@@ -7,18 +7,18 @@ export const items: any = [
         icon: <IconAntd icon="DashboardOutlined" />,
     },
     {
-        label: 'Hàng hoá',
-        key: 'merchandise',
+        label: 'Sản phẩm',
+        key: 'product',
         icon: <IconAntd icon="MergeCellsOutlined" />,
         children: [
             {
                 label: 'Danh mục',
-                key: 'merchandise/category',
+                key: 'product/category',
                 icon: <IconAntd icon="InboxOutlined" />,
             },
             {
-                label: 'Kiểm kho',
-                key: 'merchandise/inventory',
+                label: 'Sản phẩm',
+                key: 'product',
                 icon: <IconAntd icon="ScheduleOutlined" />,
             },
         ],

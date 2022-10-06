@@ -1,8 +1,9 @@
 import LoginPage from '@/features/Auth/Login/pages';
 import HomePage from '@/features/App/home/page';
-import CustomerPage from '@/features/App/customer/pages';
 import NotFoundPage from '@/features/Notfound';
 import RegisterPage from '@/features/Auth/Register';
+import ProductCategoryPage from '@/features/App/product/page/Category';
+import ProductPage from '@/features/App/product/page';
 
 // định nghĩa router
 export const routerPage = {
@@ -11,6 +12,10 @@ export const routerPage = {
     // private....
     home: '/',
     customer: '/customer',
+
+    // product
+    productCategory: '/product/category',
+    product: '/product',
     // auth....
     login: '/auth/login',
     register: '/auth/register',
@@ -26,8 +31,12 @@ const PrivateRoutes = [
         element: <HomePage />,
     },
     {
-        path: routerPage.customer,
-        element: <CustomerPage />,
+        path: routerPage.productCategory,
+        element: <ProductCategoryPage />,
+    },
+    {
+        path: routerPage.product,
+        element: <ProductPage />,
     },
     ...PublicRoutes,
 ];

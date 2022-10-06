@@ -52,10 +52,10 @@ const SidebarContent = ({
                         <MenuStyled
                             defaultOpenKeys={items.map((item: { key: string }) => item.key)}
                             selectedKeys={[selectedKeys]}
-                            theme="dark" 
+                            theme="dark"
                             mode="inline"
                             items={items}
-                            onClick={(e) => navigate('/' + e.key)}
+                            onClick={(e) => navigate(e.key === '/' ? e.key : '/' + e.key)}
                         />
                     </div>
                 </CustomScrollbars>
