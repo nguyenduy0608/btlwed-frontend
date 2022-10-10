@@ -40,6 +40,13 @@ export const dataSourceOderList = [
         amount: 30,
         total: 2000000,
     },
+    {
+        id: '3',
+        oderId: 'Pj1000',
+        customerName: 'Nguyễn Đức Duyyyyy',
+        amount: 30,
+        total: 2000000,
+    },
 ];
 export const dataSourceProduct = [
     {
@@ -81,4 +88,95 @@ export const dataSourceProduct = [
 ];
 
 
+export const columsProduct = [
+    {
+        title: 'STT',
+        dataIndex: 'id',
+        key: 'id',
+    },
+    {
+        title: 'Mã sản phẩm',
+        dataIndex: 'productId',
+        key: 'productId',
+    },
+    {
+        title: 'Tên sản phẩm',
+        dataIndex: 'name',
+        key: 'name',
+    },
+    {
+        title: 'Danh mục',
+        dataIndex: 'category',
+        key: 'category',
+    },
+    {
+        title: 'Giá bán(VNĐ)',
+        dataIndex: 'price',
+        key: 'price',
+    },
+    {
+        title: 'Trạng thái',
+        dataIndex: 'status',
+        key: 'status',
+    },
 
+    {
+        title: 'Tổng tồn',
+        dataIndex: 'total',
+        key: 'total',
+    },
+];
+export const columsOderList = [
+    {
+        title: 'STT',
+        dataIndex: 'id',
+        key: 'id',
+    },
+    {
+        title: 'Mã đơn',
+        dataIndex: 'oderId',
+        key: 'Id',
+    },
+    {
+        title: 'Tên sản phẩm',
+        dataIndex: 'customerName',
+        key: 'customerName',
+    },
+    {
+        title: 'Số lượng',
+        dataIndex: 'amount',
+        key: 'amount',
+    },
+    {
+        title: 'Tổng cộng',
+        dataIndex: 'total',
+        key: 'total',
+    },
+];
+export const columsCategoryHanoi = [
+    {
+        title: 'Tên danh mục',
+        dataIndex: 'name',
+        key: 'name',
+    },
+    {
+        title: 'Danh mục con',
+        dataIndex: 'category',
+        key: 'category',
+    },
+    {
+        title: 'Trạng thái',
+        dataIndex: 'status',
+        key: 'status',
+    },
+    {
+        title: 'Thứ tự hiển thị',
+        dataIndex: 'display',
+        key: 'display',
+    },
+    {
+        title: 'Ngày tạo',
+        dataIndex: 'createAt',
+        key: 'createAt',
+    },
+];

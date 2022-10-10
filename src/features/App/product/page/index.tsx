@@ -2,89 +2,11 @@ import TableComponent from '@/components/TableComponent';
 import { Card, Descriptions, Segmented } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
-import { dataSourceProduct } from '../components/product.config';
+import { dataSourceProduct, dataSourceOderList, columsProduct, columsOderList } from '../components/Product.Config';
 import { Tabs, Form } from 'antd';
-const columsProduct = [
-    {
-        title: 'STT',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: 'Mã sản phẩm',
-        dataIndex: 'productId',
-        key: 'productId',
-    },
-    {
-        title: 'Tên sản phẩm',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Danh mục',
-        dataIndex: 'category',
-        key: 'category',
-    },
-    {
-        title: 'Giá bán(VNĐ)',
-        dataIndex: 'price',
-        key: 'price',
-    },
-    {
-        title: 'Trạng thái',
-        dataIndex: 'status',
-        key: 'status',
-    },
 
-    {
-        title: 'Tổng tồn',
-        dataIndex: 'total',
-        key: 'total',
-    },
-];
-const dataSourceOderList = [
-    {
-        id: '1',
-        oderId: 'Pj1000',
-        customerName: 'Nguyễn Đức Duy',
-        amount: 30,
-        total: 2000000,
-    },
-    {
-        id: '2',
-        oderId: 'Pj1000',
-        customerName: 'Nguyễn Đức Duyyyyy',
-        amount: 30,
-        total: 2000000,
-    },
-];
-const columsOderList = [
-    {
-        title: 'STT',
-        dataIndex: 'id',
-        key: 'id',
-    },
-    {
-        title: 'Mã đơn',
-        dataIndex: 'oderId',
-        key: 'Id',
-    },
-    {
-        title: 'Tên sản phẩm',
-        dataIndex: 'customerName',
-        key: 'customerName',
-    },
-    {
-        title: 'Số lượng',
-        dataIndex: 'amount',
-        key: 'amount',
-    },
-    {
-        title: 'Tổng cộng',
-        dataIndex: 'total',
-        key: 'total',
-    },
-];
+
+
 const ProductPage = () => {
     const [count, setCount] = React.useState(0);
 

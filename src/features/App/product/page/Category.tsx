@@ -2,36 +2,10 @@ import TableComponent from '@/components/TableComponent';
 import { Card, Descriptions, Segmented } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
-import {  dataSourceCategoryHaNoi } from '../components/product.config';
+import { dataSourceCategoryHaNoi, columsCategoryHanoi } from '../components/Product.Config';
 
 
-const columsCategoryHanoi = [
-    {
-        title: 'Tên danh mục',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Danh mục con',
-        dataIndex: 'category',
-        key: 'category',
-    },
-    {
-        title: 'Trạng thái',
-        dataIndex: 'status',
-        key: 'status',
-    },
-    {
-        title: 'Thứ tự hiển thị',
-        dataIndex: 'display',
-        key: 'display',
-    },
-    {
-        title: 'Ngày tạo',
-        dataIndex: 'createAt',
-        key: 'createAt',
-    },
-];
+
 const ProductCategoryPage = () => {
     const [count, setCount] = React.useState(0);
 
