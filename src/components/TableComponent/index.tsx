@@ -1,3 +1,4 @@
+import { RADIUS } from '@/config/theme';
 import { Col, Row, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import React, { ReactNode } from 'react';
@@ -18,7 +19,7 @@ interface IProps {
     id?: string;
     expandedRowRender?: (record: any, index: number, indent: number, expanded: any) => ReactNode;
 
-    onRowSelection: (row: any[]) => void;
+    onRowSelection?: (row: any[]) => void;
     typeRowSelect?: RowSelect;
 }
 
@@ -40,7 +41,7 @@ const TableComponent: React.FC<IProps> = ({
 
     const rowSelection = {
         onChange: (rowKey: React.Key[], selectedRows: any[]) => {
-            onRowSelection(selectedRows);
+            onRowSelection && onRowSelection(selectedRows);
         },
     };
 
@@ -51,13 +52,14 @@ const TableComponent: React.FC<IProps> = ({
                     <TableStyled
                         id={id}
                         className="gx-table-responsive"
+                        // @ts-ignore
                         rowSelection={
                             rowSelect
                                 ? {
                                       type: typeRowSelect,
                                       ...rowSelection,
                                   }
-                                : {}
+                                : false
                         }
                         expandable={{
                             expandedRowRender,
@@ -128,7 +130,7 @@ const TableStyled = styled(Table)`
     }
 
     & .ant-table-body::-webkit-scrollbar-track {
-        border-radius: 10px;
+        border-radius: ${RADIUS};
         background-color: rgba(0, 0, 0, 0.005);
     }
 
@@ -138,7 +140,7 @@ const TableStyled = styled(Table)`
     }
 
     & .ant-table-body::-webkit-scrollbar-thumb {
-        border-radius: 10px;
+        border-radius: ${RADIUS};
         background-color: #999;
     }
 `;

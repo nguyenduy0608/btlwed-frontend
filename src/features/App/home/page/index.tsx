@@ -1,66 +1,44 @@
-import TableComponent from '@/components/TableComponent';
-import { Card, Descriptions, Segmented } from 'antd';
+import TopBar from '@/components/TopBar';
+import { PADDING } from '@/config/theme';
+import { DatePicker, Typography } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import styled from 'styled-components';
+import CardReport from '../components/CardReport';
+import ChartReport from '../components/ChartReport';
 
-const dataSource = [
-    {
-        id: '1',
-        name: 'Mike',
-        age: 32,
-        address: '10 Downing Street',
-    },
-    {
-        id: '2',
-        name: 'John',
-        age: 42,
-        address: '112 Downing Street',
-    },
-];
+const { RangePicker } = DatePicker;
+const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
+const dateFormat = 'DD/MM/YYYY';
 
 const HomePage = () => {
     const [count, setCount] = React.useState(0);
 
     return (
-        <Card title="Bảng sản phẩm" extra={<Segmented options={['Tất cả', 'Kho 1']} />}>
-            <TableComponent
-                page={1}
-                onChangePage={(_page) => console.log(_page)}
-                onRowSelection={(row) => console.log(row)}
-                expandedRowRender={(row: any) => (
-                    <Card className="gx-mb-0">
-                        <Descriptions>
-                            <Descriptions.Item label="Product">Cloud Database</Descriptions.Item>
-                            <Descriptions.Item label="Billing">Prepaid</Descriptions.Item>
-                            <Descriptions.Item label="time">18:00:00</Descriptions.Item>
-                            <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
-                            <Descriptions.Item label="Discount">$20.00</Descriptions.Item>
-                            <Descriptions.Item label="Official">$60.00</Descriptions.Item>
-                        </Descriptions>
-                    </Card>
-                )}
-                columns={[
-                    {
-                        title: 'Name',
-                        dataIndex: 'name',
-                        key: 'name',
-                    },
-                    {
-                        title: 'Age',
-                        dataIndex: 'age',
-                        key: 'age',
-                    },
-                    {
-                        title: 'Address',
-                        dataIndex: 'address',
-                        key: 'address',
-                    },
-                ]}
-                dataSource={dataSource}
-                total={dataSource.length}
+        <ContainerStyled>
+            <TopBar
+                title="Tổng quan"
+                extra={
+                    <RangePicker
+                        defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
+                        format={dateFormat}
+                    />
+                }
             />
-        </Card>
+
+            <CardReport />
+            <ChartReport />
+        </ContainerStyled>
     );
 };
+
+const ContainerStyled = styled.div`
+    max-height: 100vh;
+    height: 100%;
+    width: 100%;
+    padding: ${PADDING};
+    display: flex;
+    flex-direction: column;
+`;
 
 export default HomePage;
