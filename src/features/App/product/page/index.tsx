@@ -33,19 +33,24 @@ const ProductPage = () => {
                 <div>
                     <Tabs defaultActiveKey="1">
                         <Tabs.TabPane tab="THÔNG TIN SẢN PHẨM" key="1">
-                            Thông tin chung
-                            <Form
-                                name="basic"
-                                labelCol={{
-                                    span: 8,
-                                }}
-                                wrapperCol={{
-                                    span: 16,
-                                }}
-                            >
-                                <Form.Item label="Mã sản phẩm">1234</Form.Item>
-                                <Form.Item label="Danh mục"> Con lăn sơn</Form.Item>
-                            </Form>
+                            <Card className="gx-mb-0">
+                                <Descriptions title="THÔNG TIN CHUNG" column={2}>
+                                    <Descriptions.Item label="Mã sản phẩm">245512356</Descriptions.Item>
+                                    <Descriptions.Item label="Danh mục">Con lăn sơn</Descriptions.Item>
+                                    <Descriptions.Item label="Tên sản phẩm">Con lăn sơn</Descriptions.Item>
+                                    <Descriptions.Item label="Trạng thái sản phẩm">Đang hoạt động</Descriptions.Item>
+                                    <Descriptions.Item label="Giá bán(VNĐ)">100000</Descriptions.Item>
+                                    <Descriptions.Item label="Thuộc tính">Trắng</Descriptions.Item>
+                                    <Descriptions.Item label="Loại hàng">Hàng bán chạy</Descriptions.Item>
+                                    <Descriptions.Item label="Đơn vị tính(mặc đinh)">Cân</Descriptions.Item>
+                                    <Descriptions.Item label="Tổng tồn">100</Descriptions.Item>
+                                    <Descriptions.Item label="Đơn vị tính(quy đổi)">
+                                        Nửa cân(giá trị quy đổi 0.5)
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Số khách hàng quan tâm">100</Descriptions.Item>
+                                    <Descriptions.Item label="Mô tả">Con lăn sơn</Descriptions.Item>
+                                </Descriptions>
+                            </Card>
                         </Tabs.TabPane>
                         <Tabs.TabPane tab="DANH SÁCH ĐƠN HÀNG" key="2">
                             <TableComponent
