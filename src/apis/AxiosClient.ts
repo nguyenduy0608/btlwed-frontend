@@ -2,9 +2,9 @@ import { Notification } from '@/utils';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import LocalStorage from './LocalStorage';
-
+const API_URL = 'http://localhost:5000';
 const AxiosClient = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: API_URL,
     headers: {
         'content-type': 'application/json',
     },
