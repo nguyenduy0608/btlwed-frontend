@@ -8,8 +8,8 @@ const CardComponent = ({
     extra,
     children,
 }: {
-    title: string | ReactNode;
-    extra: ReactNode;
+    title?: string | ReactNode;
+    extra?: ReactNode;
     children: ReactNode;
 }) => {
     return (

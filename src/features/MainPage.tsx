@@ -15,7 +15,9 @@ const MainPage = () => {
         // nếu đăng nhập và domain không webview và domain không public
         // if (LocalStorage.getToken() && pathname.includes('webview') && pathname.includes('public')) {
         if (LocalStorage.getToken()) {
-            navigate(routerPage.home);
+            if (pathname === '/') {
+                navigate(routerPage.home);
+            }
         } else {
             switch (pathname) {
                 case routerPage.register:

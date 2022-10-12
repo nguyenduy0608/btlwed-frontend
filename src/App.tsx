@@ -14,7 +14,6 @@ function App() {
     const { state, dispatch } = useCallContext();
 
     const { pathname } = useLocation();
-    console.log('🚀 ~ file: App.tsx ~ line 17 ~ App ~ pathname', pathname);
 
     // loading when going to app
     React.useEffect(() => {

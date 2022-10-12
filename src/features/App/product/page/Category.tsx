@@ -5,7 +5,6 @@ import { PADDING } from '@/config/theme';
 import { Button, Card, Descriptions, Segmented, Switch } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Button from '../../home/components/Button';
 import { dataSourceCategoryHaNoi, columsCategoryHanoi } from '../components/Product.Config';
 
 const ProductCategoryPage = () => {

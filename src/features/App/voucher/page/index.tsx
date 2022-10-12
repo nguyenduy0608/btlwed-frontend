@@ -8,7 +8,10 @@ import TopBar from '@/components/TopBar';
 import CardComponent from '@/components/CardComponent';
 import { PADDING } from '@/config/theme';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
+import { routerPage } from '@/config/routes';
 const VoucherPage = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const { RangePicker } = DatePicker;
     const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
@@ -21,7 +24,7 @@ const VoucherPage = () => {
             <TopBar
                 title="Quản lý voucher"
                 extra={
-                    <Button className="gx-mb-0" type="primary">
+                    <Button onClick={() => navigate(routerPage.voucherForm)} className="gx-mb-0" type="primary">
                         Thêm mới
                     </Button>
                 }
