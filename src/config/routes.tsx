@@ -4,6 +4,7 @@ import NotFoundPage from '@/features/Notfound';
 import RegisterPage from '@/features/Auth/Register';
 import ProductCategoryPage from '@/features/App/product/page/Category';
 import ProductPage from '@/features/App/product/page';
+import VoucherPage from '@/features/App/voucher/page';
 
 // định nghĩa router
 export const routerPage = {
@@ -16,6 +17,10 @@ export const routerPage = {
     // product
     productCategory: '/product/category',
     product: '/product',
+
+    // voucher
+    voucher: '/voucher',
+
     // auth....
     login: '/auth/login',
     register: '/auth/register',
@@ -37,6 +42,10 @@ const PrivateRoutes = [
     {
         path: routerPage.product,
         element: <ProductPage />,
+    },
+    {
+        path: routerPage.voucher,
+        element: <VoucherPage />,
     },
     ...PublicRoutes,
 ];

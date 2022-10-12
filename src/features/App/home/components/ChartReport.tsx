@@ -52,17 +52,19 @@ const ChartReport = () => {
                     </ColStyled>
                 </Col>
             </RowStyled>
-            <ResponsiveContainer width="100%" height={440}>
-                <LineChart data={data} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <Tooltip />
-                    <Legend />
-                    <Line name="Hoàn thành" type="monotone" dataKey="ht" stroke="#003366" activeDot={{ r: 8 }} />
-                    <Line name="Huỷ/Từ chối" type="monotone" dataKey="tc" stroke="#FE9E15" />
-                </LineChart>
-            </ResponsiveContainer>
+            <div style={{ flex: 1 }}>
+                <ResponsiveContainer width="100%">
+                    <LineChart data={data} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <Tooltip />
+                        <Legend />
+                        <Line name="Hoàn thành" type="monotone" dataKey="ht" stroke="#003366" activeDot={{ r: 8 }} />
+                        <Line name="Huỷ/Từ chối" type="monotone" dataKey="tc" stroke="#FE9E15" />
+                    </LineChart>
+                </ResponsiveContainer>
+            </div>
         </ReportChartStyled>
     );
 };
@@ -80,7 +82,7 @@ const ReportChartStyled = styled.div`
 
 const RowStyled = styled(Row)`
     padding: 0 40px;
-    margin: 10px 0;
+    margin: 30px 0;
 `;
 
 const ColStyled = styled(Col)<{ color?: string }>`
