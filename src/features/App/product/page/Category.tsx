@@ -5,7 +5,7 @@ import { PADDING } from '@/config/theme';
 import { Button, Card, Descriptions, Segmented, Switch } from 'antd';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { EditOutlined, DeleteOutlined, SettingOutlined } from '@ant-design/icons';
+import Button from '../../home/components/Button';
 import { dataSourceCategoryHaNoi, columsCategoryHanoi } from '../components/Product.Config';
 
 const ProductCategoryPage = () => {
@@ -31,19 +31,13 @@ const ProductCategoryPage = () => {
                     rowSelect={false}
                     onChangePage={(_page) => console.log(_page)}
                     expandedRowRender={(row: any) => (
-                        <Card
-                            className="gx-mb-0"
-                            actions={[
-                                <EditOutlined key="edit">Chỉnh sửa</EditOutlined>,
-                                <Switch checked={!loading} onChange={onChange} />,
-                            ]}
-                        >
+                        <Card className="gx-mb-0">
                             <Descriptions title="Thông tin danh mục" column={2}>
                                 <Descriptions.Item label="Tên danh mục">
                                     {dataSourceCategoryHaNoi[0].name}
                                 </Descriptions.Item>
-                                <Descriptions.Item label="Trạng thái">Hoạt động</Descriptions.Item>
                                 <Descriptions.Item label="Thứ tự hiển thị">1</Descriptions.Item>
+                                <Descriptions.Item label="Trạng thái">Hoạt động</Descriptions.Item>
                                 <Descriptions.Item label="Ngày tạo">17/10</Descriptions.Item>
                             </Descriptions>
                         </Card>
