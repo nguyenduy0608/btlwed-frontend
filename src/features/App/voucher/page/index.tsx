@@ -43,18 +43,39 @@ const VoucherPage = () => {
                         <Card
                             className="gx-mb-0"
                             actions={[
-                                <div>
-                                    <Switch checked={!loading} onChange={onChange} />
+                                <Button
+                                    type="text"
+                                    className="gx-mb-0"
+                                    style={{
+                                        fontSize: '16px',
+                                        color: '#0090FF',
+                                    }}
+                                >
+                                    <Switch checked={!loading} onChange={onChange} style = {{margin:'0 8px 2px 0'}}/>
                                     Đang hoạt động
-                                </div>,
-                                <div style={{ marginTop: '12px' }}>
+                                </Button>,
+                                <Button
+                                    type="text"
+                                    className="gx-mb-0"
+                                    style={{
+                                        fontSize: '16px',
+                                        color: 'green',
+                                    }}
+                                >
                                     <EditOutlined key="edit" />
                                     Chỉnh sửa
-                                </div>,
-                                <div>
+                                </Button>,
+                                <Button
+                                    type="text"
+                                    className="gx-mb-0"
+                                    style={{
+                                        fontSize: '16px',
+                                        color: 'red',
+                                    }}
+                                >
                                     <DeleteOutlined key="delete" />
                                     Xóa
-                                </div>,
+                                </Button>,
                             ]}
                         >
                             <Descriptions title="Thông tin mã giảm giá" column={2}>
