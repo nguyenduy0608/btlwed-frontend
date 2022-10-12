@@ -1,20 +1,34 @@
 import { BOX_SHADOW, RADIUS } from '@/config/theme';
-import { Typography } from 'antd';
+import { PageHeader, Typography } from 'antd';
 import React, { ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 const { Title } = Typography;
 
-const TopBar = ({ title, extra, style }: { title: string; extra?: ReactNode; style?: React.CSSProperties }) => {
+const TopBar = ({
+    title,
+    extra,
+    style,
+    back,
+}: {
+    title: string;
+    extra?: ReactNode;
+    style?: React.CSSProperties;
+    back?: boolean;
+}) => {
+    const navigate = useNavigate();
     return (
-        <HeaderStyled style={style}>
-            <Title level={4} className="gx-m-0 gx-font-weight-bold">
-                {title}
-            </Title>
-            {extra}
-        </HeaderStyled>
+        <HeaderStyled
+            ghost
+            onBack={back ? () => navigate(-1) : undefined}
+            title={title}
+            style={style}
+            extra={extra}
+            // subTitle="This is a subtitle"
+        />
     );
 };
-const HeaderStyled = styled.div`
+const HeaderStyled = styled(PageHeader)`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,5 +37,9 @@ const HeaderStyled = styled.div`
     border-radius: ${RADIUS};
     box-shadow: ${BOX_SHADOW};
     margin-bottom: 10px;
+
+    & .ant-page-header-heading {
+        width: 100%;
+    }
 `;
 export default React.memo(TopBar);
