@@ -21,6 +21,7 @@ interface IProps {
 
     onRowSelection?: (row: any[]) => void;
     typeRowSelect?: RowSelect;
+    header?: any;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -36,6 +37,7 @@ const TableComponent: React.FC<IProps> = ({
     expandedRowRender,
     loading = false,
     typeRowSelect = 'checkbox',
+    header,
 }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
@@ -50,6 +52,7 @@ const TableComponent: React.FC<IProps> = ({
             <Col span={24} className="gx-m-0 gx-px-0">
                 <WrapperTable>
                     <TableStyled
+                        title={header ? () => header : undefined}
                         id={id}
                         className="gx-table-responsive"
                         // @ts-ignore
@@ -79,12 +82,13 @@ const TableComponent: React.FC<IProps> = ({
                         // scroll={{ x: '100vh', y: `calc(100vh - ${pathname === '/settings' ? '330px' : '270px'})` }}
                         dataSource={dataSource}
                         columns={columns}
+                        // onChange={(all) => console.log('change table', all)}
                     />
                 </WrapperTable>
             </Col>
             {isPagination && (
                 <Col span={24}>
-                    <Row justify="end">
+                    <Row justify="end" style={{ flexDirection: 'row' }}>
                         <PaginationComponent page={page || 1} total={total || 0} onChange={onChangePage} />
                     </Row>
                 </Col>

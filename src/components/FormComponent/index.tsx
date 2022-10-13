@@ -47,14 +47,15 @@ const FormComponent: React.FC<IPropsFormLayout> = ({
     return (
         <FormStyled
             // {...formItemLayout}
+            labelAlign="left"
+            name="basic"
+            autoComplete="off"
             form={form}
             layout={layoutType}
-            labelAlign="left"
             initialValues={initialValues}
-            name="basic"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            autoComplete="off"
+            scrollToFirstError
         >
             {children}
         </FormStyled>

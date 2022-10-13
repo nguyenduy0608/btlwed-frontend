@@ -1,10 +1,12 @@
 import CardComponent from '@/components/CardComponent';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
+import SearchInput from '@/components/SearchInput';
+import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { PADDING } from '@/config/theme';
 import Container from '@/layout/Container';
-import { Button, Checkbox, Col, DatePicker, Divider, Input, Row, Space } from 'antd';
+import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Space } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,15 +14,18 @@ import { rules } from '../rules';
 
 const VoucherFormPage = () => {
     const navigate = useNavigate();
+    const [form] = Form.useForm();
 
     return (
-        <FormComponent layoutType="vertical" onSubmit={(values) => console.log(values)}>
+        <FormComponent form={form} layoutType="vertical" onSubmit={(values) => console.log(values)}>
             <TopBar
                 back
                 title="Thêm voucher khách hàng"
                 extra={[
-                    <Button onClick={() => navigate(-1)}> Thoát</Button>,
-                    <Button type="primary" htmlType="submit">
+                    <Button key="1" onClick={() => navigate(-1)}>
+                        Thoát
+                    </Button>,
+                    <Button key="2" type="primary" htmlType="submit">
                         Lưu
                     </Button>,
                 ]}
@@ -45,10 +50,20 @@ const VoucherFormPage = () => {
                                 inputField={<Input placeholder="Nhập tên voucher" />}
                             />
                             <FormItemComponent
-                                rules={[rules.required('Vui lòng nhập số lượng voucher!')]}
+                                rules={[{ required: true, message: 'Vui lòng nhập số lượng voucher!' }]}
                                 name="amount"
                                 label="Số lượng voucher"
-                                inputField={<Input placeholder="Nhập số lượng voucher" />}
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập số lượng voucher"
+                                        // addonAfter={lang(t).contract_frequency}
+                                    />
+                                }
                             />
                             <FormItemComponent
                                 rules={[rules.required('Vui lòng nhập trạng thái voucher!')]}
@@ -74,6 +89,7 @@ const VoucherFormPage = () => {
                             <FormItemComponent
                                 name="provided"
                                 label=""
+                                valuePropName="checked"
                                 inputField={
                                     <Checkbox>
                                         <strong>Gửi thông báo cho khách hàng </strong>
@@ -103,6 +119,7 @@ const VoucherFormPage = () => {
                             <FormItemComponent
                                 name="apply"
                                 label=""
+                                valuePropName="checked"
                                 inputField={
                                     <Checkbox>
                                         <strong>Áp dụng cho toàn bộ sản phẩm</strong>
@@ -111,6 +128,61 @@ const VoucherFormPage = () => {
                             />
                         </Col>
                     </Row>
+                    <Divider />
+                    <TableComponent
+                        header={
+                            <Row style={{ flexDirection: 'row' }} justify="space-between" align="middle">
+                                <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO TẤT CẢ SẢN PHẦM</h3>
+                                <Space>
+                                    <SearchInput
+                                        placeholderSearch="Nhập tên sản phẩm"
+                                        onChangeSearch={() => console.log('first')}
+                                    />
+                                </Space>
+                            </Row>
+                        }
+                        columns={[
+                            {
+                                title: 'Name',
+                                dataIndex: 'name',
+                                render: (text) => <a>{text}</a>,
+                            },
+                            {
+                                title: 'Cash Assets',
+                                className: 'column-money',
+                                dataIndex: 'money',
+                                align: 'right',
+                            },
+                            {
+                                title: 'Address',
+                                dataIndex: 'address',
+                            },
+                        ]}
+                        dataSource={[
+                            {
+                                id: '1',
+                                name: 'John Brown',
+                                money: '￥300,000.00',
+                                address: 'New York No. 1 Lake Park',
+                            },
+                            {
+                                id: '2',
+                                name: 'Jim Green',
+                                money: '￥1,256,000.00',
+                                address: 'London No. 1 Lake Park',
+                            },
+                            {
+                                id: '3',
+                                name: 'Joe Black',
+                                money: '￥120,000.00',
+                                address: 'Sidney No. 1 Lake Park',
+                            },
+                        ]}
+                        page={0}
+                        onChangePage={function (page: number): void {
+                            throw new Error('Function not implemented.');
+                        }}
+                    />
                 </CardComponent>
             </Container>
         </FormComponent>

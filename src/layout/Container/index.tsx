@@ -13,7 +13,7 @@ const Container = ({ children }: { children: React.ReactNode }) => {
 
 const ContainerStyled = styled.div`
     padding: ${PADDING};
-    height: 100%;
+    height: calc(100% - 68px);
     flex: 1;
 `;
 export default Container;

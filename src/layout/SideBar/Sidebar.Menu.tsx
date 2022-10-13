@@ -8,7 +8,7 @@ export const items: any = [
     },
     {
         label: 'Sản phẩm',
-        key: 'product',
+        key: '/product',
         icon: <IconAntd icon="MergeCellsOutlined" />,
         children: [
             {
