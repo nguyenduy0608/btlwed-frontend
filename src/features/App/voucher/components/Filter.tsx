@@ -16,14 +16,14 @@ const Filter = () => {
         <Space size="middle" wrap>
             <SearchInput onChangeSearch={(search) => console.log(search)} placeholderSearch="Nhập mã, tên voucher" />
             <DefaultSelectStyled
-                placeholder="Chọn"
+                placeholder="Trạng thái"
                 allowClear
                 style={{ width: '200px' }}
                 defaultValue="lucy"
                 onChange={handleChange}
             >
-                <Option value="jack">Jack</Option>
-                <Option value="lucy">Lucy</Option>
+                <Option value="đang hoạt động">Đang hoạt động</Option>
+                <Option value="ngừng hoạt động">Ngừng hoạt động</Option>
                 <Option value="disabled" disabled>
                     Disabled
                 </Option>
