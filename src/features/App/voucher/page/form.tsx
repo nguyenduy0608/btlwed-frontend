@@ -6,8 +6,8 @@ import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { PADDING } from '@/config/theme';
 import Container from '@/layout/Container';
-import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Space } from 'antd';
-import React from 'react';
+import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
+import { dataSourceApplyVoucher, columnsApplyVoucher } from '../components/Voucher.Config';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { rules } from '../rules';
@@ -15,7 +15,7 @@ import { rules } from '../rules';
 const VoucherFormPage = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
-
+    const { Option } = Select;
     return (
         <FormComponent form={form} layoutType="vertical" onSubmit={(values) => console.log(values)}>
             <TopBar
@@ -65,26 +65,91 @@ const VoucherFormPage = () => {
                                     />
                                 }
                             />
+
                             <FormItemComponent
                                 rules={[rules.required('Vui lòng nhập trạng thái voucher!')]}
                                 name="status"
                                 label="Trạng thái"
-                                inputField={<Input placeholder="Nhập trạng thái voucher" />}
+                                inputField={
+                                    <Select placeholder="Nhập trạng thái voucher">
+                                        <Option value="Đang hoạt động">Đang hoạt động</Option>
+                                        <Option value="ngừng hoạt động">Ngừng hoạt động</Option>
+                                    </Select>
+                                }
+                            />
+                            <FormItemComponent
+                                name="amountUsed"
+                                label="Số lượng voucher đã dùng"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập Số lượng voucher đã dùng"
+                                        // addonAfter={lang(t).contract_frequency}
+                                    />
+                                }
+                            />
+                            <FormItemComponent
+                                name="amountRemaining"
+                                label="Số lượng voucher còn lại"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập Số lượng voucher còn lại"
+                                        // addonAfter={lang(t).contract_frequency}
+                                    />
+                                }
                             />
                             <FormItemComponent
                                 name="reduce"
                                 label="Mức giảm"
-                                inputField={<Input placeholder="Nhập mức giảm" />}
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập mức giảm"
+                                        addonAfter={'%'}
+                                        // addonAfter={lang(t).contract_frequency}
+                                    />
+                                }
                             />
                             <FormItemComponent
                                 name="reduceMax"
                                 label="Giá trị giảm tối đa"
-                                inputField={<Input placeholder="Nhập giá trị giảm tối đa" />}
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={1000000}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập giá trị giảm tối đa"
+                                    />
+                                }
                             />
                             <FormItemComponent
                                 name="minimumValue"
                                 label="Giá trị đơn hàng tối thiểu"
-                                inputField={<Input placeholder="Nhập giá trị đơn hàng tối thiểu" />}
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={10000000}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập giá trị đơn hàng tối thiểu"
+                                    />
+                                }
                             />
                             <FormItemComponent
                                 name="provided"
@@ -132,7 +197,7 @@ const VoucherFormPage = () => {
                     <TableComponent
                         header={
                             <Row style={{ flexDirection: 'row' }} justify="space-between" align="middle">
-                                <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO TẤT CẢ SẢN PHẦM</h3>
+                                <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO TẤT CẢ SẢN PHẨM</h3>
                                 <Space>
                                     <SearchInput
                                         placeholderSearch="Nhập tên sản phẩm"
@@ -141,43 +206,8 @@ const VoucherFormPage = () => {
                                 </Space>
                             </Row>
                         }
-                        columns={[
-                            {
-                                title: 'Name',
-                                dataIndex: 'name',
-                                render: (text) => <a>{text}</a>,
-                            },
-                            {
-                                title: 'Cash Assets',
-                                className: 'column-money',
-                                dataIndex: 'money',
-                                align: 'right',
-                            },
-                            {
-                                title: 'Address',
-                                dataIndex: 'address',
-                            },
-                        ]}
-                        dataSource={[
-                            {
-                                id: '1',
-                                name: 'John Brown',
-                                money: '￥300,000.00',
-                                address: 'New York No. 1 Lake Park',
-                            },
-                            {
-                                id: '2',
-                                name: 'Jim Green',
-                                money: '￥1,256,000.00',
-                                address: 'London No. 1 Lake Park',
-                            },
-                            {
-                                id: '3',
-                                name: 'Joe Black',
-                                money: '￥120,000.00',
-                                address: 'Sidney No. 1 Lake Park',
-                            },
-                        ]}
+                        columns={columnsApplyVoucher}
+                        dataSource={dataSourceApplyVoucher}
                         page={0}
                         onChangePage={function (page: number): void {
                             throw new Error('Function not implemented.');

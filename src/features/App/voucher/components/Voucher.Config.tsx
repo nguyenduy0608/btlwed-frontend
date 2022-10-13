@@ -101,3 +101,76 @@ export const columnsVoucher = [
             ),
     },
 ];
+export const dataSourceApplyVoucher = [
+    {
+        id: '1',
+        category: 'Trà',
+        product: 'Trà nhài',
+        price: '15000000',
+    },
+    {
+        id: '2',
+        category: 'Bánh quy',
+        product: 'Bánh quy',
+        price: '12000000',
+    },
+    {
+        id: '3',
+        category: 'Bánh kem',
+        product: 'Bánh kem',
+        price: '17000000',
+    },
+];
+export const columnsApplyVoucher = [
+    {
+        title: 'Danh mục',
+        dataIndex: 'category',
+        key: 'category',
+        filters: [
+            {
+                text: 'Trà',
+                value: 'Trà',
+            },
+            {
+                text: 'Bánh quy',
+                value: 'Bánh quy',
+            },
+            {
+                text: 'Bánh kem',
+                value: 'Bánh kem',
+            },
+        ],
+        filterSearch: true,
+        onFilter: (value: any, record: any) => record.category.includes(value),
+        width: '35%',
+    },
+    {
+        title: 'Sản phẩm',
+        dataIndex: 'product',
+        key: 'product',
+        filters: [
+            {
+                text: 'Trà nhài',
+                value: 'Trà nhài',
+                type: 'radio',
+            },
+            {
+                text: 'Bánh quy',
+                value: 'Bánh quy',
+            },
+            {
+                text: 'Bánh kem',
+                value: 'Bánh kem',
+            },
+        ],
+        filterSearch: true,
+        onFilter: (value: any, record: any) => record.product.includes(value),
+        width: '35%',
+    },
+    {
+        title: 'Giá bán',
+        dataIndex: 'price',
+        key: 'price',
+        sorter: (a: any, b: any) => a.price - b.price,
+    },
+];
