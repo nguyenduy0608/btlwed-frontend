@@ -1,3 +1,6 @@
+import TagResult from '@/components/TagResult';
+import { Tag } from 'antd';
+
 export const dataSourceVoucher = [
     {
         id: '1',
@@ -7,7 +10,7 @@ export const dataSourceVoucher = [
         remainingAmount: 5,
         createAt: '19/08/2020',
         endAt: '20/09/2021',
-        status: 'Đang hoạt động',
+        status: 0,
     },
     {
         id: '2',
@@ -17,7 +20,7 @@ export const dataSourceVoucher = [
         remainingAmount: 5,
         createAt: '19/08/2020',
         endAt: '20/09/2021',
-        status: 'Đang hoạt động',
+        status: 0,
     },
     {
         id: '3',
@@ -27,7 +30,7 @@ export const dataSourceVoucher = [
         remainingAmount: 5,
         createAt: '19/08/2020',
         endAt: '20/09/2021',
-        status: 'Đang hoạt động',
+        status: 1,
     },
     {
         id: '4',
@@ -37,7 +40,7 @@ export const dataSourceVoucher = [
         remainingAmount: 5,
         createAt: '19/08/2020',
         endAt: '20/09/2021',
-        status: 'Đang hoạt động',
+        status: 1,
     },
     {
         id: '5',
@@ -47,7 +50,7 @@ export const dataSourceVoucher = [
         remainingAmount: 5,
         createAt: '19/08/2020',
         endAt: '20/09/2021',
-        status: 'Đang hoạt động',
+        status: 1,
     },
 ];
 export const columnsVoucher = [
@@ -90,5 +93,11 @@ export const columnsVoucher = [
         title: 'Trạng thái',
         dataIndex: 'status',
         key: 'status',
+        render: (value: number) =>
+            value ? (
+                <TagResult text="Đang hoạt động" color="processing" />
+            ) : (
+                <TagResult text="Dừng hoạt động" color="error" />
+            ),
     },
 ];

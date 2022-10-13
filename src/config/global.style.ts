@@ -1,4 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
+import { Select } from 'antd';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -72,7 +73,46 @@ const GlobalStyle = createGlobalStyle`
     border: none;
   }
 
+  .rowTableSelect  {
+    color: rgba(24,144,255) !important;
+    transition: background .2s ease-in-out;
+    background-color: white;
+    /* & * {font-weight: 600 !important;} */
+    & td:first-child  *{
+      color: black;
+    }
 
+    &.ant-table-row-selected {
+      color: black;
+    }
+
+    &:hover {
+      color: black;
+
+    }
+  }
+
+  .rowTableSelect td {
+    border-top:  1px solid rgba(24,144,255,.5);
+  }
+
+  .rowTableSelect > td:last-child {
+    border-right:  1px solid rgba(24,144,255,.5) !important;
+  }
+
+  .rowTableSelect > td:first-child {
+    border-left:  1px solid rgba(24,144,255,.5);
+  }
+
+  .ant-table-expanded-row > td {
+    border-right: 1px solid rgba(24,144,255,.5) !important;
+    border-left: 1px solid rgba(24,144,255,.5) !important;
+    border-bottom: 1px solid rgba(24,144,255,.5) !important;
+  }
+`;
+
+export const DefaultSelectStyled = styled(Select)`
+    width: 200px;
 `;
 
 export default GlobalStyle;

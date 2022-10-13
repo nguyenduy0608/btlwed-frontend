@@ -40,10 +40,8 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                     {/* body content */}
                     <ErrorBoundary>
                         <Content className="gx-layout-content">
-                            <div className="gx-main-content-wrapper" style={{ overflow: 'auto' }}>
-                                <CustomScrollbars>
-                                    <PageComponent />
-                                </CustomScrollbars>
+                            <div className="gx-main-content-wrapper" style={{ overflow: 'hidden' }}>
+                                <PageComponent />
                             </div>
                             {/* footer content */}
                             {/* <Footer>

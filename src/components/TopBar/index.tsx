@@ -34,9 +34,13 @@ const HeaderStyled = styled(PageHeader)`
     align-items: center;
     background-color: #fff;
     padding: 12px 20px;
-    border-radius: ${RADIUS};
+    /* border-radius: ${RADIUS}; */
     box-shadow: ${BOX_SHADOW};
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+
+    position: sticky;
+    top: 0;
+    z-index: 1;
 
     & .ant-page-header-heading {
         width: 100%;

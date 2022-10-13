@@ -20,7 +20,7 @@ const CardComponent = ({
 };
 
 const CardStyled = styled(Card)`
-    border-radius: ${RADIUS};
+    border-radius: 0px;
     box-shadow: ${BOX_SHADOW};
 `;
 

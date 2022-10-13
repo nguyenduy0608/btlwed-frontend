@@ -62,6 +62,8 @@ const FormComponent: React.FC<IPropsFormLayout> = ({
 };
 
 const FormStyled = styled(Form)`
+    height: 100%;
+
     & .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
         content: '';
         margin-right: 0;

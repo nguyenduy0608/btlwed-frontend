@@ -3,26 +3,29 @@ import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import TopBar from '@/components/TopBar';
 import { PADDING } from '@/config/theme';
-import { Button, Checkbox, Col, DatePicker, Input, Row, Space } from 'antd';
+import Container from '@/layout/Container';
+import { Button, Checkbox, Col, DatePicker, Divider, Input, Row, Space } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { rules } from '../rules';
 
 const VoucherFormPage = () => {
-    
+    const navigate = useNavigate();
+
     return (
-        <Container>
-            <FormComponent layoutType="vertical" onSubmit={(values) => console.log(values)}>
-                <TopBar
-                    back
-                    title="Thêm voucher khách hàng"
-                    extra={[
-                        <Button> Thoát</Button>,
-                        <Button type="primary" htmlType="submit">
-                            Lưu
-                        </Button>,
-                    ]}
-                />
+        <FormComponent layoutType="vertical" onSubmit={(values) => console.log(values)}>
+            <TopBar
+                back
+                title="Thêm voucher khách hàng"
+                extra={[
+                    <Button onClick={() => navigate(-1)}> Thoát</Button>,
+                    <Button type="primary" htmlType="submit">
+                        Lưu
+                    </Button>,
+                ]}
+            />
+            <Container>
                 <CardComponent>
                     <Row style={{ flexDirection: 'row' }}>
                         <Col span={6}>
@@ -79,6 +82,7 @@ const VoucherFormPage = () => {
                             />
                         </Col>
                     </Row>
+                    <Divider />
                     <Row style={{ flexDirection: 'row' }}>
                         <Col span={6}>
                             <h2 className="gx-font-weight-medium">Thời gian áp dụng</h2>
@@ -108,13 +112,9 @@ const VoucherFormPage = () => {
                         </Col>
                     </Row>
                 </CardComponent>
-            </FormComponent>
-        </Container>
+            </Container>
+        </FormComponent>
     );
 };
-
-const Container = styled.div`
-    padding: ${PADDING};
-`;
 
 export default VoucherFormPage;

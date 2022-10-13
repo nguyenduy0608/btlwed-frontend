@@ -1,5 +1,5 @@
 import TopBar from '@/components/TopBar';
-import { PADDING } from '@/config/theme';
+import { PADDING, RADIUS } from '@/config/theme';
 import { DatePicker, Typography } from 'antd';
 import moment from 'moment';
 import React from 'react';
@@ -17,6 +17,7 @@ const HomePage = () => {
     return (
         <ContainerStyled>
             <TopBar
+                style={{ borderRadius: RADIUS, position: 'relative', marginBottom: '10px' }}
                 title="Tổng quan"
                 extra={
                     <RangePicker
@@ -33,12 +34,14 @@ const HomePage = () => {
 };
 
 const ContainerStyled = styled.div`
-    max-height: 100vh;
-    height: 100%;
     width: 100%;
+    height: 100%;
+    flex: 1;
     padding: ${PADDING};
     display: flex;
     flex-direction: column;
+    overflow-y: overlay;
+    overflow-x: hidden;
 `;
 
 export default HomePage;

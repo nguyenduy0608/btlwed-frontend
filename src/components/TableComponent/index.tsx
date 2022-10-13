@@ -131,7 +131,7 @@ const TableStyled = styled(Table)`
 
     & .ant-table-body::-webkit-scrollbar-track {
         border-radius: ${RADIUS};
-        background-color: rgba(0, 0, 0, 0.005);
+        /* background-color: rgba(0, 0, 0, 0.005); */
     }
 
     & .ant-table-body::-webkit-scrollbar {
