@@ -2,7 +2,7 @@ import { Notification } from '@/utils';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import LocalStorage from './LocalStorage';
-const API_URL = 'http://localhost:5000';
+const API_URL = 'http://dev.stakaapi.winds.vn/api/v1';
 const AxiosClient = axios.create({
     baseURL: API_URL,
     headers: {

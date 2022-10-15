@@ -19,7 +19,7 @@ const Filter = () => {
                 placeholder="Trạng thái"
                 allowClear
                 style={{ width: '200px' }}
-                defaultValue="lucy"
+                defaultValue="Đang hoạt động"
                 onChange={handleChange}
             >
                 <Option value="đang hoạt động">Đang hoạt động</Option>

@@ -82,7 +82,18 @@ export const downloadFile = (fileLink: string) => {
             link.parentNode.removeChild(link);
         });
 };
+export const handleObjectEmpty = (obj: any) => {
+    const cloneObj = { ...obj };
 
+    // remove key from object value empty
+    for (const key in cloneObj) {
+        if (Object.prototype.hasOwnProperty.call(cloneObj, key)) {
+            const element = cloneObj[key];
+            if (element === '' || element === null) delete cloneObj[key];
+        }
+    }
+    return cloneObj;
+};
 // format size file
 export function formatBytes(bytes: number, decimals = 2) {
     if (bytes === 0) return '0 Bytes';

@@ -1,18 +1,22 @@
 import React, { ReactNode, useState } from 'react';
-import {
-    EditOutlined,
-    DeleteOutlined,
-    SettingOutlined,
-    CloseCircleOutlined,
-    CheckCircleOutlined,
-} from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { Button, Card, DatePicker, Descriptions, Input, Segmented, Switch } from 'antd';
-
-const Buttons = () => {
-    const [check,setCheck]  = useState(true);
+import voucherService from '../service';
+import { Notification } from '@/utils';
+import { DataTypeVoucher } from './Voucher.Config';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { routerPage } from '@/config/routes';
+interface IProps {
+    record: DataTypeVoucher;
+    // handleShowModal: (value: DataTypePotentialCustomers) => void;
+    refetch: any;
+}
+const Buttons = ({ record, refetch }: any) => {
+    const [check, setCheck] = useState(true);
     const handleUpdateStatus = () => {
-
-    }
+        setCheck(!check);
+    };
+    const navigate = useNavigate();
 
     return [
         check ? (
@@ -23,11 +27,9 @@ const Buttons = () => {
                     fontSize: '16px',
                     color: '#0090FF',
                 }}
-                onClick={() => {
-                    setCheck(!check);
-                }}
+                onClick={handleUpdateStatus}
             >
-                <CheckCircleOutlined key="edit" />
+                <CheckCircleOutlined />
                 Đang hoạt động
             </Button>
         ) : (
@@ -38,9 +40,7 @@ const Buttons = () => {
                     fontSize: '16px',
                     color: '#CC0000',
                 }}
-                onClick={() => {
-                    setCheck(!check);
-                }}
+                onClick={handleUpdateStatus}
             >
                 <CloseCircleOutlined />
                 Ngừng hoạt động
@@ -54,6 +54,7 @@ const Buttons = () => {
                 fontSize: '16px',
                 color: 'green',
             }}
+            onClick={() => navigate(routerPage.voucherForm)}
         >
             <EditOutlined key="edit" />
             Chỉnh sửa
@@ -64,6 +65,13 @@ const Buttons = () => {
             style={{
                 fontSize: '16px',
                 color: 'red',
+            }}
+            onClick={async () => {
+                const res = await voucherService.delete(record.id);
+                if (res.status === 1) {
+                    Notification('success', 'Xóa thành công');
+                    refetch();
+                }
             }}
         >
             <DeleteOutlined key="delete" />

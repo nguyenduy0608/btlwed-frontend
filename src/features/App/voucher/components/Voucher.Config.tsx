@@ -1,98 +1,68 @@
 import TagResult from '@/components/TagResult';
+import { RECORD_SIZE } from '@/config/theme';
+import { momentToStringDate } from '@/utils';
 import { Tag } from 'antd';
+import Table, { ColumnsType } from 'antd/lib/table';
 
-export const dataSourceVoucher = [
-    {
-        id: '1',
-        voucherId: 'KM0011',
-        name: 'Mua 10 tặng 1',
-        amount: 10,
-        remainingAmount: 5,
-        createAt: '19/08/2020',
-        endAt: '20/09/2021',
-        status: 0,
-    },
-    {
-        id: '2',
-        voucherId: 'KM0011',
-        name: 'Mua 10 tặng 1',
-        amount: 10,
-        remainingAmount: 5,
-        createAt: '19/08/2020',
-        endAt: '20/09/2021',
-        status: 0,
-    },
-    {
-        id: '3',
-        voucherId: 'KM0011',
-        name: 'Mua 10 tặng 1',
-        amount: 10,
-        remainingAmount: 5,
-        createAt: '19/08/2020',
-        endAt: '20/09/2021',
-        status: 1,
-    },
-    {
-        id: '4',
-        voucherId: 'KM0011',
-        name: 'Mua 10 tặng 1',
-        amount: 10,
-        remainingAmount: 5,
-        createAt: '19/08/2020',
-        endAt: '20/09/2021',
-        status: 1,
-    },
-    {
-        id: '5',
-        voucherId: 'KM0011',
-        name: 'Mua 10 tặng 1',
-        amount: 10,
-        remainingAmount: 5,
-        createAt: '19/08/2020',
-        endAt: '20/09/2021',
-        status: 1,
-    },
-];
-export const columnsVoucher = [
+export interface DataTypeVoucher {
+    id: number;
+    status: number;
+    code: string;
+    name: string;
+    quota: number;
+    remainQuota: number;
+    rewardType: number;
+    minSpend: number;
+    rewardPercentage: number;
+    startTime: string;
+    endTime: string;
+    enableAllProduct: number;
+    enableNotification:number;
+    createdAt:string;
+    updatedAt:string;
+
+}
+
+export const columns = (page: number): ColumnsType<DataTypeVoucher> => [
     {
         title: 'STT',
         dataIndex: 'id',
-        key: 'id',
+        align: 'center',
+        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
     },
     {
         title: 'Mã voucher',
-        dataIndex: 'voucherId',
-        key: 'voucherId',
+        dataIndex: 'code',
     },
     {
         title: 'Tên voucher',
         dataIndex: 'name',
-        key: 'name',
     },
     {
         title: 'Số lượng quy định',
-        dataIndex: 'amount',
-        key: 'amount',
+        dataIndex: 'remainQuota',
+        align: 'center',
     },
     {
         title: 'Số lượng còn lại',
-        dataIndex: 'remainingAmount',
-        key: 'remainingAmount',
+        dataIndex: 'rewardType',
+        align: 'center',
     },
     {
         title: 'Ngày bắt đầu',
-        dataIndex: 'createAt',
-        key: 'createAt',
+        dataIndex: 'startTime',
+        align: 'center',
+        render: (value: any) => momentToStringDate(value),
     },
     {
         title: 'Ngày kết thúc',
-        dataIndex: 'endAt',
-        key: 'id',
+        dataIndex: 'endTime',
+        align: 'center',
+        render: (value: any) => momentToStringDate(value),
     },
     {
         title: 'Trạng thái',
         dataIndex: 'status',
-        key: 'status',
         render: (value: number) =>
             value ? (
                 <TagResult text="Đang hoạt động" color="processing" />

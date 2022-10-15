@@ -7,22 +7,64 @@ import TopBar from '@/components/TopBar';
 import { PADDING } from '@/config/theme';
 import Container from '@/layout/Container';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
-import { dataSourceApplyVoucher, columnsApplyVoucher } from '../components/Voucher.Config';
+import { dataSourceApplyVoucher, columnsApplyVoucher, DataTypeVoucher } from '../components/Voucher.Config';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { rules } from '../rules';
+import voucherService from '../service';
+import { Notification } from '@/utils';
+import React from 'react';
+const initialValue = {
+    code: '',
+    name: '',
+    status: '',
+    quota: '',
+    remainQuota: '',
+    rewardType: '',
+    minSpend: '',
+    rewardPercentage: '',
+    startTime: '',
+    endTime: '',
+    enableAllProduct: '',
+    enableNotification: '',
+    createdAt: '',
+    updatedAt: '',
+};
 
-const VoucherFormPage = () => {
+const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const { Option } = Select;
+
+    const [loadingModal, setLoadingModal] = React.useState(false);
+
+
+
+    const handleSubmit = React.useCallback(
+        async (data: any) => {
+            setLoadingModal(true);
+            const res = await voucherService.create(data);
+            // if (res.status === 0) {
+            //     Notification('success', 'Thêm voucher thành công');
+            // }
+            setLoadingModal(false);
+        },
+        [values]
+    );
+
     return (
-        <FormComponent form={form} layoutType="vertical" onSubmit={(values) => console.log(values)}>
+        <FormComponent form={form} layoutType="vertical" onSubmit={handleSubmit} initialValues={initialValue}>
             <TopBar
                 back
                 title="Thêm voucher khách hàng"
                 extra={[
-                    <Button key="1" onClick={() => navigate(-1)}>
+                    <Button
+                        key="1"
+                        onClick={() => {
+                            navigate(-1);
+                           
+                        }}
+                    >
                         Thoát
                     </Button>,
                     <Button key="2" type="primary" htmlType="submit">
@@ -51,7 +93,7 @@ const VoucherFormPage = () => {
                             />
                             <FormItemComponent
                                 rules={[{ required: true, message: 'Vui lòng nhập số lượng voucher!' }]}
-                                name="amount"
+                                name="quota"
                                 label="Số lượng voucher"
                                 inputField={
                                     <InputNumber
@@ -78,7 +120,7 @@ const VoucherFormPage = () => {
                                 }
                             />
                             <FormItemComponent
-                                name="amountUsed"
+                                name="remainQuota"
                                 label="Số lượng voucher đã dùng"
                                 inputField={
                                     <InputNumber
@@ -93,7 +135,7 @@ const VoucherFormPage = () => {
                                 }
                             />
                             <FormItemComponent
-                                name="amountRemaining"
+                                name="rewardType"
                                 label="Số lượng voucher còn lại"
                                 inputField={
                                     <InputNumber
@@ -108,7 +150,7 @@ const VoucherFormPage = () => {
                                 }
                             />
                             <FormItemComponent
-                                name="reduce"
+                                name="rewardPercentage"
                                 label="Mức giảm"
                                 inputField={
                                     <InputNumber
@@ -152,7 +194,7 @@ const VoucherFormPage = () => {
                                 }
                             />
                             <FormItemComponent
-                                name="provided"
+                                name=""
                                 label=""
                                 valuePropName="checked"
                                 inputField={
@@ -170,14 +212,14 @@ const VoucherFormPage = () => {
                         </Col>
                         <Col span={18}>
                             <FormItemComponent
-                                rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
-                                name="createAt"
+                                // rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
+                                name="startTime"
                                 label="Ngày bắt đầu"
                                 inputField={<DatePicker placeholder="Ngày" style={{ width: '100%' }} />}
                             />
                             <FormItemComponent
-                                rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
-                                name="endAt"
+                                // rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
+                                name="endTime"
                                 label="Ngày kết thúc"
                                 inputField={<DatePicker placeholder="Ngày" style={{ width: '100%' }} />}
                             />
