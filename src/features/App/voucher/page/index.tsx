@@ -22,16 +22,6 @@ const VoucherPage = () => {
     const [modalVisible, setModalVisible] = React.useState(false);
     const [values, setValues] = React.useState<DataTypeVoucher | null>(null);
 
-    const rowRender = (record: any, index: number, indent: number, expanded: any) => {
-        const row = document.querySelector(`[data-row-key="${record.id}"]`);
-        if (expanded) {
-            row?.classList.add('rowTableSelect');
-        } else {
-            row?.classList.remove('rowTableSelect');
-        }
-
-        return <Description record  ={record}/>;
-    };
     const {
         data: voucher,
         isLoading,
@@ -40,9 +30,22 @@ const VoucherPage = () => {
     } = useQuery<any>(['voucherService', page, search, filterQuery], () =>
         voucherService.get({ page, search, ...filterQuery })
     );
+
     const onRowSelection = React.useCallback((row: DataTypeVoucher[]) => {
         setRowSelected(row);
     }, []);
+
+    const rowRender = (record: any, index: number, indent: number, expanded: any) => {
+        const row = document.querySelector(`[data-row-key="${record.id}"]`);
+        if (expanded) {
+            row?.classList.add('rowTableSelect');
+        } else {
+            row?.classList.remove('rowTableSelect');
+        }
+
+        return <Description record={record} />;
+    };
+
     return (
         <>
             <TopBar
@@ -54,7 +57,7 @@ const VoucherPage = () => {
                 }
             />
             <Container>
-                <CardComponent title="" extra={[<Filter />]}>
+                <CardComponent title="" extra={[<Filter key="filter" />]}>
                     <TableComponent
                         loading={isRefetching}
                         page={page}

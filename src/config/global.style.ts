@@ -109,6 +109,9 @@ const GlobalStyle = createGlobalStyle`
     border-left: 1px solid rgba(24,144,255,.5) !important;
     border-bottom: 1px solid rgba(24,144,255,.5) !important;
   }
+  td.ant-descriptions-item {
+    padding: 0 16px 16px;
+  }
 `;
 
 export const DefaultSelectStyled = styled(Select)`

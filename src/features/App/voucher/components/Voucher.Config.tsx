@@ -17,10 +17,9 @@ export interface DataTypeVoucher {
     startTime: string;
     endTime: string;
     enableAllProduct: number;
-    enableNotification:number;
-    createdAt:string;
-    updatedAt:string;
-
+    enableNotification: number;
+    createdAt: string;
+    updatedAt: string;
 }
 
 export const columns = (page: number): ColumnsType<DataTypeVoucher> => [
@@ -63,6 +62,7 @@ export const columns = (page: number): ColumnsType<DataTypeVoucher> => [
     {
         title: 'Trạng thái',
         dataIndex: 'status',
+        align: 'center',
         render: (value: number) =>
             value ? (
                 <TagResult text="Đang hoạt động" color="processing" />

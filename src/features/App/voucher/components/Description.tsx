@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button, Card, Descriptions} from 'antd';
+import { Button, Card, Descriptions } from 'antd';
 import Buttons from './Buttons';
 import { DataTypeVoucher } from './Voucher.Config';
 import { momentToStringDate } from '@/utils';
 interface IProps {
     record: DataTypeVoucher;
 }
-const Description = ({record}:any) => {
+const Description = ({ record }: any) => {
     return (
         <Card className="gx-mb-0" actions={Buttons(record)}>
             <Descriptions title="Thông tin mã giảm giá" column={2}>
