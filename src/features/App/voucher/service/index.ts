@@ -2,12 +2,10 @@ import AxiosClient from '@/apis/AxiosClient';
 import { RECORD_SIZE } from '@/config/theme';
 import { handleObjectEmpty } from '@/utils';
 
-
 import { DataTypeVoucher } from '../components/Voucher.Config';
 
 export interface IQuery {
     page: number;
-    search: string;
 }
 
 const voucherService = {

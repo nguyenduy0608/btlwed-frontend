@@ -12,24 +12,20 @@ import Filter from '../components/Filter';
 import { columns, DataTypeVoucher } from '../components/Voucher.Config';
 import voucherService from '../service';
 import { useQuery } from 'react-query';
+import { IFilter } from '../type';
 const initialFilterQuery = {};
 const VoucherPage = () => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
-    const [search, setSearch] = React.useState('');
     const [rowSelected, setRowSelected] = React.useState<DataTypeVoucher[] | []>([]);
-    const [modalVisible, setModalVisible] = React.useState(false);
-    const [values, setValues] = React.useState<DataTypeVoucher | null>(null);
 
     const {
         data: voucher,
         isLoading,
         refetch,
         isRefetching,
-    } = useQuery<any>(['voucherService', page, search, filterQuery], () =>
-        voucherService.get({ page, search, ...filterQuery })
-    );
+    } = useQuery<any>(['voucherService', page, filterQuery], () => voucherService.get({ page, ...filterQuery }));
 
     const onRowSelection = React.useCallback((row: DataTypeVoucher[]) => {
         setRowSelected(row);
@@ -46,6 +42,10 @@ const VoucherPage = () => {
         return <Description record={record} />;
     };
 
+    const returnFilter = React.useCallback((filter: IFilter) => {
+        setFilterQuery({ ...filterQuery, ...filter });
+    }, []);
+
     return (
         <>
             <TopBar
@@ -57,17 +57,17 @@ const VoucherPage = () => {
                 }
             />
             <Container>
-                <CardComponent title="" extra={[<Filter key="filter" />]}>
+                <CardComponent title="" extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent
                         loading={isRefetching}
                         page={page}
                         rowSelect={false}
-                        onChangePage={(_page) => console.log(_page)}
+                        onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
                         onRowSelection={onRowSelection}
                         dataSource={voucher ? voucher.data : []}
                         columns={columns(page)}
-                        total={voucher && voucher?.paging?.totalItemCount - 1}
+                        total={voucher && voucher?.paging?.totalItemCount}
                     />
                 </CardComponent>
             </Container>

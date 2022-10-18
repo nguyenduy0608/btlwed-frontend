@@ -41,7 +41,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                     <ErrorBoundary>
                         <Content className="gx-layout-content">
                             <div className="gx-main-content-wrapper" style={{ overflow: 'hidden' }}>
-                                <PageComponent />
+                                <PageComponent {...props} />
                             </div>
                             {/* footer content */}
                             {/* <Footer>
@@ -56,7 +56,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
         ) : (
             <Layout className="gx-app-layout">
                 <ContainerAuthStyled justify="center" align="middle">
-                    <PageComponent />
+                    <PageComponent {...props} />
                 </ContainerAuthStyled>
             </Layout>
         );

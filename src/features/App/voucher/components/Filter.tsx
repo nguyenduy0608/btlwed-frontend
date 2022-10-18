@@ -1,37 +1,40 @@
+import RangerPicker from '@/components/RangerPicker';
 import SearchInput from '@/components/SearchInput';
 import { DefaultSelectStyled } from '@/config/global.style';
+import { IStatus } from '@/types';
 import { DatePicker, Select, Space } from 'antd';
 import moment from 'moment';
 import React from 'react';
-const { RangePicker } = DatePicker;
-const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
-const dateFormat = 'DD/MM/YYYY';
+import { IFilter } from '../type';
+
 const { Option } = Select;
-const Filter = () => {
+
+const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) => {
     const handleChange = (value: any) => {
-        console.log(`selected ${value}`);
+        returnFilter({ status: value });
     };
 
     return (
         <Space size="middle" wrap>
-            <SearchInput onChangeSearch={(search) => console.log(search)} placeholderSearch="Nhập mã, tên voucher" />
+            <SearchInput
+                onChangeSearch={(search) => returnFilter({ search })}
+                placeholderSearch="Nhập mã, tên voucher"
+            />
             <DefaultSelectStyled
                 placeholder="Trạng thái"
                 allowClear
                 style={{ width: '200px' }}
-                defaultValue="Đang hoạt động"
+                defaultValue={null}
                 onChange={handleChange}
             >
-                <Option value="đang hoạt động">Đang hoạt động</Option>
-                <Option value="ngừng hoạt động">Ngừng hoạt động</Option>
-                <Option value="disabled" disabled>
-                    Disabled
-                </Option>
-                <Option value="Yiminghe">yiminghe</Option>
+                <Option value={1}>Đang hoạt động</Option>
+                <Option value={0}>Ngừng hoạt động</Option>
             </DefaultSelectStyled>
-            <RangePicker
-                defaultValue={[moment('2015/01/01', dateFormat), moment('2015/01/01', dateFormat)]}
-                format={dateFormat}
+            <RangerPicker
+                name="dateFilter"
+                onChange={(name: string, value: string) => {
+                    returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });
+                }}
             />
         </Space>
     );

@@ -52,6 +52,7 @@ const TableComponent: React.FC<IProps> = ({
             <Col span={24} className="gx-m-0 gx-px-0">
                 <WrapperTable>
                     <TableStyled
+                        // loading={loading}
                         title={header ? () => header : undefined}
                         id={id}
                         className="gx-table-responsive"
@@ -86,13 +87,14 @@ const TableComponent: React.FC<IProps> = ({
                     />
                 </WrapperTable>
             </Col>
-            {isPagination && (
-                <Col span={24}>
-                    <Row justify="end" style={{ flexDirection: 'row' }}>
-                        <PaginationComponent page={page || 1} total={total || 0} onChange={onChangePage} />
-                    </Row>
-                </Col>
-            )}
+            {isPagination ||
+                (total && total > 12 && (
+                    <Col span={24}>
+                        <Row justify="end" style={{ flexDirection: 'row' }}>
+                            <PaginationComponent page={page || 1} total={total || 0} onChange={onChangePage} />
+                        </Row>
+                    </Col>
+                ))}
         </Row>
     );
 };
