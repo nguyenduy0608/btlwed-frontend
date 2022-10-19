@@ -20,6 +20,7 @@ export interface DataTypeVoucher {
     enableNotification: number;
     createdAt: string;
     updatedAt: string;
+    rewardCap:number;
 }
 
 export const columns = (page: number): ColumnsType<DataTypeVoucher> => [

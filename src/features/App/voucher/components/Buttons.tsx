@@ -11,7 +11,7 @@ interface IProps {
     // handleShowModal: (value: DataTypePotentialCustomers) => void;
     refetch: any;
 }
-const Buttons = ({ record, refetch }: any) => {
+const Buttons = (record :DataTypeVoucher) => {
     const [check, setCheck] = useState(true);
     const handleUpdateStatus = () => {
         setCheck(!check);
@@ -70,7 +70,7 @@ const Buttons = ({ record, refetch }: any) => {
                 const res = await voucherService.delete(record.id);
                 if (res.status === 1) {
                     Notification('success', 'Xóa thành công');
-                    refetch();
+                    // refetch();
                 }
             }}
         >

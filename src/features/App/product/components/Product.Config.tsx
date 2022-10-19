@@ -1,30 +1,45 @@
-export const dataSourceCategoryHaNoi = [
-    {
-        id: '1',
-        name: 'Đinh vít',
-        category: 5,
-        display: 1,
-        status: 'Hoạt động',
-        createAt: '19/07/2020',
-    },
-    {
-        id: '2',
-        name: 'Con lăn sơn',
-        category: 5,
-        display: 2,
-        status: 'Hoạt động',
-        createAt: '19/07/2020',
-    },
-    {
-        id: '3',
-        name: 'Cờ-lê',
-        category: 5,
-        display: 3,
-        status: 'Hoạt động',
-        createAt: '19/07/2020',
-    },
-];
+import TagResult from '@/components/TagResult';
+import { RECORD_SIZE } from '@/config/theme';
+import { momentToStringDate } from '@/utils';
+import { Tag } from 'antd';
+import Table, { ColumnsType } from 'antd/lib/table';
+import { DataTypeVoucher } from '../../voucher/components/Voucher.Config';
 
+export interface DataTypeProductCategory {
+    id: number;
+    code: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    descreption: string;
+    kiotvietId: number;
+    kiotvietProductCategoryId: number;
+    order: number;
+    parentId: any;
+    status: number;
+    total_child: number;
+    deletedAt: any;
+}
+export interface DataTypeProduct {
+    id: number;
+    code: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    descreption: string;
+    kiotvietId: number;
+    kiotvietProductCategoryId: number;
+    maxStock: number;
+    minStock: number;
+    price: number;
+    sellingPrice: number;
+    sold: number;
+    stock: number;
+    category: object;
+    status: number;
+    total_child: number;
+    deletedAt: any;
+}
 export const dataSourceOderList = [
     {
         id: '1',
@@ -86,18 +101,44 @@ export const dataSourceProduct = [
         total: 2000,
     },
 ];
-
-
-export const columsProduct = [
+export const columns = (page: number): ColumnsType<DataTypeProductCategory> => [
+    {
+        title: 'Tên danh mục',
+        dataIndex: 'name',
+    },
+    {
+        title: 'Trạng thái',
+        dataIndex: 'status',
+        align: 'center',
+        render: (value: number) =>
+            value ? (
+                <TagResult text="Đang hoạt động" color="processing" />
+            ) : (
+                <TagResult text="Dừng hoạt động" color="error" />
+            ),
+    },
+    {
+        title: 'Thứ tự hiển thị',
+        dataIndex: 'order',
+        align: 'center',
+    },
+    {
+        title: 'Ngày tạo',
+        dataIndex: 'createdAt',
+        align: 'center',
+        render: (value: any) => momentToStringDate(value),
+    },
+];
+export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
     {
         title: 'STT',
         dataIndex: 'id',
-        key: 'id',
+        align: 'center',
+        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
     },
     {
         title: 'Mã sản phẩm',
-        dataIndex: 'productId',
-        key: 'productId',
+        dataIndex: 'code',
     },
     {
         title: 'Tên sản phẩm',
@@ -107,25 +148,35 @@ export const columsProduct = [
     {
         title: 'Danh mục',
         dataIndex: 'category',
-        key: 'category',
+        align: 'center',
+        render: (value) => value?.name,
     },
     {
         title: 'Giá bán(VNĐ)',
         dataIndex: 'price',
         key: 'price',
+        align: 'center',    
     },
     {
         title: 'Trạng thái',
         dataIndex: 'status',
         key: 'status',
+        align: 'center',
+        render: (value: number) =>
+            value ? (
+                <TagResult text="Đang hoạt động" color="processing" />
+            ) : (
+                <TagResult text="Dừng hoạt động" color="error" />
+            ),
     },
 
     {
         title: 'Tổng tồn',
-        dataIndex: 'total',
-        key: 'total',
+        dataIndex: 'sellingPrice',
     },
 ];
+
+
 export const columsOderList = [
     {
         title: 'STT',
@@ -151,32 +202,5 @@ export const columsOderList = [
         title: 'Tổng cộng',
         dataIndex: 'total',
         key: 'total',
-    },
-];
-export const columsCategoryHanoi = [
-    {
-        title: 'Tên danh mục',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Danh mục con',
-        dataIndex: 'category',
-        key: 'category',
-    },
-    {
-        title: 'Trạng thái',
-        dataIndex: 'status',
-        key: 'status',
-    },
-    {
-        title: 'Thứ tự hiển thị',
-        dataIndex: 'display',
-        key: 'display',
-    },
-    {
-        title: 'Ngày tạo',
-        dataIndex: 'createAt',
-        key: 'createAt',
     },
 ];
