@@ -2,7 +2,7 @@ import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { momentToStringDate } from '@/utils';
 import { Tag } from 'antd';
-import Table, { ColumnsType } from 'antd/lib/table';
+import  { ColumnsType } from 'antd/lib/table';
 
 export interface DataTypeVoucher {
     id: number;
@@ -16,10 +16,10 @@ export interface DataTypeVoucher {
     rewardPercentage: number;
     startTime: string;
     endTime: string;
-    enableAllProduct: number;
     enableNotification: number;
     createdAt: string;
     updatedAt: string;
+    rewardCap:number;
 }
 
 export const columns = (page: number): ColumnsType<DataTypeVoucher> => [

@@ -16,7 +16,7 @@ const voucherService = {
     },
     create: (data: DataTypeVoucher) => {
         const url = `/admin/voucher`;
-        return AxiosClient.post(url, data);
+        return AxiosClient.post(url,{...data});
     },
     update: (id: number, data: DataTypeVoucher) => {
         const url = `/admin/voucher/${id}`;

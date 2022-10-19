@@ -39,7 +39,7 @@ const VoucherPage = () => {
             row?.classList.remove('rowTableSelect');
         }
 
-        return <Description record={record} />;
+        return <Description record={record} refetch = {refetch} />;
     };
 
     const returnFilter = React.useCallback((filter: IFilter) => {

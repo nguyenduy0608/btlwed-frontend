@@ -9,15 +9,15 @@ import Container from '@/layout/Container';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
 import { dataSourceApplyVoucher, columnsApplyVoucher, DataTypeVoucher } from '../components/Voucher.Config';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { rules } from '../rules';
 import voucherService from '../service';
-import { Notification } from '@/utils';
+import { Notification, wait } from '@/utils';
 import React from 'react';
 const initialValue = {
     code: '',
     name: '',
     status: '',
+    rewardCap: '',
     quota: '',
     remainQuota: '',
     rewardType: '',
@@ -25,7 +25,6 @@ const initialValue = {
     rewardPercentage: '',
     startTime: '',
     endTime: '',
-    enableAllProduct: '',
     enableNotification: '',
     createdAt: '',
     updatedAt: '',
@@ -37,15 +36,24 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
     const { Option } = Select;
 
     const [loadingModal, setLoadingModal] = React.useState(false);
-
-
-
+    const formReset = () => {
+        form.setFieldsValue(initialValue);
+    };
+    React.useEffect(() => {
+        if (values) {
+            setLoadingModal(true);
+            form.setFieldsValue(values || initialValue);
+            wait(500).then(() => setLoadingModal(false));
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [values]);
     const handleSubmit = React.useCallback(
         async (data: any) => {
             setLoadingModal(true);
             const res = await voucherService.create(data);
-            // if (res.status === 0) {
+            // if (res.status === 1) {
             //     Notification('success', 'Thêm voucher thành công');
+            //     formReset()
             // }
             setLoadingModal(false);
         },
@@ -62,7 +70,6 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                         key="1"
                         onClick={() => {
                             navigate(-1);
-                           
                         }}
                     >
                         Thoát
@@ -85,6 +92,7 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                 label="Mã voucher"
                                 inputField={<Input placeholder="Nhập mã voucher" />}
                             />
+
                             <FormItemComponent
                                 rules={[rules.required('Vui lòng nhập tên voucher!')]}
                                 name="name"
@@ -103,11 +111,9 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                         formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
                                         placeholder="Nhập số lượng voucher"
-                                        // addonAfter={lang(t).contract_frequency}
                                     />
                                 }
                             />
-
                             <FormItemComponent
                                 rules={[rules.required('Vui lòng nhập trạng thái voucher!')]}
                                 name="status"
@@ -120,38 +126,21 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                 }
                             />
                             <FormItemComponent
-                                name="remainQuota"
-                                label="Số lượng voucher đã dùng"
+                                rules={[rules.required('Vui lòng nhập loại giảm voucher!')]}
+                                name=""
+                                label="Loại giảm"
                                 inputField={
-                                    <InputNumber
-                                        min={0}
-                                        max={99}
-                                        style={{ width: '100%' }}
-                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
-                                        placeholder="Nhập Số lượng voucher đã dùng"
-                                        // addonAfter={lang(t).contract_frequency}
-                                    />
+                                    <Select placeholder="Nhập loại giảm voucher" defaultValue={null}>
+                                        <Option value={1}>Chiết khấu</Option>
+                                        <Option value={0}>Tặng quà</Option>
+                                    </Select>
                                 }
                             />
-                            <FormItemComponent
-                                name="rewardType"
-                                label="Số lượng voucher còn lại"
-                                inputField={
-                                    <InputNumber
-                                        min={0}
-                                        max={99}
-                                        style={{ width: '100%' }}
-                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
-                                        placeholder="Nhập Số lượng voucher còn lại"
-                                        // addonAfter={lang(t).contract_frequency}
-                                    />
-                                }
-                            />
+
                             <FormItemComponent
                                 name="rewardPercentage"
                                 label="Mức giảm"
+                                rules={[rules.required('Vui lòng nhập mức giảm ')]}
                                 inputField={
                                     <InputNumber
                                         min={0}
@@ -166,12 +155,13 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                 }
                             />
                             <FormItemComponent
-                                name="reduceMax"
+                                rules={[{ required: true, message: 'Vui lòng nhập giá trị giảm tối đa!' }]}
+                                name=""
                                 label="Giá trị giảm tối đa"
                                 inputField={
                                     <InputNumber
                                         min={0}
-                                        max={1000000}
+                                        max={99}
                                         style={{ width: '100%' }}
                                         formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
@@ -180,7 +170,50 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                 }
                             />
                             <FormItemComponent
-                                name="minimumValue"
+                                name="remainQuota"
+                                label="Số lượng voucher đã dùng"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập Số lượng voucher đã dùng"
+                                    />
+                                }
+                            />
+                            <FormItemComponent
+                                name=""
+                                label="Số lượng voucher còn lại"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập Số lượng voucher còn lại"
+                                    />
+                                }
+                            />
+                            <FormItemComponent
+                                name=""
+                                label="Số lượng sản phẩm cần phải mua"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập số lượng sản phẩm cần phải mua"
+                                        // addonAfter={lang(t).contract_frequency}
+                                    />
+                                }
+                            />
+                            <FormItemComponent
+                                name=""
                                 label="Giá trị đơn hàng tối thiểu"
                                 inputField={
                                     <InputNumber
@@ -193,6 +226,26 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                     />
                                 }
                             />
+                            <FormItemComponent
+                                name=""
+                                label="Tổng giá trị đơn hàng"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={10000000}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập tổng giá trị đơn hàng"
+                                    />
+                                }
+                            />
+                            <FormItemComponent
+                                name="note"
+                                label="Ghi chú"
+                                inputField={<Input.TextArea rows={3} placeholder="Nhập ghi chú" />}
+                            />
+
                             <FormItemComponent
                                 name=""
                                 label=""
@@ -212,13 +265,13 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                         </Col>
                         <Col span={18}>
                             <FormItemComponent
-                                // rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
+                                rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
                                 name="startTime"
                                 label="Ngày bắt đầu"
                                 inputField={<DatePicker placeholder="Ngày" style={{ width: '100%' }} />}
                             />
                             <FormItemComponent
-                                // rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
+                                rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
                                 name="endTime"
                                 label="Ngày kết thúc"
                                 inputField={<DatePicker placeholder="Ngày" style={{ width: '100%' }} />}

@@ -11,15 +11,30 @@ interface IProps {
     // handleShowModal: (value: DataTypePotentialCustomers) => void;
     refetch: any;
 }
-const Buttons = ({ record, refetch }: any) => {
-    const [check, setCheck] = useState(true);
-    const handleUpdateStatus = () => {
-        setCheck(!check);
-    };
+const Buttons = (props: IProps) => {
+    const { record, refetch } = props;
     const navigate = useNavigate();
-
+    const handleLock = async (id: number) => {
+        const res = await voucherService.lock(id);
+        if (res.status) {
+            refetch();
+        }
+    };
+    const handleUnlock = async (id: number) => {
+        const res = await voucherService.unlock(id);
+        if (res.status) {
+            refetch();
+        }
+    };
+    const handleDelete = async (id: number) => {
+        const res = await voucherService.delete(id);
+        if (res.status === 1) {
+            Notification('success', 'Xóa thành công');
+            refetch();
+        }
+    };
     return [
-        check ? (
+        record.status ? (
             <Button
                 type="text"
                 className="gx-mb-0"
@@ -27,7 +42,7 @@ const Buttons = ({ record, refetch }: any) => {
                     fontSize: '16px',
                     color: '#0090FF',
                 }}
-                onClick={handleUpdateStatus}
+                onClick={() => handleLock(record.id)}
             >
                 <CheckCircleOutlined />
                 Đang hoạt động
@@ -40,7 +55,7 @@ const Buttons = ({ record, refetch }: any) => {
                     fontSize: '16px',
                     color: '#CC0000',
                 }}
-                onClick={handleUpdateStatus}
+                onClick={() => handleUnlock(record.id)}
             >
                 <CloseCircleOutlined />
                 Ngừng hoạt động
@@ -66,13 +81,7 @@ const Buttons = ({ record, refetch }: any) => {
                 fontSize: '16px',
                 color: 'red',
             }}
-            onClick={async () => {
-                const res = await voucherService.delete(record.id);
-                if (res.status === 1) {
-                    Notification('success', 'Xóa thành công');
-                    refetch();
-                }
-            }}
+            onClick={() => handleDelete(record.id)}
         >
             <DeleteOutlined key="delete" />
             Xóa

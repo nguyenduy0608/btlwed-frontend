@@ -1,16 +1,43 @@
 import TableComponent from '@/components/TableComponent';
 import { Button, Card, Descriptions, Segmented } from 'antd';
 import React from 'react';
-import styled from 'styled-components';
-import { dataSourceProduct, dataSourceOderList, columsProduct, columsOderList } from '../components/Product.Config';
+import {
+    
+    DataTypeProduct,
+    columnsProduct,
+    
+} from '../components/Product.Config';
 import { Tabs, Form } from 'antd';
 import TopBar from '@/components/TopBar';
 import CardComponent from '@/components/CardComponent';
 import { PADDING } from '@/config/theme';
 import Container from '@/layout/Container';
-
+import { useNavigate } from 'react-router-dom';
+import { IFilter } from '../../voucher/type';
+import { useQuery } from 'react-query';
+import Filter from '../components/Filter';
+import { ProductService } from './service';
+const initialFilterQuery = {};
 const ProductPage = () => {
-    const [count, setCount] = React.useState(0);
+    const navigate = useNavigate();
+    const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
+    const [page, setPage] = React.useState(1);
+    const [rowSelected, setRowSelected] = React.useState<DataTypeProduct[] | []>([]);
+
+    const {
+        data: product,
+        isLoading,
+        refetch,
+        isRefetching,
+    } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));
+
+    const onRowSelection = React.useCallback((row: DataTypeProduct[]) => {
+        setRowSelected(row);
+    }, []);
+
+    const returnFilter = React.useCallback((filter: IFilter) => {
+        setFilterQuery({ ...filterQuery, ...filter });
+    }, []);
 
     return (
         <>
@@ -23,16 +50,21 @@ const ProductPage = () => {
                 }
             />
             <Container>
-                <CardComponent title={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />} extra="filter">
+                <CardComponent
+                    title={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />}
+                    extra={<div>filter</div>}
+                >
                     <TableComponent
-                        page={1}
-                        onChangePage={(_page) => console.log(_page)}
-                        columns={columsProduct}
-                        dataSource={dataSourceProduct}
-                        total={dataSourceProduct.length}
-                        onRowSelection={(row) => console.log('row', row)}
+                        loading={isRefetching}
+                        page={page}
+                        rowSelect={false}
+                        onChangePage={(_page) => setPage(_page)}
+                        onRowSelection={onRowSelection}
+                        dataSource={product ? product.data : []}
+                        columns={columnsProduct(page)}
+                        total={product && product?.paging?.totalItemCount}
                     />
-                    <div>
+                    {/* <div>
                         <Tabs defaultActiveKey="1">
                             <Tabs.TabPane tab="THÔNG TIN SẢN PHẨM" key="1">
                                 <Card className="gx-mb-0">
@@ -67,11 +99,10 @@ const ProductPage = () => {
                                 />
                             </Tabs.TabPane>
                         </Tabs>
-                    </div>
+                    </div> */}
                 </CardComponent>
             </Container>
         </>
     );
 };
-
 export default ProductPage;
