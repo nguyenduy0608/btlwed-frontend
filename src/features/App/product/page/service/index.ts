@@ -37,6 +37,6 @@ export const ProductService = {
 
     update: (id: number, data: DataTypeProduct) => {
         const url = `/admin/product/${id}`;
-        return AxiosClient.patch(url, data);
+        return AxiosClient.patch(url, {...data});
     },
 };

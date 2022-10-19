@@ -1,14 +1,11 @@
 import TableComponent from '@/components/TableComponent';
 import { Button, Card, Descriptions, Segmented } from 'antd';
 import React from 'react';
-import styled from 'styled-components';
 import {
-    dataSourceProduct,
-    dataSourceOderList,
-    columsOderList,
+    
     DataTypeProduct,
     columnsProduct,
-    DataTypeProductCategory,
+    
 } from '../components/Product.Config';
 import { Tabs, Form } from 'antd';
 import TopBar from '@/components/TopBar';
@@ -18,11 +15,10 @@ import Container from '@/layout/Container';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
 import { useQuery } from 'react-query';
-import Filter from '../components/filter';
+import Filter from '../components/Filter';
 import { ProductService } from './service';
 const initialFilterQuery = {};
 const ProductPage = () => {
-
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
@@ -34,7 +30,7 @@ const ProductPage = () => {
         refetch,
         isRefetching,
     } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));
-   
+
     const onRowSelection = React.useCallback((row: DataTypeProduct[]) => {
         setRowSelected(row);
     }, []);

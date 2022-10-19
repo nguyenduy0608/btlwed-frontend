@@ -13,7 +13,6 @@ import { rules } from '../rules';
 import voucherService from '../service';
 import { Notification, wait } from '@/utils';
 import React from 'react';
-import { DefaultSelectStyled } from '@/config/global.style';
 const initialValue = {
     code: '',
     name: '',
@@ -26,7 +25,6 @@ const initialValue = {
     rewardPercentage: '',
     startTime: '',
     endTime: '',
-    enableAllProduct: '',
     enableNotification: '',
     createdAt: '',
     updatedAt: '',
@@ -53,7 +51,7 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
         async (data: any) => {
             setLoadingModal(true);
             const res = await voucherService.create(data);
-            // if (res.status === 0) {
+            // if (res.status === 1) {
             //     Notification('success', 'Thêm voucher thành công');
             //     formReset()
             // }
@@ -94,17 +92,7 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                 label="Mã voucher"
                                 inputField={<Input placeholder="Nhập mã voucher" />}
                             />
-                            <FormItemComponent
-                                rules={[rules.required('Vui lòng nhập loại giảm voucher!')]}
-                                name=""
-                                label="Loại giảm"
-                                inputField={
-                                    <Select placeholder="Nhập loại giảm voucher" defaultValue={null}>
-                                        <Option value={1}>Chiết khấu</Option>
-                                        <Option value={0}>Tặng quà</Option>
-                                    </Select>
-                                }
-                            />
+
                             <FormItemComponent
                                 rules={[rules.required('Vui lòng nhập tên voucher!')]}
                                 name="name"
@@ -126,7 +114,89 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                     />
                                 }
                             />
+                            <FormItemComponent
+                                rules={[rules.required('Vui lòng nhập trạng thái voucher!')]}
+                                name="status"
+                                label="Trạng thái"
+                                inputField={
+                                    <Select placeholder="Nhập trạng thái voucher">
+                                        <Option value="Đang hoạt động">Đang hoạt động</Option>
+                                        <Option value="ngừng hoạt động">Ngừng hoạt động</Option>
+                                    </Select>
+                                }
+                            />
+                            <FormItemComponent
+                                rules={[rules.required('Vui lòng nhập loại giảm voucher!')]}
+                                name=""
+                                label="Loại giảm"
+                                inputField={
+                                    <Select placeholder="Nhập loại giảm voucher" defaultValue={null}>
+                                        <Option value={1}>Chiết khấu</Option>
+                                        <Option value={0}>Tặng quà</Option>
+                                    </Select>
+                                }
+                            />
 
+                            <FormItemComponent
+                                name="rewardPercentage"
+                                label="Mức giảm"
+                                rules={[rules.required('Vui lòng nhập mức giảm ')]}
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập mức giảm"
+                                        addonAfter={'%'}
+                                        // addonAfter={lang(t).contract_frequency}
+                                    />
+                                }
+                            />
+                            <FormItemComponent
+                                rules={[{ required: true, message: 'Vui lòng nhập giá trị giảm tối đa!' }]}
+                                name=""
+                                label="Giá trị giảm tối đa"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập giá trị giảm tối đa"
+                                    />
+                                }
+                            />
+                            <FormItemComponent
+                                name="remainQuota"
+                                label="Số lượng voucher đã dùng"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập Số lượng voucher đã dùng"
+                                    />
+                                }
+                            />
+                            <FormItemComponent
+                                name=""
+                                label="Số lượng voucher còn lại"
+                                inputField={
+                                    <InputNumber
+                                        min={0}
+                                        max={99}
+                                        style={{ width: '100%' }}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                        placeholder="Nhập Số lượng voucher còn lại"
+                                    />
+                                }
+                            />
                             <FormItemComponent
                                 name=""
                                 label="Số lượng sản phẩm cần phải mua"
@@ -142,24 +212,6 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                     />
                                 }
                             />
-
-                            <FormItemComponent
-                                name="rewardPercentage"
-                                label="Mức giảm"
-                                inputField={
-                                    <InputNumber
-                                        min={0}
-                                        max={99}
-                                        style={{ width: '100%' }}
-                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                        parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
-                                        placeholder="Nhập mức giảm"
-                                        addonAfter={'%'}
-                                        // addonAfter={lang(t).contract_frequency}
-                                    />
-                                }
-                            />
-
                             <FormItemComponent
                                 name=""
                                 label="Giá trị đơn hàng tối thiểu"
@@ -175,7 +227,7 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                 }
                             />
                             <FormItemComponent
-                                name="enableAllProduct"
+                                name=""
                                 label="Tổng giá trị đơn hàng"
                                 inputField={
                                     <InputNumber
@@ -213,13 +265,13 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                         </Col>
                         <Col span={18}>
                             <FormItemComponent
-                                // rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
+                                rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
                                 name="startTime"
                                 label="Ngày bắt đầu"
                                 inputField={<DatePicker placeholder="Ngày" style={{ width: '100%' }} />}
                             />
                             <FormItemComponent
-                                // rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
+                                rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
                                 name="endTime"
                                 label="Ngày kết thúc"
                                 inputField={<DatePicker placeholder="Ngày" style={{ width: '100%' }} />}
