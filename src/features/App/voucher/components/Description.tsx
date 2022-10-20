@@ -10,7 +10,7 @@ interface IProps {
 const Description: React.FC<IProps> = ({ record, refetch }) => {
     return (
         <Card className="gx-mb-0" actions={Buttons({ record, refetch })}>
-            <Descriptions title="Thông tin mã giảm giá" column={2}>
+            <Descriptions title="Thông tin mã giảm giá" column={2} >
                 <Descriptions.Item label="Mã voucher">{record.code || '--'}</Descriptions.Item>
                 <Descriptions.Item label="Ngày bắt đầu">
                     {momentToStringDate(record.startTime) || '--'}

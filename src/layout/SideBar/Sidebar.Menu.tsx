@@ -24,6 +24,11 @@ export const items: any = [
         ],
     },
     {
+        label: 'Khách hàng',
+        key: 'customer',
+        icon: <IconAntd icon="UserOutlined" />,
+    },
+    {
         label: 'Mã giảm giá',
         key: 'voucher',
         icon: <IconAntd icon="BarcodeOutlined" />,

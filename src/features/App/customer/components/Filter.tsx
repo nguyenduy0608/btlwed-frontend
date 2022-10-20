@@ -18,18 +18,21 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) =
         <Space size="middle" wrap>
             <SearchInput
                 onChangeSearch={(search) => returnFilter({ search })}
-                placeholderSearch="Nhập mã, tên danh mục"
+                placeholderSearch="Nhập tên, số điện thoại"
             />
             <DefaultSelectStyled
-                placeholder="Trạng thái"
+                placeholder="Tỉnh thành phố"
                 allowClear
                 style={{ width: '200px' }}
                 defaultValue={null}
                 onChange={handleChange}
+                
+                
             >
                 <Option value={1}>Đang hoạt động</Option>
                 <Option value={0}>Ngừng hoạt động</Option>
             </DefaultSelectStyled>
+            
             <RangerPicker
                 name="dateFilter"
                 onChange={(name: string, value: string) => {

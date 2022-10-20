@@ -1,12 +1,7 @@
 import TableComponent from '@/components/TableComponent';
 import { Button, Card, Descriptions, Segmented } from 'antd';
 import React from 'react';
-import {
-    
-    DataTypeProduct,
-    columnsProduct,
-    
-} from '../components/Product.Config';
+import { DataTypeProduct, columnsProduct } from '../components/Product.Config';
 import { Tabs, Form } from 'antd';
 import TopBar from '@/components/TopBar';
 import CardComponent from '@/components/CardComponent';

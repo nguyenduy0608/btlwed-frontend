@@ -13,7 +13,7 @@ interface IProps {
 const Description: React.FC<IProps> = ({ record, handleShowModal,refetch }) => {
     return (
         <Card className="gx-mb-0" actions={Buttons({ record, handleShowModal, refetch })}>
-            <Descriptions title="Thông tin danh mục" column={2}>
+            <Descriptions title="Thông tin danh mục" column={2} >
                 <Descriptions.Item label="Tên danh mục">{record.name || '--'}</Descriptions.Item>
                 <Descriptions.Item label="Thứ tự hiển thị">{record.order || '--'}</Descriptions.Item>
                 <Descriptions.Item label="Trạng thái">

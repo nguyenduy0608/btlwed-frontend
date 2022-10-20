@@ -6,6 +6,7 @@ import ProductCategoryPage from '@/features/App/product/page/Category';
 import ProductPage from '@/features/App/product/page';
 import VoucherPage from '@/features/App/voucher/page';
 import VoucherFormPage from '@/features/App/voucher/page/form';
+import CustomerPage from '@/features/App/customer/pages';
 
 // định nghĩa router
 export const routerPage = {
@@ -13,7 +14,6 @@ export const routerPage = {
 
     // private....
     home: '/',
-    customer: '/customer',
 
     // product
     productCategory: '/product/category',
@@ -22,6 +22,9 @@ export const routerPage = {
     // voucher
     voucher: '/voucher',
     voucherForm: '/voucher/form',
+
+    // customer
+    customer: '/customer',
 
     // auth....
     login: '/auth/login',
@@ -45,11 +48,19 @@ const PrivateRoutes = [
         path: routerPage.product,
         element: <ProductPage />,
     },
+    // customer
+
+    {
+        path: routerPage.customer,
+        element: <CustomerPage />,
+    },
+
     // voucher
     {
         path: routerPage.voucher,
         element: <VoucherPage />,
     },
+
     {
         path: routerPage.voucherForm,
         element: <VoucherFormPage />,
