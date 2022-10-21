@@ -22,6 +22,7 @@ interface IProps {
     onRowSelection?: (row: any[]) => void;
     typeRowSelect?: RowSelect;
     header?: any;
+    onRowClick?: any;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -38,6 +39,7 @@ const TableComponent: React.FC<IProps> = ({
     loading = false,
     typeRowSelect = 'checkbox',
     header,
+    onRowClick,
 }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
@@ -77,6 +79,11 @@ const TableComponent: React.FC<IProps> = ({
                                 }
                             },
                         }}
+                        onRow={(record) => {
+                            return {
+                                onClick: () => onRowClick && onRowClick(record), // click row
+                            };
+                        }}
                         bordered
                         pagination={false}
                         rowKey={(record: any) => record.id}
@@ -87,14 +94,13 @@ const TableComponent: React.FC<IProps> = ({
                     />
                 </WrapperTable>
             </Col>
-            {isPagination ||
-                (total && total > 12 && (
-                    <Col span={24}>
-                        <Row justify="end" style={{ flexDirection: 'row' }}>
-                            <PaginationComponent page={page || 1} total={total || 0} onChange={onChangePage} />
-                        </Row>
-                    </Col>
-                ))}
+            {isPagination && total && total > 12 && (
+                <Col span={24}>
+                    <Row justify="end" style={{ flexDirection: 'row' }}>
+                        <PaginationComponent page={page || 1} total={total || 0} onChange={onChangePage} />
+                    </Row>
+                </Col>
+            )}
         </Row>
     );
 };

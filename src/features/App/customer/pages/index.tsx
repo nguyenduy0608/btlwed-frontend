@@ -48,19 +48,21 @@ const CustomerPage = () => {
         <>
             <TopBar
                 title="Danh sách khách hàng"
-                extra={[
-                    <Button  className="gx-mb-0" type="default">
-                        Export
-                    </Button>,
-                    <Button className="gx-mb-0" type="primary">
-                        Xóa
-                    </Button>,
-                ]}
+                extra={[<Segmented key="province" options={['Hà Nội', 'Đà Lạt', 'Hồ Chí Minh']} />]}
             />
             <Container>
                 <CardComponent
-                    title={<Segmented options={['Hà Nội', 'Đà Lạt', 'Hồ Chí Minh']} />}
-                    extra={[<Filter returnFilter={returnFilter} key="filter" />]}
+                    title={<Filter returnFilter={returnFilter} key="filter" />}
+                    extra={
+                        <Space>
+                            <Button key="delete" danger className="gx-mb-0" type="dashed">
+                                Xóa
+                            </Button>
+                            <Button key="export" type="primary" className="gx-mb-0">
+                                Export
+                            </Button>
+                        </Space>
+                    }
                 >
                     <TableComponent
                         loading={isRefetching || loadingModal || isLoading}

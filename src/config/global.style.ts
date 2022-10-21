@@ -118,4 +118,10 @@ export const DefaultSelectStyled = styled(Select)`
     width: 200px;
 `;
 
+export const TitleCard = styled.h3`
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
+`;
+
 export default GlobalStyle;

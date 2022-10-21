@@ -1,12 +1,15 @@
 import CardComponent from '@/components/CardComponent';
+import IconAntd from '@/components/IconAntd';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
+import { routerPage } from '@/config/routes';
 import Container from '@/layout/Container';
-import { Button, Segmented } from 'antd';
+import { Button, Segmented, Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
+import Filter from '../components/Filter.Product';
 import { columnsProduct, DataTypeProduct } from '../components/Product.Config';
 import { ProductService } from '../service';
 const initialFilterQuery = {};
@@ -17,7 +20,7 @@ const ProductPage = () => {
     const [rowSelected, setRowSelected] = React.useState<DataTypeProduct[] | []>([]);
 
     const {
-        data: product,
+        data: products,
         isLoading,
         refetch,
         isRefetching,
@@ -28,70 +31,38 @@ const ProductPage = () => {
     }, []);
 
     const returnFilter = React.useCallback((filter: IFilter) => {
+        setPage(1);
         setFilterQuery({ ...filterQuery, ...filter });
     }, []);
 
     return (
         <>
-            <TopBar
-                title="Sản phẩm"
-                extra={
-                    <Button className="gx-mb-0" type="primary">
-                        Export
-                    </Button>
-                }
-            />
+            <TopBar title="Sản phẩm" extra={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />} />
             <Container>
                 <CardComponent
-                    title={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />}
-                    extra={<div>filter</div>}
+                    title={<Filter returnFilter={returnFilter} key="filterProduct" />}
+                    extra={
+                        <Button
+                            icon={<IconAntd icon="FileExcelOutlined" size="18px" />}
+                            key="btn_export"
+                            className="gx-mb-0"
+                            type="primary"
+                        >
+                            Export
+                        </Button>
+                    }
                 >
                     <TableComponent
                         loading={isRefetching}
                         page={page}
+                        onRowClick={(record: { id: number }) => navigate(`${routerPage.product}/${record.id}`)}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         onRowSelection={onRowSelection}
-                        dataSource={product ? product.data : []}
+                        dataSource={products ? products.data : []}
                         columns={columnsProduct(page)}
-                        total={product && product?.paging?.totalItemCount}
+                        total={products?.paging?.totalItemCount || 0}
                     />
-                    {/* <div>
-                        <Tabs defaultActiveKey="1">
-                            <Tabs.TabPane tab="THÔNG TIN SẢN PHẨM" key="1">
-                                <Card className="gx-mb-0">
-                                    <Descriptions title="THÔNG TIN CHUNG" column={2}>
-                                        <Descriptions.Item label="Mã sản phẩm">245512356</Descriptions.Item>
-                                        <Descriptions.Item label="Danh mục">Con lăn sơn</Descriptions.Item>
-                                        <Descriptions.Item label="Tên sản phẩm">Con lăn sơn</Descriptions.Item>
-                                        <Descriptions.Item label="Trạng thái sản phẩm">
-                                            Đang hoạt động
-                                        </Descriptions.Item>
-                                        <Descriptions.Item label="Giá bán(VNĐ)">100000</Descriptions.Item>
-                                        <Descriptions.Item label="Thuộc tính">Trắng</Descriptions.Item>
-                                        <Descriptions.Item label="Loại hàng">Hàng bán chạy</Descriptions.Item>
-                                        <Descriptions.Item label="Đơn vị tính(mặc đinh)">Cân</Descriptions.Item>
-                                        <Descriptions.Item label="Tổng tồn">100</Descriptions.Item>
-                                        <Descriptions.Item label="Đơn vị tính(quy đổi)">
-                                            Nửa cân(giá trị quy đổi 0.5)
-                                        </Descriptions.Item>
-                                        <Descriptions.Item label="Số khách hàng quan tâm">100</Descriptions.Item>
-                                        <Descriptions.Item label="Mô tả">Con lăn sơn</Descriptions.Item>
-                                    </Descriptions>
-                                </Card>
-                            </Tabs.TabPane>
-                            <Tabs.TabPane tab="DANH SÁCH ĐƠN HÀNG" key="2">
-                                <TableComponent
-                                    page={1}
-                                    onChangePage={(_page) => console.log(_page)}
-                                    columns={columsOderList}
-                                    dataSource={dataSourceOderList}
-                                    total={dataSourceOderList.length}
-                                    onRowSelection={(row) => console.log('row', row)}
-                                />
-                            </Tabs.TabPane>
-                        </Tabs>
-                    </div> */}
                 </CardComponent>
             </Container>
         </>

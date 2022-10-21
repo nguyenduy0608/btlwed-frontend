@@ -25,4 +25,4 @@ const CardStyled = styled(Card)`
     margin-bottom: 0;
 `;
 
-export default CardComponent;
+export default React.memo(CardComponent);

@@ -2,7 +2,6 @@ import { Modal, Spin } from 'antd';
 import React, { CSSProperties } from 'react';
 import styled from 'styled-components';
 
-
 interface IProps {
     title: string;
     modalVisible: boolean;
@@ -29,12 +28,10 @@ const ModalComponent: React.FC<IProps> = ({
             bodyStyle={bodyStyle}
             footer={null}
             title={title}
-            visible={modalVisible}
+            open={modalVisible}
             centered
         >
-            <Spin spinning={loading} >
-                {children}
-            </Spin>
+            <Spin spinning={loading}>{children}</Spin>
         </ModalStyled>
     );
 };

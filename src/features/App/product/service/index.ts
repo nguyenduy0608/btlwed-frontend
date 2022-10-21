@@ -14,7 +14,6 @@ export const CategoryService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
-
     update: (id: number, data: { order: number }) => {
         const url = `/admin/product_category/${id}/re_order`;
         return AxiosClient.patch(url, { ...data });
@@ -34,9 +33,12 @@ export const ProductService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
-
     update: (id: number, data: DataTypeProduct) => {
         const url = `/admin/product/${id}`;
         return AxiosClient.patch(url, { ...data });
+    },
+    detail: (id: string | undefined) => {
+        const url = `/admin/product/${id}`;
+        return AxiosClient.get(url);
     },
 };

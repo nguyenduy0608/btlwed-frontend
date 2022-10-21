@@ -5,6 +5,8 @@ import { CategoryService } from '../service';
 import { Notification } from '@/utils';
 import { DataTypeProductCategory } from './Product.Config';
 import { Navigate, useNavigate } from 'react-router-dom';
+import ActiveButton from '@/components/Button/Active.Button';
+import UnActiveButton from '@/components/Button/UnActive.Button';
 interface IProps {
     record: DataTypeProductCategory;
     handleShowModal?: any;
@@ -18,7 +20,6 @@ const Buttons = (props: IProps) => {
             refetch();
         }
     };
-    const navigate = useNavigate();
     const handleUnlock = async (id: number) => {
         const res = await CategoryService.unlock(id);
         if (res.status) {
@@ -39,33 +40,13 @@ const Buttons = (props: IProps) => {
             Chỉnh sửa
         </Button>,
         record.status ? (
-            <Button
-                type="text"
-                className="gx-mb-0"
-                style={{
-                    fontSize: '16px',
-                    color: '#0090FF',
-                }}
-                onClick={() => handleLock(record.id)}
-            >
-                <CheckCircleOutlined />
-                Đang hoạt động
-            </Button>
-        ) : (
-            <Button
-                type="text"
-                className="gx-mb-0"
-                style={{
-                    fontSize: '16px',
-                    color: '#CC0000',
-                }}
+            <UnActiveButton
                 onClick={() => {
-                    handleUnlock(record.id);
+                    handleLock(record.id);
                 }}
-            >
-                <CloseCircleOutlined />
-                Ngừng hoạt động
-            </Button>
+            />
+        ) : (
+            <ActiveButton onClick={() => handleUnlock(record.id)} />
         ),
     ];
 };

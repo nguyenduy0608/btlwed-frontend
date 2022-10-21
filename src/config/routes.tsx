@@ -7,6 +7,7 @@ import ProductPage from '@/features/App/product/page';
 import VoucherPage from '@/features/App/voucher/page';
 import VoucherFormPage from '@/features/App/voucher/page/form';
 import CustomerPage from '@/features/App/customer/pages';
+import ProductDetailPage from '@/features/App/product/page/Detail';
 
 // định nghĩa router
 export const routerPage = {
@@ -18,6 +19,7 @@ export const routerPage = {
     // product
     productCategory: '/product/category',
     product: '/product',
+    productDetail: '/product/:id',
 
     // voucher
     voucher: '/voucher',
@@ -47,6 +49,10 @@ const PrivateRoutes = [
     {
         path: routerPage.product,
         element: <ProductPage />,
+    },
+    {
+        path: routerPage.productDetail,
+        element: <ProductDetailPage />,
     },
     // customer
 

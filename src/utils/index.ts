@@ -110,3 +110,17 @@ export function formatBytes(bytes: number, decimals = 2) {
 export const wait = (timeout: number) => {
     return new Promise((resolve: any) => setTimeout(resolve, timeout));
 };
+
+// flat duplicate id in array
+export const removeDuplicateIdInArray = (arr: any) => {
+    const filteredArr = arr.reduce((acc: any, current: any) => {
+        const x = acc.find((item: any) => item.id === current.id);
+        if (!x) {
+            return acc.concat([current]);
+        } else {
+            return acc;
+        }
+    }, []);
+
+    return filteredArr;
+};

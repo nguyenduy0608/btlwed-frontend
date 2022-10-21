@@ -19,6 +19,7 @@ interface IProps {
 }
 
 const PaginationComponent: React.FC<IProps> = ({ page, total, pageSize = RECORD_SIZE, onChange }) => {
+    console.log('🚀 ~ file: index.tsx ~ line 22 ~ total', total);
     return (
         <PaginationStyled
             onChange={(value) => onChange(value)}

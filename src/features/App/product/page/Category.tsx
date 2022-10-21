@@ -15,7 +15,7 @@ import { rules } from '../../voucher/rules';
 import Description from '../components/Description';
 import { columns, DataTypeProductCategory } from '../components/Product.Config';
 import { CategoryService } from '../service';
-import Filter from '../components/Filter2';
+import Filter from '../components/Filter.Category';
 const initialFilterQuery = {};
 
 const initialValue = {
@@ -94,6 +94,7 @@ const ProductCategoryPage = () => {
     };
 
     const returnFilter = React.useCallback((filter: any) => {
+        setPage(1);
         setFilterQuery({ ...filterQuery, ...filter });
     }, []);
 
