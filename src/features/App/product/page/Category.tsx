@@ -99,17 +99,9 @@ const ProductCategoryPage = () => {
 
     return (
         <>
-            <TopBar
-                title="Danh mục sản phẩm"
-                extra={
-                    <Button className="gx-mb-0" type="primary">
-                        Tìm kiếm
-                    </Button>
-                }
-            />
+            <TopBar title="Danh mục sản phẩm" extra={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />} />
             <Container>
                 <CardComponent
-                    title={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />}
                     extra={[<Filter returnFilter={returnFilter} key="filter" />]}
                 >
                     <TableComponent
@@ -124,7 +116,7 @@ const ProductCategoryPage = () => {
                         total={category && category?.paging?.totalItemCount}
                     />
 
-                    <ModalComponent title="Sửa danh mục" modalVisible={modalVisible} loading = {loadingModal}>
+                    <ModalComponent title="Cập nhật danh mục" modalVisible={modalVisible} loading={loadingModal}>
                         <FormComponent
                             layoutType="vertical"
                             form={form}
@@ -136,7 +128,7 @@ const ProductCategoryPage = () => {
                                     rules={[rules.required('Vui lòng nhập tên danh mục!')]}
                                     name="name"
                                     label="Tên danh mục"
-                                    inputField={<Input  disabled={true} />}
+                                    inputField={<Input disabled={true} />}
                                 />
                                 <FormItemComponent
                                     rules={[{ required: true, message: 'Vui lòng nhập số thứ tự hiển thị!' }]}

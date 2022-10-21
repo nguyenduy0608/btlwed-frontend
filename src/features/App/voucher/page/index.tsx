@@ -50,11 +50,12 @@ const VoucherPage = () => {
         <>
             <TopBar
                 title="Quản lý voucher"
-                extra={
+                extra={[
+                    
                     <Button onClick={() => navigate(routerPage.voucherForm)} className="gx-mb-0" type="primary">
                         Thêm mới
-                    </Button>
-                }
+                    </Button>,
+                ]}
             />
             <Container>
                 <CardComponent title="" extra={[<Filter returnFilter={returnFilter} key="filter" />]}>

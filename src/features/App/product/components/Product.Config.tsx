@@ -1,6 +1,6 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
-import { momentToStringDate } from '@/utils';
+import { currencyFormat, momentToStringDate } from '@/utils';
 import { Tag } from 'antd';
 import Table, { ColumnsType } from 'antd/lib/table';
 import { DataTypeVoucher } from '../../voucher/components/Voucher.Config';
@@ -154,9 +154,10 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
     {
         title: 'Giá bán(VNĐ)',
         dataIndex: 'price',
-        key: 'price',
-        align: 'center',    
+        align: 'center',
+        render: (value: number) => currencyFormat(value),
     },
+
     {
         title: 'Trạng thái',
         dataIndex: 'status',
@@ -173,6 +174,8 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
     {
         title: 'Tổng tồn',
         dataIndex: 'sellingPrice',
+        align: 'center',
+        render: (value: number) => currencyFormat(value),
     },
 ];
 

@@ -31,11 +31,10 @@ export const momentToStringDate = (date: string | Date, type = 'date') => {
             return '';
     }
 };
-
-// create function format number 100000 to 100.000
 export const currencyFormat = (number: number) => {
     return number?.toString()?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 };
+// create function format number 100000 to 100.000
 
 // cover DD/MM/YYYY to YYYY-MM-DD
 export const getDateFormat = (date: any) => {
