@@ -6,23 +6,23 @@ import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
 import { Notification, wait } from '@/utils';
-import { Button, Form, InputNumber,  Row, Segmented, Space} from 'antd';
+import { Button, Form, InputNumber, Row, Segmented, Space } from 'antd';
 import Input from 'antd/lib/input/Input';
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { rules } from '../../voucher/rules';
-import { IFilter } from '../../voucher/type';
 import Description from '../components/Description';
-import Filter from '../components/Filter';
-import { DataTypeProductCategory, columns } from '../components/Product.Config';
-import { CategoryService } from './service';
+import { columns, DataTypeProductCategory } from '../components/Product.Config';
+import { CategoryService } from '../service';
+import Filter from '../components/Filter2';
 const initialFilterQuery = {};
+
 const initialValue = {
     name: '',
     order: '',
 };
+
 const ProductCategoryPage = () => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
@@ -93,7 +93,7 @@ const ProductCategoryPage = () => {
         return <Description record={record} handleShowModal={() => handleShowModal(record)} refetch={refetch} />;
     };
 
-    const returnFilter = React.useCallback((filter: IFilter) => {
+    const returnFilter = React.useCallback((filter: any) => {
         setFilterQuery({ ...filterQuery, ...filter });
     }, []);
 
@@ -101,9 +101,7 @@ const ProductCategoryPage = () => {
         <>
             <TopBar title="Danh mục sản phẩm" extra={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />} />
             <Container>
-                <CardComponent
-                    extra={[<Filter returnFilter={returnFilter} key="filter" />]}
-                >
+                <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent
                         loading={isRefetching || loadingModal || isLoading}
                         page={page}

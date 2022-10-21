@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react';
-import { EditOutlined,  CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { Button, } from 'antd';
-import { CategoryService } from '../page/service';
+import { EditOutlined, CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { CategoryService } from '../service';
 import { Notification } from '@/utils';
 import { DataTypeProductCategory } from './Product.Config';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -20,7 +20,6 @@ const Buttons = (props: IProps) => {
     };
     const navigate = useNavigate();
     const handleUnlock = async (id: number) => {
-
         const res = await CategoryService.unlock(id);
         if (res.status) {
             refetch();
@@ -39,7 +38,7 @@ const Buttons = (props: IProps) => {
             <EditOutlined key="edit" />
             Chỉnh sửa
         </Button>,
-        record.status ?(
+        record.status ? (
             <Button
                 type="text"
                 className="gx-mb-0"
@@ -60,7 +59,9 @@ const Buttons = (props: IProps) => {
                     fontSize: '16px',
                     color: '#CC0000',
                 }}
-                onClick={()=>{handleUnlock(record.id)}}
+                onClick={() => {
+                    handleUnlock(record.id);
+                }}
             >
                 <CloseCircleOutlined />
                 Ngừng hoạt động

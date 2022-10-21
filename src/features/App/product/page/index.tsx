@@ -1,17 +1,14 @@
-import TableComponent from '@/components/TableComponent';
-import { Button, Card, Descriptions, Segmented } from 'antd';
-import React from 'react';
-import { DataTypeProduct, columnsProduct } from '../components/Product.Config';
-import { Tabs, Form } from 'antd';
-import TopBar from '@/components/TopBar';
 import CardComponent from '@/components/CardComponent';
-import { PADDING } from '@/config/theme';
+import TableComponent from '@/components/TableComponent';
+import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
+import { Button, Segmented } from 'antd';
+import React from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
-import { useQuery } from 'react-query';
-import Filter from '../components/Filter';
-import { ProductService } from './service';
+import { columnsProduct, DataTypeProduct } from '../components/Product.Config';
+import { ProductService } from '../service';
 const initialFilterQuery = {};
 const ProductPage = () => {
     const navigate = useNavigate();
