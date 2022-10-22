@@ -7,9 +7,9 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
-import { DataTypeCustomer, columns, Purchasecolumns,DataTypePurchase } from '../components/Customer.Config';
+import { DataTypeCustomer, columns, Purchasecolumns, DataTypePurchase } from './Customer.Config';
 import { CustomerService, PurchaseService } from '../service';
-import Filter from '../components/Filter';
+import Filter from './Filter';
 const initialFilterQuery = {};
 
 const PuchaseHistoryPage = () => {
@@ -37,17 +37,17 @@ const PuchaseHistoryPage = () => {
     return (
         <>
             <TopBar title="Lịch sử mua hàng" />
-                <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
-                    <TableComponent
-                        page={page}
-                        rowSelect={false}
-                        onChangePage={(_page) => setPage(_page)}
-                        onRowSelection={onRowSelection}
-                        dataSource={puchaseHistory ? puchaseHistory.data : []}
-                        columns={Purchasecolumns(page)}
-                        total={puchaseHistory && puchaseHistory?.paging?.totalItemCount}
-                    />
-                </CardComponent>
+            <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
+                <TableComponent
+                    page={page}
+                    rowSelect={false}
+                    onChangePage={(_page) => setPage(_page)}
+                    onRowSelection={onRowSelection}
+                    dataSource={puchaseHistory ? puchaseHistory.data : []}
+                    columns={Purchasecolumns(page)}
+                    total={puchaseHistory && puchaseHistory?.paging?.totalItemCount}
+                />
+            </CardComponent>
         </>
     );
 };

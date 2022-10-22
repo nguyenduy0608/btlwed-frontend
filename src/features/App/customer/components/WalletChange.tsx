@@ -7,9 +7,9 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
-import { DataTypeWalletChange, WalletChangecolumns } from '../components/Customer.Config';
+import { DataTypeWalletChange, WalletChangecolumns } from './Customer.Config';
 import { WalletChangeService } from '../service';
-import Filter from '../components/Filter';
+import Filter from './Filter';
 const initialFilterQuery = {};
 
 const WalletChangePage = () => {

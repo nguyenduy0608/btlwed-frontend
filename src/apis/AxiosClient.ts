@@ -49,6 +49,11 @@ AxiosClient.interceptors.response.use(
                         break;
                 }
             }
+
+            if (response.data.message === 'jwt malformed') {
+                LocalStorage.removeToken();
+                window.location.reload();
+            }
             // cover response to camelCase
             return camelizeKeys(response.data);
         }

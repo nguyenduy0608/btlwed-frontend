@@ -4,7 +4,6 @@ import { currencyFormat, momentToStringDate } from '@/utils';
 import { Tag } from 'antd';
 import Table, { ColumnsType } from 'antd/lib/table';
 
-
 export interface DataTypeCustomer {
     id: number;
     code: string;
@@ -22,7 +21,7 @@ export interface DataTypeCustomer {
     totalProductBought: number;
     province: string;
     turnoverOfOrder: number;
-    turnover:number;
+    turnover: number;
 }
 export interface DataTypeDebt {
     id: number;
@@ -95,12 +94,10 @@ export const columns = (page: number): ColumnsType<DataTypeCustomer> => [
     {
         title: 'Số điện thoại',
         dataIndex: 'phoneNumber',
-        align: 'center',
     },
     {
         title: 'Tỉnh thành phố',
         dataIndex: 'address',
-        align: 'center',
     },
     {
         title: 'Doanh số trên đơn hàng',
@@ -199,8 +196,6 @@ export const Debtcolumns = (page: number): ColumnsType<DataTypeDebt> => [
         dataIndex: '',
         align: 'center',
     },
-
-    
 ];
 export const WalletChangecolumns = (page: number): ColumnsType<DataTypeWalletChange> => [
     {

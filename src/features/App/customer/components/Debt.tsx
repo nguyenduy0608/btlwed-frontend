@@ -7,9 +7,9 @@ import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
-import { DataTypeCustomer,  Debtcolumns } from '../components/Customer.Config';
+import { DataTypeCustomer, Debtcolumns } from './Customer.Config';
 import { CustomerService, DebitService } from '../service';
-import Filter from '../components/Filter';
+import Filter from './Filter';
 const initialFilterQuery = {};
 
 const DebtPage = () => {
@@ -37,18 +37,18 @@ const DebtPage = () => {
     return (
         <>
             <TopBar title="Lịch sử công nợ" />
-                <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
-                    <TableComponent
-                        loading={isRefetching || loadingModal || isLoading}
-                        page={page}
-                        rowSelect={false}
-                        onChangePage={(_page) => setPage(_page)}
-                        onRowSelection={onRowSelection}
-                        dataSource={Debt ? Debt.data : []}
-                        columns={Debtcolumns(page)}
-                        total={Debt && Debt?.paging?.totalItemCount}
-                    />
-                </CardComponent>
+            <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
+                <TableComponent
+                    loading={isRefetching || loadingModal || isLoading}
+                    page={page}
+                    rowSelect={false}
+                    onChangePage={(_page) => setPage(_page)}
+                    onRowSelection={onRowSelection}
+                    dataSource={Debt ? Debt.data : []}
+                    columns={Debtcolumns(page)}
+                    total={Debt && Debt?.paging?.totalItemCount}
+                />
+            </CardComponent>
         </>
     );
 };

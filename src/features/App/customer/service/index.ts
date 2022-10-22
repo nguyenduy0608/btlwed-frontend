@@ -13,6 +13,11 @@ export const CustomerService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
+    detail: (id: number) => {
+        const url = `/admin/user/${id}`;
+
+        return AxiosClient.get(url);
+    },
 
     update: (id: number, data: DataTypeCustomer) => {
         const url = `/admin/user/${id}`;
@@ -25,17 +30,14 @@ export const PurchaseService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
-   
 };
+
 export const DebitService = {
     get: (params: IQuery) => {
         const url = `/admin/debit`;
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
-
-
-
 };
 export const WalletChangeService = {
     get: (params: IQuery) => {

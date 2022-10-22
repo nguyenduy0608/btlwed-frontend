@@ -110,7 +110,7 @@ const ProductCategoryPage = () => {
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
                         onRowSelection={onRowSelection}
-                        dataSource={category ? category.data : []}
+                        dataSource={category?.data}
                         columns={columns(page)}
                         total={category && category?.paging?.totalItemCount}
                     />

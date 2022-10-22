@@ -2,14 +2,14 @@ import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
-import { Button, Form, InputNumber, Row, Segmented, Space } from 'antd';
-import React, { useState } from 'react';
+import { Button, Segmented, Space } from 'antd';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { IFilter } from '../../voucher/type';
+import { columns, DataTypeCustomer } from '../components/Customer.Config';
 import Description from '../components/Description';
-import { DataTypeCustomer, columns } from '../components/Customer.Config';
-import { CustomerService } from '../service';
 import Filter from '../components/Filter';
+import { CustomerService } from '../service';
 const initialFilterQuery = {};
 
 const CustomerPage = () => {
@@ -19,11 +19,11 @@ const CustomerPage = () => {
     const [rowSelected, setRowSelected] = React.useState<DataTypeCustomer[] | []>([]);
 
     const {
-        data: category,
+        data: customer,
         isLoading,
         refetch,
         isRefetching,
-    } = useQuery<any>(['CategoryService', page, filterQuery], () => CustomerService.get({ page, ...filterQuery }));
+    } = useQuery<any>(['customer', page, filterQuery], () => CustomerService.get({ page, ...filterQuery }));
 
     const onRowSelection = React.useCallback((row: DataTypeCustomer[]) => {
         setRowSelected(row);
@@ -71,9 +71,9 @@ const CustomerPage = () => {
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
                         onRowSelection={onRowSelection}
-                        dataSource={category ? category.data : []}
+                        dataSource={customer ? customer.data : []}
                         columns={columns(page)}
-                        total={category && category?.paging?.totalItemCount}
+                        total={customer && customer?.paging?.totalItemCount}
                     />
                 </CardComponent>
             </Container>
