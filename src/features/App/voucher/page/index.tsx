@@ -39,7 +39,7 @@ const VoucherPage = () => {
             row?.classList.remove('rowTableSelect');
         }
 
-        return <Description record={record} refetch = {refetch} />;
+        return <Description record={record} refetch={refetch} />;
     };
 
     const returnFilter = React.useCallback((filter: IFilter) => {
@@ -51,7 +51,6 @@ const VoucherPage = () => {
             <TopBar
                 title="Quản lý voucher"
                 extra={[
-                    
                     <Button onClick={() => navigate(routerPage.voucherForm)} className="gx-mb-0" type="primary">
                         Thêm mới
                     </Button>,

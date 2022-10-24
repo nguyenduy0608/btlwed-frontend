@@ -12,3 +12,8 @@ export const APPLICABLE_TYPE = {
     order: 1,
     product: 2,
 };
+
+export const CUSTOMER_TYPE = {
+    AGENT: 1,
+    DISTRIBUTORS: 2,
+};

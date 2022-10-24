@@ -14,9 +14,11 @@ import voucherService from '../service';
 import { Notification, wait } from '@/utils';
 import React from 'react';
 import { IStatusVoucher } from '@/types';
-import { APPLICABLE_TYPE, REWARD, STATUS } from '@/contants';
+import { APPLICABLE_TYPE, CUSTOMER_TYPE, REWARD, STATUS } from '@/contants';
 import UploadComponent from '@/components/Upload';
 import IconAntd from '@/components/IconAntd';
+import moment from 'moment';
+import { camelize, decamelize } from 'humps';
 const { Option } = Select;
 
 const initialValue = {
@@ -36,36 +38,39 @@ const initialValue = {
     updatedAt: '',
 };
 
-const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
+const VoucherFormPage = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
     const rewardType = Form.useWatch('rewardType', form);
-    console.log('🚀 ~ file: form.tsx ~ line 42 ~ VoucherFormPage ~ rewardType', rewardType);
+    const enableProducts = Form.useWatch('enableProducts', form);
+
+    const [file, setFile] = React.useState<any>(null);
+    console.log('🚀 ~ file: form.tsx ~ line 47 ~ VoucherFormPage ~ file', file);
 
     const [loadingModal, setLoadingModal] = React.useState(false);
     const formReset = () => {
         form.setFieldsValue(initialValue);
     };
-    React.useEffect(() => {
-        if (values) {
-            setLoadingModal(true);
-            form.setFieldsValue(values || initialValue);
-            wait(500).then(() => setLoadingModal(false));
+    const handleSubmit = React.useCallback(async (data: any) => {
+        const formData = new FormData();
+
+        const dataUpload = {
+            ...data,
+            startTime: data.startTime ? moment(data.startTime).format('YYYY-MM-DD') : '',
+            endTime: data.endTime ? moment(data.endTime).format('YYYY-MM-DD') : '',
+            enableNotification: data?.enableNotification ? 1 : 0,
+            enableProducts: data?.enableProducts ? 1 : 0,
+            products: [],
+        };
+        formData.append('file', file);
+        for (var key in dataUpload) {
+            formData.append(decamelize(key), dataUpload[key]);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [values]);
-    const handleSubmit = React.useCallback(
-        async (data: any) => {
-            setLoadingModal(true);
-            const res = await voucherService.create(data);
-            // if (res.status === 1) {
-            //     Notification('success', 'Thêm voucher thành công');
-            //     formReset()
-            // }
-            setLoadingModal(false);
-        },
-        [values]
-    );
+
+        voucherService.create(formData).then((res) => {
+            console.log('🚀 ~ file: form.tsx ~ line 61 ~ voucherService.create ~ res', res);
+        });
+    }, []);
 
     return (
         <FormComponent form={form} layoutType="vertical" onSubmit={handleSubmit}>
@@ -126,8 +131,8 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                 label="Loại khách hàng"
                                 inputField={
                                     <Select placeholder="Chọn loại khách hàng">
-                                        <Option value={REWARD.gift}>Khách hàng tiềm năng</Option>
-                                        <Option value={REWARD.discount}>Khách hàng</Option>
+                                        <Option value={CUSTOMER_TYPE.AGENT}>Đại lý</Option>
+                                        <Option value={CUSTOMER_TYPE.DISTRIBUTORS}>Nhà phân phối</Option>
                                     </Select>
                                 }
                             />
@@ -157,7 +162,7 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                             {rewardType === REWARD.gift && (
                                 <>
                                     <FormItemComponent
-                                        name=""
+                                        name="quantityBuy"
                                         label="Số lượng sản phẩm cần phải mua"
                                         inputField={
                                             <InputNumber
@@ -171,7 +176,7 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                         }
                                     />
                                     <FormItemComponent
-                                        name=""
+                                        name="minSpend"
                                         label="Tổng giá trị sản phẩm tối thiểu"
                                         inputField={
                                             <InputNumber
@@ -217,7 +222,7 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                         }
                                     />
                                     <FormItemComponent
-                                        name=""
+                                        name="minSpend"
                                         label="Tổng giá trị đơn hàng tối thiểu"
                                         inputField={
                                             <InputNumber
@@ -232,7 +237,7 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                     />
                                     <FormItemComponent
                                         rules={[{ required: true, message: 'Vui lòng nhập giá trị giảm tối đa!' }]}
-                                        name="max"
+                                        name="rewardCap"
                                         label="Giá trị giảm tối đa"
                                         inputField={
                                             <InputNumber
@@ -249,12 +254,11 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                             )}
 
                             <FormItemComponent
-                                name="note"
+                                name="description"
                                 label="Mô tả"
                                 inputField={<Input.TextArea rows={5} placeholder="Nhập ghi chú" />}
                             />
                             <FormItemComponent
-                                name=""
                                 label="Ảnh voucher"
                                 inputField={
                                     <UploadComponent
@@ -262,14 +266,14 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                         uploadType="list"
                                         listType="picture-card"
                                         maxLength={1}
-                                        onSuccessUpload={(url) => {
-                                            // setUrls([...urls, url]);
+                                        onSuccessUpload={(url: any) => {
+                                            setFile(url?.originFileObj);
                                         }}
                                     />
                                 }
                             />
                             <FormItemComponent
-                                name=""
+                                name="enableNotification"
                                 label=""
                                 valuePropName="checked"
                                 inputField={
@@ -290,16 +294,16 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                                 rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
                                 name="startTime"
                                 label="Ngày bắt đầu"
-                                inputField={<DatePicker placeholder="Ngày" style={{ width: '100%' }} />}
+                                inputField={<DatePicker placeholder="Chọn ngày bắt đầu" style={{ width: '100%' }} />}
                             />
                             <FormItemComponent
                                 rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
                                 name="endTime"
                                 label="Ngày kết thúc"
-                                inputField={<DatePicker placeholder="Ngày" style={{ width: '100%' }} />}
+                                inputField={<DatePicker placeholder="Chọn ngày kết thúc" style={{ width: '100%' }} />}
                             />
                             <FormItemComponent
-                                name="apply"
+                                name="enableProducts"
                                 label=""
                                 valuePropName="checked"
                                 inputField={
@@ -311,25 +315,27 @@ const VoucherFormPage = ({ values }: { values?: DataTypeVoucher | null }) => {
                         </Col>
                     </Row>
                     <Divider />
-                    <TableComponent
-                        header={
-                            <Row style={{ flexDirection: 'row' }} justify="space-between" align="middle">
-                                <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO TẤT CẢ SẢN PHẨM</h3>
-                                <Space>
-                                    <SearchInput
-                                        placeholderSearch="Nhập tên sản phẩm"
-                                        onChangeSearch={() => console.log('first')}
-                                    />
-                                </Space>
-                            </Row>
-                        }
-                        columns={columnsApplyVoucher}
-                        dataSource={dataSourceApplyVoucher}
-                        page={0}
-                        onChangePage={function (page: number): void {
-                            throw new Error('Function not implemented.');
-                        }}
-                    />
+                    <div style={enableProducts ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
+                        <TableComponent
+                            header={
+                                <Row style={{ flexDirection: 'row' }} justify="space-between" align="middle">
+                                    <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO TẤT CẢ SẢN PHẨM</h3>
+                                    <Space>
+                                        <SearchInput
+                                            placeholderSearch="Nhập tên sản phẩm"
+                                            onChangeSearch={() => console.log('first')}
+                                        />
+                                    </Space>
+                                </Row>
+                            }
+                            columns={columnsApplyVoucher}
+                            dataSource={dataSourceApplyVoucher}
+                            page={0}
+                            onChangePage={function (page: number): void {
+                                throw new Error('Function not implemented.');
+                            }}
+                        />
+                    </div>
                 </CardComponent>
             </Container>
         </FormComponent>

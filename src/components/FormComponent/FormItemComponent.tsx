@@ -11,7 +11,7 @@ const FormItemComponent = ({
 }: {
     grid?: boolean;
     label: string;
-    name: string;
+    name?: string;
     rules?: any;
     valuePropName?: any;
     inputField: ReactNode;

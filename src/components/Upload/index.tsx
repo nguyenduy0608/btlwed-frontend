@@ -10,7 +10,7 @@ import styled from 'styled-components';
 // import { notificationError } from 'utils/notification';
 type uploadType = 'single' | 'list';
 interface IProps {
-    onSuccessUpload: (file: UploadFile | string) => void;
+    onSuccessUpload: (file: UploadFile | string | null) => void;
 
     isUploadServerWhenUploading?: boolean;
     isShowFileList?: boolean;
@@ -100,7 +100,9 @@ const UploadComponent: React.FC<IProps> = ({
         if (file.status !== 'error') {
             setFiles(fileList);
         }
-        !isUploadServerWhenUploading && onSuccessUpload(file);
+        if (file.status !== 'removed') {
+            !isUploadServerWhenUploading && onSuccessUpload(file);
+        }
     };
 
     const handlePreview = async (file: UploadFile) => {
@@ -118,6 +120,7 @@ const UploadComponent: React.FC<IProps> = ({
                 fileList={isShowFileList ? files : []}
                 className="image-upload-grid"
                 onPreview={handlePreview}
+                onRemove={() => onSuccessUpload(null)}
             >
                 {files.length >= maxLength ? null : uploadType === 'single' && files.length >= 1 ? null : listType ===
                   'text' ? (

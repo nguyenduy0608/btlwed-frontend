@@ -10,7 +10,8 @@ import { APP_LOADING, SET_INFO } from './context/types';
 import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
-
+import { appService } from './service';
+import { SET_KIOTVIETS } from './context/types';
 function App() {
     const { state, dispatch } = useCallContext();
     const [role, setRole] = React.useState('');
@@ -30,6 +31,9 @@ function App() {
                     type: SET_INFO,
                     payload: { ...res.data[Object.keys(res.data)[0]], role: Object.keys(res.data)[0] },
                 });
+            });
+            appService.getKiotviet().then((res) => {
+                dispatch({ type: SET_KIOTVIETS, payload: res.data });
             });
         }
     }, []);

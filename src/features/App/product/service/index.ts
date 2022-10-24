@@ -6,6 +6,7 @@ import { DataTypeProduct, DataTypeProductCategory } from '../components/Product.
 
 export interface IQuery {
     page: number;
+    kiotvietId?: string | number;
 }
 
 export const CategoryService = {

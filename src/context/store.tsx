@@ -10,7 +10,7 @@ interface ContextType {
 export const Store = React.createContext<ContextType | undefined>(undefined);
 
 // initial state
-const initialState: InitialStateType = { appLoading: true, info: null };
+const initialState: InitialStateType = { appLoading: true, info: null, kiotviets: null };
 
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {
     const [state, dispatch] = useReducer(appReducer, { ...initialState });

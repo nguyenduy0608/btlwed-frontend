@@ -14,9 +14,13 @@ const voucherService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
-    create: (data: DataTypeVoucher) => {
+    create: (data: FormData) => {
         const url = `/admin/voucher`;
-        return AxiosClient.post(url,{...data});
+        return AxiosClient.post(url, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
     },
     update: (id: number, data: DataTypeVoucher) => {
         const url = `/admin/voucher/${id}`;

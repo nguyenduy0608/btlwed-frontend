@@ -5,6 +5,7 @@ import { handleObjectEmpty } from '@/utils';
 import { DataTypeCustomer } from '../components/Customer.Config';
 export interface IQuery {
     page: number;
+    kiotvietId?: string | number;
 }
 
 export const CustomerService = {
@@ -18,7 +19,6 @@ export const CustomerService = {
 
         return AxiosClient.get(url);
     },
-
     update: (id: number, data: DataTypeCustomer) => {
         const url = `/admin/user/${id}`;
         return AxiosClient.patch(url, { ...data });

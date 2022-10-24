@@ -4,7 +4,9 @@ import IconAntd from '@/components/IconAntd';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/routes';
+import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
+import { selectAll } from '@/service';
 import { Button, Segmented, Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -15,6 +17,8 @@ import { columnsProduct, DataTypeProduct } from '../components/Product.Config';
 import { ProductService } from '../service';
 const initialFilterQuery = {};
 const ProductPage = () => {
+    const { state } = useCallContext();
+
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
@@ -38,7 +42,18 @@ const ProductPage = () => {
 
     return (
         <>
-            <TopBar title="Sản phẩm" extra={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />} />
+            <TopBar
+                title="Sản phẩm"
+                extra={
+                    <Segmented
+                        onChange={(value) => setFilterQuery({ ...filterQuery, kiotvietId: value })}
+                        options={[
+                            selectAll,
+                            ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
+                        ]}
+                    />
+                }
+            />
             <Container>
                 <CardComponent
                     title={<Filter returnFilter={returnFilter} key="filterProduct" />}

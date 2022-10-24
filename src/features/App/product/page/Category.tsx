@@ -16,6 +16,8 @@ import Description from '../components/Description';
 import { columns, DataTypeProductCategory } from '../components/Product.Config';
 import { CategoryService } from '../service';
 import Filter from '../components/Filter.Category';
+import useCallContext from '@/hooks/useCallContext';
+import { selectAll } from '@/service';
 const initialFilterQuery = {};
 
 const initialValue = {
@@ -24,6 +26,8 @@ const initialValue = {
 };
 
 const ProductCategoryPage = () => {
+    const { state, dispatch } = useCallContext();
+
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [modalVisible, setModalVisible] = React.useState(false);
@@ -100,7 +104,18 @@ const ProductCategoryPage = () => {
 
     return (
         <>
-            <TopBar title="Danh mục sản phẩm" extra={<Segmented options={['Hà Nội', 'Vinh', 'Hồ Chí Minh']} />} />
+            <TopBar
+                title="Danh mục sản phẩm"
+                extra={
+                    <Segmented
+                        onChange={(value) => setFilterQuery({ ...filterQuery, kiotvietId: value })}
+                        options={[
+                            selectAll,
+                            ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
+                        ]}
+                    />
+                }
+            />
             <Container>
                 <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent

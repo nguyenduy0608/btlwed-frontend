@@ -2,7 +2,8 @@ import { Notification } from '@/utils';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import LocalStorage from './LocalStorage';
-const API_URL = 'http://dev.stakaapi.winds.vn/api/v1';
+// const API_URL = 'http://dev.stakaapi.winds.vn/api/v1';
+const API_URL = 'http://192.168.0.61:3055/api/v1';
 const AxiosClient = axios.create({
     baseURL: API_URL,
     headers: {
@@ -39,7 +40,14 @@ AxiosClient.interceptors.response.use(
             if (!response.data.status || response.data.code === 400 || response.data.code === 403) {
                 switch (response.data.code) {
                     case 400:
-                        // handle error
+                        if (response.data.details && response.data.details.length > 0) {
+                            const errMsg = response.data.details.map((error: { message: string }, index: number) => (
+                                <div key={index}>{error?.message}</div>
+                            ));
+                            Notification('error', errMsg);
+                        } else {
+                            Notification('error', response?.data?.message);
+                        }
                         break;
                     case 403:
                         // handle error

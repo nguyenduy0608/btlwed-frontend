@@ -3,7 +3,9 @@ import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
+import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
+import { selectAll } from '@/service';
 import { Button, Segmented, Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -15,6 +17,8 @@ import { CustomerService } from '../service';
 const initialFilterQuery = {};
 
 const CustomerPage = () => {
+    const { state } = useCallContext();
+
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
@@ -50,7 +54,15 @@ const CustomerPage = () => {
         <>
             <TopBar
                 title="Danh sách khách hàng"
-                extra={[<Segmented key="province" options={['Hà Nội', 'Đà Lạt', 'Hồ Chí Minh']} />]}
+                extra={[
+                    <Segmented
+                        onChange={(value) => setFilterQuery({ ...filterQuery, kiotvietId: value })}
+                        options={[
+                            selectAll,
+                            ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
+                        ]}
+                    />,
+                ]}
             />
             <Container>
                 <CardComponent
