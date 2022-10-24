@@ -1,5 +1,5 @@
 import IconAntd from '@/components/IconAntd';
-import { Card, Col, Descriptions, Row, Tabs } from 'antd';
+import { Card, Col, Descriptions, Row, Skeleton, Tabs } from 'antd';
 import moment from 'moment';
 import React from 'react';
 import DebtPage from './Debt';
@@ -9,6 +9,7 @@ import { DataTypeCustomer } from './Customer.Config';
 import { CustomerService } from '../service';
 import { useQuery } from 'react-query';
 import CountUp from 'react-countup';
+import { DescriptionStyled, TitleCardDes } from '@/config/global.style';
 
 const CardInfo = React.memo(({ index, title, value }: { index: number; title: string; value: any }) => {
     return (
@@ -38,23 +39,21 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
     );
     const generalInformation = data?.data;
 
-    if (!generalInformation) return null;
-
     return (
         <Row gutter={[24, 24]}>
             <Col span={14}>
-                <Descriptions labelStyle={{ width: '200px' }} title="Thông tin khách hàng" column={2} bordered>
+                <DescriptionStyled labelStyle={{ width: '180px' }} title="Thông tin khách hàng" column={2} bordered>
                     <Descriptions.Item labelStyle={{ textAlign: 'center' }} label={<IconAntd icon="UserOutlined" />}>
-                        {generalInformation.fullName || '--'}
+                        {generalInformation?.fullName || '--'}
                     </Descriptions.Item>
                     <Descriptions.Item labelStyle={{ textAlign: 'center' }} label={<IconAntd icon="PhoneOutlined" />}>
-                        {generalInformation.phoneNumber || '--'}
+                        {generalInformation?.phoneNumber || '--'}
                     </Descriptions.Item>
                     <Descriptions.Item
                         labelStyle={{ textAlign: 'center' }}
                         label={<IconAntd icon="ScheduleOutlined" />}
                     >
-                        {generalInformation.dateOfBirth
+                        {generalInformation?.dateOfBirth
                             ? moment(generalInformation.dateOfBirth).format('DD/MM/YYYY')
                             : '--'}
                     </Descriptions.Item>
@@ -62,48 +61,54 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
                         labelStyle={{ textAlign: 'center' }}
                         label={<IconAntd icon="EnvironmentOutlined" />}
                     >
-                        {generalInformation.address || '--'}
+                        {generalInformation?.address || '--'}
                     </Descriptions.Item>
 
                     <Descriptions.Item span={2} label="Điểm tích lũy">
-                        {generalInformation.wallet.point}
+                        {generalInformation?.wallet?.point}
                     </Descriptions.Item>
                     <Descriptions.Item span={2} label="Hạn mức công nợ">
-                        {generalInformation.maxDebit}
+                        {generalInformation?.maxDebit}
                     </Descriptions.Item>
                     <Descriptions.Item label="Thời gian công nợ">
-                        {generalInformation.maxDebitTime} ngày
+                        {generalInformation?.maxDebitTime} ngày
                     </Descriptions.Item>
-                </Descriptions>
+                </DescriptionStyled>
             </Col>
             <Col span={10}>
-                <h4>Tổng quan bán hàng</h4>
-                <Row>
-                    <Col span={12}>
-                        <CardInfo
-                            index={0}
-                            title="Doanh số"
-                            value={<CountUp separator=" " end={generalInformation.turnoverOfOrder} />}
-                        />
-                    </Col>
-                    <Col span={12}>
-                        <CardInfo
-                            index={1}
-                            title="Công nợ"
-                            value={<CountUp separator=" " end={generalInformation.debt} />}
-                        />
-                    </Col>
-                    <Col span={12}>
-                        <CardInfo
-                            index={2}
-                            title="Sản phẩm"
-                            value={<CountUp end={generalInformation.totalProductBought} />}
-                        />
-                    </Col>
-                    <Col span={12}>
-                        <CardInfo index={3} title="Đơn hàng" value={<CountUp end={generalInformation.totalOrder} />} />
-                    </Col>
-                </Row>
+                <TitleCardDes>Tổng quan bán hàng</TitleCardDes>
+                <div>
+                    <Row>
+                        <Col span={12}>
+                            <CardInfo
+                                index={0}
+                                title="Doanh số"
+                                value={<CountUp separator=" " end={generalInformation?.turnoverOfOrder || 0} />}
+                            />
+                        </Col>
+                        <Col span={12}>
+                            <CardInfo
+                                index={1}
+                                title="Công nợ"
+                                value={<CountUp separator=" " end={generalInformation?.debt || 0} />}
+                            />
+                        </Col>
+                        <Col span={12}>
+                            <CardInfo
+                                index={2}
+                                title="Sản phẩm"
+                                value={<CountUp end={generalInformation?.totalProductBought || 0} />}
+                            />
+                        </Col>
+                        <Col span={12}>
+                            <CardInfo
+                                index={3}
+                                title="Đơn hàng"
+                                value={<CountUp end={generalInformation?.totalOrder || 0} />}
+                            />
+                        </Col>
+                    </Row>
+                </div>
             </Col>
         </Row>
     );

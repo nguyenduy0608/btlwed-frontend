@@ -1,0 +1,155 @@
+import AxiosClient from '@/apis/AxiosClient';
+import { Notification } from '@/utils';
+import { Image, Upload } from 'antd';
+import type { UploadProps } from 'antd/es/upload';
+import { UploadFile, UploadListType } from 'antd/lib/upload/interface';
+import axios from 'axios';
+import React, { ReactNode } from 'react';
+// import axiosInstance, { ApiClient } from 'services/ApiService';
+import styled from 'styled-components';
+// import { notificationError } from 'utils/notification';
+type uploadType = 'single' | 'list';
+interface IProps {
+    onSuccessUpload: (file: UploadFile | string) => void;
+
+    isUploadServerWhenUploading?: boolean;
+    isShowFileList?: boolean;
+    children?: ReactNode;
+    uploadType?: uploadType;
+    accept?: string;
+    listType?: UploadListType;
+    maxLength?: number;
+}
+
+const UploadComponent: React.FC<IProps> = ({
+    accept = 'image/*',
+    listType = 'text',
+    uploadType = 'single',
+    isShowFileList = true,
+    isUploadServerWhenUploading = false,
+    onSuccessUpload,
+    children,
+    maxLength = 5,
+}) => {
+    const [files, setFiles] = React.useState<UploadFile[]>([]);
+    const [progress, setProgress] = React.useState(0);
+    const [visiblePreview, setVisiblePreview] = React.useState(false);
+
+    const uploadImage = async (options: any) => {
+        const { onSuccess, onError, file, onProgress } = options;
+
+        if (files.length > maxLength) {
+            file.status = 'error';
+            const error = new Error('Some error');
+            if (uploadType === 'single') {
+                setFiles([file]);
+            } else {
+                setFiles((f) => [...f.filter((_f) => _f.status !== 'uploading'), file]);
+            }
+            onError({ error });
+            return Notification('error', 'Vượt quá số lượng cho phép');
+        }
+        if (isUploadServerWhenUploading) {
+            const fmData = new FormData();
+            const config = {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                },
+                onUploadProgress: (event: any) => {
+                    const percent = Math.floor((event.loaded / event.total) * 100);
+                    setProgress(percent);
+                    if (percent === 100) {
+                        setTimeout(() => setProgress(0), 1000);
+                    }
+                    onProgress({ percent: (event.loaded / event.total) * 100 });
+                },
+            };
+            fmData.append('image', file);
+            try {
+                const res: any = await AxiosClient.post('/file/upload/image/single', fmData, config);
+
+                if (res.status) {
+                    onSuccessUpload(res?.data?.data?.key as string);
+                    onSuccess('ok');
+                } else {
+                    file.status = 'error';
+                    const error = new Error('Some error');
+                    if (uploadType === 'single') {
+                        setFiles([file]);
+                    } else {
+                        setFiles((f) => [...f.filter((_f) => _f.status !== 'uploading'), file]);
+                    }
+                    onError({ error });
+                }
+            } catch (err) {
+                file.status = 'error';
+                const error = new Error('Some error');
+                if (uploadType === 'single') {
+                    setFiles([file]);
+                } else {
+                    setFiles((f) => [...f.filter((_f) => _f.status !== 'uploading'), file]);
+                }
+                onError({ error });
+            }
+        } else {
+            setTimeout(() => onSuccess('ok'), 1000);
+        }
+    };
+
+    const handleOnChange: UploadProps['onChange'] = ({ file, fileList, event }) => {
+        if (file.status !== 'error') {
+            setFiles(fileList);
+        }
+        !isUploadServerWhenUploading && onSuccessUpload(file);
+    };
+
+    const handlePreview = async (file: UploadFile) => {
+        setVisiblePreview(true);
+        return;
+    };
+
+    return (
+        <>
+            <UploadStyled
+                accept={accept}
+                customRequest={uploadImage}
+                onChange={handleOnChange}
+                listType={listType}
+                fileList={isShowFileList ? files : []}
+                className="image-upload-grid"
+                onPreview={handlePreview}
+            >
+                {files.length >= maxLength ? null : uploadType === 'single' && files.length >= 1 ? null : listType ===
+                  'text' ? (
+                    children
+                ) : (
+                    <div>+</div>
+                )}
+            </UploadStyled>
+            {listType !== 'text' && (
+                <Image.PreviewGroup
+                    preview={{
+                        visible: visiblePreview,
+                        onVisibleChange: (visible) => setVisiblePreview(visible),
+                    }}
+                >
+                    {files.map((file: UploadFile, index: number) => {
+                        return <Image key={file.uid} src={file.thumbUrl} width={0} style={{ display: 'none' }} />;
+                    })}
+                </Image.PreviewGroup>
+            )}
+        </>
+    );
+};
+
+const UploadStyled = styled(Upload)`
+    & img {
+        object-fit: none !important;
+    }
+    & .ant-upload-list-picture-card .ant-upload-list-item,
+    .ant-upload-list-picture .ant-upload-list-item {
+        padding: 2px;
+    }
+`;
+
+export default UploadComponent;

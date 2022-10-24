@@ -1,3 +1,4 @@
+import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
 import IconAntd from '@/components/IconAntd';
 import TableComponent from '@/components/TableComponent';
@@ -41,16 +42,7 @@ const ProductPage = () => {
             <Container>
                 <CardComponent
                     title={<Filter returnFilter={returnFilter} key="filterProduct" />}
-                    extra={
-                        <Button
-                            icon={<IconAntd icon="FileExcelOutlined" size="18px" />}
-                            key="btn_export"
-                            className="gx-mb-0"
-                            type="primary"
-                        >
-                            Export
-                        </Button>
-                    }
+                    extra={<ExportButton onClick={() => console.log('first')} />}
                 >
                     <TableComponent
                         loading={isRefetching}

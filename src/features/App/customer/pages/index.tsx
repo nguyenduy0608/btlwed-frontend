@@ -1,3 +1,5 @@
+import DeleteButton from '@/components/Button/Detele.Button';
+import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
@@ -16,7 +18,7 @@ const CustomerPage = () => {
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeCustomer[] | []>([]);
+    const [rowSelected, setRowSelected] = React.useState<DataTypeCustomer[] | null>(null);
 
     const {
         data: customer,
@@ -55,19 +57,17 @@ const CustomerPage = () => {
                     title={<Filter returnFilter={returnFilter} key="filter" />}
                     extra={
                         <Space>
-                            <Button key="delete" danger className="gx-mb-0" type="dashed">
-                                Xóa
-                            </Button>
-                            <Button key="export" type="primary" className="gx-mb-0">
-                                Export
-                            </Button>
+                            {rowSelected && rowSelected.length > 0 && (
+                                <DeleteButton onConfirm={() => console.log('kkk')} />
+                            )}
+                            <ExportButton onClick={() => console.log('first')} />
                         </Space>
                     }
                 >
                     <TableComponent
                         loading={isRefetching || loadingModal || isLoading}
                         page={page}
-                        rowSelect={false}
+                        rowSelect
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
                         onRowSelection={onRowSelection}

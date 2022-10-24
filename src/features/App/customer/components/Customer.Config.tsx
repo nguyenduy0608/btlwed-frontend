@@ -1,9 +1,8 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate } from '@/utils';
-import { Tag } from 'antd';
 import Table, { ColumnsType } from 'antd/lib/table';
-
+import { Table as AntdTable } from 'antd';
 export interface DataTypeCustomer {
     id: number;
     code: string;
@@ -111,13 +110,13 @@ export const columns = (page: number): ColumnsType<DataTypeCustomer> => [
         align: 'center',
         render: (value: number) => currencyFormat(value),
     },
-
     {
         title: 'Ngày tạo',
         dataIndex: 'createdAt',
         align: 'center',
         render: (value: any) => momentToStringDate(value),
     },
+    AntdTable.SELECTION_COLUMN,
 ];
 export const Purchasecolumns = (page: number): ColumnsType<DataTypePurchase> => [
     {
