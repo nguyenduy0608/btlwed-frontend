@@ -1,0 +1,141 @@
+import React, { ReactNode, useState } from 'react';
+import {
+    EditOutlined,
+    DeleteOutlined,
+    CloseCircleOutlined,
+    CheckCircleOutlined,
+    ReloadOutlined,
+    ExclamationCircleOutlined,
+} from '@ant-design/icons';
+import { Button, Modal } from 'antd';
+import voucherService from '../service';
+import { Notification } from '@/utils';
+import { DataTypeAccount } from './Account.Config';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { routerPage } from '@/config/routes';
+interface IProps {
+    record: DataTypeAccount;
+    handleShowModal?: any;
+    refetch: any;
+}
+const Buttons = (props: IProps) => {
+    const { record, refetch, handleShowModal } = props;
+    const navigate = useNavigate();
+    const handleLock = async (id: number) => {
+        const res = await voucherService.lock(id);
+        if (res.status) {
+            refetch();
+        }
+    };
+    const handleReset = async (id: number) => {
+        const res = await voucherService.resetPassword(id);
+        if (res.status) {
+            refetch();
+        }
+    };
+    const { confirm } = Modal;
+
+    const destroyAll = () => {
+        Modal.destroyAll();
+    };
+
+    const showConfirm = () => {
+        setTimeout(() => {
+            confirm({
+                width: '520px',
+                title: 'Đặt lại mật khẩu',
+                icon: <ExclamationCircleOutlined />,
+                content: (
+                    <Button className="gx-mb-0" onClick={destroyAll}>
+                        Bạn chắc chắn đồng ý đặt lại mật khẩu khách hàng
+                    </Button>
+                ),
+                onOk() {
+                   handleReset(record.id) ;
+                },
+                onCancel() {},
+            });
+        });
+    };
+    const handleUnlock = async (id: number) => {
+        const res = await voucherService.unlock(id);
+        if (res.status) {
+            refetch();
+        }
+    };
+    const handleDelete = async (id: number) => {
+        const res = await voucherService.delete(id);
+        if (res.status === 1) {
+            Notification('success', 'Xóa thành công');
+            refetch();
+        }
+    };
+    return [
+        record.status ? (
+            <Button
+                type="text"
+                className="gx-mb-0"
+                style={{
+                    fontSize: '16px',
+                    color: '#0090FF',
+                }}
+                onClick={() => handleLock(record.id)}
+            >
+                <CheckCircleOutlined />
+                Đang hoạt động
+            </Button>
+        ) : (
+            <Button
+                type="text"
+                className="gx-mb-0"
+                style={{
+                    fontSize: '16px',
+                    color: '#CC0000',
+                }}
+                onClick={() => handleUnlock(record.id)}
+            >
+                <CloseCircleOutlined />
+                Ngừng hoạt động
+            </Button>
+        ),
+        <Button
+            type="text"
+            className="gx-mb-0"
+            style={{
+                fontSize: '16px',
+                color: '#000',
+            }}
+            onClick={showConfirm}
+        >
+            <ReloadOutlined key="reset" />
+            Reset mật khẩu
+        </Button>,
+        <Button
+            type="text"
+            className="gx-mb-0"
+            style={{
+                fontSize: '16px',
+                color: 'green',
+            }}
+            onClick={handleShowModal}
+        >
+            <EditOutlined key="edit" />
+            Chỉnh sửa
+        </Button>,
+
+        <Button
+            type="text"
+            className="gx-mb-0"
+            style={{
+                fontSize: '16px',
+                color: 'red',
+            }}
+            onClick={() => handleDelete(record.id)}
+        >
+            <DeleteOutlined key="delete" />
+            Xóa
+        </Button>,
+    ];
+};
+
+export default Buttons;

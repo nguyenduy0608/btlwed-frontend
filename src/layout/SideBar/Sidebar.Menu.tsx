@@ -26,12 +26,17 @@ export const items: any = [
     {
         label: 'Khách hàng',
         key: 'customer',
-        icon: <IconAntd icon="UserOutlined" />,
+        icon: <IconAntd icon="TeamOutlined" />,
     },
     {
         label: 'Mã giảm giá',
         key: 'voucher',
         icon: <IconAntd icon="BarcodeOutlined" />,
+    },
+    {
+        label: 'Tài khoản',
+        key: 'account',
+        icon: <IconAntd icon="UserOutlined" />,
     },
     // {
     //     label: 'Giao dịch',

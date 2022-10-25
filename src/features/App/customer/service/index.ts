@@ -31,7 +31,7 @@ export const PurchaseService = {
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
 };
-
+  
 export const DebitService = {
     get: (params: IQuery) => {
         const url = `/admin/debit`;

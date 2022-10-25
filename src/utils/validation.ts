@@ -11,3 +11,12 @@ export const errorValidPhone = () => ({
         return Promise.resolve();
     },
 });
+export const errorConfirmPassword = ({ getFieldValue }: any) => ({
+    validator(_: Rule, value: string) {
+        if (!value) return Promise.resolve();
+        if (!value || getFieldValue('password') === value) {
+            return Promise.resolve();
+        }
+        return Promise.reject(new Error('Mật khẩu nhập lại chưa trùng khớp!'));
+    },
+});

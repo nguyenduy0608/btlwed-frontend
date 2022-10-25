@@ -8,6 +8,8 @@ import VoucherPage from '@/features/App/voucher/page';
 import VoucherFormPage from '@/features/App/voucher/page/form';
 import CustomerPage from '@/features/App/customer/pages';
 import ProductDetailPage from '@/features/App/product/page/Detail';
+import AccountPage from '@/features/App/account/page';
+import AccountFormPage from '@/features/App/account/page/form';
 
 // định nghĩa router
 export const routerPage = {
@@ -27,6 +29,9 @@ export const routerPage = {
 
     // customer
     customer: '/customer',
+
+    // account
+    account: '/account',
 
     // auth....
     login: '/auth/login',
@@ -71,6 +76,11 @@ const PrivateRoutes = [
         path: routerPage.voucherForm,
         element: <VoucherFormPage />,
     },
+    {
+        path: routerPage.account,
+        element: <AccountPage />,
+    },
+    
     ...PublicRoutes,
 ];
 

@@ -15,7 +15,7 @@ function SelectComponent({
     apiUrl: string;
     params?: any;
     placeholder: string;
-    onChange: (id: any) => void;
+    onChange?: (id: any) => void;
     defaultSelect?: any;
     disabled?: boolean;
     fieldShow?: string;
@@ -54,7 +54,7 @@ function SelectComponent({
             value={value || undefined}
             fetchOptions={fetchUserList}
             onChange={(newValue) => {
-                onChange(newValue ? newValue : undefined);
+                onChange && onChange(newValue ? newValue : undefined);
             }}
             style={{ width: '100%', minWidth: '200px' }}
         />

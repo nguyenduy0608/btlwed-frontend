@@ -53,7 +53,8 @@ const UploadComponent: React.FC<IProps> = ({
             const fmData = new FormData();
             const config = {
                 headers: {
-                    'content-type': 'multipart/form-data',
+                    Accept: 'multipart/form-data',
+                    'Content-Type': 'multipart/form-data',
                 },
                 onUploadProgress: (event: any) => {
                     const percent = Math.floor((event.loaded / event.total) * 100);
@@ -64,12 +65,12 @@ const UploadComponent: React.FC<IProps> = ({
                     onProgress({ percent: (event.loaded / event.total) * 100 });
                 },
             };
-            fmData.append('image', file);
+            fmData.append('file', file);
             try {
-                const res: any = await AxiosClient.post('/file/upload/image/single', fmData, config);
+                const res: any = await AxiosClient.post('/files/upload/single/image', fmData, config);
 
                 if (res.status) {
-                    onSuccessUpload(res?.data?.data?.key as string);
+                    onSuccessUpload(res?.data as string);
                     onSuccess('ok');
                 } else {
                     file.status = 'error';

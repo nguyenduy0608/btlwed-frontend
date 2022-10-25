@@ -17,3 +17,7 @@ export const CUSTOMER_TYPE = {
     AGENT: 1,
     DISTRIBUTORS: 2,
 };
+export const ADMIN = {
+    main: 1,
+    stall: 2,
+};

@@ -36,7 +36,7 @@ const initialValue = {
     enableNotification: '',
     createdAt: '',
     updatedAt: '',
-};
+};                          
 
 const VoucherFormPage = () => {
     const navigate = useNavigate();

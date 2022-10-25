@@ -167,7 +167,7 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
             value ? (
                 <TagResult text="Đang hoạt động" color="processing" />
             ) : (
-                <TagResult text="Dừng hoạt động" color="error" />
+                <TagResult text="Ngừng hoạt động" color="error" />
             ),
     },
 
