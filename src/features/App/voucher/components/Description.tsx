@@ -20,7 +20,7 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
                     {momentToStringDate(record.endTime) || '--'}
                 </Descriptions.Item>
                 <Descriptions.Item label="Số lượng quy định">{record.remainQuota || '--'}</Descriptions.Item>
-                <Descriptions.Item label="Số lượng còn lại">{record.rewardType}</Descriptions.Item>
+                <Descriptions.Item label="Số lượng còn lại">{record.rewardType || '--'}</Descriptions.Item>
             </Descriptions>
         </Card>
     );
