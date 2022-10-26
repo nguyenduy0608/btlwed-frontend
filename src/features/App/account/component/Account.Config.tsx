@@ -1,7 +1,5 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
-import { momentToStringDate } from '@/utils';
-import { Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 
 export interface DataTypeAccount {

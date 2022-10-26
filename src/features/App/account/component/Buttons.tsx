@@ -11,8 +11,7 @@ import { Button, Modal } from 'antd';
 import voucherService from '../service';
 import { Notification } from '@/utils';
 import { DataTypeAccount } from './Account.Config';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { routerPage } from '@/config/routes';
+import {  useNavigate } from 'react-router-dom';
 interface IProps {
     record: DataTypeAccount;
     handleShowModal?: any;
@@ -21,41 +20,10 @@ interface IProps {
 const Buttons = (props: IProps) => {
     const { record, refetch, handleShowModal } = props;
     const navigate = useNavigate();
-    const handleLock = async (id: number) => {
-        const res = await voucherService.lock(id);
-        if (res.status) {
-            refetch();
-        }
-    };
-    const handleReset = async (id: number) => {
-        const res = await voucherService.resetPassword(id);
-        if (res.status) {
-            refetch();
-        }
-    };
-    const { confirm } = Modal;
 
+    const { confirm } = Modal;
     const destroyAll = () => {
         Modal.destroyAll();
-    };
-
-    const showConfirmReset = () => {
-        setTimeout(() => {
-            confirm({
-                width: '520px',
-                title: 'Đặt lại mật khẩu',
-                icon: <ExclamationCircleOutlined />,
-                content: (
-                    <Button className="gx-mb-0" onClick={destroyAll}>
-                        Bạn chắc chắn đồng ý đặt lại mật khẩu khách hàng?
-                    </Button>
-                ),
-                onOk() {
-                   handleReset(record.id) ;
-                },
-                onCancel() {},
-            });
-        });
     };
     const showConfirmDelete = () => {
         setTimeout(() => {
@@ -73,6 +41,36 @@ const Buttons = (props: IProps) => {
                 onCancel() {},
             });
         });
+    };
+    const showConfirmReset = () => {
+        setTimeout(() => {
+            confirm({
+                width: '520px',
+                title: 'Đặt lại mật khẩu',
+                icon: <ExclamationCircleOutlined />,
+                content: (
+                    <Button className="gx-mb-0" onClick={destroyAll}>
+                        Bạn chắc chắn đồng ý đặt lại mật khẩu khách hàng?
+                    </Button>
+                ),
+                onOk() {
+                    handleReset(record.id);
+                },
+                onCancel() {},
+            });
+        });
+    };
+    const handleReset = async (id: number) => {
+        const res = await voucherService.resetPassword(id);
+        if (res.status) {
+            refetch();
+        }
+    };
+    const handleLock = async (id: number) => {
+        const res = await voucherService.lock(id);
+        if (res.status) {
+            refetch();
+        }
     };
     const handleUnlock = async (id: number) => {
         const res = await voucherService.unlock(id);

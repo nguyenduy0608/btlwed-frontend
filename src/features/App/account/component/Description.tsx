@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Card, Descriptions } from 'antd';
+import {  Card, Descriptions } from 'antd';
 import Buttons from './Buttons';
 import { DataTypeAccount } from './Account.Config';
 import { momentToStringDate } from '@/utils';
-import TagResult from '@/components/TagResult';
 interface IProps {
     record: DataTypeAccount;
     refetch: any;

@@ -1,15 +1,7 @@
-import CardComponent from '@/components/CardComponent';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
-import SearchInput from '@/components/SearchInput';
-import TableComponent from '@/components/TableComponent';
-import TopBar from '@/components/TopBar';
-import { PADDING } from '@/config/theme';
-import Container from '@/layout/Container';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
-import { useNavigate } from 'react-router-dom';
 import { rules } from '../../voucher/rules';
-import voucherService from '../service';
 import { Notification, wait } from '@/utils';
 import React from 'react';
 import { ADMIN, STATUS } from '@/contants';
@@ -18,7 +10,6 @@ import ModalComponent from '@/components/ModalComponent';
 import { DataTypeAccount } from '../component/Account.Config';
 import UploadComponent from '@/components/Upload';
 import { errorConfirmPassword, errorValidPhone } from '@/utils/validation';
-import { type } from 'os';
 import useCallContext from '@/hooks/useCallContext';
 const { Option } = Select;
 
@@ -78,7 +69,6 @@ const AccountFormPage = ({
                 }
             } else {
                 const res = await accountService.create({ ...data, avatar: file, status: true, isRoot: true });
-
                 if (res.status === 1) {
                     Notification('success', 'Thêm tài khoản thành công');
                     handleCloseForm();

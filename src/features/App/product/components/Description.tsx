@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, Card, Descriptions, Tag } from 'antd';
+import {  Card, Descriptions, Tag } from 'antd';
 import Buttons from './Buttons';
 import { DataTypeProductCategory } from './Product.Config';
 import { momentToStringDate } from '@/utils';
-import dayjs from 'dayjs';
 import TagResult from '@/components/TagResult';
 interface IProps {
     record: DataTypeProductCategory;
