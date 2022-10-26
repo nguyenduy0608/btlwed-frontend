@@ -30,6 +30,8 @@ const initialValue = {
     createdAt: '',
     updatedAt: '',
     password: '',
+    accountId: '',
+    passwordConfirmation:'',
 };
 
 const AccountFormPage = ({
@@ -42,11 +44,11 @@ const AccountFormPage = ({
     handleCloseForm: any;
 }) => {
     const { state } = useCallContext();
-
     const [form] = Form.useForm();
-    const accountId = Form.useWatch('accountId', form);
     const [file, setFile] = React.useState<any>(null);
     const [loadingModal, setLoadingModal] = React.useState(false);
+
+    const accountId = Form.useWatch('accountId', form);
     const formReset = () => {
         form.setFieldsValue(initialValue);
     };

@@ -39,7 +39,7 @@ const Buttons = (props: IProps) => {
         Modal.destroyAll();
     };
 
-    const showConfirm = () => {
+    const showConfirmReset = () => {
         setTimeout(() => {
             confirm({
                 width: '520px',
@@ -47,11 +47,28 @@ const Buttons = (props: IProps) => {
                 icon: <ExclamationCircleOutlined />,
                 content: (
                     <Button className="gx-mb-0" onClick={destroyAll}>
-                        Bạn chắc chắn đồng ý đặt lại mật khẩu khách hàng
+                        Bạn chắc chắn đồng ý đặt lại mật khẩu khách hàng?
                     </Button>
                 ),
                 onOk() {
                    handleReset(record.id) ;
+                },
+                onCancel() {},
+            });
+        });
+    };
+    const showConfirmDelete = () => {
+        setTimeout(() => {
+            confirm({
+                title: 'Xóa tài khoản',
+                icon: <ExclamationCircleOutlined />,
+                content: (
+                    <Button className="gx-mb-0" onClick={destroyAll}>
+                        Bạn chắc chắn muốn xóa tài khoản này?
+                    </Button>
+                ),
+                onOk() {
+                    handleDelete(record.id);
                 },
                 onCancel() {},
             });
@@ -105,7 +122,7 @@ const Buttons = (props: IProps) => {
                 fontSize: '16px',
                 color: '#000',
             }}
-            onClick={showConfirm}
+            onClick={showConfirmReset}
         >
             <ReloadOutlined key="reset" />
             Reset mật khẩu
@@ -130,7 +147,7 @@ const Buttons = (props: IProps) => {
                 fontSize: '16px',
                 color: 'red',
             }}
-            onClick={() => handleDelete(record.id)}
+            onClick={showConfirmDelete}
         >
             <DeleteOutlined key="delete" />
             Xóa

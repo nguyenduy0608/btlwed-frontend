@@ -24,6 +24,8 @@ const initialValue = {
     createdAt: '',
     updatedAt: '',
     password: '',
+    accountId: '',
+    passwordConfirmation: '',
 };
 
 const AccountPage = () => {
