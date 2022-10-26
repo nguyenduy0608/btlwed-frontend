@@ -15,7 +15,7 @@ const Description: React.FC<IProps> = ({ record, refetch ,handleShowModal}) => {
                 <Descriptions.Item label="Tên người dùng">{record.fullName || '--'}</Descriptions.Item>
                 <Descriptions.Item label="Email">{record.email || '--'}</Descriptions.Item>
                 <Descriptions.Item label="Số điện thoại">{record.phoneNumber || '--'}</Descriptions.Item>
-                <Descriptions.Item label="Ngàytạo">{momentToStringDate(record.createdAt) || '--'}</Descriptions.Item>
+                <Descriptions.Item label="Ngày tạo">{momentToStringDate(record.createdAt) || '--'}</Descriptions.Item>
                 <Descriptions.Item label="Vai trò">
                     {record.kiotvietId ? (
                         <p> Admin</p>

@@ -1,7 +1,6 @@
 import AxiosClient from '@/apis/AxiosClient';
 import { RECORD_SIZE } from '@/config/theme';
 import { handleObjectEmpty } from '@/utils';
-
 import { DataTypeCustomer } from '../components/Customer.Config';
 export interface IQuery {
     page: number;

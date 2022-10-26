@@ -1,7 +1,6 @@
-import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate } from '@/utils';
-import Table, { ColumnsType } from 'antd/lib/table';
+import  { ColumnsType } from 'antd/lib/table';
 import { Table as AntdTable } from 'antd';
 export interface DataTypeCustomer {
     id: number;

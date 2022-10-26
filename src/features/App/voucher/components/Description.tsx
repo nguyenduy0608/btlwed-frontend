@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card, Descriptions } from 'antd';
+import { Card, Descriptions } from 'antd';
 import Buttons from './Buttons';
 import { DataTypeVoucher } from './Voucher.Config';
 import { momentToStringDate } from '@/utils';

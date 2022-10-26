@@ -4,21 +4,17 @@ import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import SearchInput from '@/components/SearchInput';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
-import { PADDING } from '@/config/theme';
 import Container from '@/layout/Container';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
 import { dataSourceApplyVoucher, columnsApplyVoucher, DataTypeVoucher } from '../components/Voucher.Config';
 import { useNavigate } from 'react-router-dom';
 import { rules } from '../rules';
 import voucherService from '../service';
-import { Notification, wait } from '@/utils';
 import React from 'react';
-import { IStatusVoucher } from '@/types';
 import { APPLICABLE_TYPE, CUSTOMER_TYPE, REWARD, STATUS } from '@/contants';
 import UploadComponent from '@/components/Upload';
-import IconAntd from '@/components/IconAntd';
 import moment from 'moment';
-import { camelize, decamelize } from 'humps';
+import {  decamelize } from 'humps';
 const { Option } = Select;
 
 const initialValue = {

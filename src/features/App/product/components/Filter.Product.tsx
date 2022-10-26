@@ -1,4 +1,3 @@
-import RangerPicker from '@/components/RangerPicker';
 import SearchInput from '@/components/SearchInput';
 import SelectComponent from '@/components/SelectComponent';
 import { DefaultSelectStyled } from '@/config/global.style';

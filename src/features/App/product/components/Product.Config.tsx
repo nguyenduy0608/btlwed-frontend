@@ -1,9 +1,7 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate } from '@/utils';
-import { Tag } from 'antd';
-import Table, { ColumnsType } from 'antd/lib/table';
-import { DataTypeVoucher } from '../../voucher/components/Voucher.Config';
+import { ColumnsType } from 'antd/lib/table';
 
 export interface DataTypeProductCategory {
     id: number;

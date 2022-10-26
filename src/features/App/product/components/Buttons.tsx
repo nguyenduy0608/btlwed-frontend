@@ -1,10 +1,8 @@
 import React, { ReactNode, useState } from 'react';
-import { EditOutlined, CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { CategoryService } from '../service';
-import { Notification } from '@/utils';
 import { DataTypeProductCategory } from './Product.Config';
-import { Navigate, useNavigate } from 'react-router-dom';
 import ActiveButton from '@/components/Button/Active.Button';
 import UnActiveButton from '@/components/Button/UnActive.Button';
 interface IProps {

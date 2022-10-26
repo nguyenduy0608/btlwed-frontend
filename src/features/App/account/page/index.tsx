@@ -40,7 +40,7 @@ const AccountPage = () => {
     const [values, setValues] = React.useState<DataTypeAccount | null>(null);
 
     const {
-        data: customer,
+        data: account,
         isLoading,
         refetch,
         isRefetching,
@@ -98,17 +98,16 @@ const AccountPage = () => {
                     <TableComponent
                         loading={isRefetching || loadingModal || isLoading}
                         page={page}
-                        rowSelect = {false}
+                        rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
                         onRowSelection={onRowSelection}
-                        dataSource={customer ? customer.data : []}
+                        dataSource={account ? account.data : []}
                         columns={columns(page)}
-                        total={customer && customer?.paging?.totalItemCount}
+                        total={account && account?.paging?.totalItemCount}
                     />
                 </CardComponent>
                 <AccountFormPage modalVisible={modalVisible} values={values} handleCloseForm={handleCloseForm} />
-                
             </Container>
         </>
     );
