@@ -11,6 +11,7 @@ import { DataTypeCustomer, columns, Purchasecolumns, DataTypePurchase } from './
 import { CustomerService, PurchaseService } from '../service';
 import Filter from './Filter';
 import RangerPicker from '@/components/RangerPicker';
+import { TitleCardDes } from '@/config/global.style';
 const initialFilterQuery = {};
 
 const PuchaseHistoryPage = () => {
@@ -37,8 +38,8 @@ const PuchaseHistoryPage = () => {
 
     return (
         <>
-            <TopBar title="Lịch sử mua hàng" />
             <CardComponent
+                title="Lịch sử mua hàng"
                 extra={[
                     <Space size="middle" wrap>
                         <RangerPicker

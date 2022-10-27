@@ -30,11 +30,11 @@ const ProductCategoryPage = () => {
 
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
+    const [rowSelected, setRowSelected] = React.useState<DataTypeProductCategory[] | []>([]);
+    const [page, setPage] = React.useState(1);
     const [modalVisible, setModalVisible] = React.useState(false);
     const [loadingModal, setLoadingModal] = React.useState(false);
     const [values, setValues] = React.useState<DataTypeProductCategory | null>(null);
-    const [page, setPage] = React.useState(1);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeProductCategory[] | []>([]);
     const [form] = Form.useForm();
 
     const {
@@ -44,9 +44,7 @@ const ProductCategoryPage = () => {
         isRefetching,
     } = useQuery<any>(['CategoryService', page, filterQuery], () => CategoryService.get({ page, ...filterQuery }));
 
-    const onRowSelection = React.useCallback((row: DataTypeProductCategory[]) => {
-        setRowSelected(row);
-    }, []);
+    
     const handleShowModal = (record: DataTypeProductCategory) => {
         setModalVisible(true);
         setValues(record);
@@ -86,6 +84,9 @@ const ProductCategoryPage = () => {
         },
         [values]
     );
+    const onRowSelection = React.useCallback((row: DataTypeProductCategory[]) => {
+        setRowSelected(row);
+    }, []);
     const rowRender = (record: DataTypeProductCategory, index: number, indent: number, expanded: any) => {
         const row = document.querySelector(`[data-row-key="${record.id}"]`);
         if (expanded) {

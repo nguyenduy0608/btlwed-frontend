@@ -10,6 +10,8 @@ import { IFilter } from '../../voucher/type';
 import { DataTypeWalletChange, WalletChangecolumns } from './Customer.Config';
 import { WalletChangeService } from '../service';
 import Filter from './Filter';
+import FilterWallet from './FilterWallet';
+import { title } from 'process';
 const initialFilterQuery = {};
 
 const WalletChangePage = () => {
@@ -38,8 +40,10 @@ const WalletChangePage = () => {
 
     return (
         <>
-            <TopBar title="Lịch sử tích điểm" />
-            <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
+            <CardComponent
+                title="Lịch sử tích điểm"
+                extra={[<FilterWallet returnFilter={returnFilter} key="filter" />]}
+            >
                 <TableComponent
                     loading={isRefetching || loadingModal || isLoading}
                     page={page}

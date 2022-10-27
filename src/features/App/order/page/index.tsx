@@ -18,6 +18,7 @@ import Filter from '../components/FIlter';
 import useCallContext from '@/hooks/useCallContext';
 import { selectAll } from '@/service';
 import ExportButton from '@/components/Button/Export.Button';
+import { routerPage } from '@/config/routes';
 const initialFilterQuery = {};
 
 const initialValue = {
@@ -81,6 +82,7 @@ const OrderPage = () => {
                         loading={isRefetching || loadingModal || isLoading}
                         page={page}
                         rowSelect={false}
+                        onRowClick={(record: { id: number }) => navigate(`${routerPage.order}/${record.id}`)}
                         onChangePage={(_page) => setPage(_page)}
                         onRowSelection={onRowSelection}
                         dataSource={order?.data}

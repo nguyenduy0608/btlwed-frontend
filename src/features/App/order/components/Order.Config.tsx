@@ -80,7 +80,7 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
         title: 'Trạng thái thanh toán',
         dataIndex: 'paymentStatus',
         align: 'center',
-        render: (value: number) => (value ? 'Đang chờ' : 'Đã thanh toán'),
+        render: (value) => (value ? 'Đang chờ' : 'Đã thanh toán'),
     },
     {
         title: 'Nguồn đơn',
@@ -94,5 +94,41 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
         align: 'center',
         render: (value: any) => momentToStringDate(value),
     },
+    AntdTable.SELECTION_COLUMN,
+];
+export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
+    {
+        title: 'STT',
+        dataIndex: 'id',
+        align: 'center',
+        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
+    },
+    {
+        title: 'Tên sản phẩm',
+        dataIndex: 'name',
+        align: 'center',
+    },
+    {
+        title: 'Số lượng',
+        dataIndex: 'code',
+        align: 'center',
+    },
+    {
+        title: 'Đơn vị tính',
+        dataIndex: 'code',
+        align: 'center',
+        render : (value) => currencyFormat(value)
+    },
+    {
+        title: 'Giá bán',
+        dataIndex: 'price',
+        align: 'center',
+    },
+    {
+        title: 'Thành tiền',
+        dataIndex: 'code',
+        align: 'center',
+    },
+
     AntdTable.SELECTION_COLUMN,
 ];

@@ -12,6 +12,7 @@ import AccountPage from '@/features/App/account/page';
 import AccountFormPage from '@/features/App/account/page/form';
 import NotificationPage from '@/features/App/notification/page';
 import OrderPage from '@/features/App/order/page';
+import OrderDetailPage from '@/features/App/order/page/Detail';
 
 // định nghĩa router
 export const routerPage = {
@@ -33,10 +34,11 @@ export const routerPage = {
     customer: '/customer',
 
     //order
-    order:'/order',
+    order: '/order',
+    orderDetail: '/order/:id',
 
     // notification
-    notification:'/notification',
+    notification: '/notification',
 
     // account
     account: '/account',
@@ -87,6 +89,10 @@ const PrivateRoutes = [
     {
         path: routerPage.order,
         element: <OrderPage />,
+    },
+    {
+        path: routerPage.orderDetail,
+        element: <OrderDetailPage />,
     },
     {
         path: routerPage.notification,
