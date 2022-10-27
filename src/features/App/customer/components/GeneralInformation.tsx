@@ -10,6 +10,8 @@ import { CustomerService } from '../service';
 import { useQuery } from 'react-query';
 import CountUp from 'react-countup';
 import { DescriptionStyled, TitleCardDes } from '@/config/global.style';
+import { Button } from 'antd/lib/radio';
+import TopBar from '@/components/TopBar';
 
 const CardInfo = React.memo(({ index, title, value }: { index: number; title: string; value: any }) => {
     return (
@@ -76,7 +78,13 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
                 </DescriptionStyled>
             </Col>
             <Col span={10}>
-                <TitleCardDes>Tổng quan bán hàng</TitleCardDes>
+                {/* <TopBar title={<TitleCardDes>Tổng quan bán hàng</TitleCardDes>}></TopBar> */}
+                <TitleCardDes>
+                    Tổng quan bán hàng
+                    {/* <Button onClick={() => {}} className="gx-mb-0" type="primary">
+                        Thêm mới
+                    </Button> */}
+                </TitleCardDes>
                 <div>
                     <Row>
                         <Col span={12}>

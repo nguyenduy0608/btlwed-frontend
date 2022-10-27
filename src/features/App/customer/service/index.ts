@@ -25,7 +25,7 @@ export const CustomerService = {
 };
 export const PurchaseService = {
     get: (params: IQuery) => {
-        const url = `/admin/oder`;
+        const url = `/admin/order`;
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },

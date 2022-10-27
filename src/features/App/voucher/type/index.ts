@@ -1,4 +1,4 @@
-import { IRole, IStatus } from '@/types';
+import { ICreatetable, IOrderStatus, IRole, IStatus } from '@/types';
 
 export interface IFilter {
     search?: string;
@@ -6,4 +6,7 @@ export interface IFilter {
     createFrom?: string | null;
     createTo?: string | null;
     accountId?: IRole | null;
+    orderStatus?: IOrderStatus | null;
+    createtableType?:ICreatetable|null;
+
 }

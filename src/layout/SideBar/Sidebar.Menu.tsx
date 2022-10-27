@@ -34,6 +34,17 @@ export const items: any = [
         icon: <IconAntd icon="BarcodeOutlined" />,
     },
     {
+        label: 'Đơn hàng',
+        key: 'order',
+        icon: <IconAntd icon="SwitcherOutlined" />,
+    },
+
+    {
+        label: 'Thông báo',
+        key: 'notification',
+        icon: <IconAntd icon="NotificationOutlined" />,
+    },
+    {
         label: 'Tài khoản',
         key: 'account',
         icon: <IconAntd icon="UserOutlined" />,

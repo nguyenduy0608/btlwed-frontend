@@ -10,6 +10,7 @@ import { IFilter } from '../../voucher/type';
 import { DataTypeCustomer, columns, Purchasecolumns, DataTypePurchase } from './Customer.Config';
 import { CustomerService, PurchaseService } from '../service';
 import Filter from './Filter';
+import RangerPicker from '@/components/RangerPicker';
 const initialFilterQuery = {};
 
 const PuchaseHistoryPage = () => {
@@ -37,7 +38,19 @@ const PuchaseHistoryPage = () => {
     return (
         <>
             <TopBar title="Lịch sử mua hàng" />
-            <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
+            <CardComponent
+                extra={[
+                    <Space size="middle" wrap>
+                        <RangerPicker
+                            name="dateFilter"
+                            onChange={(name: string, value: string) => {
+                                returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });
+                            }}
+                        />
+                        ,
+                    </Space>,
+                ]}
+            >
                 <TableComponent
                     page={page}
                     rowSelect={false}

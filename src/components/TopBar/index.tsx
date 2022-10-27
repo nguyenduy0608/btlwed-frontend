@@ -11,7 +11,7 @@ const TopBar = ({
     style,
     back,
 }: {
-    title: string;
+    title: any;
     extra?: ReactNode;
     style?: React.CSSProperties;
     back?: boolean;

@@ -1,6 +1,6 @@
 import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate } from '@/utils';
-import  { ColumnsType } from 'antd/lib/table';
+import { ColumnsType } from 'antd/lib/table';
 import { Table as AntdTable } from 'antd';
 export interface DataTypeCustomer {
     id: number;
@@ -126,35 +126,50 @@ export const Purchasecolumns = (page: number): ColumnsType<DataTypePurchase> => 
     },
     {
         title: 'Mã đơn',
-        dataIndex: '',
+        dataIndex: 'code',
+        align: 'center',
     },
     {
         title: 'Khách hàng',
-        dataIndex: '',
-        align: 'center',
+        dataIndex: 'user',
+        render: (value) => (
+            <>
+                {value.fullName} {'(' + value.phoneNumber + ')'}
+            </>
+        ),
     },
     {
         title: 'Số sản phẩm',
-        dataIndex: '',
+        dataIndex: 'quantityProduct',
         align: 'center',
     },
     {
-        title: 'Tổng tiền',
-        dataIndex: '',
+        title: 'Tổng tiền(VNĐ)',
+        dataIndex: 'total',
         align: 'center',
+        render: (value) => currencyFormat(value),
     },
     {
         title: 'Trạng thái đơn hàng',
-        dataIndex: '',
+        dataIndex: 'status',
         align: 'center',
+        render: (value: any) =>
+            (value =
+                value === 'wait_confirmation'
+                    ? 'Đang chờ'
+                    : value === 'inprogress'
+                    ? 'Đang xử lý'
+                    : value === 'completed'
+                    ? 'Hoàn thành'
+                    : 'Hủy'),
     },
-
     {
         title: 'Ngày tạo',
         dataIndex: 'createdAt',
         align: 'center',
         render: (value: any) => momentToStringDate(value),
     },
+    AntdTable.SELECTION_COLUMN,
 ];
 export const Debtcolumns = (page: number): ColumnsType<DataTypeDebt> => [
     {

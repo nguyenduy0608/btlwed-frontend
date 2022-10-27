@@ -11,7 +11,7 @@ import { Button, Modal } from 'antd';
 import voucherService from '../service';
 import { Notification } from '@/utils';
 import { DataTypeAccount } from './Account.Config';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 interface IProps {
     record: DataTypeAccount;
     handleShowModal?: any;
@@ -63,18 +63,21 @@ const Buttons = (props: IProps) => {
     const handleReset = async (id: number) => {
         const res = await voucherService.resetPassword(id);
         if (res.status) {
+            Notification('success', 'Reset mật khẩu thành công');
             refetch();
         }
     };
     const handleLock = async (id: number) => {
         const res = await voucherService.lock(id);
         if (res.status) {
+            Notification('success', 'Thay đổi trạng thái thành công');
             refetch();
         }
     };
     const handleUnlock = async (id: number) => {
         const res = await voucherService.unlock(id);
         if (res.status) {
+            Notification('success', 'Thay đổi trạng thái thành công');
             refetch();
         }
     };

@@ -55,7 +55,6 @@ const AccountPage = () => {
     const handleShowModal = (record: DataTypeAccount) => {
         setValues(record);
         setModalVisible(true);
-        console.log('check:', 1);
     };
     const handleCloseForm = React.useCallback((trick = '') => {
         setValues(null);
@@ -89,7 +88,13 @@ const AccountPage = () => {
                     title={<Filter returnFilter={returnFilter} key="filter" />}
                     extra={
                         <Space>
-                            <Button type="primary" className="gx-mb-0" onClick={() => setModalVisible(true)}>
+                            <Button
+                                type="primary"
+                                className="gx-mb-0"
+                                onClick={() => {
+                                    setModalVisible(true);
+                                }}
+                            >
                                 Thêm mới
                             </Button>
                         </Space>
