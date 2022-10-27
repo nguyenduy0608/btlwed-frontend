@@ -1,7 +1,7 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
-import { momentToStringDate } from '@/utils';
-import  { ColumnsType } from 'antd/lib/table';
+import { currencyFormat, momentToStringDate } from '@/utils';
+import { ColumnsType } from 'antd/lib/table';
 
 export interface DataTypeVoucher {
     id: number;
@@ -18,7 +18,7 @@ export interface DataTypeVoucher {
     enableNotification: number;
     createdAt: string;
     updatedAt: string;
-    rewardCap:number;
+    rewardCap: number;
 }
 
 export const columns = (page: number): ColumnsType<DataTypeVoucher> => [
@@ -90,56 +90,34 @@ export const dataSourceApplyVoucher = [
         price: '17000000',
     },
 ];
-export const columnsApplyVoucher = [
+export const columnsApplyVoucher: any = (page: number) => [
+    {
+        title: 'STT',
+        dataIndex: 'id',
+        key: 'id',
+        align: 'center',
+        width: '50px',
+        render: (_: any, a: any, index: number) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
+    },
     {
         title: 'Danh mục',
         dataIndex: 'category',
         key: 'category',
-        filters: [
-            {
-                text: 'Trà',
-                value: 'Trà',
-            },
-            {
-                text: 'Bánh quy',
-                value: 'Bánh quy',
-            },
-            {
-                text: 'Bánh kem',
-                value: 'Bánh kem',
-            },
-        ],
-        filterSearch: true,
-        onFilter: (value: any, record: any) => record.category.includes(value),
-        width: '35%',
+        render: (value: any) => value?.name,
+        width: '300px',
     },
     {
         title: 'Sản phẩm',
-        dataIndex: 'product',
-        key: 'product',
-        filters: [
-            {
-                text: 'Trà nhài',
-                value: 'Trà nhài',
-                type: 'radio',
-            },
-            {
-                text: 'Bánh quy',
-                value: 'Bánh quy',
-            },
-            {
-                text: 'Bánh kem',
-                value: 'Bánh kem',
-            },
-        ],
-        filterSearch: true,
-        onFilter: (value: any, record: any) => record.product.includes(value),
-        width: '35%',
+        dataIndex: 'name',
+        key: 'name',
+        width: 'auto',
     },
     {
         title: 'Giá bán',
         dataIndex: 'price',
         key: 'price',
+        width: '140px',
+        render: (value: number) => currencyFormat(value),
         sorter: (a: any, b: any) => a.price - b.price,
     },
 ];

@@ -54,6 +54,7 @@ const TableComponent: React.FC<IProps> = ({
             <Col span={24} className="gx-m-0 gx-px-0">
                 <WrapperTable>
                     <TableStyled
+                        showSorterTooltip={{ title: 'Sắp xếp' }}
                         // loading={loading}
                         title={header ? () => header : undefined}
                         id={id}

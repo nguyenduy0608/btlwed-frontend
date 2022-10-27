@@ -14,7 +14,8 @@ import React from 'react';
 import { APPLICABLE_TYPE, CUSTOMER_TYPE, REWARD, STATUS } from '@/contants';
 import UploadComponent from '@/components/Upload';
 import moment from 'moment';
-import {  decamelize } from 'humps';
+import { decamelize } from 'humps';
+import TableProduct from '../components/Table.Product';
 const { Option } = Select;
 
 const initialValue = {
@@ -32,7 +33,7 @@ const initialValue = {
     enableNotification: '',
     createdAt: '',
     updatedAt: '',
-};                          
+};
 
 const VoucherFormPage = () => {
     const navigate = useNavigate();
@@ -312,25 +313,7 @@ const VoucherFormPage = () => {
                     </Row>
                     <Divider />
                     <div style={enableProducts ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                        <TableComponent
-                            header={
-                                <Row style={{ flexDirection: 'row' }} justify="space-between" align="middle">
-                                    <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO TẤT CẢ SẢN PHẨM</h3>
-                                    <Space>
-                                        <SearchInput
-                                            placeholderSearch="Nhập tên sản phẩm"
-                                            onChangeSearch={() => console.log('first')}
-                                        />
-                                    </Space>
-                                </Row>
-                            }
-                            columns={columnsApplyVoucher}
-                            dataSource={dataSourceApplyVoucher}
-                            page={0}
-                            onChangePage={function (page: number): void {
-                                throw new Error('Function not implemented.');
-                            }}
-                        />
+                        <TableProduct />
                     </div>
                 </CardComponent>
             </Container>
