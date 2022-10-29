@@ -2,6 +2,7 @@ import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate } from '@/utils';
 import { ColumnsType } from 'antd/lib/table';
 import { Table as AntdTable } from 'antd';
+import { ORDERSTATUS } from '@/contants';
 export interface DataTypeOrder {
     id: number;
     code: string;
@@ -16,17 +17,18 @@ export interface DataTypeOrder {
     paymentStatus: string;
     quantityProduct: number;
     dateOfBirth: string;
-    shipping_address: '123, Phường Hội Hợp, Thành phố Vĩnh Yên, Vĩnh Phúc';
-    shipping_district_id: number;
+    shippingAddress: any;
+    shippingDistrictId: number;
     shippingName: string;
     shippingPhoneNumber: string;
     shippingProvinceId: number;
     shippingWardId: number;
     total: number;
+    items: any;
     totalDiscount: number;
     totalPayment: number;
     transportStatus: any;
-    transportStatus_code: number;
+    transportStatusCode: number;
     updatableId: any;
 }
 export const columns = (page: number): ColumnsType<DataTypeOrder> => [
@@ -67,11 +69,11 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
         align: 'center',
         render: (value: any) =>
             (value =
-                value === 'wait_confirmation'
-                    ? 'Đang chờ'
-                    : value === 'inprogress'
+                value === ORDERSTATUS.wait_confirmation
+                    ? 'Chờ xác nhận'
+                    : value === ORDERSTATUS.inprogress
                     ? 'Đang xử lý'
-                    : value === 'completed'
+                    : value === ORDERSTATUS.completed
                     ? 'Hoàn thành'
                     : 'Hủy'),
     },
@@ -105,17 +107,17 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
     },
     {
         title: 'Tên sản phẩm',
-        dataIndex: 'name',
-        align: 'center',
+        dataIndex: 'productName',
+        
     },
     {
         title: 'Số lượng',
-        dataIndex: 'code',
+        dataIndex: 'quantity',
         align: 'center',
     },
     {
         title: 'Đơn vị tính',
-        dataIndex: 'code',
+        dataIndex: 'productUnit',
         align: 'center',
         render : (value) => currencyFormat(value)
     },
@@ -126,8 +128,9 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
     },
     {
         title: 'Thành tiền',
-        dataIndex: 'code',
+        dataIndex: '',
         align: 'center',
+          
     },
 
     AntdTable.SELECTION_COLUMN,

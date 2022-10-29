@@ -16,6 +16,7 @@ import { IFilter } from '../../voucher/type';
 import { TitleCardDes } from '@/config/global.style';
 import { columnsProduct, DataTypeOrder } from '../components/Order.Config';
 import { ProductService } from '../../product/service';
+import { ORDERSTATUS, PAYMENTSTATUS } from '@/contants';
 
 const initialFilterQuery = {};
 const OrderDetailPage = () => {
@@ -30,12 +31,8 @@ const OrderDetailPage = () => {
         OrderService.detail(id)
     );
     const order = data?.data;
-    const {
-        data: Product,
-        //  isLoading,
-        //  refetch,
-        //  isRefetching,
-    } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));
+    console.log('🚀 ~ file: Detail.tsx ~ line 33 ~ OrderDetailPage ~ order', order);
+    const orderProduct = data?.data.items;
 
     const onRowSelection = React.useCallback((row: DataTypeOrder[]) => {
         setRowSelected(row);
@@ -45,7 +42,7 @@ const OrderDetailPage = () => {
     }, []);
     return (
         <>
-            <TopBar back title={order?.fullName} />
+            <TopBar back title={'Đơn hàng ' + order?.code} />
             <Container>
                 <Row>
                     <Col span={12}>
@@ -68,40 +65,86 @@ const OrderDetailPage = () => {
                     <Col span={12}>
                         <>
                             <CardComponent title="Lịch sử đơn hàng">
-                                <CardRow left="Thời gian đặt hàng" right={order?.code} />
+                                {order?.status && order?.status === ORDERSTATUS.wait_confirmation ? (
+                                    <CardRow left="Thời gian đặt hàng" right={order?.code} />
+                                ) : order?.status === ORDERSTATUS.completed ? (
+                                    <>
+                                        <CardRow left="Thời gian đặt hàng" right={order?.code} />
+                                        <CardRow left="Xác nhận đơn hàng" right={order?.code} />
+                                        <CardRow left="Hoàn thành" right={order?.code} />
+                                    </>
+                                ) : order?.status === ORDERSTATUS.inprogress ? (
+                                    <>
+                                        <CardRow left="Thời gian đặt hàng" right={order?.code} />
+                                        <CardRow left="Xác nhận đơn hàng" right={order?.code} />
+                                    </>
+                                ) : (
+                                    <>
+                                        <CardRow left="Thời gian đặt hàng" right={order?.code} />
+                                        <CardRow left="Xác nhận đơn hàng" right={order?.code} />
+                                        <CardRow left="Hủy đơn hàng" right={order?.code} />
+                                        <CardRow left="Lý do hủy đơn" right={order?.code} />
+                                    </>
+                                )}
                             </CardComponent>
                         </>
                     </Col>
                 </Row>
-                <CardComponent>
+
+                <CardComponent
+                    title={'Thông tin đơn hàng'}
+                    extra={
+                        order?.status && order?.status === ORDERSTATUS.wait_confirmation ? (
+                            <TagResult text="Chờ xác nhận" color="orange" />
+                        ) : order?.status === ORDERSTATUS.inprogress ? (
+                            <TagResult text="Đang xử lý" color="processing" />
+                        ) : order?.status === ORDERSTATUS.completed ? (
+                            <TagResult text="Hoàn thành" color="green" />
+                        ) : (
+                            <TagResult text="Hủy" color="error" />
+                        )
+                    }
+                >
                     <CardContainer
                         leftCol={
                             <>
                                 <CardRow left="Mã đơn hàng" right={order?.code} />
-                                <CardRow left="Sản phẩm" right={order?.code} />
-                                <CardRow left="Hình thức thanh toán" right={'Chưa có api'} />
+                                <CardRow left="Sản phẩm" right={order?.items.length+ ' sản phẩm'} />
+                                <CardRow left="Hình thức thanh toán" right={order?.paymentMethod} />
                                 <CardRow
                                     left="Trạng thái thanh toán"
                                     right={
-                                        order?.paymentStatus ? (
-                                            <TagResult text="Đang chờ" color="error" />
-                                        ) : (
-                                            <TagResult text="Đã thanh toán" color="processing" />
-                                        )
+                                        order?.paymentStatus && order?.paymentStatus === PAYMENTSTATUS.pending
+                                            ? 'Đang chờ'
+                                            : 'Đã thanh toán'
                                     }
+                                />
+
+                                <CardRow
+                                    left="Trạng thái vận chuyển"
+                                    right={order?.transportStatus ? 'Đang chờ' : 'Đang vận chuyển'}
                                 />
                             </>
                         }
                         rightCol={
                             <>
-                                <CardRow left="Khu vực mua hàng" right={order?.code} />
+                                <CardRow left="Khu vực mua hàng" right={order?.shippingAddress} />
                                 <CardRow left="Tổng tiền" right={currencyFormat(order?.total) + 'đ'} />
-                                <CardRow left="Tổng tiền giảm(Điểm tích lũy)" right={order?.total || 0} />
-                                <CardRow left="Tổng tiền giảm(Voucher)" right={order?.total} />
-                                <CardRow left="Tổng tiền thanh toán" right={order?.totalPayment} />
+                                <CardRow
+                                    left="Tổng tiền giảm(Điểm tích lũy)"
+                                    right={currencyFormat(order?.totalDiscount) + 'đ'}
+                                />
+                                <CardRow
+                                    left="Tổng tiền giảm(Voucher)"
+                                    right={currencyFormat(order?.totalDiscount) + 'đ'}
+                                />
+                                <CardRow
+                                    left="Tổng tiền thanh toán"
+                                    right={currencyFormat(order?.totalPayment) + 'đ'}
+                                />
                             </>
                         }
-                        title="Thông tin đơn hàng"
+                        title=""
                     />
                 </CardComponent>
                 <CardComponent title="Danh sách sản phẩm">
@@ -110,9 +153,9 @@ const OrderDetailPage = () => {
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         onRowSelection={onRowSelection}
-                        dataSource={Product ? Product.data : []}
+                        dataSource={order ? order?.items : []}
                         columns={columnsProduct(page)}
-                        total={Product && Product?.paging?.totalItemCount}
+                        total={order && order?.paging?.totalItemCount}
                     />
                 </CardComponent>
             </Container>

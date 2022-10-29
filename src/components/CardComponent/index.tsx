@@ -22,7 +22,8 @@ const CardComponent = ({
 const CardStyled = styled(Card)`
     border-radius: 0px;
     box-shadow: ${BOX_SHADOW};
-    margin-bottom: 0;
+    margin-bottom: 10px;
+    
 `;
 
 export default React.memo(CardComponent);
