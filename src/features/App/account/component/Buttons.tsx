@@ -12,6 +12,8 @@ import voucherService from '../service';
 import { Notification } from '@/utils';
 import { DataTypeAccount } from './Account.Config';
 import { useNavigate } from 'react-router-dom';
+import ActiveButton from '@/components/Button/Active.Button';
+import UnActiveButton from '@/components/Button/UnActive.Button';
 interface IProps {
     record: DataTypeAccount;
     handleShowModal?: any;
@@ -90,44 +92,15 @@ const Buttons = (props: IProps) => {
     };
     return [
         record.status ? (
-            <Button
-                type="text"
-                className="gx-mb-0"
-                style={{
-                    fontSize: '16px',
-                    color: '#0090FF',
+            <UnActiveButton
+                onClick={() => {
+                    handleLock(record.id);
                 }}
-                onClick={() => handleLock(record.id)}
-            >
-                <CheckCircleOutlined />
-                Đang hoạt động
-            </Button>
+            />
         ) : (
-            <Button
-                type="text"
-                className="gx-mb-0"
-                style={{
-                    fontSize: '16px',
-                    color: '#CC0000',
-                }}
-                onClick={() => handleUnlock(record.id)}
-            >
-                <CloseCircleOutlined />
-                Ngừng hoạt động
-            </Button>
+            <ActiveButton onClick={() => handleUnlock(record.id)} />
         ),
-        <Button
-            type="text"
-            className="gx-mb-0"
-            style={{
-                fontSize: '16px',
-                color: '#000',
-            }}
-            onClick={showConfirmReset}
-        >
-            <ReloadOutlined key="reset" />
-            Reset mật khẩu
-        </Button>,
+
         <Button
             type="text"
             className="gx-mb-0"
@@ -139,6 +112,18 @@ const Buttons = (props: IProps) => {
         >
             <EditOutlined key="edit" />
             Chỉnh sửa
+        </Button>,
+        <Button
+            type="text"
+            className="gx-mb-0"
+            style={{
+                fontSize: '16px',
+                color: '#000',
+            }}
+            onClick={showConfirmReset}
+        >
+            <ReloadOutlined key="reset" />
+            Reset mật khẩu
         </Button>,
 
         <Button

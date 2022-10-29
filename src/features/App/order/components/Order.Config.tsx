@@ -3,6 +3,7 @@ import { currencyFormat, momentToStringDate } from '@/utils';
 import { ColumnsType } from 'antd/lib/table';
 import { Table as AntdTable } from 'antd';
 import { ORDERSTATUS } from '@/contants';
+import TagResult from '@/components/TagResult';
 export interface DataTypeOrder {
     id: number;
     code: string;
@@ -68,27 +69,33 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
         dataIndex: 'status',
         align: 'center',
         render: (value: any) =>
-            (value =
-                value === ORDERSTATUS.wait_confirmation
-                    ? 'Chờ xác nhận'
-                    : value === ORDERSTATUS.inprogress
-                    ? 'Đang xử lý'
-                    : value === ORDERSTATUS.completed
-                    ? 'Hoàn thành'
-                    : 'Hủy'),
+            value === ORDERSTATUS.wait ? (
+                <TagResult text="Chờ xác nhận" color="orange" />
+            ) : value === ORDERSTATUS.inprogress ? (
+                <TagResult text="Đang xử lý" color="processing" />
+            ) : value === ORDERSTATUS.completed ? (
+                <TagResult text="Hoàn thành" color="success" />
+            ) : (
+                <TagResult text="Hủy" color="error" />
+            ),
     },
 
     {
         title: 'Trạng thái thanh toán',
         dataIndex: 'paymentStatus',
         align: 'center',
-        render: (value) => (value ? 'Đang chờ' : 'Đã thanh toán'),
+        render: (value) =>
+            value ? (
+                <TagResult text="Đang chờ" color="processing" />
+            ) : (
+                <TagResult text="Đã thanh toán" color="success" />
+            ),
     },
     {
         title: 'Nguồn đơn',
         dataIndex: 'createtableType',
         align: 'center',
-        render: (value: number) => (value ? 'KiotViet' : 'Staka'),
+        render: (value) => (value ? 'KiotViet' : 'Staka'),
     },
     {
         title: 'Ngày tạo',
@@ -108,7 +115,6 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
     {
         title: 'Tên sản phẩm',
         dataIndex: 'productName',
-        
     },
     {
         title: 'Số lượng',
@@ -119,7 +125,7 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
         title: 'Đơn vị tính',
         dataIndex: 'productUnit',
         align: 'center',
-        render : (value) => currencyFormat(value)
+        render: (value) => currencyFormat(value),
     },
     {
         title: 'Giá bán',
@@ -130,7 +136,6 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
         title: 'Thành tiền',
         dataIndex: '',
         align: 'center',
-          
     },
 
     AntdTable.SELECTION_COLUMN,

@@ -27,9 +27,9 @@ export const ORDERSTATUS ={
     completed:'completed',
     inprogress:'inprogress',
     cancelled :'cancelled',
-    wait_confirmation: 'wait_confirmation',
+    wait: 'wait_confirmation',
 }
 export const PAYMENTSTATUS ={ 
     pending: 'pending',
-    
+
 }

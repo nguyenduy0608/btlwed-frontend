@@ -65,7 +65,7 @@ const OrderDetailPage = () => {
                     <Col span={12}>
                         <>
                             <CardComponent title="Lịch sử đơn hàng">
-                                {order?.status && order?.status === ORDERSTATUS.wait_confirmation ? (
+                                {order?.status && order?.status === ORDERSTATUS.wait ? (
                                     <CardRow left="Thời gian đặt hàng" right={order?.code} />
                                 ) : order?.status === ORDERSTATUS.completed ? (
                                     <>
@@ -94,7 +94,7 @@ const OrderDetailPage = () => {
                 <CardComponent
                     title={'Thông tin đơn hàng'}
                     extra={
-                        order?.status && order?.status === ORDERSTATUS.wait_confirmation ? (
+                        order?.status && order?.status === ORDERSTATUS.wait ? (
                             <TagResult text="Chờ xác nhận" color="orange" />
                         ) : order?.status === ORDERSTATUS.inprogress ? (
                             <TagResult text="Đang xử lý" color="processing" />
@@ -109,7 +109,7 @@ const OrderDetailPage = () => {
                         leftCol={
                             <>
                                 <CardRow left="Mã đơn hàng" right={order?.code} />
-                                <CardRow left="Sản phẩm" right={order?.items.length+ ' sản phẩm'} />
+                                <CardRow left="Sản phẩm" right={order?.items.length + ' sản phẩm'} />
                                 <CardRow left="Hình thức thanh toán" right={order?.paymentMethod} />
                                 <CardRow
                                     left="Trạng thái thanh toán"

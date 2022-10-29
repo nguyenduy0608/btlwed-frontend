@@ -41,7 +41,7 @@ export const columns = (page: number): ColumnsType<DataTypeAccount> => [
         title: 'Loại tài khoản',
         dataIndex: 'accountId',
         align: 'center',
-        render: (value: number) => (value ? <a> Admin</a> : <a> Admin gian hàng</a>),
+        render: (value: number) => (value ? 'Admin': 'Admin gian hàng'),
     },
     {
         title: 'Trạng thái',
