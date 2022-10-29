@@ -125,17 +125,18 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
         title: 'Đơn vị tính',
         dataIndex: 'productUnit',
         align: 'center',
-        render: (value) => currencyFormat(value),
     },
     {
         title: 'Giá bán',
         dataIndex: 'price',
         align: 'center',
+        render: (value) => currencyFormat(value),
     },
     {
         title: 'Thành tiền',
         dataIndex: '',
         align: 'center',
+        render: (value, row: any) => currencyFormat(row?.price * row?.quantity),
     },
 
     AntdTable.SELECTION_COLUMN,

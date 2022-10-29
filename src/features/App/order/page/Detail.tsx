@@ -62,7 +62,7 @@ const OrderDetailPage = () => {
                         </>
                     </Col>
 
-                    <Col span={12}>
+                    <Col className="gx-p-0" span={12}>
                         <>
                             <CardComponent title="Lịch sử đơn hàng">
                                 {order?.status && order?.status === ORDERSTATUS.wait ? (

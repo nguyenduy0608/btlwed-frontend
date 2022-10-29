@@ -11,12 +11,12 @@ export enum IStatusVoucher {
     unActive = 0,
 }
 export enum IOrderStatus {
-    completed ,
-    wait_confirmation,
-    inprogress ,
-    cacelled,
+    completed = 'completed',
+    wait = 'wait_confirmation',
+    inprogress = 'inprogress',
+    cacelled = 'cacelled',
 }
 export enum ICreatetable {
-    user,
-    admin
+    user = 'user',
+    admin = 'admin'
 }

@@ -2,13 +2,12 @@ import RangerPicker from '@/components/RangerPicker';
 import SearchInput from '@/components/SearchInput';
 import { DefaultSelectStyled } from '@/config/global.style';
 import { Select, Space } from 'antd';
-import { IFilter } from '../../voucher/type';
-
+import { IFilter } from '../type';
 const { Option } = Select;
 
-const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
+const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) => {
     const handleChangeStatus = (value: any) => {
-        returnFilter({ orderStatus: value });
+        returnFilter({ status: value });
     };
     const handleChange = (value: any) => {
         returnFilter({ createtableType: value });
@@ -17,13 +16,14 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
     return (
         <Space size="middle" wrap>
             <SearchInput
+                style={{ minWidth: '140px' }}
                 onChangeSearch={(search) => returnFilter({ search })}
                 placeholderSearch="Nhập mã đơn, tên khách hàng, số điện thoại khách hàng"
             />
             <DefaultSelectStyled
                 placeholder="Trạng thái"
                 allowClear
-                style={{ width: '120px' }}
+                style={{ width: '160px' }}
                 defaultValue={null}
                 onChange={handleChangeStatus}
             >
@@ -35,7 +35,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
             <DefaultSelectStyled
                 placeholder="Nguồn đơn"
                 allowClear
-                style={{ width: '120px' }}
+                style={{ width: '160px' }}
                 defaultValue={null}
                 onChange={handleChange}
             >

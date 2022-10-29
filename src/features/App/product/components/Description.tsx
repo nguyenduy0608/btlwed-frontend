@@ -17,7 +17,7 @@ const Description: React.FC<IProps> = ({ record, handleShowModal, refetch }) => 
                 <Descriptions.Item label="Thứ tự hiển thị">{record.order || '--'}</Descriptions.Item>
                 <Descriptions.Item label="Trạng thái">
                     {record.status ? (
-                        <TagResult text="Đang hoạt động" color="processing" />
+                        <TagResult  text="Đang hoạt động" color="processing" />
                     ) : (
                         <TagResult text="Ngừng hoạt động" color="error" />
                     )}
