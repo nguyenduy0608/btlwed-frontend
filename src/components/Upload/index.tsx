@@ -1,5 +1,5 @@
 import AxiosClient from '@/apis/AxiosClient';
-import { Notification } from '@/utils';
+import { Notification, uuid } from '@/utils';
 import { Image, Upload } from 'antd';
 import type { UploadProps } from 'antd/es/upload';
 import { UploadFile, UploadListType } from 'antd/lib/upload/interface';
@@ -19,6 +19,7 @@ interface IProps {
     accept?: string;
     listType?: UploadListType;
     maxLength?: number;
+    initialFile?: any;
 }
 
 const UploadComponent: React.FC<IProps> = ({
@@ -30,6 +31,7 @@ const UploadComponent: React.FC<IProps> = ({
     onSuccessUpload,
     children,
     maxLength = 5,
+    initialFile,
 }) => {
     const [files, setFiles] = React.useState<UploadFile[]>([]);
     const [progress, setProgress] = React.useState(0);
@@ -111,6 +113,12 @@ const UploadComponent: React.FC<IProps> = ({
         return;
     };
 
+    React.useEffect(() => {
+        if (initialFile) {
+            setFiles([initialFile]);
+        }
+    }, [initialFile]);
+
     return (
         <>
             <UploadStyled
@@ -138,7 +146,7 @@ const UploadComponent: React.FC<IProps> = ({
                     }}
                 >
                     {files.map((file: UploadFile, index: number) => {
-                        return <Image key={file.uid} src={file.thumbUrl} width={0} style={{ display: 'none' }} />;
+                        return <Image key={uuid()} src={file.thumbUrl} width={0} style={{ display: 'none' }} />;
                     })}
                 </Image.PreviewGroup>
             )}

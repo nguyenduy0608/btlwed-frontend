@@ -5,6 +5,7 @@ import TopBar from '@/components/TopBar';
 import UploadComponent from '@/components/Upload';
 import { APPLICABLE_TYPE, CUSTOMER_TYPE, REWARD } from '@/contants';
 import Container from '@/layout/Container';
+import { uuid } from '@/utils';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select } from 'antd';
 import { decamelize } from 'humps';
 import moment from 'moment';
@@ -40,6 +41,11 @@ const VoucherFormPage = () => {
 
     const [file, setFile] = React.useState<any>(null);
 
+    const fileEdit = React.useRef<any>(null);
+
+    const [productSelected, setProductSelected] = React.useState<any>([]);
+    console.log('🚀 ~ file: form.tsx ~ line 473122321 ~ VoucherFormPage ~ productSelected', productSelected);
+
     // handle edit voucher
     const { id } = useParams();
 
@@ -57,18 +63,33 @@ const VoucherFormPage = () => {
                 enableNotification: data?.enableNotification ? 1 : 0,
                 enableProducts: data?.enableProducts ? 1 : 0,
                 status: 1,
+                products: data?.enableProducts ? [] : productSelected.flat(),
             };
-            formData.append('file', file);
+
             for (var key in dataUpload) {
-                formData.append(decamelize(key), dataUpload[key]);
+                formData.append(
+                    decamelize(key),
+                    Array.isArray(dataUpload[key]) ? JSON.stringify(dataUpload[key]) : dataUpload[key]
+                );
             }
-            voucherService.create(formData).then((res) => {
-                if (res.status) {
-                    navigate(-1);
-                }
-            });
+
+            formData.append('file', file ? file : fileEdit.current[0].url);
+
+            if (id) {
+                voucherService.update(id, formData).then((res) => {
+                    if (res.status) {
+                        navigate(-1);
+                    }
+                });
+            } else {
+                voucherService.create(formData).then((res) => {
+                    if (res.status) {
+                        navigate(-1);
+                    }
+                });
+            }
         },
-        [file]
+        [file, id, productSelected]
     );
 
     React.useEffect(() => {
@@ -84,10 +105,16 @@ const VoucherFormPage = () => {
                         enableNotification: res.data.enableNotification === 1,
                         enableProducts: res.data.enableProducts === 1,
                     });
+                    fileEdit.current = [{ url: res.data?.image, uid: uuid(), name: 'demo' }];
+                    setProductSelected(res.data?.voucherProduct.map((item: any) => item.productId));
                 }
             });
         })();
     }, [id]);
+
+    const handleCallbackProductSelected = React.useCallback((products: any) => {
+        setProductSelected(products);
+    }, []);
 
     return (
         <FormComponent form={form} onSubmit={handleSubmit}>
@@ -275,6 +302,20 @@ const VoucherFormPage = () => {
                                     </Checkbox>
                                 }
                             />
+                            {id && (
+                                <>
+                                    <FormItemComponent
+                                        label="Số lượng đã dùng"
+                                        valuePropName="checked"
+                                        inputField={<strong>{10}</strong>}
+                                    />
+                                    <FormItemComponent
+                                        label="Số lượng còn lại"
+                                        valuePropName="checked"
+                                        inputField={<strong>{10}</strong>}
+                                    />
+                                </>
+                            )}
                         </Col>
 
                         <FormItemComponent
@@ -287,6 +328,7 @@ const VoucherFormPage = () => {
                             inputField={
                                 <UploadComponent
                                     // isUploadServerWhenUploading
+                                    initialFile={fileEdit.current}
                                     uploadType="list"
                                     listType="picture-card"
                                     maxLength={1}
@@ -333,7 +375,10 @@ const VoucherFormPage = () => {
                     </Row>
                     <Divider />
                     <div style={enableProducts ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                        <TableProduct />
+                        <TableProduct
+                            productSelected={productSelected}
+                            handleCallbackProductSelected={handleCallbackProductSelected}
+                        />
                     </div>
                 </CardComponent>
             </Container>

@@ -7,9 +7,18 @@ import { useQuery } from 'react-query';
 import { columnsApplyVoucher } from '../components/Voucher.Config';
 import voucherService from '../service';
 
-const TableProduct = () => {
+const TableProduct = ({
+    productSelected,
+    handleCallbackProductSelected,
+}: {
+    productSelected: any;
+    handleCallbackProductSelected: any;
+}) => {
     const [filterQuery, setFilterQuery] = React.useState({});
     const [page, setPage] = React.useState(1);
+
+    const [rowSelected, setRowSelected] = React.useState<any>({});
+
     const {
         data: products,
         isLoading,
@@ -19,12 +28,21 @@ const TableProduct = () => {
         voucherService.getProduct({ page, ...filterQuery })
     );
 
-    const onRowSelection = React.useCallback((row) => {
-        // setRowSelected(row);
-    }, []);
+    const onRowSelection = React.useCallback(
+        (row: any) => {
+            setRowSelected((prev: any) => ({ ...prev, [page]: row }));
+            handleCallbackProductSelected(
+                Object.values({ ...rowSelected, [page]: row })
+                    .flat()
+                    .map((item: any) => ({ id: item.id }))
+            );
+        },
+        [page]
+    );
 
     return (
         <TableComponent
+            customRowKey={productSelected}
             header={
                 <Row style={{ flexDirection: 'row', padding: '0 20px' }} justify="space-between" align="middle">
                     <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO TẤT CẢ SẢN PHẨM</h3>
@@ -55,4 +73,4 @@ const TableProduct = () => {
     );
 };
 
-export default TableProduct;
+export default React.memo(TableProduct);

@@ -26,9 +26,13 @@ const voucherService = {
             },
         });
     },
-    update: (id: number, data: DataTypeVoucher) => {
+    update: (id: string, data: FormData) => {
         const url = `/admin/voucher/${id}`;
-        return AxiosClient.patch(url, data);
+        return AxiosClient.post(url, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
     },
     delete: (id: number) => {
         const url = `/admin/voucher/${id}`;

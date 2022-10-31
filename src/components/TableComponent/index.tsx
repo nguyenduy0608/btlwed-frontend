@@ -23,6 +23,7 @@ interface IProps {
     typeRowSelect?: RowSelect;
     header?: any;
     onRowClick?: any;
+    customRowKey?: any;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -40,6 +41,7 @@ const TableComponent: React.FC<IProps> = ({
     typeRowSelect = 'checkbox',
     header,
     onRowClick,
+    customRowKey,
 }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
@@ -62,10 +64,16 @@ const TableComponent: React.FC<IProps> = ({
                         // @ts-ignore
                         rowSelection={
                             rowSelect
-                                ? {
-                                      type: typeRowSelect,
-                                      ...rowSelection,
-                                  }
+                                ? customRowKey
+                                    ? {
+                                          selectedRowKeys: customRowKey,
+                                          type: typeRowSelect,
+                                          ...rowSelection,
+                                      }
+                                    : {
+                                          type: typeRowSelect,
+                                          ...rowSelection,
+                                      }
                                 : false
                         }
                         expandable={{

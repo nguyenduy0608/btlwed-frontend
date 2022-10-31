@@ -2,8 +2,8 @@ import { Notification } from '@/utils';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { camelizeKeys, decamelizeKeys } from 'humps';
 import LocalStorage from './LocalStorage';
-const API_URL = 'http://dev.stakaapi.winds.vn/api/v1';
-// const API_URL = 'http://192.168.0.61:3055/api/v1';
+// const API_URL = 'http://dev.stakaapi.winds.vn/api/v1';
+const API_URL = 'http://192.168.0.39:3055/api/v1';
 const AxiosClient = axios.create({
     baseURL: API_URL,
     headers: {
@@ -13,7 +13,6 @@ const AxiosClient = axios.create({
 
 // handle request to convert all api requests to snake_case
 AxiosClient.interceptors.request.use(async (config: AxiosRequestConfig) => {
-    console.log('🚀 ~ file: AxiosClient.tsx ~ line 16 ~ AxiosClient.interceptors.request.use ~ config', config);
     const token = LocalStorage.getToken();
 
     if (token && config.headers) {
