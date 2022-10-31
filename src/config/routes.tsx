@@ -29,6 +29,7 @@ export const routerPage = {
     // voucher
     voucher: '/voucher',
     voucherForm: '/voucher/form',
+    voucherFormEdit: '/voucher/form/:id',
 
     // customer
     customer: '/customer',
@@ -84,6 +85,10 @@ const PrivateRoutes = [
 
     {
         path: routerPage.voucherForm,
+        element: <VoucherFormPage />,
+    },
+    {
+        path: routerPage.voucherFormEdit,
         element: <VoucherFormPage />,
     },
     {

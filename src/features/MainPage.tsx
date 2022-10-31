@@ -25,7 +25,7 @@ const MainPage = ({ role }: { role: string }) => {
             if (pathname === routerPage.register || pathname === routerPage.login) {
                 return navigate('/');
             }
-            navigate(pathname);
+            // navigate(pathname);
         } else {
             switch (pathname) {
                 case routerPage.register:

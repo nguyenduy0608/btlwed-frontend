@@ -10,7 +10,7 @@ const FormItemComponent = ({
     inputField,
 }: {
     grid?: boolean;
-    label: string;
+    label: any;
     name?: string;
     rules?: any;
     valuePropName?: any;

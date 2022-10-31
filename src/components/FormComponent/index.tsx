@@ -1,4 +1,4 @@
-import { Form } from 'antd';
+import { Form, Row } from 'antd';
 import { FormInstance, FormLayout } from 'antd/lib/form/Form';
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
@@ -46,7 +46,7 @@ const FormComponent: React.FC<IPropsFormLayout> = ({
 
     return (
         <FormStyled
-            // {...formItemLayout}
+            {...(layoutType === 'vertical' ? null : formItemLayout)}
             labelAlign="left"
             name="basic"
             autoComplete="off"
