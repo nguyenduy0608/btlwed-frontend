@@ -4,8 +4,8 @@ import TableComponent from '@/components/TableComponent';
 import { Row, Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { ProductService } from '../../product/service';
-import { columnsApplyVoucher, dataSourceApplyVoucher } from '../components/Voucher.Config';
+import { columnsApplyVoucher } from '../components/Voucher.Config';
+import voucherService from '../service';
 
 const TableProduct = () => {
     const [filterQuery, setFilterQuery] = React.useState({});
@@ -15,12 +15,18 @@ const TableProduct = () => {
         isLoading,
         refetch,
         isRefetching,
-    } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));
+    } = useQuery<any>(['voucherProductService', page, filterQuery], () =>
+        voucherService.getProduct({ page, ...filterQuery })
+    );
+
+    const onRowSelection = React.useCallback((row) => {
+        // setRowSelected(row);
+    }, []);
 
     return (
         <TableComponent
             header={
-                <Row style={{ flexDirection: 'row' }} justify="space-between" align="middle">
+                <Row style={{ flexDirection: 'row', padding: '0 20px' }} justify="space-between" align="middle">
                     <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO TẤT CẢ SẢN PHẨM</h3>
                     <Space>
                         <SearchInput
@@ -39,8 +45,8 @@ const TableProduct = () => {
             }
             loading={isRefetching}
             page={page}
-            rowSelect={false}
-            // onRowSelection={onRowSelection}
+            rowSelect
+            onRowSelection={onRowSelection}
             total={products?.paging?.totalItemCount || 0}
             columns={columnsApplyVoucher(page)}
             dataSource={products ? products.data : []}

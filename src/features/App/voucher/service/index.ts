@@ -14,6 +14,10 @@ const voucherService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
+    detail: (id: number) => {
+        const url = `/admin/voucher/${id}`;
+        return AxiosClient.get(url);
+    },
     create: (data: FormData) => {
         const url = `/admin/voucher`;
         return AxiosClient.post(url, data, {
@@ -41,6 +45,11 @@ const voucherService = {
     resetPassword: (id: number) => {
         const url = `/admin/voucher/${id}/reset-password`;
         return AxiosClient.patch(url);
+    },
+    getProduct: (params: IQuery) => {
+        const url = `/admin/product`;
+        const handleParams = handleObjectEmpty(params);
+        return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
 };
 

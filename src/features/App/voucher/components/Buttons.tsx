@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 import { EditOutlined, DeleteOutlined, CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { Button, } from 'antd';
+import { Button } from 'antd';
 import voucherService from '../service';
 import { Notification } from '@/utils';
 import { DataTypeVoucher } from './Voucher.Config';
@@ -69,7 +69,7 @@ const Buttons = (props: IProps) => {
                 fontSize: '16px',
                 color: 'green',
             }}
-            onClick={() => navigate(routerPage.voucherForm)}
+            onClick={() => navigate(routerPage.voucherForm + '/' + record.id)}
         >
             <EditOutlined key="edit" />
             Chỉnh sửa
