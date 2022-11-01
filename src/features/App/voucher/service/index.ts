@@ -53,7 +53,7 @@ const voucherService = {
     getProduct: (params: IQuery) => {
         const url = `/admin/product`;
         const handleParams = handleObjectEmpty(params);
-        return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
+        return AxiosClient.get(url, { params: { ...handleParams, limit: 8 } });
     },
 };
 

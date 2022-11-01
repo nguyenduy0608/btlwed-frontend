@@ -7,7 +7,6 @@ import { images } from '@/assets/imagesAssets';
 
 const UserInfo = () => {
     const { state, dispatch } = useCallContext();
-    console.log('🚀 ~ file: index.tsx ~ line 9 ~ UserInfo ~ state', state);
 
     const userMenuOptions = (
         <ul className="gx-user-popover">
@@ -27,7 +26,7 @@ const UserInfo = () => {
         <Row wrap={false} justify="start" className="gx-avatar-row gx-m-0">
             <Popover placement="bottomRight" content={userMenuOptions} trigger="click">
                 <Avatar src={images.logo} className="gx-size-40 gx-pointer gx-mr-3" alt="" />
-                <span className="gx-avatar-name">
+                <span className="gx-avatar-name gx-font-weight-bold" style={{ color: 'white' }}>
                     {state?.info?.fullName}
                     <DownOutlined className="gx-fs-sm gx-ml-4" />
                 </span>

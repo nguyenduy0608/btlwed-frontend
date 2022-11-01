@@ -132,6 +132,15 @@ const GlobalStyle = createGlobalStyle`
   background-color: #a8bbbf;
 }
 
+  /* .gx-layout-sider-dark {
+    background: rgba(24, 60, 128, 1);
+  }
+  ul.ant-menu.ant-menu-root.ant-menu-inline.ant-menu-dark {
+    background-color: transparent;
+  } */
+  label.ant-form-item-no-colon {
+    white-space: break-spaces;
+}
 `;
 
 export const DefaultSelectStyled = styled(Select)`
@@ -153,7 +162,7 @@ export const TitleCardDes = styled.h3`
     line-height: 1.3;
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-bottom: 20px;
+    margin: 0;
 `;
 
 export const DescriptionStyled = styled(Descriptions)`

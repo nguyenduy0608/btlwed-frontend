@@ -1,17 +1,16 @@
+import AppLoading from '@/assets/appLoading.json';
 import { Spin } from 'antd';
+import Lottie from 'lottie-react';
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-import { HashLoader } from 'react-spinners';
 import styled from 'styled-components';
 import LocalStorage from './apis/LocalStorage';
 import GlobalStyle from './config/global.style';
-import { LOADING_COLOR } from './config/theme';
-import { APP_LOADING, SET_INFO } from './context/types';
+import { APP_LOADING, SET_INFO, SET_KIOTVIETS } from './context/types';
 import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
 import { appService } from './service';
-import { SET_KIOTVIETS } from './context/types';
+
 function App() {
     const { state, dispatch } = useCallContext();
     const [role, setRole] = React.useState('');
@@ -20,7 +19,7 @@ function App() {
     React.useEffect(() => {
         setTimeout(() => {
             dispatch({ type: APP_LOADING, payload: false });
-        }, 2000);
+        }, 2500);
     }, []);
 
     React.useLayoutEffect(() => {
@@ -41,7 +40,13 @@ function App() {
     return (
         <SpinLoadingStyled
             spinning={state.appLoading}
-            indicator={<HashLoader color={LOADING_COLOR} loading size={60} />}
+            indicator={
+                <ContainerLoading>
+                    <div style={{ height: '600px', width: '600px' }}>
+                        <Lottie animationData={AppLoading} loop={true} />
+                    </div>
+                </ContainerLoading>
+            }
         >
             <MainPage role={role} />
             {/* define default style */}
@@ -52,8 +57,21 @@ function App() {
 
 const SpinLoadingStyled = styled(Spin)`
     &&& {
-        top: 20%;
+        top: 0;
+        left: 0;
     }
+`;
+
+const ContainerLoading = styled.div`
+    top: 0 !important;
+    margin: 0 !important;
+    left: 0 !important;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
 `;
 
 export default App;

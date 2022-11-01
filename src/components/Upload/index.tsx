@@ -37,6 +37,8 @@ const UploadComponent: React.FC<IProps> = ({
     const [progress, setProgress] = React.useState(0);
     const [visiblePreview, setVisiblePreview] = React.useState(false);
 
+    const firstLoad = React.useRef(false);
+
     const uploadImage = async (options: any) => {
         const { onSuccess, onError, file, onProgress } = options;
 
@@ -114,8 +116,10 @@ const UploadComponent: React.FC<IProps> = ({
     };
 
     React.useEffect(() => {
+        if (firstLoad?.current) return;
         if (initialFile) {
-            setFiles([initialFile]);
+            setFiles(initialFile);
+            firstLoad.current = true;
         }
     }, [initialFile]);
 

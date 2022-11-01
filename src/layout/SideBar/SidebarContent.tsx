@@ -1,6 +1,7 @@
+import logo_sidebar from '@/assets/images/logo_sidebar.png';
 import CustomScrollbars from '@/components/CustomScrollbars';
 import UserInfo from '@/components/UserInfo';
-import { MenuFoldOutlined, MenuUnfoldOutlined, NotificationOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Menu, Row } from 'antd';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -17,19 +18,23 @@ const SidebarContent = ({
     const location = useLocation();
     const navigate = useNavigate();
     const selectedKeys = location.pathname.substr(1) || '/';
-    const defaultOpenKeys = selectedKeys.split('/')[1] || '/';
 
     return (
         <>
             <Row align="middle" className="gx-m-0 gx-layout-sider-header">
                 {!collapsed && (
                     <Link className="gx-d-block gx-pointer" to="/">
-                        {/* <img
-                            height="40px"
-                            alt=""
-                            src="https://winds.vn/wp-content/uploads/2021/07/logoWindSoftBlendNew-e1569232144947.png"
-                        /> */}
-                        <div style={{ color: 'white', fontSize: '24px' }}>STAKA</div>
+                        <div
+                            style={{
+                                border: '2px solid rgba(255,255,255,0.7)',
+                                backgroundColor: '#F5F5F5',
+                                padding: '6px 10px',
+                                borderRadius: '10px',
+                            }}
+                        >
+                            <img height="25px" alt="logo_sidebar" src={logo_sidebar} />
+                        </div>
+                        {/* <div style={{ color: 'white', fontSize: '24px' }}>STAKA</div> */}
                     </Link>
                 )}
                 <div className="gx-linebar" onClick={handleCallbackCollapsed}>

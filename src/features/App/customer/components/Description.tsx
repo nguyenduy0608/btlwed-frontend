@@ -10,7 +10,6 @@ interface IProps {
     refetch: any;
 }
 const Description: React.FC<IProps> = ({ record, refetch }) => {
-    console.log('🚀 ~ file: Description.tsx ~ line 13 ~ record', record);
     const items = [
         {
             label: 'Thông tin chung',

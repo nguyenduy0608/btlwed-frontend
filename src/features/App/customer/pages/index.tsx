@@ -67,19 +67,12 @@ const CustomerPage = () => {
             <Container>
                 <CardComponent
                     title={<Filter returnFilter={returnFilter} key="filter" />}
-                    extra={
-                        <Space>
-                            {rowSelected && rowSelected.length > 0 && (
-                                <DeleteButton onConfirm={() => console.log('kkk')} />
-                            )}
-                            <ExportButton onClick={() => console.log('first')} />
-                        </Space>
-                    }
+                    extra={<ExportButton onClick={() => console.log('first')} />}
                 >
                     <TableComponent
                         loading={isRefetching || loadingModal || isLoading}
                         page={page}
-                        rowSelect
+                        rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
                         onRowSelection={onRowSelection}

@@ -2,7 +2,7 @@ import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
 import { rules } from '../../voucher/rules';
-import { Notification, wait } from '@/utils';
+import { Notification, uuid, wait } from '@/utils';
 import React from 'react';
 import { ADMIN, STATUS } from '@/contants';
 import accountService from '../service';
@@ -22,7 +22,7 @@ const initialValue = {
     updatedAt: '',
     password: '',
     accountId: '',
-    passwordConfirmation:'',
+    passwordConfirmation: '',
 };
 
 const AccountFormPage = ({
@@ -40,13 +40,14 @@ const AccountFormPage = ({
     const [loadingModal, setLoadingModal] = React.useState(false);
 
     const accountId = Form.useWatch('accountId', form);
+
     const formReset = () => {
         form.setFieldsValue(initialValue);
     };
     React.useEffect(() => {
         if (values) {
             setLoadingModal(true);
-            form.setFieldsValue(values || initialValue);
+            form.setFieldsValue({ ...values, accountId: values?.isRoot ? 1 : 2 });
             wait(500).then(() => setLoadingModal(false));
         }
     }, [values]);
@@ -58,18 +59,18 @@ const AccountFormPage = ({
 
                 const res = await accountService.update(values.id, {
                     ...rest,
-                    avatar: file,
+                    avatar: file || values?.avatar,
                     status: !!data.status,
                     isRoot: true,
                 });
-                if (res.status === 1) {
+                if (res.status) {
                     Notification('success', 'Cập nhật tài khoản thành công');
                     handleCloseForm();
                     formReset();
                 }
             } else {
                 const res = await accountService.create({ ...data, avatar: file, status: true, isRoot: true });
-                if (res.status === 1) {
+                if (res.status) {
                     Notification('success', 'Thêm tài khoản thành công');
                     handleCloseForm();
                     formReset();
@@ -80,9 +81,10 @@ const AccountFormPage = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [values, file]
     );
+
     return (
         <ModalComponent
-            title={values ? 'Sửa tài khoản' : 'Thêm tài khoản'}
+            title={values ? 'Cập nhật tài khoản' : 'Thêm tài khoản'}
             modalVisible={modalVisible}
             loading={loadingModal}
         >
@@ -99,6 +101,8 @@ const AccountFormPage = ({
                                 onSuccessUpload={(file: any) => {
                                     setFile(file?.url);
                                 }}
+                                isShowFileList
+                                initialFile={[{ url: values?.avatar, uid: uuid(), name: 'avatar' }]}
                             />
                         }
                     />

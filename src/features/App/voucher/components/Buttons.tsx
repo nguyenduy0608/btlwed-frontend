@@ -6,6 +6,7 @@ import { Notification } from '@/utils';
 import { DataTypeVoucher } from './Voucher.Config';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { routerPage } from '@/config/routes';
+import DeleteDescriptionButton from '@/components/Button/Delete.Description.Button';
 interface IProps {
     record: DataTypeVoucher;
     // handleShowModal: (value: DataTypePotentialCustomers) => void;
@@ -28,7 +29,7 @@ const Buttons = (props: IProps) => {
     };
     const handleDelete = async (id: number) => {
         const res = await voucherService.delete(id);
-        if (res.status === 1) {
+        if (res.status) {
             Notification('success', 'Xóa thành công');
             refetch();
         }
@@ -74,18 +75,7 @@ const Buttons = (props: IProps) => {
             <EditOutlined key="edit" />
             Chỉnh sửa
         </Button>,
-        <Button
-            type="text"
-            className="gx-mb-0"
-            style={{
-                fontSize: '16px',
-                color: 'red',
-            }}
-            onClick={() => handleDelete(record.id)}
-        >
-            <DeleteOutlined key="delete" />
-            Xóa
-        </Button>,
+        <DeleteDescriptionButton handleDelete={() => handleDelete(record.id)} />,
     ];
 };
 

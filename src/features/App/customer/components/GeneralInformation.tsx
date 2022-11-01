@@ -2,7 +2,7 @@ import IconAntd from '@/components/IconAntd';
 import { Button, Card, Checkbox, Col, Descriptions, Form, InputNumber, Row, Skeleton, Space, Tabs } from 'antd';
 import moment from 'moment';
 import React from 'react';
-import {  DataTypeWalletChange } from './Customer.Config';
+import { DataTypeWalletChange } from './Customer.Config';
 import { CustomerService, WalletChangeService } from '../service';
 import { useQuery } from 'react-query';
 import CountUp from 'react-countup';
@@ -132,12 +132,12 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
                 </Col>
                 <Col span={10}>
                     {/* <TopBar title={<TitleCardDes>Tổng quan bán hàng</TitleCardDes>}></TopBar> */}
-                    <TitleCardDes>
-                        Tổng quan bán hàng
-                        <Button onClick={() => setModalVisible(true)} className="gx-mb-0" type="primary">
-                            Thêm mới
+                    <Row className="gx-mb-4 gx-mx-0" justify="space-between" align="middle">
+                        <TitleCardDes>Tổng quan bán hàng</TitleCardDes>
+                        <Button onClick={() => setModalVisible(true)} type="primary">
+                            Áp dụng công nợ
                         </Button>
-                    </TitleCardDes>
+                    </Row>
                     <div>
                         <Row>
                             <Col span={12}>

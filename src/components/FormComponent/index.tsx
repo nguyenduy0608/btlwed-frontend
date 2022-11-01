@@ -51,6 +51,7 @@ const FormComponent: React.FC<IPropsFormLayout> = ({
             name="basic"
             autoComplete="off"
             form={form}
+            labelWrap
             layout={layoutType}
             initialValues={initialValues}
             onFinish={onFinish}

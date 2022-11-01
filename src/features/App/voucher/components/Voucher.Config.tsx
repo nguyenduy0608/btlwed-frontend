@@ -1,7 +1,9 @@
+import IconAntd from '@/components/IconAntd';
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate } from '@/utils';
 import { ColumnsType } from 'antd/lib/table';
+import styled from 'styled-components';
 
 export interface DataTypeVoucher {
     id: number;
@@ -37,12 +39,12 @@ export const columns = (page: number): ColumnsType<DataTypeVoucher> => [
         dataIndex: 'name',
     },
     {
-        title: 'Số lượng quy định',
+        title: 'SL quy định',
         dataIndex: 'remainQuota',
         align: 'center',
     },
     {
-        title: 'Số lượng còn lại',
+        title: 'SL còn lại',
         dataIndex: 'rewardType',
         align: 'center',
     },
@@ -90,6 +92,59 @@ export const dataSourceApplyVoucher = [
         price: '17000000',
     },
 ];
+
+const ButtonDeleteStyled = styled.div`
+    color: red;
+    &:hover {
+        opacity: 0.6;
+        cursor: pointer;
+        scale: 1.4;
+    }
+`;
+
+export const columnsApplyVoucherSelect: any = (callbackRemoveProduct: any) => [
+    {
+        title: '',
+        dataIndex: 'id',
+        align: 'center',
+        width: '60px',
+        render: (id: number) => (
+            <ButtonDeleteStyled onClick={() => callbackRemoveProduct(id)}>
+                <IconAntd icon="MinusSquareOutlined" />
+            </ButtonDeleteStyled>
+        ),
+    },
+    {
+        title: 'STT',
+        dataIndex: 'id',
+        key: 'id',
+        align: 'center',
+        width: '50px',
+        render: (_: any, a: any, index: number) => ++index,
+    },
+    {
+        title: 'Danh mục',
+        dataIndex: 'category',
+        key: 'category',
+        render: (value: any) => value?.name,
+        width: '300px',
+    },
+    {
+        title: 'Sản phẩm',
+        dataIndex: 'name',
+        key: 'name',
+        width: 'auto',
+    },
+    {
+        title: 'Giá bán',
+        dataIndex: 'price',
+        key: 'price',
+        width: '140px',
+        render: (value: number) => currencyFormat(value),
+        sorter: (a: any, b: any) => a.price - b.price,
+    },
+];
+
 export const columnsApplyVoucher: any = (page: number) => [
     {
         title: 'STT',

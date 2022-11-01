@@ -85,7 +85,7 @@ const Buttons = (props: IProps) => {
     };
     const handleDelete = async (id: number) => {
         const res = await voucherService.delete(id);
-        if (res.status === 1) {
+        if (res.status) {
             Notification('success', 'Xóa thành công');
             refetch();
         }

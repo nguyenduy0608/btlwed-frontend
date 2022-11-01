@@ -9,8 +9,8 @@ type RowSelect = 'checkbox' | 'radio';
 interface IProps {
     dataSource: any[];
     columns: ColumnsType<any>;
-    page: number;
-    onChangePage: (page: number) => void;
+    page?: number;
+    onChangePage?: (page: number) => void;
     total?: number;
     isPagination?: boolean;
     rowSelect?: boolean;
@@ -24,6 +24,7 @@ interface IProps {
     header?: any;
     onRowClick?: any;
     customRowKey?: any;
+    renderDefault?: any;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -42,12 +43,17 @@ const TableComponent: React.FC<IProps> = ({
     header,
     onRowClick,
     customRowKey,
+    renderDefault,
 }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
     const rowSelection = {
         onChange: (rowKey: React.Key[], selectedRows: any[]) => {
             onRowSelection && onRowSelection(selectedRows);
+        },
+        hideSelectAll: !renderDefault,
+        onSelect: (record: any, selected: any, selectedRows: any, nativeEvent: any) => {
+            console.log('🚀 ~ file: index.tsx ~ line 56 ~ selected', selected);
         },
     };
 
@@ -103,7 +109,7 @@ const TableComponent: React.FC<IProps> = ({
                     />
                 </WrapperTable>
             </Col>
-            {isPagination && total && total > 12 && (
+            {renderDefault && onChangePage && isPagination && total && total > 12 && (
                 <Col span={24}>
                     <Row justify="end" style={{ flexDirection: 'row' }}>
                         <PaginationComponent page={page || 1} total={total || 0} onChange={onChangePage} />

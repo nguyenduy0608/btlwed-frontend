@@ -5,7 +5,7 @@ import TopBar from '@/components/TopBar';
 import UploadComponent from '@/components/Upload';
 import { APPLICABLE_TYPE, CUSTOMER_TYPE, REWARD } from '@/contants';
 import Container from '@/layout/Container';
-import { uuid } from '@/utils';
+import { Notification, uuid } from '@/utils';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select } from 'antd';
 import { decamelize } from 'humps';
 import moment from 'moment';
@@ -38,22 +38,32 @@ const VoucherFormPage = () => {
     const [form] = Form.useForm();
     const rewardType = Form.useWatch('rewardType', form);
     const enableProducts = Form.useWatch('enableProducts', form);
+    const applicableType = Form.useWatch('applicableType', form);
+    const nameVoucher = React.useRef(null);
 
     const [file, setFile] = React.useState<any>(null);
 
     const fileEdit = React.useRef<any>(null);
 
+    const [products, setProducts] = React.useState([]);
     const [productSelected, setProductSelected] = React.useState<any>([]);
-    console.log('🚀 ~ file: form.tsx ~ line 473122321 ~ VoucherFormPage ~ productSelected', productSelected);
 
     // handle edit voucher
     const { id } = useParams();
+
+    // lưu số lượng
+    const [quantity, setQuantity] = React.useState({
+        used: 0,
+        remaining: 0,
+    });
 
     const formReset = () => {
         form.setFieldsValue(initialValue);
     };
     const handleSubmit = React.useCallback(
         async (data: any) => {
+            if (!file) return Notification('warning', 'Vui lòng chọn ảnh');
+
             const formData = new FormData();
 
             const dataUpload = {
@@ -63,7 +73,7 @@ const VoucherFormPage = () => {
                 enableNotification: data?.enableNotification ? 1 : 0,
                 enableProducts: data?.enableProducts ? 1 : 0,
                 status: 1,
-                products: data?.enableProducts ? [] : productSelected.flat(),
+                products: data?.enableProducts ? [] : products,
             };
 
             for (var key in dataUpload) {
@@ -79,17 +89,19 @@ const VoucherFormPage = () => {
                 voucherService.update(id, formData).then((res) => {
                     if (res.status) {
                         navigate(-1);
+                        Notification('success', 'Cập nhật thành công');
                     }
                 });
             } else {
                 voucherService.create(formData).then((res) => {
                     if (res.status) {
                         navigate(-1);
+                        Notification('success', 'Thêm voucher thành công');
                     }
                 });
             }
         },
-        [file, id, productSelected]
+        [file, id, products]
     );
 
     React.useEffect(() => {
@@ -106,21 +118,27 @@ const VoucherFormPage = () => {
                         enableProducts: res.data.enableProducts === 1,
                     });
                     fileEdit.current = [{ url: res.data?.image, uid: uuid(), name: 'demo' }];
-                    setProductSelected(res.data?.voucherProduct.map((item: any) => item.productId));
+                    if (res?.data?.voucherProduct) {
+                        setProductSelected(res.data?.voucherProduct.map((item: any) => item.productId));
+                        setProducts(res.data?.voucherProduct);
+                    }
+
+                    setQuantity({
+                        used: res?.data?.used || 0,
+                        remaining: res?.data?.remainQuota,
+                    });
+
+                    nameVoucher.current = res.data.name;
                 }
             });
         })();
     }, [id]);
 
-    const handleCallbackProductSelected = React.useCallback((products: any) => {
-        setProductSelected(products);
-    }, []);
-
     return (
         <FormComponent form={form} onSubmit={handleSubmit}>
             <TopBar
                 back
-                title="Thêm voucher khách hàng"
+                title={id ? 'Cập nhật voucher ' + `* ${nameVoucher.current} *` : 'Thêm voucher khách hàng'}
                 extra={[
                     <Button
                         key="out"
@@ -130,7 +148,7 @@ const VoucherFormPage = () => {
                     >
                         Thoát
                     </Button>,
-                    <Button key="save" type="primary" htmlType="submit">
+                    <Button key="saveVoucher" type="primary" htmlType="submit">
                         Lưu
                     </Button>,
                 ]}
@@ -172,6 +190,25 @@ const VoucherFormPage = () => {
                                     name="description"
                                     label="Mô tả"
                                     inputField={<Input.TextArea rows={5} placeholder="Nhập ghi chú" />}
+                                />
+                                <FormItemComponent
+                                    label={
+                                        <div>
+                                            Ảnh voucher <span style={{ color: 'red' }}>*</span>
+                                        </div>
+                                    }
+                                    inputField={
+                                        <UploadComponent
+                                            // isUploadServerWhenUploading
+                                            initialFile={fileEdit.current}
+                                            uploadType="list"
+                                            listType="picture-card"
+                                            maxLength={1}
+                                            onSuccessUpload={(url: any) => {
+                                                setFile(url?.originFileObj);
+                                            }}
+                                        />
+                                    }
                                 />
                             </Row>
                         </Col>
@@ -263,7 +300,11 @@ const VoucherFormPage = () => {
                                     />
                                     <FormItemComponent
                                         name="minSpend"
-                                        label="Tổng giá trị đơn hàng tối thiểu"
+                                        label={
+                                            applicableType === APPLICABLE_TYPE.order
+                                                ? `Tổng giá trị đơn hàng tối thiểu`
+                                                : `Tổng giá trị sản phẩm tối thiểu`
+                                        }
                                         inputField={
                                             <InputNumber
                                                 min={0}
@@ -307,37 +348,16 @@ const VoucherFormPage = () => {
                                     <FormItemComponent
                                         label="Số lượng đã dùng"
                                         valuePropName="checked"
-                                        inputField={<strong>{10}</strong>}
+                                        inputField={<strong>{quantity.used}</strong>}
                                     />
                                     <FormItemComponent
                                         label="Số lượng còn lại"
                                         valuePropName="checked"
-                                        inputField={<strong>{10}</strong>}
+                                        inputField={<strong>{quantity.remaining}</strong>}
                                     />
                                 </>
                             )}
                         </Col>
-
-                        <FormItemComponent
-                            grid
-                            label={
-                                <div>
-                                    Ảnh voucher <span style={{ color: 'red' }}></span>
-                                </div>
-                            }
-                            inputField={
-                                <UploadComponent
-                                    // isUploadServerWhenUploading
-                                    initialFile={fileEdit.current}
-                                    uploadType="list"
-                                    listType="picture-card"
-                                    maxLength={1}
-                                    onSuccessUpload={(url: any) => {
-                                        setFile(url?.originFileObj);
-                                    }}
-                                />
-                            }
-                        />
                     </Row>
 
                     <Divider />
@@ -351,14 +371,26 @@ const VoucherFormPage = () => {
                                 rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
                                 name="startTime"
                                 label="Ngày bắt đầu"
-                                inputField={<DatePicker placeholder="Chọn ngày bắt đầu" style={{ width: '100%' }} />}
+                                inputField={
+                                    <DatePicker
+                                        format="DD/MM/YYYY"
+                                        placeholder="Chọn ngày bắt đầu"
+                                        style={{ width: '100%' }}
+                                    />
+                                }
                             />
                             <FormItemComponent
                                 grid
                                 rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
                                 name="endTime"
                                 label="Ngày kết thúc"
-                                inputField={<DatePicker placeholder="Chọn ngày kết thúc" style={{ width: '100%' }} />}
+                                inputField={
+                                    <DatePicker
+                                        format="DD/MM/YYYY"
+                                        placeholder="Chọn ngày kết thúc"
+                                        style={{ width: '100%' }}
+                                    />
+                                }
                             />
                             <FormItemComponent
                                 grid
@@ -375,10 +407,7 @@ const VoucherFormPage = () => {
                     </Row>
                     <Divider />
                     <div style={enableProducts ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
-                        <TableProduct
-                            productSelected={productSelected}
-                            handleCallbackProductSelected={handleCallbackProductSelected}
-                        />
+                        <TableProduct productSelected={productSelected} products={products} setProducts={setProducts} />
                     </div>
                 </CardComponent>
             </Container>
