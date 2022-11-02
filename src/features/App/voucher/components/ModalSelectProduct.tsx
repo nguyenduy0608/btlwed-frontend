@@ -12,10 +12,12 @@ const ModalSelectProduct = ({
     open,
     setOpen,
     callbackChoseProduct,
+    productsProps,
 }: {
     open: boolean;
     setOpen: any;
     callbackChoseProduct: any;
+    productsProps: any;
 }) => {
     const [filterQuery, setFilterQuery] = React.useState({});
     const [page, setPage] = React.useState(1);
@@ -25,7 +27,6 @@ const ModalSelectProduct = ({
     const {
         data: products,
         isLoading,
-        refetch,
         isRefetching,
     } = useQuery<any>(['voucherProductService', page, filterQuery], () =>
         voucherService.getProduct({ page, ...filterQuery })
@@ -39,16 +40,16 @@ const ModalSelectProduct = ({
     );
 
     const handleSubmit = () => {
-        callbackChoseProduct(Object.values(productSelected).flat());
+        callbackChoseProduct([...productsProps, ...Object.values(productSelected).flat()]);
         setOpen(false);
     };
 
     return (
         <ModalComponent width={1400} title="Chọn sản phẩm áp dụng" modalVisible={open}>
             <TableComponent
-                customRowKey={Object.values(productSelected)
-                    .flat()
-                    .map((item: any) => item?.id)}
+                // customRowKey={Object.values(productSelected)
+                //     .flat()
+                //     .map((item: any) => item?.id)}
                 header={
                     <Row style={{ flexDirection: 'row', padding: '0 20px' }} justify="space-between" align="middle">
                         <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO SẢN PHẨM</h3>
@@ -68,9 +69,12 @@ const ModalSelectProduct = ({
                     </Row>
                 }
                 loading={isRefetching}
-                renderDefault
+                renderDefault={false}
                 page={page}
                 rowSelect
+                rowClassName={(record: any) =>
+                    productsProps.some((product: any) => product.id === record.id) ? 'disabled' : ''
+                }
                 onRowSelection={onRowSelection}
                 total={products?.paging?.totalItemCount || 0}
                 columns={columnsApplyVoucher(page)}

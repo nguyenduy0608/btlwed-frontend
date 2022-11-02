@@ -141,6 +141,17 @@ const GlobalStyle = createGlobalStyle`
   label.ant-form-item-no-colon {
     white-space: break-spaces;
 }
+
+.gx-layout-sider-scrollbar {
+  height: calc(100vh - 180px) !important;
+}
+
+.disabled {
+   pointer-events: none; 
+   opacity: 0.5;
+   text-decoration: line-through;
+}
+
 `;
 
 export const DefaultSelectStyled = styled(Select)`

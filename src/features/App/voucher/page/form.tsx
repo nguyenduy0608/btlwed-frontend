@@ -62,7 +62,7 @@ const VoucherFormPage = () => {
     };
     const handleSubmit = React.useCallback(
         async (data: any) => {
-            if (!file) return Notification('warning', 'Vui lòng chọn ảnh');
+            if (!id && !file) return Notification('warning', 'Vui lòng chọn ảnh');
 
             const formData = new FormData();
 
@@ -119,10 +119,11 @@ const VoucherFormPage = () => {
                     });
                     fileEdit.current = [{ url: res.data?.image, uid: uuid(), name: 'demo' }];
                     if (res?.data?.voucherProduct) {
-                        setProductSelected(res.data?.voucherProduct.map((item: any) => item.productId));
-                        setProducts(res.data?.voucherProduct);
+                        setProductSelected(res.data?.voucherProduct.map((product: any) => product.productId));
+                        setProducts(
+                            res.data?.voucherProduct.map((product: any) => ({ ...product, id: product.productId }))
+                        );
                     }
-
                     setQuantity({
                         used: res?.data?.used || 0,
                         remaining: res?.data?.remainQuota,

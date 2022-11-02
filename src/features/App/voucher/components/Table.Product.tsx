@@ -39,6 +39,7 @@ const TableProduct = ({
                 callbackChoseProduct={(pros: any) => setProducts(pros)}
                 setOpen={setOpenModal}
                 open={openModal}
+                productsProps={products}
             />
         </>
     );

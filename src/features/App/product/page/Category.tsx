@@ -44,7 +44,6 @@ const ProductCategoryPage = () => {
         isRefetching,
     } = useQuery<any>(['CategoryService', page, filterQuery], () => CategoryService.get({ page, ...filterQuery }));
 
-    
     const handleShowModal = (record: DataTypeProductCategory) => {
         setModalVisible(true);
         setValues(record);
@@ -74,7 +73,7 @@ const ProductCategoryPage = () => {
                 const res = await CategoryService.update(values.id, { order: data.order });
                 if (res.status === 1) {
                     refetch();
-                    Notification('success', 'Sửa danh mục thành công');
+                    Notification('success', 'Cập nhật danh mục thành công');
                     handleCloseModal();
                     formReset();
                 }

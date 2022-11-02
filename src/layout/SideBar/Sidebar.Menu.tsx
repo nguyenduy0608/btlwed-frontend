@@ -29,6 +29,28 @@ export const items: any = [
         icon: <IconAntd icon="TeamOutlined" />,
     },
     {
+        label: 'Hàng hoá',
+        key: 'merchandise',
+        icon: <IconAntd icon="MergeCellsOutlined" />,
+        children: [
+            {
+                label: 'Nhập hàng',
+                key: 'merchandise/order',
+                icon: <IconAntd icon="ShoppingOutlined" />,
+            },
+            {
+                label: 'Trả hàng',
+                key: 'merchandise/returnOrder',
+                icon: <IconAntd icon="RollbackOutlined" />,
+            },
+            {
+                label: 'Chuyển hàng',
+                key: 'merchandise/shipping',
+                icon: <IconAntd icon="CarOutlined" />,
+            },
+        ],
+    },
+    {
         label: 'Mã giảm giá',
         key: 'voucher',
         icon: <IconAntd icon="BarcodeOutlined" />,
@@ -38,7 +60,6 @@ export const items: any = [
         key: 'order',
         icon: <IconAntd icon="SwitcherOutlined" />,
     },
-
     {
         label: 'Thông báo',
         key: 'notification',
@@ -49,38 +70,11 @@ export const items: any = [
         key: 'account',
         icon: <IconAntd icon="UserOutlined" />,
     },
-    // {
-    //     label: 'Giao dịch',
-    //     key: 'transaction',
-    //     icon: <IconAntd icon="SwapOutlined" />,
-    //     children: [
-    //         {
-    //             label: 'Đặt hàng',
-    //             key: 'transaction/order',
-    //             icon: <IconAntd icon="ShoppingOutlined" />,
-    //         },
-    //         {
-    //             label: 'Hoá đơn',
-    //             key: 'transaction/bill',
-    //             icon: <IconAntd icon="ContainerOutlined" />,
-    //         },
-    //         {
-    //             label: 'Vận đơn',
-    //             key: 'transaction/billOfLading',
-    //             icon: <IconAntd icon="FormOutlined" />,
-    //         },
-    //         {
-    //             label: 'Trả hàng',
-    //             key: 'transaction/returnOrder',
-    //             icon: <IconAntd icon="RollbackOutlined" />,
-    //         },
-    //         {
-    //             label: 'Chuyển hàng',
-    //             key: 'transaction/shipping',
-    //             icon: <IconAntd icon="CarOutlined" />,
-    //         },
-    //     ],
-    // },
+    {
+        label: 'Tin tức',
+        key: 'new',
+        icon: <IconAntd icon="ProfileOutlined" />,
+    },
     // {
     //     label: 'Đối tác',
     //     key: 'partner',
@@ -93,21 +87,21 @@ export const items: any = [
     //         },
     //     ],
     // },
-    // {
-    //     label: 'Báo cáo',
-    //     key: 'report',
-    //     icon: <IconAntd icon="BarChartOutlined" />,
-    //     children: [
-    //         {
-    //             label: 'Hàng hoá',
-    //             key: 'report/merchandise',
-    //             icon: <IconAntd icon="MergeCellsOutlined" />,
-    //         },
-    //         {
-    //             label: 'Khách hàng',
-    //             key: 'report/customer',
-    //             icon: <IconAntd icon="UserSwitchOutlined" />,
-    //         },
-    //     ],
-    // },
+    {
+        label: 'Báo cáo',
+        key: 'report',
+        icon: <IconAntd icon="BarChartOutlined" />,
+        children: [
+            {
+                label: 'Hàng hoá',
+                key: 'report/merchandise',
+                icon: <IconAntd icon="MergeCellsOutlined" />,
+            },
+            {
+                label: 'Khách hàng',
+                key: 'report/customer',
+                icon: <IconAntd icon="UserSwitchOutlined" />,
+            },
+        ],
+    },
 ];

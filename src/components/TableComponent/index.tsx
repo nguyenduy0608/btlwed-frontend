@@ -25,6 +25,7 @@ interface IProps {
     onRowClick?: any;
     customRowKey?: any;
     renderDefault?: any;
+    rowClassName?: any;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -44,6 +45,7 @@ const TableComponent: React.FC<IProps> = ({
     onRowClick,
     customRowKey,
     renderDefault,
+    rowClassName,
 }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
@@ -96,6 +98,7 @@ const TableComponent: React.FC<IProps> = ({
                                 onClick: () => onRowClick && onRowClick(record), // click row
                             };
                         }}
+                        rowClassName={rowClassName || undefined}
                         bordered
                         pagination={false}
                         rowKey={(record: any) => record.id}
