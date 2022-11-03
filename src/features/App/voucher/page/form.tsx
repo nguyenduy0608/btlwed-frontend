@@ -4,6 +4,7 @@ import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import TopBar from '@/components/TopBar';
 import UploadComponent from '@/components/Upload';
 import { APPLICABLE_TYPE, CUSTOMER_TYPE, REWARD } from '@/contants';
+import useWindowSize from '@/hooks/useWindowSize';
 import Container from '@/layout/Container';
 import { Notification, uuid } from '@/utils';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select } from 'antd';
@@ -36,6 +37,8 @@ const initialValue = {
 const VoucherFormPage = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
+    const { width } = useWindowSize();
+
     const rewardType = Form.useWatch('rewardType', form);
     const enableProducts = Form.useWatch('enableProducts', form);
     const applicableType = Form.useWatch('applicableType', form);
@@ -136,7 +139,7 @@ const VoucherFormPage = () => {
     }, [id]);
 
     return (
-        <FormComponent form={form} onSubmit={handleSubmit}>
+        <FormComponent form={form} initialValues={{ enableProducts: true }} onSubmit={handleSubmit}>
             <TopBar
                 back
                 title={id ? 'Cập nhật voucher ' + `* ${nameVoucher.current} *` : 'Thêm voucher khách hàng'}
@@ -158,7 +161,7 @@ const VoucherFormPage = () => {
                 <CardComponent>
                     <Row>
                         {/* col bên trái */}
-                        <Col span={12}>
+                        <Col xs={24} sm={24} lg={12}>
                             <Row>
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng nhập mã voucher!')]}
@@ -213,7 +216,7 @@ const VoucherFormPage = () => {
                                 />
                             </Row>
                         </Col>
-                        <Col span={12}>
+                        <Col xs={24} sm={24} lg={12}>
                             <FormItemComponent
                                 rules={[rules.required('Vui lòng chọn loại khách hàng!')]}
                                 name="customerType"
@@ -363,12 +366,12 @@ const VoucherFormPage = () => {
 
                     <Divider />
                     <Row style={{ flexDirection: 'row' }}>
-                        <Col span={4}>
+                        <Col xs={24} sm={24} lg={4}>
                             <h2 className="gx-font-weight-medium">Thời gian áp dụng</h2>
                         </Col>
-                        <Col span={20}>
+                        <Col xs={24} sm={24} lg={20}>
                             <FormItemComponent
-                                grid
+                                grid={width > 1024}
                                 rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
                                 name="startTime"
                                 label="Ngày bắt đầu"
@@ -381,7 +384,7 @@ const VoucherFormPage = () => {
                                 }
                             />
                             <FormItemComponent
-                                grid
+                                grid={width > 1024}
                                 rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
                                 name="endTime"
                                 label="Ngày kết thúc"
@@ -394,7 +397,7 @@ const VoucherFormPage = () => {
                                 }
                             />
                             <FormItemComponent
-                                grid
+                                grid={width > 1024}
                                 name="enableProducts"
                                 label=""
                                 valuePropName="checked"
