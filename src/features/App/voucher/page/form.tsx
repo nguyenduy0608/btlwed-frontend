@@ -71,8 +71,8 @@ const VoucherFormPage = () => {
 
             const dataUpload = {
                 ...data,
-                startTime: data.startTime ? moment(data.startTime).format('YYYY-MM-DD') : '',
-                endTime: data.endTime ? moment(data.endTime).format('YYYY-MM-DD') : '',
+                startTime: data.startTime ? moment(data.startTime).format('YYYY-MM-DD HH:mm') : '',
+                endTime: data.endTime ? moment(data.endTime).format('YYYY-MM-DD HH:mm') : '',
                 enableNotification: data?.enableNotification ? 1 : 0,
                 enableProducts: data?.enableProducts ? 1 : 0,
                 status: 1,
@@ -377,7 +377,8 @@ const VoucherFormPage = () => {
                                 label="Ngày bắt đầu"
                                 inputField={
                                     <DatePicker
-                                        format="DD/MM/YYYY"
+                                        showTime
+                                        format="HH:mm DD/MM/YYYY"
                                         placeholder="Chọn ngày bắt đầu"
                                         style={{ width: '100%' }}
                                     />
@@ -390,7 +391,8 @@ const VoucherFormPage = () => {
                                 label="Ngày kết thúc"
                                 inputField={
                                     <DatePicker
-                                        format="DD/MM/YYYY"
+                                        showTime
+                                        format="HH:mm DD/MM/YYYY"
                                         placeholder="Chọn ngày kết thúc"
                                         style={{ width: '100%' }}
                                     />

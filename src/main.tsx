@@ -6,10 +6,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { ContextProvider } from './context/store';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
-
+import * as moment from 'moment-timezone';
 // import css
 import 'antd/dist/antd.min.css';
 import './overiseStyle/style.min.css';
+moment.tz.setDefault('Etc/UTC');
 
 const queryClient = new QueryClient({
     defaultOptions: {

@@ -93,14 +93,14 @@ export const items: any = [
         icon: <IconAntd icon="BarChartOutlined" />,
         children: [
             {
-                label: 'Hàng hoá',
-                key: 'report/merchandise',
-                icon: <IconAntd icon="MergeCellsOutlined" />,
+                label: 'Bán hàng',
+                key: 'report/sell',
+                icon: <IconAntd icon="UserSwitchOutlined" />,
             },
             {
-                label: 'Khách hàng',
-                key: 'report/customer',
-                icon: <IconAntd icon="UserSwitchOutlined" />,
+                label: 'Gian hàng',
+                key: 'report/stall',
+                icon: <IconAntd icon="MergeCellsOutlined" />,
             },
         ],
     },

@@ -1,5 +1,5 @@
 import AppLoading from '@/assets/appLoading.json';
-import { Spin } from 'antd';
+import { Spin, ConfigProvider } from 'antd';
 import Lottie from 'lottie-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -10,6 +10,9 @@ import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
 import { appService } from './service';
+import moment from 'moment';
+import vi_VN from 'antd/lib/locale/vi_VN';
+moment.utc().locale('vi');
 
 function App() {
     const { state, dispatch } = useCallContext();
@@ -48,7 +51,9 @@ function App() {
                 </ContainerLoading>
             }
         >
-            <MainPage role={role} />
+            <ConfigProvider locale={vi_VN}>
+                <MainPage role={role} />
+            </ConfigProvider>
             {/* define default style */}
             <GlobalStyle />
         </SpinLoadingStyled>

@@ -52,13 +52,13 @@ export const columns = (page: number): ColumnsType<DataTypeVoucher> => [
         title: 'Ngày bắt đầu',
         dataIndex: 'startTime',
         align: 'center',
-        render: (value: any) => momentToStringDate(value),
+        render: (value: any) => momentToStringDate(value, 'dateTime'),
     },
     {
         title: 'Ngày kết thúc',
         dataIndex: 'endTime',
         align: 'center',
-        render: (value: any) => momentToStringDate(value),
+        render: (value: any) => momentToStringDate(value, 'dateTime'),
     },
     {
         title: 'Trạng thái',

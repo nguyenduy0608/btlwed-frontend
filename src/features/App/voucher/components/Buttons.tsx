@@ -7,6 +7,7 @@ import { DataTypeVoucher } from './Voucher.Config';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { routerPage } from '@/config/routes';
 import DeleteDescriptionButton from '@/components/Button/Delete.Description.Button';
+import moment from 'moment';
 interface IProps {
     record: DataTypeVoucher;
     // handleShowModal: (value: DataTypePotentialCustomers) => void;
@@ -44,6 +45,7 @@ const Buttons = (props: IProps) => {
                     color: '#0090FF',
                 }}
                 onClick={() => handleLock(record.id)}
+                disabled={moment(record.endTime).isBefore(moment())}
             >
                 <CheckCircleOutlined />
                 Đang hoạt động
@@ -57,6 +59,7 @@ const Buttons = (props: IProps) => {
                     color: '#CC0000',
                 }}
                 onClick={() => handleUnlock(record.id)}
+                disabled={moment(record.endTime).isBefore(moment())}
             >
                 <CloseCircleOutlined />
                 Ngừng hoạt động

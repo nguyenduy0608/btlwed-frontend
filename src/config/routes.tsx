@@ -13,6 +13,8 @@ import AccountFormPage from '@/features/App/account/page/form';
 import NotificationPage from '@/features/App/notification/page';
 import OrderPage from '@/features/App/order/page';
 import OrderDetailPage from '@/features/App/order/page/Detail';
+import ReportSellPage from '@/features/App/report/Sell';
+import ReportStallPage from '@/features/App/report/Stall';
 
 // định nghĩa router
 export const routerPage = {
@@ -43,6 +45,10 @@ export const routerPage = {
 
     // account
     account: '/account',
+
+    // report
+    reportSell: '/report/sell',
+    reportStall: '/report/stall',
 
     // auth....
     login: '/auth/login',
@@ -104,6 +110,17 @@ const PrivateRoutes = [
         element: <NotificationPage />,
     },
 
+    // report
+    {
+        path: routerPage.reportSell,
+        element: <ReportSellPage />,
+    },
+    {
+        path: routerPage.reportStall,
+        element: <ReportStallPage />,
+    },
+
+    // account
     {
         path: routerPage.account,
         element: <AccountPage />,
