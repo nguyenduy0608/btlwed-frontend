@@ -1,10 +1,11 @@
 export const APP_LOADING = 'APP_LOADING';
 export const SET_INFO = 'SET_INFO';
 export const SET_KIOTVIETS = 'SET_KIOTVIETS';
+export const SET_SYNC_LOADING = 'SET_SYNC_LOADING';
 
-type ActionType = typeof APP_LOADING | typeof SET_INFO | typeof SET_KIOTVIETS;
+type ActionType = typeof APP_LOADING | typeof SET_INFO | typeof SET_KIOTVIETS | typeof SET_SYNC_LOADING;
 
-export type InitialStateType = { appLoading: boolean; info: any; kiotviets: IKiotviet[] | null };
+export type InitialStateType = { appLoading: boolean; info: any; kiotviets: IKiotviet[] | null; syncLoading: boolean };
 
 export interface IAction {
     type: ActionType;

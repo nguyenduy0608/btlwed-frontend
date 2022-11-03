@@ -1,13 +1,11 @@
-import React, { ReactNode, useState } from 'react';
-import { EditOutlined, DeleteOutlined, CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import voucherService from '../service';
-import { Notification } from '@/utils';
-import { DataTypeVoucher } from './Voucher.Config';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { routerPage } from '@/config/routes';
 import DeleteDescriptionButton from '@/components/Button/Delete.Description.Button';
-import moment from 'moment';
+import { routerPage } from '@/config/routes';
+import { checkNowDate, Notification } from '@/utils';
+import { CheckCircleOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import voucherService from '../service';
+import { DataTypeVoucher } from './Voucher.Config';
 interface IProps {
     record: DataTypeVoucher;
     // handleShowModal: (value: DataTypePotentialCustomers) => void;
@@ -15,6 +13,7 @@ interface IProps {
 }
 const Buttons = (props: IProps) => {
     const { record, refetch } = props;
+    console.log('🚀 ~ file: Buttons.tsx ~ line 18 ~ Buttons ~ record', record);
     const navigate = useNavigate();
     const handleLock = async (id: number) => {
         const res = await voucherService.lock(id);
@@ -35,6 +34,7 @@ const Buttons = (props: IProps) => {
             refetch();
         }
     };
+
     return [
         record.status ? (
             <Button
@@ -45,7 +45,7 @@ const Buttons = (props: IProps) => {
                     color: '#0090FF',
                 }}
                 onClick={() => handleLock(record.id)}
-                disabled={moment(record.endTime).isBefore(moment())}
+                disabled={checkNowDate(record.endTime) || record.remainQuota == 0}
             >
                 <CheckCircleOutlined />
                 Đang hoạt động
@@ -59,7 +59,7 @@ const Buttons = (props: IProps) => {
                     color: '#CC0000',
                 }}
                 onClick={() => handleUnlock(record.id)}
-                disabled={moment(record.endTime).isBefore(moment())}
+                disabled={checkNowDate(record.endTime) || record.remainQuota == 0}
             >
                 <CloseCircleOutlined />
                 Ngừng hoạt động

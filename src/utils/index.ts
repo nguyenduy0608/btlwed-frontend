@@ -22,11 +22,11 @@ export const Notification = (status: NotificationType, msg: any) => {
 export const momentToStringDate = (date: string | Date, type = 'date') => {
     switch (type) {
         case 'date':
-            return date ? moment(date).format('DD/MM/YYYY') : '';
+            return date ? moment(date).utc().format('DD/MM/YYYY') : '';
         case 'dateTime':
-            return moment(date).format('HH:mm DD/MM/YYYY');
+            return moment(date).utc().format('HH:mm DD/MM/YYYY');
         case 'time':
-            return moment(date).format('HH:mm');
+            return moment(date).utc().format('HH:mm');
         default:
             return '';
     }
@@ -123,4 +123,33 @@ export const removeDuplicateIdInArray = (arr: any) => {
     }, []);
 
     return filteredArr;
+};
+
+// check now
+export const checkNowDate = (date: string) => {
+    const dateNow = moment().format('YYYY-MM-DD');
+    const timeNow = moment().format('HH:mm');
+    const dateCompare = momentParseUtc(date).format('YYYY-MM-DD');
+    const timeCompare = momentParseUtc(date).format('HH:mm');
+    // split timeCompare into hour and minute
+    const timeCompareSplit = timeCompare.split(':');
+    const timeSplit = timeNow.split(':');
+
+    if (dateNow === dateCompare) {
+        if (timeCompareSplit[0] < timeSplit[0]) {
+            return true;
+        }
+
+        if (timeCompareSplit[0] === timeSplit[0]) {
+            if (timeCompareSplit[1] < timeSplit[1]) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+// moment parse utc
+export const momentParseUtc = (date: string) => {
+    return moment(date).utc();
 };

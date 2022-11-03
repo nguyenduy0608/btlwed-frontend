@@ -45,12 +45,21 @@ const VoucherPage = () => {
         setFilterQuery({ ...filterQuery, ...filter });
     }, []);
 
+    React.useEffect(() => {
+        refetch();
+    }, []);
+
     return (
         <>
             <TopBar
                 title="Quản lý voucher"
                 extra={[
-                    <Button onClick={() => navigate(routerPage.voucherForm)} className="gx-mb-0" type="primary">
+                    <Button
+                        key="add_voucher"
+                        onClick={() => navigate(routerPage.voucherForm)}
+                        className="gx-mb-0"
+                        type="primary"
+                    >
                         Thêm mới
                     </Button>,
                 ]}

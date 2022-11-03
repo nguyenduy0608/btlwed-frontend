@@ -11,7 +11,7 @@ const InfoLogin = () => {
                 <h1>Đăng nhập</h1>
                 <p>Bằng cách Đăng nhập, bạn có thể tận dụng các tính năng đầy đủ của các dịch vụ của chúng tôi.</p>
             </div>
-            <LogoStyled className="gx-app-logo">
+            <LogoStyled className="gx-app-logo gx-py-4">
                 <img alt="example" src={images.logo} />
             </LogoStyled>
         </div>

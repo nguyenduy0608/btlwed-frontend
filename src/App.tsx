@@ -1,4 +1,5 @@
 import AppLoading from '@/assets/appLoading.json';
+import loadingSync from '@/assets/loading_sync.json';
 import { Spin, ConfigProvider } from 'antd';
 import Lottie from 'lottie-react';
 import React from 'react';
@@ -12,6 +13,7 @@ import useCallContext from './hooks/useCallContext';
 import { appService } from './service';
 import moment from 'moment';
 import vi_VN from 'antd/lib/locale/vi_VN';
+import { BOX_SHADOW } from './config/theme';
 moment.utc().locale('vi');
 
 function App() {
@@ -42,13 +44,26 @@ function App() {
 
     return (
         <SpinLoadingStyled
-            spinning={state.appLoading}
+            spinning={state.appLoading || state.syncLoading}
             indicator={
-                <ContainerLoading>
-                    <div style={{ height: '600px', width: '600px' }}>
-                        <Lottie animationData={AppLoading} loop={true} />
-                    </div>
-                </ContainerLoading>
+                state.syncLoading ? (
+                    <ContainerLoadingSync>
+                        <ContainerLoad>
+                            <Lottie
+                                style={{ height: '300px', width: '300px' }}
+                                animationData={loadingSync}
+                                loop={true}
+                            />
+                            <strong>Đang đồng bộ ...</strong>
+                        </ContainerLoad>
+                    </ContainerLoadingSync>
+                ) : (
+                    <ContainerLoading>
+                        <div style={{ height: '600px', width: '600px' }}>
+                            <Lottie animationData={AppLoading} loop={true} />
+                        </div>
+                    </ContainerLoading>
+                )
             }
         >
             <ConfigProvider locale={vi_VN}>
@@ -77,6 +92,24 @@ const ContainerLoading = styled.div`
     justify-content: center;
     align-items: center;
     background-color: white;
+`;
+
+const ContainerLoadingSync = styled.div`
+    top: 0 !important;
+    margin: 0 !important;
+    left: 0 !important;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ContainerLoad = styled.div`
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: ${BOX_SHADOW};
+    padding: 40px;
 `;
 
 export default App;

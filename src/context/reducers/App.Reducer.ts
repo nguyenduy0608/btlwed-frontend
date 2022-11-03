@@ -1,4 +1,4 @@
-import { APP_LOADING, IAction, InitialStateType, SET_INFO, SET_KIOTVIETS } from '../types';
+import { APP_LOADING, IAction, InitialStateType, SET_INFO, SET_KIOTVIETS, SET_SYNC_LOADING } from '../types';
 
 export const appReducer = (state: InitialStateType, action: IAction) => {
     switch (action.type) {
@@ -12,6 +12,10 @@ export const appReducer = (state: InitialStateType, action: IAction) => {
 
         case SET_KIOTVIETS: {
             return { ...state, kiotviets: action.payload };
+        }
+
+        case SET_SYNC_LOADING: {
+            return { ...state, syncLoading: action.payload };
         }
 
         default: {

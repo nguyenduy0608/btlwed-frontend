@@ -6,7 +6,7 @@ import UploadComponent from '@/components/Upload';
 import { APPLICABLE_TYPE, CUSTOMER_TYPE, REWARD } from '@/contants';
 import useWindowSize from '@/hooks/useWindowSize';
 import Container from '@/layout/Container';
-import { Notification, uuid } from '@/utils';
+import { momentParseUtc, Notification, uuid } from '@/utils';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select } from 'antd';
 import { decamelize } from 'humps';
 import moment from 'moment';
@@ -115,8 +115,8 @@ const VoucherFormPage = () => {
                 if (res.status) {
                     form.setFieldsValue({
                         ...res.data,
-                        startTime: moment(res.data.startTime),
-                        endTime: moment(res.data.endTime),
+                        startTime: momentParseUtc(res.data.startTime),
+                        endTime: momentParseUtc(res.data.endTime),
                         enableNotification: res.data.enableNotification === 1,
                         enableProducts: res.data.enableProducts === 1,
                     });

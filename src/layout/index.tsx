@@ -1,4 +1,3 @@
-import CustomScrollbars from '@/components/CustomScrollbars';
 import { TAB_SIZE } from '@/config/theme';
 import ErrorBoundary from '@/features/Error/ErrorBoundary';
 import useWindowSize from '@/hooks/useWindowSize';
@@ -7,6 +6,7 @@ import { Layout, Row } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import Topbar from './Content/Topbar';
+import Notification from './Notification';
 const { Content, Footer } = Layout;
 const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
     return function WithPage({ ...props }) {
@@ -52,6 +52,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                         </Content>
                     </ErrorBoundary>
                 </Layout>
+                <Notification />
             </Layout>
         ) : (
             <Layout className="gx-app-layout">

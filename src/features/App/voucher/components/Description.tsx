@@ -19,8 +19,8 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
                 <Descriptions.Item label="Ngày kết thúc">
                     {momentToStringDate(record.endTime, 'dateTime') || '--'}
                 </Descriptions.Item>
-                <Descriptions.Item label="Số lượng quy định">{record.remainQuota || '--'}</Descriptions.Item>
-                <Descriptions.Item label="Số lượng còn lại">{record.rewardType || '--'}</Descriptions.Item>
+                <Descriptions.Item label="Số lượng quy định">{record.quota || '--'}</Descriptions.Item>
+                <Descriptions.Item label="Số lượng còn lại">{record.remainQuota || '--'}</Descriptions.Item>
             </Descriptions>
         </Card>
     );
