@@ -1,13 +1,12 @@
 import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
-import IconAntd from '@/components/IconAntd';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/routes';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { Button, Segmented, Space } from 'antd';
+import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -24,12 +23,9 @@ const ProductPage = () => {
     const [page, setPage] = React.useState(1);
     const [rowSelected, setRowSelected] = React.useState<DataTypeProduct[] | []>([]);
 
-    const {
-        data: products,
-        isLoading,
-        refetch,
-        isRefetching,
-    } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));
+    const { data: products, isLoading } = useQuery<any>(['ProductService', page, filterQuery], () =>
+        ProductService.get({ page, ...filterQuery })
+    );
 
     const onRowSelection = React.useCallback((row: DataTypeProduct[]) => {
         setRowSelected(row);
@@ -60,7 +56,7 @@ const ProductPage = () => {
                     extra={<ExportButton onClick={() => console.log('first')} />}
                 >
                     <TableComponent
-                        loading={isRefetching}
+                        loading={isLoading}
                         page={page}
                         onRowClick={(record: { id: number }) => navigate(`${routerPage.product}/${record.id}`)}
                         rowSelect={false}

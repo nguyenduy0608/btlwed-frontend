@@ -44,12 +44,20 @@ const ModalSelectProduct = ({
         setOpen(false);
     };
 
+    console.log(
+        'kk',
+        productsProps.map((item: any) => item.id)
+    );
+
     return (
         <ModalComponent width={1400} title="Chọn sản phẩm áp dụng" modalVisible={open}>
             <TableComponent
                 // customRowKey={Object.values(productSelected)
                 //     .flat()
                 //     .map((item: any) => item?.id)}
+                hiddenSelectAll={products?.data?.some((product: any, index: number) =>
+                    productsProps.map((item: any) => item.id).includes(product?.id)
+                )}
                 header={
                     <Row style={{ flexDirection: 'row', padding: '0 20px' }} justify="space-between" align="middle">
                         <h3 className="gx-m-0 gx-font-weight-medium">ÁP DỤNG CHO SẢN PHẨM</h3>

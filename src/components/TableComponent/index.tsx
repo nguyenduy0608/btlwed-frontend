@@ -26,6 +26,7 @@ interface IProps {
     customRowKey?: any;
     renderDefault?: any;
     rowClassName?: any;
+    hiddenSelectAll?: boolean;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -46,6 +47,7 @@ const TableComponent: React.FC<IProps> = ({
     customRowKey,
     renderDefault,
     rowClassName,
+    hiddenSelectAll,
 }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
@@ -53,7 +55,7 @@ const TableComponent: React.FC<IProps> = ({
         onChange: (rowKey: React.Key[], selectedRows: any[]) => {
             onRowSelection && onRowSelection(selectedRows);
         },
-        hideSelectAll: !renderDefault,
+        hideSelectAll: hiddenSelectAll,
     };
 
     return (
@@ -62,7 +64,7 @@ const TableComponent: React.FC<IProps> = ({
                 <WrapperTable>
                     <TableStyled
                         showSorterTooltip={{ title: 'Sắp xếp' }}
-                        // loading={loading}
+                        loading={loading}
                         title={header ? () => header : undefined}
                         id={id}
                         className="gx-table-responsive"

@@ -1,17 +1,16 @@
 import CardComponent from '@/components/CardComponent';
-import React, { ReactNode, useState } from 'react';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/routes';
-import { PADDING } from '@/config/theme';
 import Container from '@/layout/Container';
 import { Button } from 'antd';
+import React from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import Description from '../components/Description';
 import Filter from '../components/Filter';
 import { columns, DataTypeVoucher } from '../components/Voucher.Config';
 import voucherService from '../service';
-import { useQuery } from 'react-query';
 import { IFilter } from '../type';
 const initialFilterQuery = {};
 const VoucherPage = () => {
@@ -59,7 +58,7 @@ const VoucherPage = () => {
             <Container>
                 <CardComponent title="" extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent
-                        loading={isRefetching}
+                        loading={isLoading}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}

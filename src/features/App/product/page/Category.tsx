@@ -119,7 +119,7 @@ const ProductCategoryPage = () => {
             <Container>
                 <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent
-                        loading={isRefetching || loadingModal || isLoading}
+                        loading={isLoading}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
