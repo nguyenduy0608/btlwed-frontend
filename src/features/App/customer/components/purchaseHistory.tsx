@@ -22,12 +22,9 @@ const PuchaseHistoryPage = () => {
     const [rowSelected, setRowSelected] = React.useState<DataTypeCustomer[] | []>([]);
     const [form] = Form.useForm();
 
-    const {
-        data: puchaseHistory,
-        isLoading,
-        refetch,
-        isRefetching,
-    } = useQuery<any>(['PurchaseService', page, filterQuery], () => PurchaseService.get({ page, ...filterQuery }));
+    const { data: puchaseHistory, isLoading } = useQuery<any>(['PurchaseService', page, filterQuery], () =>
+        PurchaseService.get({ page, ...filterQuery })
+    );
 
     const onRowSelection = React.useCallback((row: DataTypePurchase[]) => {
         setRowSelected(row);
@@ -39,7 +36,7 @@ const PuchaseHistoryPage = () => {
     return (
         <>
             <CardComponent
-                title="Lịch sử mua hàng"
+                title={<div className="gx-pl-4">Lịch sử mua hàng</div>}
                 extra={[
                     <Space size="middle" wrap>
                         <RangerPicker
@@ -54,6 +51,7 @@ const PuchaseHistoryPage = () => {
             >
                 <TableComponent
                     page={page}
+                    loading={isLoading}
                     rowSelect={false}
                     onChangePage={(_page) => setPage(_page)}
                     onRowSelection={onRowSelection}

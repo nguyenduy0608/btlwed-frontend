@@ -41,7 +41,7 @@ const WalletChangePage = () => {
     return (
         <>
             <CardComponent
-                title="Lịch sử tích điểm"
+                title={<div className="gx-pl-4">Lịch sử tích điểm</div>}
                 extra={[<FilterWallet returnFilter={returnFilter} key="filter" />]}
             >
                 <TableComponent

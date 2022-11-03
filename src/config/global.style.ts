@@ -152,6 +152,13 @@ const GlobalStyle = createGlobalStyle`
    text-decoration: line-through;
 }
 
+.ant-form-item-has-feedback .ant-input-affix-wrapper .ant-input-suffix {
+  padding-right: 0;
+}
+
+
+
+
 `;
 
 export const DefaultSelectStyled = styled(Select)`

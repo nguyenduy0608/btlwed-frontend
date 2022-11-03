@@ -8,6 +8,7 @@ const FormItemComponent = ({
     rules,
     valuePropName,
     inputField,
+    ...props
 }: {
     grid?: boolean;
     label: any;
@@ -15,6 +16,7 @@ const FormItemComponent = ({
     rules?: any;
     valuePropName?: any;
     inputField: ReactNode;
+    props?: { dependencies: any };
 }) => {
     return (
         <Col span={grid ? 12 : 24}>
@@ -25,6 +27,7 @@ const FormItemComponent = ({
                 name={name}
                 rules={rules}
                 valuePropName={valuePropName}
+                {...props}
             >
                 {inputField}
             </Form.Item>

@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import { ProductService } from '../service';
 import { currencyFormat } from '@/utils';
 import TagResult from '@/components/TagResult';
+import { Col, Row } from 'antd';
+import { TitleCard } from '@/config/global.style';
 
 const ProductDetailPage = () => {
     const { id } = useParams();
@@ -16,11 +18,10 @@ const ProductDetailPage = () => {
         ProductService.detail(id)
     );
     const product = data?.data;
-    console.log('🚀 ~ file: Detail.tsx ~ line 20 ~ ProductDetailPage ~ product', product);
 
     return (
         <>
-            <TopBar back title={product?.name} />
+            <TopBar back title={product?.name || '-'} />
             <Container>
                 <CardComponent>
                     <CardContainer
@@ -29,9 +30,9 @@ const ProductDetailPage = () => {
                                 <CardRow left="Mã sản phẩm" right={product?.code} />
                                 <CardRow left="Tên sản phẩm" right={product?.name} />
                                 <CardRow left="Giá bán (VNĐ)" right={currencyFormat(product?.price) + 'đ'} />
-                                <CardRow left="Loại hàng" right={'Chưa có api'} />
+                                <CardRow left="Loại hàng" right={product?.customType} />
                                 <CardRow left="Tổng tồn" right={product?.stock || 0} />
-                                <CardRow left="Số khách quan tâm" right={'Chưa có api'} />
+                                {/* <CardRow left="Số khách quan tâm" right={'Chưa có api'} /> */}
                             </>
                         }
                         rightCol={
@@ -47,7 +48,7 @@ const ProductDetailPage = () => {
                                         )
                                     }
                                 />
-                                <CardRow left="Thuộc tính" right={'Chưa có api'} />
+                                {/* <CardRow left="Thuộc tính" right={'Chưa có api'} /> */}
                                 <CardRow left="Đơn vị tính (Mặc định)" right={product?.masterUnit} />
                                 <CardRow left="Đơn vị tính (Quy đổi)" right={product?.unit} />
                                 <CardRow left="Mô tả" right={product?.description} />
@@ -55,6 +56,15 @@ const ProductDetailPage = () => {
                         }
                         title="Thông tin sản phẩm"
                     />
+                </CardComponent>
+                <CardComponent>
+                    <TitleCard>Thông tin hình ảnh & Video</TitleCard>
+                    <Row gutter={[0, 20]} className="gx-mx-2 gx-mt-4">
+                        <Col span={5}>Hình ảnh</Col>
+                        <Col span={19}></Col>
+                        <Col span={5}>Video</Col>
+                        <Col span={19}></Col>
+                    </Row>
                 </CardComponent>
             </Container>
         </>

@@ -91,38 +91,32 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
         <>
             <Row gutter={[24, 24]}>
                 <Col span={14}>
-                    <DescriptionStyled labelStyle={{ width: '180px' }} title="Thông tin khách hàng" column={2} bordered>
-                        <Descriptions.Item
-                            labelStyle={{ textAlign: 'center' }}
-                            label={<IconAntd icon="UserOutlined" />}
-                        >
+                    <DescriptionStyled
+                        size="small"
+                        labelStyle={{ width: '180px' }}
+                        title="Thông tin khách hàng"
+                        column={2}
+                        bordered
+                    >
+                        <Descriptions.Item span={3} label="Tên khách hàng">
                             {generalInformation?.fullName || '--'}
                         </Descriptions.Item>
-                        <Descriptions.Item
-                            labelStyle={{ textAlign: 'center' }}
-                            label={<IconAntd icon="PhoneOutlined" />}
-                        >
+                        <Descriptions.Item label="Số điện thoại" span={3}>
                             {generalInformation?.phoneNumber || '--'}
                         </Descriptions.Item>
-                        <Descriptions.Item
-                            labelStyle={{ textAlign: 'center' }}
-                            label={<IconAntd icon="ScheduleOutlined" />}
-                        >
+                        <Descriptions.Item label="Ngày sinh" span={3}>
                             {generalInformation?.dateOfBirth
                                 ? moment(generalInformation.dateOfBirth).format('DD/MM/YYYY')
                                 : '--'}
                         </Descriptions.Item>
-                        <Descriptions.Item
-                            labelStyle={{ textAlign: 'center' }}
-                            label={<IconAntd icon="EnvironmentOutlined" />}
-                        >
+                        <Descriptions.Item span={3} label="Địa chỉ">
                             {generalInformation?.address || '--'}
                         </Descriptions.Item>
 
-                        <Descriptions.Item span={2} label="Điểm tích lũy">
+                        <Descriptions.Item span={3} label="Điểm tích lũy">
                             {generalInformation?.wallet?.point}
                         </Descriptions.Item>
-                        <Descriptions.Item span={2} label="Hạn mức công nợ">
+                        <Descriptions.Item span={3} label="Hạn mức công nợ">
                             {generalInformation?.maxDebit}
                         </Descriptions.Item>
                         <Descriptions.Item label="Thời gian công nợ">

@@ -22,6 +22,14 @@ export const CustomerService = {
         const url = `/admin/user/${id}`;
         return AxiosClient.patch(url, { ...data });
     },
+    changeStatus: (id: number, status: number) => {
+        const url = `/admin/user/${id}`;
+        return AxiosClient.patch(url, { status });
+    },
+    changePassword: (id: number, password: string) => {
+        const url = `/admin/user/${id}/password`;
+        return AxiosClient.put(url, { password });
+    },
 };
 export const PurchaseService = {
     get: (params: IQuery) => {
@@ -30,7 +38,7 @@ export const PurchaseService = {
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
 };
-  
+
 export const DebitService = {
     get: (params: IQuery) => {
         const url = `/admin/debit`;

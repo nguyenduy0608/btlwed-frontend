@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React from 'react';
 import IconAntd from '../IconAntd';
 
-const ActiveButton = ({ onClick }: { onClick: () => void }) => {
+const ActiveButton = ({ onClick, disabled = false }: { onClick: () => void; disabled?: boolean }) => {
     return (
         <Button
             type="text"
@@ -12,6 +12,7 @@ const ActiveButton = ({ onClick }: { onClick: () => void }) => {
                 color: '#0090FF',
             }}
             onClick={onClick}
+            disabled={disabled}
         >
             <IconAntd icon="CheckCircleOutlined" />
             Kích hoạt

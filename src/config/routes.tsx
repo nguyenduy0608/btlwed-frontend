@@ -15,6 +15,8 @@ import OrderPage from '@/features/App/order/page';
 import OrderDetailPage from '@/features/App/order/page/Detail';
 import ReportSellPage from '@/features/App/report/Sell';
 import ReportStallPage from '@/features/App/report/Stall';
+import NewsPage from '@/features/App/news/page';
+import NewsFormPage from '@/features/App/news/page/Form';
 
 // định nghĩa router
 export const routerPage = {
@@ -49,6 +51,10 @@ export const routerPage = {
     // report
     reportSell: '/report/sell',
     reportStall: '/report/stall',
+
+    // news
+    news: '/news',
+    newsForm: '/news/form',
 
     // auth....
     login: '/auth/login',
@@ -108,6 +114,17 @@ const PrivateRoutes = [
     {
         path: routerPage.notification,
         element: <NotificationPage />,
+    },
+
+    // new
+    {
+        path: routerPage.news,
+        element: <NewsPage />,
+    },
+    // new
+    {
+        path: routerPage.newsForm,
+        element: <NewsFormPage />,
     },
 
     // report

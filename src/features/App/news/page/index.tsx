@@ -2,21 +2,29 @@ import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
+import { routerPage } from '@/config/routes';
 import Container from '@/layout/Container';
 import { Button } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { columns } from '../../product/components/Product.Config';
-import Filter from './components/Filter';
+import Filter from '../components/Filter';
 
-const ReportSellPage = () => {
+const NewsPage = () => {
+    const navigate = useNavigate();
+
     return (
         <>
             <TopBar
                 title="Báo cáo bán hàng"
                 extra={[
-                    <ExportButton onClick={() => console.log('123')} />,
-                    <Button className="gx-mb-0" type="dashed" danger>
-                        In báo cáo
+                    <Button
+                        onClick={() => navigate(routerPage.newsForm)}
+                        key="add_new"
+                        className="gx-mb-0"
+                        type="primary"
+                    >
+                        Thêm mới
                     </Button>,
                 ]}
             />
@@ -39,4 +47,4 @@ const ReportSellPage = () => {
     );
 };
 
-export default ReportSellPage;
+export default NewsPage;

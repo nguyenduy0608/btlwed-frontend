@@ -2,6 +2,8 @@ import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate } from '@/utils';
 import { ColumnsType } from 'antd/lib/table';
 import { Table as AntdTable } from 'antd';
+import { ORDER_STATUS } from '@/contants';
+import TagResult from '@/components/TagResult';
 export interface DataTypeCustomer {
     id: number;
     code: string;
@@ -98,16 +100,27 @@ export const columns = (page: number): ColumnsType<DataTypeCustomer> => [
         dataIndex: 'address',
     },
     {
-        title: 'Doanh số trên đơn hàng',
+        title: 'DS trên đơn hàng',
         dataIndex: 'turnoverOfOrder',
         align: 'center',
-        render: (value: number) => currencyFormat(value),
+        render: (value: number) => currencyFormat(value || 0),
     },
     {
-        title: 'Doanh số thực tế',
+        title: 'DS thực tế',
         dataIndex: 'turnover',
         align: 'center',
-        render: (value: number) => currencyFormat(value),
+        render: (value: number) => currencyFormat(value || 0),
+    },
+    {
+        title: 'Trạng thái',
+        dataIndex: 'status',
+        align: 'center',
+        render: (value: number) =>
+            value ? (
+                <TagResult text="Đang hoạt động" color="processing" />
+            ) : (
+                <TagResult text="Dừng hoạt động" color="error" />
+            ),
     },
     {
         title: 'Ngày tạo',
@@ -115,7 +128,6 @@ export const columns = (page: number): ColumnsType<DataTypeCustomer> => [
         align: 'center',
         render: (value: any) => momentToStringDate(value),
     },
-    AntdTable.SELECTION_COLUMN,
 ];
 export const Purchasecolumns = (page: number): ColumnsType<DataTypePurchase> => [
     {
@@ -154,14 +166,15 @@ export const Purchasecolumns = (page: number): ColumnsType<DataTypePurchase> => 
         dataIndex: 'status',
         align: 'center',
         render: (value: any) =>
-            (value =
-                value === 'wait_confirmation'
-                    ? 'Đang chờ'
-                    : value === 'inprogress'
-                    ? 'Đang xử lý'
-                    : value === 'completed'
-                    ? 'Hoàn thành'
-                    : 'Hủy'),
+            value === ORDER_STATUS.WAIT_CONFIRMATION ? (
+                <TagResult text="Chờ xác nhận" color="orange" />
+            ) : value === ORDER_STATUS.INPROGRESS ? (
+                <TagResult text="Đang xử lý" color="processing" />
+            ) : value === ORDER_STATUS.COMPLETED ? (
+                <TagResult text="Hoàn thành" color="success" />
+            ) : (
+                <TagResult text="Hủy" color="error" />
+            ),
     },
     {
         title: 'Ngày tạo',

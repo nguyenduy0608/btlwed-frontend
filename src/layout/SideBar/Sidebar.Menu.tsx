@@ -29,6 +29,11 @@ export const items: any = [
         icon: <IconAntd icon="TeamOutlined" />,
     },
     {
+        label: 'Đơn hàng',
+        key: 'order',
+        icon: <IconAntd icon="SwitcherOutlined" />,
+    },
+    {
         label: 'Hàng hoá',
         key: 'merchandise',
         icon: <IconAntd icon="MergeCellsOutlined" />,
@@ -55,24 +60,16 @@ export const items: any = [
         key: 'voucher',
         icon: <IconAntd icon="BarcodeOutlined" />,
     },
-    {
-        label: 'Đơn hàng',
-        key: 'order',
-        icon: <IconAntd icon="SwitcherOutlined" />,
-    },
+
     {
         label: 'Thông báo',
         key: 'notification',
         icon: <IconAntd icon="NotificationOutlined" />,
     },
-    {
-        label: 'Tài khoản',
-        key: 'account',
-        icon: <IconAntd icon="UserOutlined" />,
-    },
+
     {
         label: 'Tin tức',
-        key: 'new',
+        key: 'news',
         icon: <IconAntd icon="ProfileOutlined" />,
     },
     // {
@@ -103,5 +100,10 @@ export const items: any = [
                 icon: <IconAntd icon="MergeCellsOutlined" />,
             },
         ],
+    },
+    {
+        label: 'Tài khoản',
+        key: 'account',
+        icon: <IconAntd icon="UserOutlined" />,
     },
 ];

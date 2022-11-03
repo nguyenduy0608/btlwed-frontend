@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React from 'react';
 import IconAntd from '../IconAntd';
 
-const UnActiveButton = ({ onClick }: { onClick: () => void }) => {
+const UnActiveButton = ({ onClick, disabled = false }: { onClick: () => void; disabled?: boolean }) => {
     return (
         <Button
             type="text"
@@ -12,6 +12,7 @@ const UnActiveButton = ({ onClick }: { onClick: () => void }) => {
                 fontSize: '16px',
                 color: '#CC0000',
             }}
+            disabled={disabled}
         >
             <IconAntd icon="CloseCircleOutlined" />
             Ngừng hoạt động

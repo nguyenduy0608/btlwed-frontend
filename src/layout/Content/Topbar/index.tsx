@@ -7,6 +7,7 @@ import useWindowSize from '@/hooks/useWindowSize';
 import { TAB_SIZE } from '@/config/theme';
 import CustomScrollbars from '@/components/CustomScrollbars';
 import UserInfo from '@/components/UserInfo';
+import { images } from '@/assets/imagesAssets';
 
 const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile: () => void }) => {
     const { width } = useWindowSize();
@@ -18,11 +19,7 @@ const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile
                     <MenuOutlined className="gx-icon-btn" onClick={handleCallbackCollapseMobile} />
                 </div>
                 <Link className="gx-d-block gx-d-lg-none gx-pointer" to="/">
-                    <img
-                        height={30}
-                        alt=""
-                        src="https://winds.vn/wp-content/uploads/2021/07/logoWindSoftBlendNew-e1569232144947.png"
-                    />
+                    <img height={30} alt="" src={images.logo} />
                 </Link>
                 <SearchBox
                     styleName="gx-d-none gx-d-lg-block gx-lt-icon-search-bar-lg"

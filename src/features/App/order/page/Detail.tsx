@@ -1,22 +1,19 @@
 import CardComponent from '@/components/CardComponent';
 import CardContainer from '@/components/CardComponent/Card.Container';
 import CardRow from '@/components/CardComponent/Card.Row';
+import TableComponent from '@/components/TableComponent';
+import TagResult from '@/components/TagResult';
 import TopBar from '@/components/TopBar';
+import { ORDER_STATUS, PAYMENTSTATUS } from '@/contants';
 import Container from '@/layout/Container';
+import { currencyFormat } from '@/utils';
+import { Col, Form, Row } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
-import { OrderService } from '../service';
-import { currencyFormat } from '@/utils';
-import TagResult from '@/components/TagResult';
-import TableComponent from '@/components/TableComponent';
-import { Button, Col, Form, InputNumber, Row, Segmented, Space } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
-import { TitleCardDes } from '@/config/global.style';
 import { columnsProduct, DataTypeOrder } from '../components/Order.Config';
-import { ProductService } from '../../product/service';
-import { ORDERSTATUS, PAYMENTSTATUS } from '@/contants';
+import { OrderService } from '../service';
 
 const initialFilterQuery = {};
 const OrderDetailPage = () => {
@@ -31,7 +28,6 @@ const OrderDetailPage = () => {
         OrderService.detail(id)
     );
     const order = data?.data;
-    console.log('🚀 ~ file: Detail.tsx ~ line 33 ~ OrderDetailPage ~ order', order);
     const orderProduct = data?.data.items;
 
     const onRowSelection = React.useCallback((row: DataTypeOrder[]) => {
@@ -45,7 +41,7 @@ const OrderDetailPage = () => {
             <TopBar back title={'Đơn hàng ' + order?.code} />
             <Container>
                 <Row>
-                    <Col span={12}>
+                    <Col className="gx-pr-3" xs={24} sm={24} lg={12}>
                         <>
                             <CardComponent title="Thông tin khách hàng    ">
                                 <CardRow left="Tên khách hàng" right={order?.user.fullName} />
@@ -62,18 +58,18 @@ const OrderDetailPage = () => {
                         </>
                     </Col>
 
-                    <Col className="gx-p-0" span={12}>
+                    <Col className="gx-p-0" xs={24} sm={24} lg={12}>
                         <>
                             <CardComponent title="Lịch sử đơn hàng">
-                                {order?.status && order?.status === ORDERSTATUS.wait ? (
+                                {order?.status && order?.status === ORDER_STATUS.WAIT_CONFIRMATION ? (
                                     <CardRow left="Thời gian đặt hàng" right={order?.code} />
-                                ) : order?.status === ORDERSTATUS.completed ? (
+                                ) : order?.status === ORDER_STATUS.COMPLETED ? (
                                     <>
                                         <CardRow left="Thời gian đặt hàng" right={order?.code} />
                                         <CardRow left="Xác nhận đơn hàng" right={order?.code} />
                                         <CardRow left="Hoàn thành" right={order?.code} />
                                     </>
-                                ) : order?.status === ORDERSTATUS.inprogress ? (
+                                ) : order?.status === ORDER_STATUS.INPROGRESS ? (
                                     <>
                                         <CardRow left="Thời gian đặt hàng" right={order?.code} />
                                         <CardRow left="Xác nhận đơn hàng" right={order?.code} />
@@ -94,11 +90,11 @@ const OrderDetailPage = () => {
                 <CardComponent
                     title={'Thông tin đơn hàng'}
                     extra={
-                        order?.status && order?.status === ORDERSTATUS.wait ? (
+                        order?.status && order?.status === ORDER_STATUS.WAIT_CONFIRMATION ? (
                             <TagResult text="Chờ xác nhận" color="orange" />
-                        ) : order?.status === ORDERSTATUS.inprogress ? (
+                        ) : order?.status === ORDER_STATUS.INPROGRESS ? (
                             <TagResult text="Đang xử lý" color="processing" />
-                        ) : order?.status === ORDERSTATUS.completed ? (
+                        ) : order?.status === ORDER_STATUS.COMPLETED ? (
                             <TagResult text="Hoàn thành" color="green" />
                         ) : (
                             <TagResult text="Hủy" color="error" />

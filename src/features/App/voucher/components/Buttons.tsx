@@ -1,4 +1,6 @@
+import ActiveButton from '@/components/Button/Active.Button';
 import DeleteDescriptionButton from '@/components/Button/Delete.Description.Button';
+import UnActiveButton from '@/components/Button/UnActive.Button';
 import { routerPage } from '@/config/routes';
 import { checkNowDate, Notification } from '@/utils';
 import { CheckCircleOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons';
@@ -13,7 +15,6 @@ interface IProps {
 }
 const Buttons = (props: IProps) => {
     const { record, refetch } = props;
-    console.log('🚀 ~ file: Buttons.tsx ~ line 18 ~ Buttons ~ record', record);
     const navigate = useNavigate();
     const handleLock = async (id: number) => {
         const res = await voucherService.lock(id);
@@ -37,35 +38,16 @@ const Buttons = (props: IProps) => {
 
     return [
         record.status ? (
-            <Button
-                type="text"
-                className="gx-mb-0"
-                style={{
-                    fontSize: '16px',
-                    color: '#0090FF',
-                }}
+            <ActiveButton
                 onClick={() => handleLock(record.id)}
                 disabled={checkNowDate(record.endTime) || record.remainQuota == 0}
-            >
-                <CheckCircleOutlined />
-                Đang hoạt động
-            </Button>
+            />
         ) : (
-            <Button
-                type="text"
-                className="gx-mb-0"
-                style={{
-                    fontSize: '16px',
-                    color: '#CC0000',
-                }}
+            <UnActiveButton
                 onClick={() => handleUnlock(record.id)}
                 disabled={checkNowDate(record.endTime) || record.remainQuota == 0}
-            >
-                <CloseCircleOutlined />
-                Ngừng hoạt động
-            </Button>
+            />
         ),
-
         <Button
             type="text"
             className="gx-mb-0"

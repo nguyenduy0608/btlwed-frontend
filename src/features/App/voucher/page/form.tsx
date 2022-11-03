@@ -123,9 +123,7 @@ const VoucherFormPage = () => {
                     fileEdit.current = [{ url: res.data?.image, uid: uuid(), name: 'demo' }];
                     if (res?.data?.voucherProduct) {
                         setProductSelected(res.data?.voucherProduct.map((product: any) => product.productId));
-                        setProducts(
-                            res.data?.voucherProduct.map((product: any) => ({ ...product, id: product.productId }))
-                        );
+                        setProducts(res.data?.voucherProduct.map((product: any) => product?.productVariant?.product));
                     }
                     setQuantity({
                         used: res?.data?.used || 0,
@@ -144,14 +142,6 @@ const VoucherFormPage = () => {
                 back
                 title={id ? 'Cập nhật voucher ' + `* ${nameVoucher.current} *` : 'Thêm voucher khách hàng'}
                 extra={[
-                    <Button
-                        key="out"
-                        onClick={() => {
-                            navigate(-1);
-                        }}
-                    >
-                        Thoát
-                    </Button>,
                     <Button key="saveVoucher" type="primary" htmlType="submit">
                         Lưu
                     </Button>,

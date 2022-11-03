@@ -1,9 +1,9 @@
-import { RECORD_SIZE } from '@/config/theme';
-import { currencyFormat, momentToStringDate } from '@/utils';
-import { ColumnsType } from 'antd/lib/table';
-import { Table as AntdTable } from 'antd';
-import { ORDERSTATUS } from '@/contants';
 import TagResult from '@/components/TagResult';
+import { RECORD_SIZE } from '@/config/theme';
+import { ORDER_STATUS } from '@/contants';
+import { currencyFormat, momentToStringDate } from '@/utils';
+import { Table as AntdTable } from 'antd';
+import { ColumnsType } from 'antd/lib/table';
 export interface DataTypeOrder {
     id: number;
     code: string;
@@ -69,11 +69,11 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
         dataIndex: 'status',
         align: 'center',
         render: (value: any) =>
-            value === ORDERSTATUS.wait ? (
+            value === ORDER_STATUS.WAIT_CONFIRMATION ? (
                 <TagResult text="Chờ xác nhận" color="orange" />
-            ) : value === ORDERSTATUS.inprogress ? (
+            ) : value === ORDER_STATUS.INPROGRESS ? (
                 <TagResult text="Đang xử lý" color="processing" />
-            ) : value === ORDERSTATUS.completed ? (
+            ) : value === ORDER_STATUS.COMPLETED ? (
                 <TagResult text="Hoàn thành" color="success" />
             ) : (
                 <TagResult text="Hủy" color="error" />

@@ -1,4 +1,4 @@
-import { PerformanceNodeTiming } from "perf_hooks";
+import { PerformanceNodeTiming } from 'perf_hooks';
 
 export const STATUS = {
     active: 1,
@@ -23,13 +23,18 @@ export const ADMIN = {
     main: 1,
     stall: 2,
 };
-export const ORDERSTATUS ={
-    completed:'completed',
-    inprogress:'inprogress',
-    cancelled :'cancelled',
-    wait: 'wait_confirmation',
-}
-export const PAYMENTSTATUS ={ 
+// export const ORDERSTATUS = {
+//     completed: 'completed',
+//     inprogress: 'inprogress',
+//     cancelled: 'cancelled',
+//     wait: 'wait_confirmation',
+// };
+export const PAYMENTSTATUS = {
     pending: 'pending',
-
-}
+};
+export const ORDER_STATUS = {
+    WAIT_CONFIRMATION: 'wait_confirmation',
+    INPROGRESS: 'inprogress',
+    COMPLETED: 'completed',
+    CANCELLED: 'cancelled',
+};

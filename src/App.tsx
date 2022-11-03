@@ -1,6 +1,6 @@
 import AppLoading from '@/assets/appLoading.json';
 import loadingSync from '@/assets/loading_sync.json';
-import { Spin, ConfigProvider } from 'antd';
+import { Spin, ConfigProvider, Row } from 'antd';
 import Lottie from 'lottie-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -44,26 +44,13 @@ function App() {
 
     return (
         <SpinLoadingStyled
-            spinning={state.appLoading || state.syncLoading}
+            spinning={state.appLoading}
             indicator={
-                state.syncLoading ? (
-                    <ContainerLoadingSync>
-                        <ContainerLoad>
-                            <Lottie
-                                style={{ height: '300px', width: '300px' }}
-                                animationData={loadingSync}
-                                loop={true}
-                            />
-                            <strong>Đang đồng bộ ...</strong>
-                        </ContainerLoad>
-                    </ContainerLoadingSync>
-                ) : (
-                    <ContainerLoading>
-                        <div style={{ height: '600px', width: '600px' }}>
-                            <Lottie animationData={AppLoading} loop={true} />
-                        </div>
-                    </ContainerLoading>
-                )
+                <ContainerLoading>
+                    <div style={{ height: '600px', width: '600px' }}>
+                        <Lottie animationData={AppLoading} loop={true} />
+                    </div>
+                </ContainerLoading>
             }
         >
             <ConfigProvider locale={vi_VN}>
@@ -71,6 +58,18 @@ function App() {
             </ConfigProvider>
             {/* define default style */}
             <GlobalStyle />
+
+            {/* loading khi đồng bộ */}
+            {state.syncLoading && (
+                <ContainerLoadingSync>
+                    <ContainerLoad>
+                        <Lottie style={{ height: '300px', width: '300px' }} animationData={loadingSync} loop={true} />
+                        <Row justify="center">
+                            <strong>Đang đồng bộ ...</strong>
+                        </Row>
+                    </ContainerLoad>
+                </ContainerLoadingSync>
+            )}
         </SpinLoadingStyled>
     );
 }
@@ -103,6 +102,9 @@ const ContainerLoadingSync = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
 `;
 
 const ContainerLoad = styled.div`
