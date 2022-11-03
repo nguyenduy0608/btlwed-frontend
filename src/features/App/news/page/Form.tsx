@@ -5,6 +5,7 @@ import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
 import { Button, Col, Form, Input, Row, Select } from 'antd';
 import { rules } from '../../voucher/rules';
+import NewsEditor from '../components/Editor';
 const NewsFormPage = () => {
     const [form] = Form.useForm();
 
@@ -50,7 +51,9 @@ const NewsFormPage = () => {
                     </Row>
                     <div>
                         <p>Nội dung tin tức</p>
-                        <div>{/* <Editor /> */}</div>
+                        <div>
+                            <NewsEditor />
+                        </div>
                     </div>
                 </CardComponent>
             </Container>
