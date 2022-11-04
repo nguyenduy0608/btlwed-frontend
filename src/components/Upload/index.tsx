@@ -149,8 +149,15 @@ const UploadComponent: React.FC<IProps> = ({
                         onVisibleChange: (visible) => setVisiblePreview(visible),
                     }}
                 >
-                    {files.map((file: UploadFile, index: number) => {
-                        return <Image key={uuid()} src={file.thumbUrl} width={0} style={{ display: 'none' }} />;
+                    {files.map((file: any, index: number) => {
+                        return (
+                            <Image
+                                key={uuid()}
+                                src={file?.thumbUrl || file.url}
+                                width={0}
+                                style={{ display: 'none' }}
+                            />
+                        );
                     })}
                 </Image.PreviewGroup>
             )}

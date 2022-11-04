@@ -38,12 +38,12 @@ const Buttons = (props: IProps) => {
 
     return [
         record.status ? (
-            <ActiveButton
+            <UnActiveButton
                 onClick={() => handleLock(record.id)}
                 disabled={checkNowDate(record.endTime) || record.remainQuota == 0}
             />
         ) : (
-            <UnActiveButton
+            <ActiveButton
                 onClick={() => handleUnlock(record.id)}
                 disabled={checkNowDate(record.endTime) || record.remainQuota == 0}
             />
