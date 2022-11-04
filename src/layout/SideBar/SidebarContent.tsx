@@ -47,7 +47,7 @@ const SidebarContent = ({
             </Row>
             <div className="gx-sidebar-content">
                 {/* top sidebar */}
-                <div className="gx-sidebar-notifications gx-pb-5">
+                <div className="gx-sidebar-notifications gx-pb-3 gx-pt-5">
                     {/* user info */}
                     <UserInfo />
                 </div>

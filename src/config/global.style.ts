@@ -156,7 +156,9 @@ const GlobalStyle = createGlobalStyle`
   padding-right: 0;
 }
 
-
+.gx-app-nav > li {
+  cursor: pointer;
+}
 
 
 `;

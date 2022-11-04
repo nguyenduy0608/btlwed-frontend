@@ -111,13 +111,13 @@ const TableComponent: React.FC<IProps> = ({
                     />
                 </WrapperTable>
             </Col>
-            {!renderDefault && onChangePage && isPagination && total && total > 12 && (
+            {!renderDefault && onChangePage && isPagination && total && total > 12 ? (
                 <Col span={24}>
                     <Row justify="end" style={{ flexDirection: 'row' }}>
                         <PaginationComponent page={page || 1} total={total || 0} onChange={onChangePage} />
                     </Row>
                 </Col>
-            )}
+            ) : null}
         </Row>
     );
 };

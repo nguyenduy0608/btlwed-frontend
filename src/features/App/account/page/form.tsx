@@ -54,9 +54,8 @@ const AccountFormPage = ({
     const handleSubmit = React.useCallback(
         async (data: DataTypeAccount) => {
             setLoadingModal(true);
+            const { accountId, phoneNumber, ...rest } = data;
             if (values) {
-                const { accountId, phoneNumber, ...rest } = data;
-
                 const res = await accountService.update(values.id, {
                     ...rest,
                     avatar: file || values?.avatar,
@@ -69,7 +68,13 @@ const AccountFormPage = ({
                     formReset();
                 }
             } else {
-                const res = await accountService.create({ ...data, avatar: file, status: true, isRoot: true });
+                const res = await accountService.create({
+                    ...rest,
+                    avatar: file,
+                    status: true,
+                    isRoot: true,
+                    phone_number: phoneNumber,
+                });
                 if (res.status) {
                     Notification('success', 'Thêm tài khoản thành công');
                     handleCloseForm();

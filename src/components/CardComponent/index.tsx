@@ -7,13 +7,15 @@ const CardComponent = ({
     title,
     extra,
     children,
+    bodyStyle,
 }: {
     title?: string | ReactNode;
     extra?: ReactNode;
     children: ReactNode;
+    bodyStyle?: React.CSSProperties;
 }) => {
     return (
-        <CardStyled title={title} extra={extra}>
+        <CardStyled bodyStyle={{ ...bodyStyle }} title={title} extra={extra}>
             {children}
         </CardStyled>
     );

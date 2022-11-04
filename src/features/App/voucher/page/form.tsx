@@ -234,7 +234,7 @@ const VoucherFormPage = () => {
                                 <>
                                     <FormItemComponent
                                         name="quantityBuy"
-                                        label="Số lượng sản phẩm cần phải mua"
+                                        label="Số lượng sản phẩm cần mua"
                                         inputField={
                                             <InputNumber
                                                 min={0}
@@ -242,7 +242,7 @@ const VoucherFormPage = () => {
                                                 style={{ width: '100%' }}
                                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                                 parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
-                                                placeholder="Nhập số lượng sản phẩm cần phải mua"
+                                                placeholder="Nhập số lượng sản phẩm cần mua"
                                             />
                                         }
                                     />
