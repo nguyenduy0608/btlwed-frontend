@@ -124,7 +124,7 @@ const Notification = () => {
                 <div style={{ position: 'relative' }}>
                     <Lottie style={{ height: '120px' }} animationData={images.bell} />
                     <CountStyled>
-                        <CountUp start={0} end={99} />
+                        <CountUp start={0} end={69} />
                     </CountStyled>
                 </div>
             </NotiContainerStyled>
