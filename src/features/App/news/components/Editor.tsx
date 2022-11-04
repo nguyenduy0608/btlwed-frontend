@@ -28,7 +28,7 @@ import 'tinymce/plugins/table';
 import 'tinymce/plugins/template';
 import 'tinymce/plugins/help';
 
-const NewsEditor = () => {
+const NewsEditor = ({ content, setContent }: any) => {
     const editorRef: any = React.useRef(null);
     const log = () => {
         if (editorRef.current) {
@@ -37,9 +37,10 @@ const NewsEditor = () => {
     };
     return (
         <Editor
+            value={content}
+            onEditorChange={(ct) => setContent(ct)}
             apiKey="hjuz02bsvcykwi6ruki9xpuarsd6l8txzaouzknog6xef2w5"
             onInit={(evt, editor) => (editorRef.current = editor)}
-            initialValue="<p>This is the initial content of the editor.</p>"
             init={{
                 height: 680,
                 content_style: 'body { font-family:Quicksand,sans-serif; font-size:14px }',

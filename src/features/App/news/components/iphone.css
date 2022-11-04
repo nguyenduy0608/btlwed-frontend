@@ -697,7 +697,7 @@
   bottom: 0;
   width: 3px;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: black;
 }
 .iphoneMock .container .iphone .bordeColor .bordeNegro .mainScreen .statusBar .rightSide .signal:before {
   right: 0;
@@ -713,7 +713,7 @@
   bottom: 0;
   width: 3px;
   border-radius: 5px;
-  background-color: #fff;
+  background-color:black;
 }
 .iphoneMock .container .iphone .bordeColor .bordeNegro .mainScreen .statusBar .rightSide .signal .bar:before {
   right: 8px;
@@ -783,7 +783,7 @@
   width: 15px;
   height: 8px;
   border-radius: 2px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid black;
   position: relative;
 }
 .iphoneMock .container .iphone .bordeColor .bordeNegro .mainScreen .statusBar .rightSide .bateria.mid:after {
@@ -796,7 +796,7 @@
 .iphoneMock .container .iphone .bordeColor .bordeNegro .mainScreen .statusBar .rightSide .bateria:before, .iphoneMock .container .iphone .bordeColor .bordeNegro .mainScreen .statusBar .rightSide .bateria:after {
   content: "";
   position: absolute;
-  background-color: #fff;
+  background-color: black;
 }
 .iphoneMock .container .iphone .bordeColor .bordeNegro .mainScreen .statusBar .rightSide .bateria:before {
   right: -2px;
@@ -957,3 +957,33 @@
   cursor: grab;
   transition: ease all 0.4s;
 }
+
+.unlockBar {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 4px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: ease all 0.2s;
+}
+
+.unlockBar:before {
+  content: attr(data-msj);
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  max-width: 100px;
+  margin: 0 auto;
+  padding-bottom: 5px;
+  color: #fff;
+  font-size: 10px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(5px);
+  transition: ease all 0.1s;
+}
+
