@@ -41,7 +41,7 @@ const NewsEditor = () => {
             onInit={(evt, editor) => (editorRef.current = editor)}
             initialValue="<p>This is the initial content of the editor.</p>"
             init={{
-                height: 500,
+                height: 680,
                 content_style: 'body { font-family:Quicksand,sans-serif; font-size:14px }',
                 plugins: [
                     'advlist',
