@@ -1,3 +1,4 @@
+import { images } from '@/assets/imagesAssets';
 import sync from '@/assets/sync.json';
 import IconAntd from '@/components/IconAntd';
 import { SET_SYNC_LOADING } from '@/context/types';
@@ -6,6 +7,7 @@ import { wait } from '@/utils';
 import { Button, Drawer, Row } from 'antd';
 import Lottie from 'lottie-react';
 import React from 'react';
+import styled from 'styled-components';
 const Notification = () => {
     const { dispatch } = useCallContext();
 
@@ -43,8 +45,20 @@ const Notification = () => {
                     <IconAntd spin icon="SettingOutlined" />
                 </Button>
             </div>
+
+            {/* popup noti */}
+
+            <NotiContainerStyled>
+                <Lottie style={{ height: '120px' }} animationData={images.bell} />
+            </NotiContainerStyled>
         </div>
     );
 };
 
 export default Notification;
+
+const NotiContainerStyled = styled.div`
+    position: fixed;
+    bottom: 40px;
+    right: -10px;
+`;
