@@ -45,6 +45,10 @@ const OrderPage = () => {
         isRefetching,
     } = useQuery<any>(['OrderService', page, filterQuery], () => OrderService.get({ page, ...filterQuery }));
 
+    React.useEffect(() => {
+        refetch();
+    }, [state.syncLoading]);
+
     const onRowSelection = React.useCallback((row: DataTypeOrder[]) => {
         setRowSelected(row);
     }, []);

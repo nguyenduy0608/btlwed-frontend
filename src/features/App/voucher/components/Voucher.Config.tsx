@@ -40,12 +40,12 @@ export const columns = (page: number): ColumnsType<DataTypeVoucher> => [
     },
     {
         title: 'SL quy định',
-        dataIndex: 'remainQuota',
+        dataIndex: 'quota',
         align: 'center',
     },
     {
         title: 'SL còn lại',
-        dataIndex: 'rewardType',
+        dataIndex: 'remainQuota',
         align: 'center',
     },
     {

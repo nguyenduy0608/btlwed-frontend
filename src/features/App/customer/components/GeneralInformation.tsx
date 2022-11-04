@@ -98,28 +98,28 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
                         column={2}
                         bordered
                     >
-                        <Descriptions.Item span={3} label="Tên khách hàng">
+                        <Descriptions.Item span={2} label="Tên khách hàng">
                             {generalInformation?.fullName || '--'}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Số điện thoại" span={3}>
+                        <Descriptions.Item label="Số điện thoại" span={2}>
                             {generalInformation?.phoneNumber || '--'}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Ngày sinh" span={3}>
+                        <Descriptions.Item label="Ngày sinh" span={2}>
                             {generalInformation?.dateOfBirth
                                 ? moment(generalInformation.dateOfBirth).format('DD/MM/YYYY')
                                 : '--'}
                         </Descriptions.Item>
-                        <Descriptions.Item span={3} label="Địa chỉ">
+                        <Descriptions.Item span={2} label="Địa chỉ">
                             {generalInformation?.address || '--'}
                         </Descriptions.Item>
 
-                        <Descriptions.Item span={3} label="Điểm tích lũy">
+                        <Descriptions.Item span={2} label="Điểm tích lũy">
                             {generalInformation?.wallet?.point}
                         </Descriptions.Item>
-                        <Descriptions.Item span={3} label="Hạn mức công nợ">
+                        <Descriptions.Item span={2} label="Hạn mức công nợ">
                             {generalInformation?.maxDebit}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Thời gian công nợ">
+                        <Descriptions.Item span={2} label="Thời gian công nợ">
                             {generalInformation?.maxDebitTime} ngày
                         </Descriptions.Item>
                     </DescriptionStyled>

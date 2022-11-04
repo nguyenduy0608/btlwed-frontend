@@ -12,7 +12,7 @@ import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
 import Filter from '../components/Filter.Product';
-import { columnsProduct, DataTypeProduct } from '../components/Product.Config';
+import { columnsProduct } from '../components/Product.Config';
 import { ProductService } from '../service';
 const initialFilterQuery = {};
 const ProductPage = () => {
@@ -21,15 +21,16 @@ const ProductPage = () => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeProduct[] | []>([]);
 
-    const { data: products, isLoading } = useQuery<any>(['ProductService', page, filterQuery], () =>
-        ProductService.get({ page, ...filterQuery })
-    );
+    const {
+        data: products,
+        isLoading,
+        refetch,
+    } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));
 
-    const onRowSelection = React.useCallback((row: DataTypeProduct[]) => {
-        setRowSelected(row);
-    }, []);
+    React.useEffect(() => {
+        refetch();
+    }, [state.syncLoading]);
 
     const returnFilter = React.useCallback((filter: IFilter) => {
         setPage(1);
@@ -61,7 +62,6 @@ const ProductPage = () => {
                         onRowClick={(record: { id: number }) => navigate(`${routerPage.product}/${record.id}`)}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
-                        onRowSelection={onRowSelection}
                         dataSource={products ? products.data : []}
                         columns={columnsProduct(page)}
                         total={products?.paging?.totalItemCount || 0}

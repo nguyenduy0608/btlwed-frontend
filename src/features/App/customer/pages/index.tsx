@@ -1,4 +1,3 @@
-import DeleteButton from '@/components/Button/Detele.Button';
 import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
@@ -6,7 +5,7 @@ import TopBar from '@/components/TopBar';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { Button, Segmented, Space } from 'antd';
+import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { IFilter } from '../../voucher/type';
@@ -30,6 +29,10 @@ const CustomerPage = () => {
         refetch,
         isRefetching,
     } = useQuery<any>(['customer', page, filterQuery], () => CustomerService.get({ page, ...filterQuery }));
+
+    React.useEffect(() => {
+        refetch();
+    }, [state.syncLoading]);
 
     const onRowSelection = React.useCallback((row: DataTypeCustomer[]) => {
         setRowSelected(row);
@@ -56,6 +59,7 @@ const CustomerPage = () => {
                 title="Danh sách khách hàng"
                 extra={[
                     <Segmented
+                        key="kh"
                         onChange={(value) => setFilterQuery({ ...filterQuery, kiotvietId: value })}
                         options={[
                             selectAll,
@@ -67,7 +71,7 @@ const CustomerPage = () => {
             <Container>
                 <CardComponent
                     title={<Filter returnFilter={returnFilter} key="filter" />}
-                    extra={<ExportButton onClick={() => console.log('first')} />}
+                    extra={<ExportButton key="extra_btn" onClick={() => console.log('first')} />}
                 >
                     <TableComponent
                         loading={isRefetching || loadingModal || isLoading}

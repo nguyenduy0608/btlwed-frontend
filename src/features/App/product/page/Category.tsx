@@ -4,7 +4,9 @@ import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import ModalComponent from '@/components/ModalComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
+import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
+import { selectAll } from '@/service';
 import { Notification, wait } from '@/utils';
 import { Button, Form, InputNumber, Row, Segmented, Space } from 'antd';
 import Input from 'antd/lib/input/Input';
@@ -13,11 +15,9 @@ import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { rules } from '../../voucher/rules';
 import Description from '../components/Description';
+import Filter from '../components/Filter.Category';
 import { columns, DataTypeProductCategory } from '../components/Product.Config';
 import { CategoryService } from '../service';
-import Filter from '../components/Filter.Category';
-import useCallContext from '@/hooks/useCallContext';
-import { selectAll } from '@/service';
 const initialFilterQuery = {};
 
 const initialValue = {
@@ -30,7 +30,6 @@ const ProductCategoryPage = () => {
 
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeProductCategory[] | []>([]);
     const [page, setPage] = React.useState(1);
     const [modalVisible, setModalVisible] = React.useState(false);
     const [loadingModal, setLoadingModal] = React.useState(false);
@@ -43,6 +42,10 @@ const ProductCategoryPage = () => {
         refetch,
         isRefetching,
     } = useQuery<any>(['CategoryService', page, filterQuery], () => CategoryService.get({ page, ...filterQuery }));
+
+    React.useEffect(() => {
+        refetch();
+    }, [state.syncLoading]);
 
     const handleShowModal = (record: DataTypeProductCategory) => {
         setModalVisible(true);
@@ -83,9 +86,7 @@ const ProductCategoryPage = () => {
         },
         [values]
     );
-    const onRowSelection = React.useCallback((row: DataTypeProductCategory[]) => {
-        setRowSelected(row);
-    }, []);
+
     const rowRender = (record: DataTypeProductCategory, index: number, indent: number, expanded: any) => {
         const row = document.querySelector(`[data-row-key="${record.id}"]`);
         if (expanded) {
@@ -124,7 +125,6 @@ const ProductCategoryPage = () => {
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
-                        onRowSelection={onRowSelection}
                         dataSource={category?.data}
                         columns={columns(page)}
                         total={category && category?.paging?.totalItemCount}
