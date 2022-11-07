@@ -6,7 +6,7 @@ import React from 'react';
 import styled from 'styled-components';
 import LocalStorage from './apis/LocalStorage';
 import GlobalStyle from './config/global.style';
-import { APP_LOADING, SET_INFO, SET_KIOTVIETS } from './context/types';
+import { APP_LOADING, SET_INFO, SET_KIOTVIETS, SET_SOCKET } from './context/types';
 import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
@@ -14,6 +14,8 @@ import { appService } from './service';
 import moment from 'moment';
 import vi_VN from 'antd/lib/locale/vi_VN';
 import { BOX_SHADOW } from './config/theme';
+import io from 'socket.io-client';
+
 moment.utc().locale('vi');
 
 function App() {
@@ -41,6 +43,17 @@ function App() {
             });
         }
     }, []);
+
+    // setup socket to context
+    React.useEffect(() => {
+        const socket = io(`https://api.quanlycongviec.cf`, { transports: ['websocket'] });
+        if (state.info) {
+            dispatch({ type: SET_SOCKET, payload: socket });
+        }
+        return () => {
+            socket.close();
+        };
+    }, [dispatch, state.info]);
 
     return (
         <SpinLoadingStyled

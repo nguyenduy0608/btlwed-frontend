@@ -143,7 +143,7 @@ const GlobalStyle = createGlobalStyle`
 }
 
 .gx-layout-sider-scrollbar {
-  height: calc(100vh - 180px) !important;
+  height: calc(100vh - 230px) !important
 }
 
 .disabled {

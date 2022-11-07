@@ -1,11 +1,25 @@
+import { Socket } from 'socket.io-client';
+
 export const APP_LOADING = 'APP_LOADING';
 export const SET_INFO = 'SET_INFO';
 export const SET_KIOTVIETS = 'SET_KIOTVIETS';
 export const SET_SYNC_LOADING = 'SET_SYNC_LOADING';
+export const SET_SOCKET = 'SET_SOCKET';
 
-type ActionType = typeof APP_LOADING | typeof SET_INFO | typeof SET_KIOTVIETS | typeof SET_SYNC_LOADING;
+type ActionType =
+    | typeof APP_LOADING
+    | typeof SET_INFO
+    | typeof SET_KIOTVIETS
+    | typeof SET_SYNC_LOADING
+    | typeof SET_SOCKET;
 
-export type InitialStateType = { appLoading: boolean; info: any; kiotviets: IKiotviet[] | null; syncLoading: boolean };
+export type InitialStateType = {
+    appLoading: boolean;
+    info: any;
+    kiotviets: IKiotviet[] | null;
+    syncLoading: boolean;
+    socket: Socket | null;
+};
 
 export interface IAction {
     type: ActionType;

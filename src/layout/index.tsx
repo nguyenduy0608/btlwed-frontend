@@ -1,12 +1,13 @@
 import { TAB_SIZE } from '@/config/theme';
 import ErrorBoundary from '@/features/Error/ErrorBoundary';
+import Socket from '@/features/Socket';
 import useWindowSize from '@/hooks/useWindowSize';
 import SideBar from '@/layout/SideBar';
 import { Layout, Row } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import Topbar from './Content/Topbar';
-import Notification from './Notification';
+import Setting from './Setting';
 const { Content, Footer } = Layout;
 const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
     return function WithPage({ ...props }) {
@@ -52,7 +53,8 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                         </Content>
                     </ErrorBoundary>
                 </Layout>
-                <Notification />
+                <Setting />
+                <Socket />
             </Layout>
         ) : (
             <Layout className="gx-app-layout">

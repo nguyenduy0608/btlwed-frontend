@@ -106,4 +106,9 @@ export const items: any = [
         key: 'account',
         icon: <IconAntd icon="UserOutlined" />,
     },
+    {
+        label: 'Cấu hình',
+        key: 'setting',
+        icon: <IconAntd icon="SettingOutlined" />,
+    },
 ];
