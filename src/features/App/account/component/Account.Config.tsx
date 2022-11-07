@@ -8,6 +8,7 @@ export interface DataTypeAccount {
     fullName: string;
     email: string;
     phoneNumber?: string;
+    phone_number?: string;
     createdAt: string;
     updatedAt: string;
     password?: string;
@@ -41,7 +42,7 @@ export const columns = (page: number): ColumnsType<DataTypeAccount> => [
         title: 'Loại tài khoản',
         dataIndex: 'accountId',
         align: 'center',
-        render: (value: number) => (value ? 'Admin': 'Admin gian hàng'),
+        render: (value: number) => (value ? 'Admin' : 'Admin gian hàng'),
     },
     {
         title: 'Trạng thái',
