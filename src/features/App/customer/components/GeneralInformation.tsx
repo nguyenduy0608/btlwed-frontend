@@ -13,6 +13,7 @@ import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import { rules } from '../../voucher/rules';
 import { Notification, wait } from '@/utils';
+import SaveButton from '@/components/Button/Save.Button';
 
 const CardInfo = React.memo(({ index, title, value }: { index: number; title: string; value: any }) => {
     return (
@@ -229,9 +230,7 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
                                             <Button type="default" onClick={handleCloseModal}>
                                                 Thoát
                                             </Button>
-                                            <Button type="primary" htmlType="submit">
-                                                Lưu
-                                            </Button>
+                                            <SaveButton htmlType="submit" />
                                         </Space>
                                     </Row>
                                 </FormComponent>

@@ -101,6 +101,12 @@ export const dataSourceProduct = [
 ];
 export const columns = (page: number): ColumnsType<DataTypeProductCategory> => [
     {
+        title: 'STT',
+        dataIndex: 'id',
+        align: 'center',
+        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
+    },
+    {
         title: 'Tên danh mục',
         dataIndex: 'name',
     },
@@ -151,7 +157,7 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
     },
     {
         title: 'Giá bán(VNĐ)',
-        dataIndex: 'price',
+        dataIndex: 'sellingPrice',
         align: 'center',
         render: (value: number) => currencyFormat(value),
     },
@@ -171,12 +177,11 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
 
     {
         title: 'Tổng tồn',
-        dataIndex: 'sellingPrice',
+        dataIndex: 'stock',
         align: 'center',
-        render: (value: number) => currencyFormat(value),
+        render: (value: number) => value,
     },
 ];
-
 
 export const columsOderList = [
     {

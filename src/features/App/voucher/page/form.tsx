@@ -1,3 +1,4 @@
+import SaveButton from '@/components/Button/Save.Button';
 import CardComponent from '@/components/CardComponent';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
@@ -141,11 +142,7 @@ const VoucherFormPage = () => {
             <TopBar
                 back
                 title={id ? 'Cập nhật voucher ' + `* ${nameVoucher.current} *` : 'Thêm voucher khách hàng'}
-                extra={[
-                    <Button key="saveVoucher" type="primary" htmlType="submit">
-                        Lưu
-                    </Button>,
-                ]}
+                extra={[<SaveButton key="saveVoucher" htmlType="submit" />]}
             />
             <Container>
                 <CardComponent>

@@ -1,4 +1,5 @@
 import ExportButton from '@/components/Button/Export.Button';
+import PrintButton from '@/components/Button/Print.Button';
 import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
@@ -13,12 +14,7 @@ const ReportSellPage = () => {
         <>
             <TopBar
                 title="Báo cáo bán hàng"
-                extra={[
-                    <ExportButton onClick={() => console.log('123')} />,
-                    <Button className="gx-mb-0" type="dashed" danger>
-                        In báo cáo
-                    </Button>,
-                ]}
+                extra={[<ExportButton onClick={() => console.log('123')} />, <PrintButton onClick={() => {}} />]}
             />
             <Container>
                 <CardComponent title={[<Filter returnFilter={() => {}} key="filter" />]}>

@@ -11,6 +11,7 @@ import { DataTypeAccount } from '../component/Account.Config';
 import UploadComponent from '@/components/Upload';
 import { errorConfirmPassword, errorValidPhone } from '@/utils/validation';
 import useCallContext from '@/hooks/useCallContext';
+import SaveButton from '@/components/Button/Save.Button';
 const { Option } = Select;
 
 const initialValue = {
@@ -198,9 +199,7 @@ const AccountFormPage = ({
                         >
                             Thoát
                         </Button>
-                        <Button type="primary" htmlType="submit">
-                            Lưu
-                        </Button>
+                        <SaveButton htmlType="submit" />
                     </Space>
                 </Row>
             </FormComponent>

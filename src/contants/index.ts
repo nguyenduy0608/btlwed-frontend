@@ -38,3 +38,20 @@ export const ORDER_STATUS = {
     COMPLETED: 'completed',
     CANCELLED: 'cancelled',
 };
+
+export enum WALLET_TYPE {
+    PAYMENT_ORDER = 'payment_order',
+    ORDER_COMPLETED = 'order_completed',
+    DEPOSIT = 'deposit',
+    MEMBER_UPGRADE = 'member_upgrade',
+    JOIN_WITH_INVITE = 'join_with_invite',
+    INVITE = 'invite',
+    GIFT_EXCHANGE = 'gift_exchange',
+}
+
+export enum ORDER_STATE {
+    ORDER_TIME = 'order_time',
+    CONFIRM = 'confirm',
+    COMPLETED = 'completed',
+    CANCELLED = 'cancelled',
+}

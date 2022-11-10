@@ -4,7 +4,7 @@ import CardRow from '@/components/CardComponent/Card.Row';
 import TableComponent from '@/components/TableComponent';
 import TagResult from '@/components/TagResult';
 import TopBar from '@/components/TopBar';
-import { ORDER_STATUS, PAYMENTSTATUS } from '@/contants';
+import { ORDER_STATE, ORDER_STATUS, PAYMENTSTATUS } from '@/contants';
 import Container from '@/layout/Container';
 import { currencyFormat, momentParseUtc } from '@/utils';
 import { Col, Form, Row, Timeline } from 'antd';
@@ -37,63 +37,55 @@ const OrderDetailPage = () => {
     const returnFilter = React.useCallback((filter: IFilter) => {
         setFilterQuery({ ...filterQuery, ...filter });
     }, []);
+
+    const switchLabel = (historyType: ORDER_STATE) => {
+        switch (historyType) {
+            case ORDER_STATE.ORDER_TIME:
+                return 'Thời gian đặt hàng';
+            case ORDER_STATE.CONFIRM:
+                return 'Xác nhận đơn hàng';
+            case ORDER_STATE.COMPLETED:
+                return 'Hoàn thành';
+            case ORDER_STATE.CANCELLED:
+                return 'Huỷ đơn hàng';
+            default:
+                return '';
+        }
+    };
+
     return (
         <>
             <TopBar back title={'Đơn hàng ' + order?.code} />
             <Container>
                 <Row>
                     <Col className="gx-pr-3" xs={24} sm={24} lg={12}>
-                        <>
-                            <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Thông tin khách hàng    ">
-                                <CardRow left="Tên khách hàng" right={order?.user.fullName} />
-                                <CardRow left="Số điện thoại" right={order?.user.phoneNumber} />
-                            </CardComponent>
-                        </>
+                        <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Thông tin khách hàng    ">
+                            <CardRow left="Tên khách hàng" right={order?.user.fullName} />
+                            <CardRow left="Số điện thoại" right={order?.user.phoneNumber} />
+                        </CardComponent>
 
-                        <>
-                            <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Thông tin người nhận hàng">
-                                <CardRow left="Tên người nhận" right={order?.user.fullName} />
-                                <CardRow left="Số điện thoại" right={order?.user.phoneNumber} />
-                                <CardRow left="Địa chỉ chi tiết" right={order?.user.address} />
-                            </CardComponent>
-                        </>
+                        <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Thông tin người nhận hàng">
+                            <CardRow left="Tên người nhận" right={order?.user.fullName} />
+                            <CardRow left="Số điện thoại" right={order?.user.phoneNumber} />
+                            <CardRow left="Địa chỉ chi tiết" right={order?.user.address} />
+                        </CardComponent>
                     </Col>
 
                     <Col className="gx-p-0" xs={24} sm={24} lg={12}>
-                        <>
-                            <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Lịch sử đơn hàng">
-                                {order?.status && order?.status === ORDER_STATUS.WAIT_CONFIRMATION ? (
-                                    <CardRow
-                                        left="Thời gian đặt hàng"
-                                        right={
-                                            <Timeline>
-                                                <Timeline.Item>
-                                                    {momentParseUtc(order?.createdAt).format('HH:mm DD/MM/YYYY')}
-                                                </Timeline.Item>
-                                            </Timeline>
-                                        }
-                                    />
-                                ) : order?.status === ORDER_STATUS.COMPLETED ? (
-                                    <>
-                                        <CardRow left="Thời gian đặt hàng" right={order?.code} />
-                                        <CardRow left="Xác nhận đơn hàng" right={order?.code} />
-                                        <CardRow left="Hoàn thành" right={order?.code} />
-                                    </>
-                                ) : order?.status === ORDER_STATUS.INPROGRESS ? (
-                                    <>
-                                        <CardRow left="Thời gian đặt hàng" right={order?.code} />
-                                        <CardRow left="Xác nhận đơn hàng" right={order?.code} />
-                                    </>
-                                ) : (
-                                    <>
-                                        <CardRow left="Thời gian đặt hàng" right={order?.code} />
-                                        <CardRow left="Xác nhận đơn hàng" right={order?.code} />
-                                        <CardRow left="Hủy đơn hàng" right={order?.code} />
-                                        <CardRow left="Lý do hủy đơn" right={order?.code} />
-                                    </>
-                                )}
-                            </CardComponent>
-                        </>
+                        <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Lịch sử đơn hàng">
+                            {order?.orderHistory.map((od: any) => (
+                                <CardRow
+                                    left={switchLabel(od.statusKiotviet)}
+                                    right={
+                                        <Timeline>
+                                            <Timeline.Item>
+                                                {momentParseUtc(order?.createdAt).format('HH:mm DD/MM/YYYY')}
+                                            </Timeline.Item>
+                                        </Timeline>
+                                    }
+                                />
+                            ))}
+                        </CardComponent>
                     </Col>
                 </Row>
 

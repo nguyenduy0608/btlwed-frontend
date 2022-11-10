@@ -14,26 +14,22 @@ import FilterWallet from './FilterWallet';
 import { title } from 'process';
 const initialFilterQuery = {};
 
-const WalletChangePage = () => {
+const WalletChangePage = ({ customerId }: { customerId: number }) => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeWalletChange[] | []>([]);
     const [form] = Form.useForm();
 
     const {
-        data: walletChange,
+        data: walletChanges,
         isLoading,
         refetch,
         isRefetching,
-    } = useQuery<any>(['WalletChangeService', page, filterQuery], () =>
-        WalletChangeService.get({ page, ...filterQuery })
+    } = useQuery<any>(['WalletChangeService', page, filterQuery, customerId], () =>
+        WalletChangeService.get({ page, ...filterQuery, user_id: customerId })
     );
 
-    const onRowSelection = React.useCallback((row: DataTypeWalletChange[]) => {
-        setRowSelected(row);
-    }, []);
     const returnFilter = React.useCallback((filter: IFilter) => {
         setFilterQuery({ ...filterQuery, ...filter });
     }, []);
@@ -44,15 +40,15 @@ const WalletChangePage = () => {
                 title={<div className="gx-pl-4">Lịch sử tích điểm</div>}
                 extra={[<FilterWallet returnFilter={returnFilter} key="filter" />]}
             >
+                <div className="gx-mb-3">Tổng điểm hiện tại: {walletChanges?.data?.totalPoint || 0}</div>
                 <TableComponent
-                    loading={isRefetching || loadingModal || isLoading}
+                    loading={isRefetching}
                     page={page}
                     rowSelect={false}
                     onChangePage={(_page) => setPage(_page)}
-                    onRowSelection={onRowSelection}
-                    dataSource={walletChange ? walletChange.data : []}
+                    dataSource={walletChanges ? walletChanges?.data?.listPointChange : []}
                     columns={WalletChangecolumns(page)}
-                    total={walletChange && walletChange?.paging?.totalItemCount}
+                    total={walletChanges && walletChanges?.paging?.totalItemCount}
                 />
             </CardComponent>
         </>

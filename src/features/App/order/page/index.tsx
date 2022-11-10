@@ -19,6 +19,7 @@ import useCallContext from '@/hooks/useCallContext';
 import { selectAll } from '@/service';
 import ExportButton from '@/components/Button/Export.Button';
 import { routerPage } from '@/config/routes';
+import PrintButton from '@/components/Button/Print.Button';
 const initialFilterQuery = {};
 
 const initialValue = {
@@ -75,12 +76,7 @@ const OrderPage = () => {
             <Container>
                 <CardComponent
                     title={<Filter returnFilter={returnFilter} key="filter" />}
-                    extra={[
-                        <Button className="gx-mb-0" type="default" style={{ backgroundColor: 'green', color: 'white' }}>
-                            In báo cáo
-                        </Button>,
-                        <ExportButton onClick={() => console.log('first')} />,
-                    ]}
+                    extra={[<PrintButton onClick={() => {}} />, <ExportButton onClick={() => console.log('first')} />]}
                 >
                     <TableComponent
                         loading={isRefetching || loadingModal || isLoading}

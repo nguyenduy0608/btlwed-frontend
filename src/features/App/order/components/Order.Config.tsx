@@ -138,6 +138,4 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
         align: 'center',
         render: (value, row: any) => currencyFormat(row?.price * row?.quantity),
     },
-
-    AntdTable.SELECTION_COLUMN,
 ];

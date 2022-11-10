@@ -25,6 +25,7 @@ const ProductPage = () => {
     const {
         data: products,
         isLoading,
+        isRefetching,
         refetch,
     } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));
 
@@ -57,7 +58,7 @@ const ProductPage = () => {
                     extra={<ExportButton onClick={() => console.log('first')} />}
                 >
                     <TableComponent
-                        loading={isLoading}
+                        loading={isLoading || isRefetching}
                         page={page}
                         onRowClick={(record: { id: number }) => navigate(`${routerPage.product}/${record.id}`)}
                         rowSelect={false}

@@ -1,15 +1,27 @@
 import LocalStorage from '@/apis/LocalStorage';
+import { rules } from '@/features/App/voucher/rules';
 import useCallContext from '@/hooks/useCallContext';
 import { DownOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Popover, Row } from 'antd';
+import { Avatar, Badge, Button, Col, Form, Input, Modal, Popover, Row, Space } from 'antd';
+import React from 'react';
+import SaveButton from '../Button/Save.Button';
+import FormComponent from '../FormComponent';
 import IconAntd from '../IconAntd';
+import ModalComponent from '../ModalComponent';
 
 const UserInfo = () => {
     const { state, dispatch } = useCallContext();
+    const [open, setOpen] = React.useState(false);
+
+    const [form] = Form.useForm();
+
+    const handleSubmit = () => {};
 
     const userMenuOptions = (
         <ul className="gx-user-popover">
-            <li className="gx-font-weight-medium">Tài khoản</li>
+            <li className="gx-font-weight-medium" onClick={() => setOpen(true)}>
+                Đổi mật khẩu
+            </li>
             <li
                 className="gx-font-weight-medium"
                 onClick={() => {
@@ -21,10 +33,11 @@ const UserInfo = () => {
             </li>
         </ul>
     );
+
     return (
         <>
             <Row wrap={false} justify="start" className="gx-avatar-row gx-m-0">
-                <Popover placement="bottomRight" content={userMenuOptions} trigger="click">
+                <Popover placement="bottomRight" content={userMenuOptions}>
                     <Avatar src={state?.info?.avatar} className="gx-size-40 gx-pointer gx-mr-3" alt="" />
                     <span className="gx-avatar-name gx-font-weight-bold" style={{ color: 'white' }}>
                         {state?.info?.fullName}
@@ -44,8 +57,63 @@ const UserInfo = () => {
                     </Badge>
                 </li>
             </Row>
+            <ModalComponent modalVisible={open} title="Đổi mật khẩu">
+                <FormComponent form={form} onSubmit={handleSubmit}>
+                    <Row gutter={[20, 0]}>
+                        <Col span={24}>
+                            <Form.Item
+                                rules={[rules.required('Vui lòng nhập mật khẩu cũ!')]}
+                                name="oldPassword"
+                                label="Mật khẩu cũ"
+                                hasFeedback
+                            >
+                                <Input.Password placeholder="Nhập mật khẩu cũ" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={24}>
+                            <Form.Item
+                                rules={[rules.required('Vui lòng nhập mật khẩu mới!')]}
+                                name="newPassword"
+                                label="Mật khẩu mới"
+                                hasFeedback
+                            >
+                                <Input.Password placeholder="Nhập mật khẩu mới" />
+                            </Form.Item>
+                        </Col>
+                        <Col span={24}>
+                            <Form.Item
+                                rules={[
+                                    rules.required('Vui lòng xác nhận mật khẩu!'),
+                                    ({ getFieldValue }: any) => ({
+                                        validator(_: any, value: any) {
+                                            if (!value || getFieldValue('password') === value) {
+                                                return Promise.resolve();
+                                            }
+                                            return Promise.reject(new Error('Mật khẩu nhập lại không trùng khớp!'));
+                                        },
+                                    }),
+                                ]}
+                                dependencies={['password']}
+                                hasFeedback
+                                name="reNewPassword"
+                                label="Xác nhận mật khẩu"
+                            >
+                                <Input.Password placeholder="Nhập mật khẩu xác nhận" />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row style={{ width: '100%' }} justify="end">
+                        <Space>
+                            <Button type="default" onClick={() => setOpen(false)}>
+                                Đóng
+                            </Button>
+                            <SaveButton htmlType="submit" />
+                        </Space>
+                    </Row>
+                </FormComponent>
+            </ModalComponent>
         </>
     );
 };
 
-export default UserInfo;
+export default React.memo(UserInfo);

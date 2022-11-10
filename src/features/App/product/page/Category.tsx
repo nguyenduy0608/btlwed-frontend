@@ -1,3 +1,4 @@
+import SaveButton from '@/components/Button/Save.Button';
 import CardComponent from '@/components/CardComponent';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
@@ -165,9 +166,7 @@ const ProductCategoryPage = () => {
                                     <Button type="default" onClick={handleCloseModal}>
                                         Thoát
                                     </Button>
-                                    <Button type="primary" htmlType="submit">
-                                        Lưu
-                                    </Button>
+                                    <SaveButton htmlType="submit" />
                                 </Space>
                             </Row>
                         </FormComponent>

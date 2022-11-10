@@ -1,4 +1,5 @@
 import ActiveButton from '@/components/Button/Active.Button';
+import SaveButton from '@/components/Button/Save.Button';
 import UnActiveButton from '@/components/Button/UnActive.Button';
 import FormComponent from '@/components/FormComponent';
 import IconAntd from '@/components/IconAntd';
@@ -29,7 +30,7 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
             children: <GeneralInformation customerId={record.id} />,
         }, // remember to pass the key prop
         { label: 'Thông tin mua hàng', key: '2', children: <PuchaseHistoryPage /> },
-        { label: 'Lịch sử tích điểm', key: '3', children: <WalletChangePage /> },
+        { label: 'Lịch sử tích điểm', key: '3', children: <WalletChangePage customerId={record.id} /> },
     ];
 
     const handleLock = async (id: number) => {
@@ -127,9 +128,7 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
                             <Button type="default" onClick={() => setModalVisible(false)}>
                                 Thoát
                             </Button>
-                            <Button type="primary" htmlType="submit">
-                                Lưu
-                            </Button>
+                            <SaveButton htmlType="submit" />
                         </Space>
                     </Row>
                 </FormComponent>

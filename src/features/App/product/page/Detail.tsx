@@ -9,11 +9,16 @@ import { useParams } from 'react-router-dom';
 import { ProductService } from '../service';
 import { currencyFormat } from '@/utils';
 import TagResult from '@/components/TagResult';
-import { Col, Row } from 'antd';
-import { TitleCard } from '@/config/global.style';
+import { Col, Image, Row, Typography } from 'antd';
+import { DefaultSelectStyled, TitleCard } from '@/config/global.style';
+import styled from 'styled-components';
+import EditButton from '@/components/Button/Edit.Button';
+import SaveButton from '@/components/Button/Save.Button';
 
 const ProductDetailPage = () => {
     const { id } = useParams();
+    const [isEdit, setIsEdit] = React.useState(false);
+
     const { data, isLoading, refetch, isRefetching } = useQuery<any>(['detailProduct', id], () =>
         ProductService.detail(id)
     );
@@ -21,7 +26,17 @@ const ProductDetailPage = () => {
 
     return (
         <>
-            <TopBar back title={product?.name || '-'} />
+            <TopBar
+                back
+                title={product?.name || '-'}
+                extra={
+                    isEdit ? (
+                        <SaveButton onClick={() => setIsEdit(false)} />
+                    ) : (
+                        <EditButton onClick={() => setIsEdit(true)} />
+                    )
+                }
+            />
             <Container>
                 <CardComponent>
                     <CardContainer
@@ -30,7 +45,26 @@ const ProductDetailPage = () => {
                                 <CardRow left="Mã sản phẩm" right={product?.code} />
                                 <CardRow left="Tên sản phẩm" right={product?.name} />
                                 <CardRow left="Giá bán (VNĐ)" right={currencyFormat(product?.price) + 'đ'} />
-                                <CardRow left="Loại hàng" right={product?.customType} />
+                                <CardRow
+                                    left="Loại hàng"
+                                    right={
+                                        isEdit ? (
+                                            <DefaultSelectStyled
+                                                defaultValue={product?.customType}
+                                                placeholder="Chọn loại hàng"
+                                            >
+                                                <DefaultSelectStyled.Option value="is_new">
+                                                    Hàng mới
+                                                </DefaultSelectStyled.Option>
+                                                <DefaultSelectStyled.Option value="is_sale">
+                                                    Hàng bán chạy
+                                                </DefaultSelectStyled.Option>
+                                            </DefaultSelectStyled>
+                                        ) : (
+                                            product?.customType
+                                        )
+                                    }
+                                />
                                 <CardRow left="Tổng tồn" right={product?.stock || 0} />
                                 {/* <CardRow left="Số khách quan tâm" right={'Chưa có api'} /> */}
                             </>
@@ -58,17 +92,33 @@ const ProductDetailPage = () => {
                     />
                 </CardComponent>
                 <CardComponent>
-                    <TitleCard>Thông tin hình ảnh & Video</TitleCard>
+                    <TitleCard>Thông tin hình ảnh</TitleCard>
                     <Row gutter={[0, 20]} className="gx-mx-2 gx-mt-4">
                         <Col span={5}>Hình ảnh</Col>
-                        <Col span={19}></Col>
-                        <Col span={5}>Video</Col>
-                        <Col span={19}></Col>
+                        <Col span={19}>
+                            <Row>
+                                {product?.images?.map((item: any) => (
+                                    <ColImageStyled span={2}>
+                                        <Image wrapperStyle={{ height: '100%' }} src={item?.src} />
+                                    </ColImageStyled>
+                                ))}
+                            </Row>
+                        </Col>
                     </Row>
                 </CardComponent>
             </Container>
         </>
     );
 };
+
+const ColImageStyled = styled(Col)`
+    border: 1px dashed #ccc;
+    margin: 0 6px !important;
+    padding: 4px;
+    border-radius: 10px;
+    & .ant-image-mask {
+        border-radius: 10px;
+    }
+`;
 
 export default ProductDetailPage;

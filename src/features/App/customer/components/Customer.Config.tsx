@@ -182,7 +182,6 @@ export const Purchasecolumns = (page: number): ColumnsType<DataTypePurchase> => 
         align: 'center',
         render: (value: any) => momentToStringDate(value),
     },
-    AntdTable.SELECTION_COLUMN,
 ];
 export const Debtcolumns = (page: number): ColumnsType<DataTypeDebt> => [
     {
@@ -230,16 +229,21 @@ export const WalletChangecolumns = (page: number): ColumnsType<DataTypeWalletCha
         align: 'center',
         render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
     },
-
     {
-        title: 'Tác vụ',
+        title: 'Mã đơn hàng',
         dataIndex: '',
         align: 'center',
     },
     {
-        title: 'Số điểm',
-        dataIndex: '',
+        title: 'Tác vụ',
+        dataIndex: 'note',
         align: 'center',
+    },
+    {
+        title: 'Số điểm',
+        dataIndex: 'value',
+        align: 'center',
+        render: (value: number) => currencyFormat(value || 0),
     },
     {
         title: 'Ngày tạo',

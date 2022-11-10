@@ -11,7 +11,6 @@ const items = [
 ];
 const SettingPage = () => {
     const [tabIndex, setTabIndex] = React.useState('0');
-    console.log('🚀 ~ file: index.tsx ~ line 14 ~ SettingPage ~ tabIndex', tabIndex);
 
     return (
         <>

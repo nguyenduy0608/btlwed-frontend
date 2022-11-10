@@ -21,7 +21,6 @@ const CustomerPage = () => {
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeCustomer[] | null>(null);
 
     const {
         data: customer,
@@ -33,10 +32,6 @@ const CustomerPage = () => {
     React.useEffect(() => {
         refetch();
     }, [state.syncLoading]);
-
-    const onRowSelection = React.useCallback((row: DataTypeCustomer[]) => {
-        setRowSelected(row);
-    }, []);
 
     const rowRender = (record: DataTypeCustomer, index: number, indent: number, expanded: any) => {
         const row = document.querySelector(`[data-row-key="${record.id}"]`);
@@ -79,7 +74,6 @@ const CustomerPage = () => {
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
-                        onRowSelection={onRowSelection}
                         dataSource={customer ? customer.data : []}
                         columns={columns(page)}
                         total={customer && customer?.paging?.totalItemCount}

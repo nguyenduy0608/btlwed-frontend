@@ -35,7 +35,7 @@ export const PurchaseService = {
     get: (params: IQuery) => {
         const url = `/admin/order`;
         const handleParams = handleObjectEmpty(params);
-        return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
+        return AxiosClient.get(url, { params: { ...handleParams, limit: 8 } });
     },
 };
 
@@ -47,7 +47,7 @@ export const DebitService = {
     },
 };
 export const WalletChangeService = {
-    get: (params: IQuery) => {
+    get: (params: any) => {
         const url = `/admin/wallet_change`;
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });

@@ -1,18 +1,18 @@
 import RangerPicker from '@/components/RangerPicker';
 import SearchInput from '@/components/SearchInput';
 import { DefaultSelectStyled } from '@/config/global.style';
+import { WALLET_TYPE } from '@/contants';
 import { Select, Space } from 'antd';
 
 const { Option } = Select;
 
 const FilterWallet = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
     const handleChange = (value: any) => {
-        returnFilter({ status: value });
+        returnFilter({ type: value });
     };
 
     return (
         <Space size="middle" wrap>
-           
             <DefaultSelectStyled
                 placeholder="Tác vụ"
                 allowClear
@@ -20,8 +20,12 @@ const FilterWallet = ({ returnFilter }: { returnFilter: (filter: any) => void })
                 defaultValue={null}
                 onChange={handleChange}
             >
-                <Option value={1}>Đang hoạt động</Option>
-                <Option value={0}>Ngừng hoạt động</Option>
+                <Option value={WALLET_TYPE.ORDER_COMPLETED}>Hoàn thành đơn hàng</Option>
+                <Option value={WALLET_TYPE.PAYMENT_ORDER}>Thanh toán đơn hàng</Option>
+                <Option value={WALLET_TYPE.INVITE}>Giới thiệu ứng dụng</Option>
+                <Option value={WALLET_TYPE.JOIN_WITH_INVITE}>Đăng ký với mã giới thiệu</Option>
+                <Option value={WALLET_TYPE.DEPOSIT}>Nạp tiền từ VNPAY</Option>
+                <Option value={WALLET_TYPE.GIFT_EXCHANGE}>Đổi quà</Option>
             </DefaultSelectStyled>
             <RangerPicker
                 name="dateFilter"
