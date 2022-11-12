@@ -56,6 +56,7 @@ export const routerPage = {
     // news
     news: '/news',
     newsForm: '/news/form',
+    newsFormEdit: '/news/form/:id',
 
     // setting
     setting: '/setting',
@@ -125,9 +126,12 @@ const PrivateRoutes = [
         path: routerPage.news,
         element: <NewsPage />,
     },
-    // new
     {
         path: routerPage.newsForm,
+        element: <NewsFormPage />,
+    },
+    {
+        path: routerPage.newsFormEdit,
         element: <NewsFormPage />,
     },
 

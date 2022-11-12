@@ -34,7 +34,7 @@ export const ProductService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
-    update: (id: number, data: DataTypeProduct) => {
+    update: (id: number, data: any) => {
         const url = `/admin/product/${id}`;
         return AxiosClient.patch(url, { ...data });
     },

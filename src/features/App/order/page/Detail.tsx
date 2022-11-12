@@ -1,6 +1,7 @@
 import CardComponent from '@/components/CardComponent';
 import CardContainer from '@/components/CardComponent/Card.Container';
 import CardRow from '@/components/CardComponent/Card.Row';
+import IconAntd from '@/components/IconAntd';
 import TableComponent from '@/components/TableComponent';
 import TagResult from '@/components/TagResult';
 import TopBar from '@/components/TopBar';
@@ -73,18 +74,21 @@ const OrderDetailPage = () => {
 
                     <Col className="gx-p-0" xs={24} sm={24} lg={12}>
                         <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Lịch sử đơn hàng">
-                            {order?.orderHistory.map((od: any) => (
-                                <CardRow
-                                    left={switchLabel(od.statusKiotviet)}
-                                    right={
-                                        <Timeline>
-                                            <Timeline.Item>
-                                                {momentParseUtc(order?.createdAt).format('HH:mm DD/MM/YYYY')}
-                                            </Timeline.Item>
-                                        </Timeline>
-                                    }
-                                />
-                            ))}
+                            {/* <CardRow
+                                left={order?.orderHistory.map((od: any) => )}
+                                right={ */}
+                            <Timeline mode="left" className="gx-mt-4">
+                                {order?.orderHistory.map((od: any) => (
+                                    <Timeline.Item
+                                        dot={<IconAntd icon="ClockCircleOutlined" size="16px" />}
+                                        label={switchLabel(od.statusKiotviet)}
+                                    >
+                                        {momentParseUtc(order?.createdAt).format('HH:mm DD/MM/YYYY')}
+                                    </Timeline.Item>
+                                ))}
+                            </Timeline>
+                            {/* }
+                            /> */}
                         </CardComponent>
                     </Col>
                 </Row>

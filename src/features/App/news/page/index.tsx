@@ -5,7 +5,7 @@ import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/routes';
 import Container from '@/layout/Container';
-import { Button } from 'antd';
+import { Button, Switch } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -69,9 +69,42 @@ const NewsPage = () => {
                         rowSelect
                         onChangePage={(_page) => setPage(_page)}
                         // expandedRowRender={rowRender}
+                        onRowClick={(record: any) => navigate(routerPage.newsForm + '/' + record.id)}
                         onRowSelection={onRowSelection}
                         dataSource={news?.data || []}
-                        columns={columns(1)}
+                        columns={[
+                            ...columns(page),
+                            {
+                                title: 'Trạng thái hoạt động',
+                                dataIndex: 'statusActive',
+                                align: 'center',
+                                width: 40,
+                                render: (value: number, row: any) => (
+                                    <div
+                                        onClick={(e: any) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        <Switch
+                                            onChange={(value) => {
+                                                newService
+                                                    .updateStatus(row.id, {
+                                                        statusActive: value,
+                                                        title: row.title,
+                                                        status: row.status,
+                                                        type: row.type,
+                                                    })
+                                                    .then(() => {
+                                                        refetch();
+                                                    });
+                                            }}
+                                            defaultChecked={!!value}
+                                        />
+                                    </div>
+                                ),
+                            },
+                        ]}
                         total={news?.paging?.totalItemCount}
                     />
                 </CardComponent>

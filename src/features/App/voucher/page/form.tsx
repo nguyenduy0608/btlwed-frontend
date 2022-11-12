@@ -61,9 +61,6 @@ const VoucherFormPage = () => {
         remaining: 0,
     });
 
-    const formReset = () => {
-        form.setFieldsValue(initialValue);
-    };
     const handleSubmit = React.useCallback(
         async (data: any) => {
             if (!id && !file) return Notification('warning', 'Vui lòng chọn ảnh');

@@ -14,6 +14,7 @@ import { DefaultSelectStyled, TitleCard } from '@/config/global.style';
 import styled from 'styled-components';
 import EditButton from '@/components/Button/Edit.Button';
 import SaveButton from '@/components/Button/Save.Button';
+import { IStatus } from '../../news/service';
 
 const ProductDetailPage = () => {
     const { id } = useParams();
@@ -23,19 +24,31 @@ const ProductDetailPage = () => {
         ProductService.detail(id)
     );
     const product = data?.data;
+    const [dataEdit, setDataEdit] = React.useState({
+        customType: '',
+        status: 1,
+    });
+
+    React.useEffect(() => {
+        setDataEdit({
+            customType: product?.customType,
+            status: product?.status,
+        });
+    }, [product]);
+
+    const handleSubmit = () => {
+        ProductService.update(id as any, dataEdit).then(() => {
+            refetch();
+            setIsEdit(false);
+        });
+    };
 
     return (
         <>
             <TopBar
                 back
                 title={product?.name || '-'}
-                extra={
-                    isEdit ? (
-                        <SaveButton onClick={() => setIsEdit(false)} />
-                    ) : (
-                        <EditButton onClick={() => setIsEdit(true)} />
-                    )
-                }
+                extra={isEdit ? <SaveButton onClick={handleSubmit} /> : <EditButton onClick={() => setIsEdit(true)} />}
             />
             <Container>
                 <CardComponent>
@@ -50,18 +63,23 @@ const ProductDetailPage = () => {
                                     right={
                                         isEdit ? (
                                             <DefaultSelectStyled
-                                                defaultValue={product?.customType}
+                                                value={dataEdit?.customType}
                                                 placeholder="Chọn loại hàng"
+                                                onChange={(value: any) =>
+                                                    setDataEdit({ ...dataEdit, customType: value })
+                                                }
                                             >
-                                                <DefaultSelectStyled.Option value="is_new">
-                                                    Hàng mới
+                                                <DefaultSelectStyled.Option value="is_best_selling">
+                                                    Bán chạy
                                                 </DefaultSelectStyled.Option>
-                                                <DefaultSelectStyled.Option value="is_sale">
-                                                    Hàng bán chạy
+                                                <DefaultSelectStyled.Option value="is_sale_off">
+                                                    Đang giảm giá
                                                 </DefaultSelectStyled.Option>
                                             </DefaultSelectStyled>
+                                        ) : product?.customType === 'is_best_selling' ? (
+                                            <TagResult color="success" text="Bán chạy" />
                                         ) : (
-                                            product?.customType
+                                            <TagResult color="warning" text="Đang giảm giá" />
                                         )
                                     }
                                 />
@@ -75,7 +93,20 @@ const ProductDetailPage = () => {
                                 <CardRow
                                     left="Trạng thái"
                                     right={
-                                        product?.status ? (
+                                        isEdit ? (
+                                            <DefaultSelectStyled
+                                                value={dataEdit?.status}
+                                                placeholder="Trạng thái"
+                                                onChange={(value: any) => setDataEdit({ ...dataEdit, status: value })}
+                                            >
+                                                <DefaultSelectStyled.Option value={IStatus.ACTIVE}>
+                                                    Đang hoạt động
+                                                </DefaultSelectStyled.Option>
+                                                <DefaultSelectStyled.Option value={IStatus.UNACTIVE}>
+                                                    Ngừng hoạt động
+                                                </DefaultSelectStyled.Option>
+                                            </DefaultSelectStyled>
+                                        ) : product?.status ? (
                                             <TagResult text="Đang hoạt động" color="processing" />
                                         ) : (
                                             <TagResult text="Dừng hoạt động" color="error" />

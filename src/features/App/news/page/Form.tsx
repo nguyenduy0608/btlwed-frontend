@@ -1,35 +1,68 @@
 import SaveButton from '@/components/Button/Save.Button';
 import CardComponent from '@/components/CardComponent';
-import CustomScrollbars from '@/components/CustomScrollbars';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import TopBar from '@/components/TopBar';
 import UploadComponent from '@/components/Upload';
 import Container from '@/layout/Container';
-import { uuid } from '@/utils';
-import { Button, Checkbox, Col, Form, Input, Row, Select } from 'antd';
+import { Notification, uuid } from '@/utils';
+import { Checkbox, Col, Form, Input, Row, Select } from 'antd';
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { rules } from '../../voucher/rules';
 import Content from '../components/Content';
 import { newService, NEWS_STATUS, NEWS_TYPE } from '../service';
 
 const NewsFormPage = () => {
+    const navigate = useNavigate();
+
+    const { id } = useParams();
+
     const [form] = Form.useForm();
     const title = Form.useWatch('title', form);
+    const fileEdit = React.useRef<any>(null);
+    const refContent = React.useRef<any>(null);
 
     const handleSubmit = (values: any) => {
-        newService.create(values).then((res) => {
-            console.log('🚀 ~ file: Form.tsx ~ line 21 ~ newService.create ~ res', res);
-        });
+        if (id) {
+            newService.update(+id, { ...values, file: values?.file ? values?.file : '' }).then((res) => {
+                if (res.status) {
+                    Notification('success', 'Cập nhật tin tức thành công');
+                    navigate(-1);
+                }
+            });
+        } else {
+            newService.create(values).then((res) => {
+                if (res.status) {
+                    Notification('success', 'Thêm tin tức thành công');
+                    navigate(-1);
+                }
+            });
+        }
     };
 
     const handleCallbackContent = React.useCallback((content: string) => {
         form.setFieldsValue({ content });
     }, []);
 
+    React.useEffect(() => {
+        if (!id) return;
+        newService.getDetail(+id).then((res) => {
+            if (res.status) {
+                form.setFieldsValue(res.data);
+                fileEdit.current = [{ url: res.data?.image, uid: uuid(), name: 'img voucher' }];
+                refContent.current = res.data?.content;
+            }
+        });
+    }, [id]);
+
     return (
         <FormComponent form={form} onSubmit={handleSubmit}>
-            <TopBar back title="Thêm tin tức" extra={[<SaveButton key="saveVoucher" htmlType="submit" />]} />
+            <TopBar
+                back
+                title={id ? `Sửa tin tức * ${title} *` : 'Thêm tin tức'}
+                extra={[<SaveButton key="saveVoucher" htmlType="submit" />]}
+            />
             <Container>
                 <CardComponent>
                     <Row>
@@ -44,7 +77,7 @@ const NewsFormPage = () => {
                                 />
 
                                 <FormItemComponent
-                                    name="image"
+                                    name="file"
                                     label={
                                         <div>
                                             Ảnh voucher <span style={{ color: 'red' }}>*</span>
@@ -52,18 +85,16 @@ const NewsFormPage = () => {
                                     }
                                     inputField={
                                         <UploadComponent
-                                            isUploadServerWhenUploading
+                                            // isUploadServerWhenUploading
+                                            initialFile={fileEdit.current}
                                             uploadType="list"
                                             listType="picture-card"
                                             maxLength={1}
-                                            onSuccessUpload={(file: any) => {
+                                            onSuccessUpload={(url: any) => {
                                                 form.setFieldsValue({
-                                                    image: file?.url,
+                                                    file: url?.originFileObj,
                                                 });
-                                                // setFile(file?.url);
                                             }}
-                                            isShowFileList
-                                            // initialFile={[{ url: values?.avatar, uid: uuid(), name: 'avatar' }]}
                                         />
                                     }
                                 />
@@ -96,7 +127,7 @@ const NewsFormPage = () => {
                                     }
                                 />
                                 <FormItemComponent
-                                    // name="enableNotification"
+                                    name="notificationCustomer"
                                     label=" "
                                     valuePropName="checked"
                                     inputField={
@@ -111,7 +142,11 @@ const NewsFormPage = () => {
                     <div>
                         <p>Nội dung tin tức</p>
                         <Form.Item wrapperCol={{ span: 24 }} name="content">
-                            <Content handleCallbackContent={handleCallbackContent} title={title} />
+                            <Content
+                                refContent={refContent.current}
+                                handleCallbackContent={handleCallbackContent}
+                                title={title}
+                            />
                         </Form.Item>
                     </div>
                 </CardComponent>

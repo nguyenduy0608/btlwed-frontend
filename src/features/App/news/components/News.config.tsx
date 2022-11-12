@@ -1,6 +1,7 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { momentToStringDate } from '@/utils';
+import { Switch } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { NEWS_STATUS, NEWS_TYPE } from '../service';
 
@@ -40,18 +41,6 @@ export const columns = (page: number): ColumnsType<any> => [
                 <TagResult text="Lưu nháp" color="warning" />
             ),
     },
-    {
-        title: 'Trạng thái hoạt động',
-        dataIndex: 'statusActive',
-        align: 'center',
-        render: (value: number) =>
-            value ? (
-                <TagResult text="Đang hoạt động" color="processing" />
-            ) : (
-                <TagResult text="Ngừng hoạt động" color="error" />
-            ),
-    },
-
     {
         title: 'Ngày tạo',
         dataIndex: 'createdAt',

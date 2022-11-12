@@ -16,7 +16,7 @@ const Content = ({
     handleCallbackContent: any;
     refContent?: string;
 }) => {
-    const [content, setContent] = React.useState('STAKA');
+    const [content, setContent] = React.useState('');
 
     return (
         <Row style={{ flexDirection: 'row', flexWrap: 'nowrap', width: '100%', margin: 0 }}>
