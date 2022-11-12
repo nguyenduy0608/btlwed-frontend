@@ -36,10 +36,13 @@ const NewsPage = () => {
 
     const navigate = useNavigate();
 
-    const returnFilter = React.useCallback((filter: any) => {
-        setPage(1);
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: any) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     const onRowSelection = React.useCallback((row: any) => {
         setRowSelected(row);

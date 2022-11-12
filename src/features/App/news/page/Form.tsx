@@ -19,6 +19,7 @@ const NewsFormPage = () => {
     const { id } = useParams();
 
     const [form] = Form.useForm();
+    const image = Form.useWatch('file', form);
     const title = Form.useWatch('title', form);
     const fileEdit = React.useRef<any>(null);
     const refContent = React.useRef<any>(null);
@@ -145,6 +146,7 @@ const NewsFormPage = () => {
                             <Content
                                 refContent={refContent.current}
                                 handleCallbackContent={handleCallbackContent}
+                                image={fileEdit.current ? fileEdit.current[0].url : image && URL.createObjectURL(image)}
                                 title={title}
                             />
                         </Form.Item>

@@ -1,20 +1,23 @@
 import CustomScrollbars from '@/components/CustomScrollbars';
 import IconAntd from '@/components/IconAntd';
 import { Col, Row, Space } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import styled from 'styled-components';
 import NewsEditor from '../components/Editor';
 import './iphone.css';
 const Content = ({
-    title,
+    image,
     disabled,
     handleCallbackContent,
     refContent,
+    title,
 }: {
-    title: string;
+    image: string;
     disabled?: boolean;
     handleCallbackContent: any;
     refContent?: string;
+    title: string;
 }) => {
     const [content, setContent] = React.useState('');
 
@@ -59,18 +62,39 @@ const Content = ({
                                             </div>
                                         </StatusbarStyled>
                                         <CustomScrollbars>
-                                            <div style={{ backgroundColor: 'white', padding: '14px' }}>
-                                                <Space>
+                                            {/* <div style={{ backgroundColor: 'white', padding: '14px' }}> */}
+                                            <div className="gx-pt-1" style={{ backgroundColor: 'white' }}>
+                                                {image && <img src={image} alt="" />}
+                                                {title && (
+                                                    <div>
+                                                        <TitleStyled>{title}</TitleStyled>
+                                                        <Row
+                                                            align="middle"
+                                                            style={{ padding: '0 12px 10px', margin: 0 }}
+                                                        >
+                                                            <IconAntd
+                                                                size="16px"
+                                                                style={{ marginRight: '6px' }}
+                                                                icon="CalendarOutlined"
+                                                            />
+                                                            {moment().format('DD/MM/YYYY')}
+                                                        </Row>
+                                                    </div>
+                                                )}
+
+                                                {/* <Space>
                                                     <IconAntd size="14px" icon="ArrowLeftOutlined" />
                                                     <span>{title || 'Staka'}</span>
-                                                </Space>
+                                                </Space> */}
                                             </div>
-                                            <div style={{ height: '100%' }}>
-                                                <div style={{ padding: '10px 10px 50px 10px' }}>
-                                                    <div
-                                                        // style={{ color: '#fff' }}
-                                                        dangerouslySetInnerHTML={{ __html: content }}
-                                                    />
+                                            <div
+                                                style={{
+                                                    height: '100%',
+                                                    backgroundColor: content ? 'white' : 'transparent',
+                                                }}
+                                            >
+                                                <div style={{ padding: '0 10px 0 10px' }}>
+                                                    <div dangerouslySetInnerHTML={{ __html: content }} />
                                                 </div>
                                             </div>
                                         </CustomScrollbars>
@@ -92,6 +116,14 @@ const StatusbarStyled = styled.div`
         color: black !important;
         font-weight: bold !important;
     }
+`;
+
+const TitleStyled = styled.div`
+    font-size: 15px;
+    background-color: #fff;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: black;
 `;
 
 export default React.memo(Content);
