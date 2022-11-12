@@ -93,7 +93,7 @@ const Content = ({
                                                     backgroundColor: content ? 'white' : 'transparent',
                                                 }}
                                             >
-                                                <div style={{ padding: '0 10px 0 10px' }}>
+                                                <div style={{ backgroundColor: '#fff', padding: '0 10px 50px 10px' }}>
                                                     <div dangerouslySetInnerHTML={{ __html: content }} />
                                                 </div>
                                             </div>

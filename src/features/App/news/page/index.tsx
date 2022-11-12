@@ -48,12 +48,24 @@ const NewsPage = () => {
         setRowSelected(row);
     }, []);
 
+    const handleConfirmDelete = React.useCallback(() => {
+        rowSelected.forEach(async (row: any, index: number) => {
+            await newService.delete(row.id);
+            if (index === rowSelected.length - 1) {
+                setRowSelected([]);
+                refetch();
+            }
+        });
+    }, [rowSelected]);
+
     return (
         <>
             <TopBar
                 title="Tin tức"
                 extra={[
-                    rowSelected && rowSelected?.length > 0 && <DeleteButton key="delete" onConfirm={() => {}} />,
+                    rowSelected && rowSelected?.length > 0 && (
+                        <DeleteButton key="delete" onConfirm={handleConfirmDelete} />
+                    ),
                     <Button
                         onClick={() => navigate(routerPage.newsForm)}
                         key="add_new"

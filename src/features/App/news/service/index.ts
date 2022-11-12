@@ -33,6 +33,10 @@ export const newService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
+    getDetail: (id: number) => {
+        const url = `/admin/news/${id}`;
+        return AxiosClient.get(url);
+    },
     create: (data: any) => {
         const url = `/admin/news`;
 
@@ -43,7 +47,7 @@ export const newService = {
         formData.append('type', data.type);
         formData.append('status', data.status);
         formData.append('file', data.file);
-        formData.append('status_active', '1');
+        formData.append('status_active', data.statusActive);
         formData.append('notification_customer', data.notificationCustomer ? '1' : '0');
 
         return AxiosClient.post(url, formData, {
@@ -62,7 +66,7 @@ export const newService = {
         formData.append('type', data.type);
         formData.append('status', data.status);
         data.file && formData.append('file', data.file);
-        formData.append('status_active', '1');
+        formData.append('status_active', data.statusActive);
         formData.append('notification_customer', data.notificationCustomer ? '1' : '0');
 
         return AxiosClient.patch(url, formData, {
@@ -85,8 +89,8 @@ export const newService = {
             },
         });
     },
-    getDetail: (id: number) => {
+    delete: (id: number) => {
         const url = `/admin/news/${id}`;
-        return AxiosClient.get(url);
+        return AxiosClient.delete(url);
     },
 };

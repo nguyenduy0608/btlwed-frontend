@@ -21,19 +21,24 @@ const NewsFormPage = () => {
     const [form] = Form.useForm();
     const image = Form.useWatch('file', form);
     const title = Form.useWatch('title', form);
+    const status = Form.useWatch('status', form);
+
     const fileEdit = React.useRef<any>(null);
     const refContent = React.useRef<any>(null);
+    const statusActive = React.useRef<any>(null);
 
     const handleSubmit = (values: any) => {
         if (id) {
-            newService.update(+id, { ...values, file: values?.file ? values?.file : '' }).then((res) => {
-                if (res.status) {
-                    Notification('success', 'Cập nhật tin tức thành công');
-                    navigate(-1);
-                }
-            });
+            newService
+                .update(+id, { ...values, file: values?.file ? values?.file : '', statusActive: statusActive.current })
+                .then((res) => {
+                    if (res.status) {
+                        Notification('success', 'Cập nhật tin tức thành công');
+                        navigate(-1);
+                    }
+                });
         } else {
-            newService.create(values).then((res) => {
+            newService.create({ ...values, statusActive: statusActive.current }).then((res) => {
                 if (res.status) {
                     Notification('success', 'Thêm tin tức thành công');
                     navigate(-1);
@@ -53,6 +58,7 @@ const NewsFormPage = () => {
                 form.setFieldsValue(res.data);
                 fileEdit.current = [{ url: res.data?.image, uid: uuid(), name: 'img voucher' }];
                 refContent.current = res.data?.content;
+                statusActive.current = res.data?.statusActive;
             }
         });
     }, [id]);
@@ -74,7 +80,12 @@ const NewsFormPage = () => {
                                     rules={[rules.required('Vui lòng nhập mã voucher!')]}
                                     name="title"
                                     label="Tiêu đề tin tức"
-                                    inputField={<Input placeholder="Nhập tiêu đề tin tức" />}
+                                    inputField={
+                                        <Input
+                                            disabled={Boolean(id && status === NEWS_STATUS.POST)}
+                                            placeholder="Nhập tiêu đề tin tức"
+                                        />
+                                    }
                                 />
 
                                 <FormItemComponent
@@ -86,6 +97,7 @@ const NewsFormPage = () => {
                                     }
                                     inputField={
                                         <UploadComponent
+                                            disabled={Boolean(id && status === NEWS_STATUS.POST)}
                                             // isUploadServerWhenUploading
                                             initialFile={fileEdit.current}
                                             uploadType="list"
@@ -109,7 +121,10 @@ const NewsFormPage = () => {
                                     name="status"
                                     label="Trạng thái"
                                     inputField={
-                                        <Select placeholder="Chọn trạng thái">
+                                        <Select
+                                            // disabled={Boolean(id && status === NEWS_STATUS.POST)}
+                                            placeholder="Chọn trạng thái"
+                                        >
                                             <Select.Option value={NEWS_STATUS.POST}>Đăng bài</Select.Option>
                                             <Select.Option value={NEWS_STATUS.DRAFT}>Lưu nháp</Select.Option>
                                         </Select>
@@ -120,23 +135,28 @@ const NewsFormPage = () => {
                                     name="type"
                                     label="Loại tin tức"
                                     inputField={
-                                        <Select placeholder="Chọn loại tin tức">
+                                        <Select
+                                            disabled={Boolean(id && status === NEWS_STATUS.POST)}
+                                            placeholder="Chọn loại tin tức"
+                                        >
                                             <Select.Option value={NEWS_TYPE.BANNER}>Banner</Select.Option>
                                             <Select.Option value={NEWS_TYPE.POLICY}>Chính sách</Select.Option>
-                                            <Select.Option value={NEWS_TYPE.TUTORIAL}>Hướng dẫn</Select.Option>
+                                            <Select.Option value={NEWS_TYPE.TUTORIAL}>Hướng dẫn đặt hàng</Select.Option>
                                         </Select>
                                     }
                                 />
-                                <FormItemComponent
-                                    name="notificationCustomer"
-                                    label=" "
-                                    valuePropName="checked"
-                                    inputField={
-                                        <Checkbox>
-                                            <strong>Gửi thông báo cho khách hàng </strong>
-                                        </Checkbox>
-                                    }
-                                />
+                                {status === NEWS_STATUS.POST && (
+                                    <FormItemComponent
+                                        name="notificationCustomer"
+                                        label=" "
+                                        valuePropName="checked"
+                                        inputField={
+                                            <Checkbox disabled={Boolean(id && status === NEWS_STATUS.POST)}>
+                                                <strong>Gửi thông báo cho khách hàng </strong>
+                                            </Checkbox>
+                                        }
+                                    />
+                                )}
                             </Row>
                         </Col>
                     </Row>
@@ -146,7 +166,9 @@ const NewsFormPage = () => {
                             <Content
                                 refContent={refContent.current}
                                 handleCallbackContent={handleCallbackContent}
-                                image={fileEdit.current ? fileEdit.current[0].url : image && URL.createObjectURL(image)}
+                                image={
+                                    image ? URL.createObjectURL(image) : fileEdit.current ? fileEdit.current[0].url : ''
+                                }
                                 title={title}
                             />
                         </Form.Item>

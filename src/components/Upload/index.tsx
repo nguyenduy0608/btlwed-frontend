@@ -20,6 +20,7 @@ interface IProps {
     listType?: UploadListType;
     maxLength?: number;
     initialFile?: any;
+    disabled?: boolean;
 }
 
 const UploadComponent: React.FC<IProps> = ({
@@ -32,6 +33,7 @@ const UploadComponent: React.FC<IProps> = ({
     children,
     maxLength = 5,
     initialFile,
+    disabled,
 }) => {
     const [files, setFiles] = React.useState<UploadFile[]>([]);
     const [progress, setProgress] = React.useState(0);
@@ -126,6 +128,7 @@ const UploadComponent: React.FC<IProps> = ({
     return (
         <>
             <UploadStyled
+                disabled={disabled}
                 accept={accept}
                 customRequest={uploadImage}
                 onChange={handleOnChange}
