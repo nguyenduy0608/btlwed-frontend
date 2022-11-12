@@ -75,6 +75,7 @@ const VoucherFormPage = () => {
                 enableProducts: data?.enableProducts ? 1 : 0,
                 status: 1,
                 products: data?.enableProducts ? [] : products,
+                description: data?.description ? data?.description : '',
             };
 
             for (var key in dataUpload) {
