@@ -1,27 +1,37 @@
-import { DatePicker } from 'antd';
+import { DatePicker, Tooltip } from 'antd';
 import React from 'react';
 const { RangePicker } = DatePicker;
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 const dateFormat = 'DD/MM/YYYY';
 
-const RangerPicker = ({ name, onChange }: { name: string; onChange: any }) => {
+const RangerPicker = ({
+    name,
+    onChange,
+    tooltipTitle = 'Lọc theo ngày tạo',
+}: {
+    name: string;
+    onChange: any;
+    tooltipTitle?: string;
+}) => {
     return (
-        <RangePicker
-            onChange={(date: any, dateStrings: string[]) => {
-                return onChange(
-                    name,
-                    date
-                        ? `${dateStrings[0].split('/').reverse().join('-')},${dateStrings[1]
-                              .split('/')
-                              .reverse()
-                              .join('-')}`
-                        : ''
-                );
-            }}
-            placeholder={['Từ ngày', 'Đến ngày']}
-            defaultValue={null}
-            format={dateFormat}
-        />
+        <Tooltip title={tooltipTitle}>
+            <RangePicker
+                onChange={(date: any, dateStrings: string[]) => {
+                    return onChange(
+                        name,
+                        date
+                            ? `${dateStrings[0].split('/').reverse().join('-')},${dateStrings[1]
+                                  .split('/')
+                                  .reverse()
+                                  .join('-')}`
+                            : ''
+                    );
+                }}
+                placeholder={['Từ ngày', 'Đến ngày']}
+                defaultValue={null}
+                format={dateFormat}
+            />
+        </Tooltip>
     );
 };
 

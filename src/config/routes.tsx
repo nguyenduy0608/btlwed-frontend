@@ -18,6 +18,7 @@ import ReportStallPage from '@/features/App/report/Stall';
 import NewsPage from '@/features/App/news/page';
 import NewsFormPage from '@/features/App/news/page/Form';
 import SettingPage from '@/features/App/settings';
+import ChatPage from '@/features/App/chat';
 
 // định nghĩa router
 export const routerPage = {
@@ -60,6 +61,9 @@ export const routerPage = {
 
     // setting
     setting: '/setting',
+
+    // chat
+    chat: '/chat',
 
     // auth....
     login: '/auth/login',
@@ -149,6 +153,12 @@ const PrivateRoutes = [
     {
         path: routerPage.account,
         element: <AccountPage />,
+    },
+
+    // chat
+    {
+        path: routerPage.chat,
+        element: <ChatPage />,
     },
 
     // setting

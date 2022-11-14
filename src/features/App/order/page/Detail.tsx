@@ -1,7 +1,10 @@
+import ExportButton from '@/components/Button/Export.Button';
+import PrintButton from '@/components/Button/Print.Button';
 import CardComponent from '@/components/CardComponent';
 import CardContainer from '@/components/CardComponent/Card.Container';
 import CardRow from '@/components/CardComponent/Card.Row';
 import IconAntd from '@/components/IconAntd';
+import PrintTemplate from '@/components/PrintTemplate';
 import TableComponent from '@/components/TableComponent';
 import TagResult from '@/components/TagResult';
 import TopBar from '@/components/TopBar';
@@ -12,6 +15,7 @@ import { Col, Form, Row, Timeline } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
+import ReactToPrint from 'react-to-print';
 import { IFilter } from '../../voucher/type';
 import { columnsProduct, DataTypeOrder } from '../components/Order.Config';
 import { OrderService } from '../service';
@@ -29,7 +33,6 @@ const OrderDetailPage = () => {
         OrderService.detail(id)
     );
     const order = data?.data;
-    console.log('🚀 ~ file: Detail.tsx ~ line 31 ~ OrderDetailPage ~ order', order);
     const orderProduct = data?.data.items;
 
     const onRowSelection = React.useCallback((row: DataTypeOrder[]) => {
@@ -54,9 +57,24 @@ const OrderDetailPage = () => {
         }
     };
 
+    // print
+    const componentRef = React.useRef<any>();
+
     return (
         <>
-            <TopBar back title={'Đơn hàng ' + order?.code} />
+            <TopBar
+                back
+                title={'Đơn hàng ' + order?.code}
+                extra={[
+                    <ReactToPrint
+                        key="print"
+                        trigger={() => {
+                            return <PrintButton onClick={() => {}} />;
+                        }}
+                        content={() => componentRef.current}
+                    />,
+                ]}
+            />
             <Container>
                 <Row>
                     <Col className="gx-pr-3" xs={24} sm={24} lg={12}>
@@ -66,9 +84,9 @@ const OrderDetailPage = () => {
                         </CardComponent>
 
                         <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Thông tin người nhận hàng">
-                            <CardRow left="Tên người nhận" right={order?.user.fullName} />
-                            <CardRow left="Số điện thoại" right={order?.user.phoneNumber} />
-                            <CardRow left="Địa chỉ chi tiết" right={order?.user.address} />
+                            <CardRow left="Tên người nhận" right={order?.shippingName} />
+                            <CardRow left="Số điện thoại" right={order?.shippingPhoneNumber} />
+                            <CardRow left="Địa chỉ chi tiết" right={order?.shippingAddress} />
                         </CardComponent>
                     </Col>
 
@@ -79,10 +97,7 @@ const OrderDetailPage = () => {
                                 right={ */}
                             <Timeline mode="left" className="gx-mt-4">
                                 {order?.orderHistory.map((od: any) => (
-                                    <Timeline.Item
-                                        dot={<IconAntd icon="ClockCircleOutlined" size="16px" />}
-                                        label={switchLabel(od.statusKiotviet)}
-                                    >
+                                    <Timeline.Item key={od.id} label={switchLabel(od.statusKiotviet)}>
                                         {momentParseUtc(order?.createdAt).format('HH:mm DD/MM/YYYY')}
                                     </Timeline.Item>
                                 ))}
@@ -97,15 +112,17 @@ const OrderDetailPage = () => {
                     bodyStyle={{ padding: '0 0 30px' }}
                     title={'Thông tin đơn hàng'}
                     extra={
-                        order?.status && order?.status === ORDER_STATUS.WAIT_CONFIRMATION ? (
-                            <TagResult text="Chờ xác nhận" color="orange" />
-                        ) : order?.status === ORDER_STATUS.INPROGRESS ? (
-                            <TagResult text="Đang xử lý" color="processing" />
-                        ) : order?.status === ORDER_STATUS.COMPLETED ? (
-                            <TagResult text="Hoàn thành" color="green" />
-                        ) : (
-                            <TagResult text="Hủy" color="error" />
-                        )
+                        <React.Fragment key="status">
+                            {order?.status && order?.status === ORDER_STATUS.WAIT_CONFIRMATION ? (
+                                <TagResult text="Chờ xác nhận" color="orange" />
+                            ) : order?.status === ORDER_STATUS.INPROGRESS ? (
+                                <TagResult text="Đang xử lý" color="processing" />
+                            ) : order?.status === ORDER_STATUS.COMPLETED ? (
+                                <TagResult text="Hoàn thành" color="green" />
+                            ) : (
+                                <TagResult text="Hủy" color="error" />
+                            )}
+                        </React.Fragment>
                     }
                 >
                     <CardContainer
@@ -170,6 +187,7 @@ const OrderDetailPage = () => {
                     />
                 </CardComponent>
             </Container>
+            <PrintTemplate ref={componentRef} />
         </>
     );
 };

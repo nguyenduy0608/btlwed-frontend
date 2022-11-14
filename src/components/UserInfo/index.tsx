@@ -1,9 +1,12 @@
 import LocalStorage from '@/apis/LocalStorage';
+import ChatPage from '@/features/App/chat';
+import PushNoti from '@/features/App/pushNoti';
 import { rules } from '@/features/App/voucher/rules';
 import useCallContext from '@/hooks/useCallContext';
 import { DownOutlined } from '@ant-design/icons';
 import { Avatar, Badge, Button, Col, Form, Input, Modal, Popover, Row, Space } from 'antd';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import SaveButton from '../Button/Save.Button';
 import FormComponent from '../FormComponent';
 import IconAntd from '../IconAntd';
@@ -11,7 +14,15 @@ import ModalComponent from '../ModalComponent';
 
 const UserInfo = () => {
     const { state, dispatch } = useCallContext();
+    const navigate = useNavigate();
+
     const [open, setOpen] = React.useState(false);
+
+    const [openNoti, setOpenNoti] = React.useState(false);
+
+    const showDrawer = () => {
+        setOpenNoti(true);
+    };
 
     const [form] = Form.useForm();
 
@@ -46,12 +57,12 @@ const UserInfo = () => {
                 </Popover>
             </Row>
             <Row justify="center" className="gx-app-nav" style={{ marginTop: '26px' }}>
-                <li>
+                <li onClick={() => navigate('/chat')}>
                     <Badge showZero count={2}>
                         <IconAntd style={{ color: 'white' }} icon="MessageOutlined" />
                     </Badge>
                 </li>
-                <li>
+                <li onClick={showDrawer}>
                     <Badge showZero count={9}>
                         <IconAntd style={{ color: 'white' }} icon="BellOutlined" />
                     </Badge>
@@ -112,6 +123,7 @@ const UserInfo = () => {
                     </Row>
                 </FormComponent>
             </ModalComponent>
+            <PushNoti open={openNoti} setOpen={setOpenNoti} />
         </>
     );
 };

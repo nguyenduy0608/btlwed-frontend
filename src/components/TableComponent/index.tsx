@@ -131,7 +131,7 @@ const WrapperTable = styled.div`
     padding-bottom: 10px;
 `;
 
-const TableStyled = styled(Table)`
+export const TableStyled = styled(Table)`
     background-color: #fff;
 
     & th.ant-table-cell {

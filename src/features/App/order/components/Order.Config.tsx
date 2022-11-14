@@ -103,7 +103,6 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
         align: 'center',
         render: (value: any) => momentToStringDate(value),
     },
-    AntdTable.SELECTION_COLUMN,
 ];
 export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
     {

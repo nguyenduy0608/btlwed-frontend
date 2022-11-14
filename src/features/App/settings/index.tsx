@@ -1,9 +1,12 @@
 import CardComponent from '@/components/CardComponent';
+import IconAntd from '@/components/IconAntd';
+import ModalComponent from '@/components/ModalComponent';
 import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
-import { Button, Tabs } from 'antd';
+import { Button, Steps, Tabs } from 'antd';
 import React from 'react';
 import InformationTab from './components/Information.Tab';
+import SynckiotForm from './components/Synckiot.Form';
 import SynckiotTab from './components/Synckiot.Tab';
 const items = [
     { label: 'Thông tin hệ thống', key: '0', children: <InformationTab /> }, // remember to pass the key prop
@@ -11,6 +14,22 @@ const items = [
 ];
 const SettingPage = () => {
     const [tabIndex, setTabIndex] = React.useState('0');
+    const [addKiotViet, setAddKiotViet] = React.useState(false);
+
+    // step
+    const [current, setCurrent] = React.useState(0);
+
+    const handleNextStep = () => {
+        setCurrent((prev: number) => prev + 1);
+    };
+    const handleBackStep = React.useCallback(() => {
+        setCurrent((prev: number) => prev - 1);
+    }, []);
+
+    const handleClose = React.useCallback(() => {
+        setAddKiotViet(false);
+        setCurrent(0);
+    }, []);
 
     return (
         <>
@@ -21,7 +40,7 @@ const SettingPage = () => {
                         onChange={(key) => setTabIndex(key)}
                         tabBarExtraContent={
                             tabIndex === '1' && (
-                                <Button className="gx-mb-2" type="primary">
+                                <Button onClick={() => setAddKiotViet(true)} className="gx-mb-2" type="primary">
                                     Thêm mới
                                 </Button>
                             )
@@ -31,6 +50,20 @@ const SettingPage = () => {
                     />
                 </CardComponent>
             </Container>
+            <ModalComponent title="Thêm gian hàng" modalVisible={addKiotViet}>
+                <Steps current={current}>
+                    <Steps.Step title="Gian hàng" icon={<IconAntd icon="SolutionOutlined" />} />
+                    <Steps.Step title="Kho hàng" icon={<IconAntd icon="ShopOutlined" />} />
+                </Steps>
+                <div className="gx-mt-4">
+                    <SynckiotForm
+                        handleClose={handleClose}
+                        handleBackStep={handleBackStep}
+                        handleNextStep={handleNextStep}
+                        step={current}
+                    />
+                </div>
+            </ModalComponent>
         </>
     );
 };

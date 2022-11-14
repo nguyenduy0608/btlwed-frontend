@@ -78,8 +78,10 @@ const ProductDetailPage = () => {
                                             </DefaultSelectStyled>
                                         ) : product?.customType === 'is_best_selling' ? (
                                             <TagResult color="success" text="Bán chạy" />
-                                        ) : (
+                                        ) : product?.customType ? (
                                             <TagResult color="warning" text="Đang giảm giá" />
+                                        ) : (
+                                            ''
                                         )
                                     }
                                 />

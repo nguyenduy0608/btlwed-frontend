@@ -76,7 +76,10 @@ const OrderPage = () => {
             <Container>
                 <CardComponent
                     title={<Filter returnFilter={returnFilter} key="filter" />}
-                    extra={[<PrintButton onClick={() => {}} />, <ExportButton onClick={() => console.log('first')} />]}
+                    extra={[
+                        // <PrintButton key="print" onClick={() => {}} />,
+                        <ExportButton key="export" onClick={() => console.log('first')} />,
+                    ]}
                 >
                     <TableComponent
                         loading={isRefetching || loadingModal || isLoading}

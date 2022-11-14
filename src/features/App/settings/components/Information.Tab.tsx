@@ -9,7 +9,6 @@ import styled from 'styled-components';
 
 const InformationTab = () => {
     const { state } = useCallContext();
-    console.log('🚀 ~ file: Information.Tab.tsx ~ line 12 ~ InformationTab ~ state', state);
 
     return (
         <FormComponent initialValues={{ point: 0 }} onSubmit={() => {}}>
