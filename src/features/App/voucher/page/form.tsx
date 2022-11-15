@@ -112,18 +112,30 @@ const VoucherFormPage = () => {
         (async () => {
             voucherService.detail(+id).then((res) => {
                 if (res.status) {
-                    form.setFieldsValue({
+                    const fieldValues: any = {
                         ...res.data,
+                    };
+
+                    if (res?.data?.rewardType === REWARD.gift) {
+                        delete fieldValues?.applicableType;
+                        delete fieldValues?.rewardPercentage;
+                    }
+
+                    form.setFieldsValue({
+                        ...fieldValues,
                         startTime: momentParseUtc(res.data.startTime),
                         endTime: momentParseUtc(res.data.endTime),
                         enableNotification: res.data.enableNotification === 1,
                         enableProducts: res.data.enableProducts === 1,
                     });
+
                     fileEdit.current = [{ url: res.data?.image, uid: uuid(), name: 'demo' }];
+
                     if (res?.data?.voucherProduct) {
                         setProductSelected(res.data?.voucherProduct.map((product: any) => product.productId));
                         setProducts(res.data?.voucherProduct.map((product: any) => product?.productVariant?.product));
                     }
+
                     setQuantity({
                         used: res?.data?.used || 0,
                         remaining: res?.data?.remainQuota,
@@ -232,7 +244,7 @@ const VoucherFormPage = () => {
                                         label="Số lượng sản phẩm cần mua"
                                         inputField={
                                             <InputNumber
-                                                min={0}
+                                                min={1}
                                                 max={99}
                                                 style={{ width: '100%' }}
                                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -277,7 +289,7 @@ const VoucherFormPage = () => {
                                         rules={[rules.required('Vui lòng nhập mức giảm ')]}
                                         inputField={
                                             <InputNumber
-                                                min={0}
+                                                min={1}
                                                 max={50000000}
                                                 style={{ width: '100%' }}
                                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
