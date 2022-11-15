@@ -30,9 +30,13 @@ const WalletChangePage = ({ customerId }: { customerId: number }) => {
         WalletChangeService.get({ page, ...filterQuery, user_id: customerId })
     );
 
-    const returnFilter = React.useCallback((filter: IFilter) => {
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: IFilter) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     return (
         <>

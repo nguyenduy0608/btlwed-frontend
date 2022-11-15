@@ -41,9 +41,13 @@ const VoucherPage = () => {
         return <Description record={record} refetch={refetch} />;
     };
 
-    const returnFilter = React.useCallback((filter: IFilter) => {
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: IFilter) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     React.useEffect(() => {
         refetch();

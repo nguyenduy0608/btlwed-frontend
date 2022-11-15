@@ -25,36 +25,38 @@ const PuchaseHistoryPage = () => {
         PurchaseService.get({ page, ...filterQuery })
     );
 
-    const returnFilter = React.useCallback((filter: IFilter) => {
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: IFilter) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     return (
-        <>
-            <CardComponent
-                title={<div className="gx-pl-4">Lịch sử mua hàng</div>}
-                extra={[
-                    <div key="filter" className="gx-mr-4">
-                        <RangerPicker
-                            name="dateFilter"
-                            onChange={(name: string, value: string) => {
-                                returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });
-                            }}
-                        />
-                    </div>,
-                ]}
-            >
-                <TableComponent
-                    page={page}
-                    loading={isLoading}
-                    rowSelect={false}
-                    onChangePage={(_page) => setPage(_page)}
-                    dataSource={puchaseHistory ? puchaseHistory.data : []}
-                    columns={Purchasecolumns(page)}
-                    total={puchaseHistory && puchaseHistory?.paging?.totalItemCount}
-                />
-            </CardComponent>
-        </>
+        <CardComponent
+            title={<div className="gx-pl-4">Lịch sử mua hàng</div>}
+            extra={[
+                <div key="filter" className="gx-mr-4">
+                    <RangerPicker
+                        name="dateFilter"
+                        onChange={(name: string, value: string) => {
+                            returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });
+                        }}
+                    />
+                </div>,
+            ]}
+        >
+            <TableComponent
+                page={page}
+                loading={isLoading}
+                rowSelect={false}
+                onChangePage={(_page) => setPage(_page)}
+                dataSource={puchaseHistory ? puchaseHistory.data : []}
+                columns={Purchasecolumns(page)}
+                total={puchaseHistory && puchaseHistory?.paging?.totalItemCount}
+            />
+        </CardComponent>
     );
 };
 

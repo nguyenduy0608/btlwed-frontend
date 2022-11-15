@@ -1,14 +1,13 @@
 import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
-import Container from '@/layout/Container';
-import { Button, Form, InputNumber, Row, Segmented, Space } from 'antd';
-import React, { useState } from 'react';
+import { Form } from 'antd';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
+import { DebitService } from '../service';
 import { DataTypeCustomer, Debtcolumns } from './Customer.Config';
-import { CustomerService, DebitService } from '../service';
 import Filter from './Filter';
 const initialFilterQuery = {};
 
@@ -30,9 +29,13 @@ const DebtPage = () => {
     const onRowSelection = React.useCallback((row: DataTypeCustomer[]) => {
         setRowSelected(row);
     }, []);
-    const returnFilter = React.useCallback((filter: IFilter) => {
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: IFilter) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     return (
         <>

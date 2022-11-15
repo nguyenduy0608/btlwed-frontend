@@ -3,7 +3,7 @@ import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
-import { Button, Segmented, Space, Form } from 'antd';
+import { Button, Form, Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -76,9 +76,13 @@ const AccountPage = () => {
         return <Description record={record} handleShowModal={() => handleShowModal(record)} refetch={refetch} />;
     };
 
-    const returnFilter = React.useCallback((filter: IFilter) => {
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: IFilter) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     return (
         <>

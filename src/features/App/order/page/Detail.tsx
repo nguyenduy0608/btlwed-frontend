@@ -38,9 +38,13 @@ const OrderDetailPage = () => {
     const onRowSelection = React.useCallback((row: DataTypeOrder[]) => {
         setRowSelected(row);
     }, []);
-    const returnFilter = React.useCallback((filter: IFilter) => {
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: IFilter) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     const switchLabel = (historyType: ORDER_STATE) => {
         switch (historyType) {

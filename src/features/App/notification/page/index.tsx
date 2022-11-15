@@ -56,10 +56,13 @@ const NotificationPage = () => {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    const returnFilter = React.useCallback((filter: IFilter) => {
-        setPage(1);
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: IFilter) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     return (
         <>

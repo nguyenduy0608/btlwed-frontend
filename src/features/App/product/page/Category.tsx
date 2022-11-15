@@ -99,10 +99,13 @@ const ProductCategoryPage = () => {
         return <Description record={record} handleShowModal={() => handleShowModal(record)} refetch={refetch} />;
     };
 
-    const returnFilter = React.useCallback((filter: any) => {
-        setPage(1);
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: any) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     return (
         <>

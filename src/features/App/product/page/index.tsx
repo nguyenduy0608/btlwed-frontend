@@ -33,10 +33,13 @@ const ProductPage = () => {
         refetch();
     }, [state.syncLoading]);
 
-    const returnFilter = React.useCallback((filter: IFilter) => {
-        setPage(1);
-        setFilterQuery({ ...filterQuery, ...filter });
-    }, []);
+    const returnFilter = React.useCallback(
+        (filter: IFilter) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
 
     return (
         <>

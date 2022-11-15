@@ -1,28 +1,28 @@
 import CardComponent from '@/components/CardComponent';
+import RangerPicker from '@/components/RangerPicker';
 import SearchInput from '@/components/SearchInput';
-import SelectComponent from '@/components/SelectComponent';
 import TableComponent from '@/components/TableComponent';
 import { DefaultSelectStyled } from '@/config/global.style';
 import { routerPage } from '@/config/routes';
-import { columnsProduct } from '@/features/App/product/components/Product.Config';
+import { columns } from '@/features/App/order/components/Order.Config';
 import { Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { settingService } from '../../service';
 
-const ProductTab = ({ kiotvietId }: { kiotvietId: number }) => {
+const OrderTab = ({ kiotvietId }: { kiotvietId: number }) => {
     const [filterQuery, setFilterQuery] = React.useState({});
     const [page, setPage] = React.useState(1);
     const navigate = useNavigate();
 
     const {
-        data: products,
+        data: orders,
         isLoading,
         isRefetching,
         refetch,
-    } = useQuery<any>(['settingProductService', page, filterQuery], () =>
-        settingService.getProductByKiotViet(kiotvietId, { page, ...filterQuery })
+    } = useQuery<any>(['settingOrderService', page, filterQuery], () =>
+        settingService.getOrderByKiotViet(kiotvietId, { page, ...filterQuery })
     );
 
     const returnFilter = React.useCallback(
@@ -37,47 +37,52 @@ const ProductTab = ({ kiotvietId }: { kiotvietId: number }) => {
         <CardComponent
             title={
                 <div className="gx-pl-4" style={{ fontSize: '14px' }}>
-                    Kết quả lọc: <strong>{products?.paging?.totalItemCount || 0}</strong>
+                    Kết quả lọc: <strong>{orders?.paging?.totalItemCount || 0}</strong>
                 </div>
             }
             extra={[
                 <Space className="gx-mr-4" size="middle" wrap>
                     <SearchInput
+                        style={{ minWidth: '140px' }}
                         onChangeSearch={(search) => returnFilter({ search })}
-                        placeholderSearch="Nhập mã, tên sản phẩm"
-                    />
-                    <SelectComponent
-                        onChange={(item: any) => {
-                            returnFilter({ category_id: item?.key || '' });
-                        }}
-                        apiUrl="/admin/product_category"
-                        placeholder="Chọn danh mục"
+                        placeholderSearch="Nhập mã đơn, tên khách hàng, số điện thoại khách hàng"
                     />
                     <DefaultSelectStyled
                         placeholder="Trạng thái"
                         allowClear
-                        style={{ width: '200px' }}
+                        style={{ width: '160px' }}
                         defaultValue={null}
                         onChange={(value) => returnFilter({ status: value })}
                     >
-                        <DefaultSelectStyled.Option value={1}>Đang hoạt động</DefaultSelectStyled.Option>
-                        <DefaultSelectStyled.Option value={0}>Ngừng hoạt động</DefaultSelectStyled.Option>
+                        <DefaultSelectStyled.Option value={'inprogress'}>Đang xử lý</DefaultSelectStyled.Option>
+                        <DefaultSelectStyled.Option value={'wait_confirmation'}>
+                            Chờ xác nhận
+                        </DefaultSelectStyled.Option>
+                        <DefaultSelectStyled.Option value={'completed'}>Hoàn thành</DefaultSelectStyled.Option>
+                        <DefaultSelectStyled.Option value={'cacelled'}>Hủy</DefaultSelectStyled.Option>
                     </DefaultSelectStyled>
+
+                    <RangerPicker
+                        name="dateFilter"
+                        onChange={(name: string, value: string) => {
+                            returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });
+                        }}
+                    />
                 </Space>,
             ]}
         >
             <TableComponent
                 loading={isLoading || isRefetching}
                 page={page}
-                onRowClick={(record: { id: number }) => navigate(`${routerPage.product}/${record.id}`)}
+                onRowClick={(record: { id: number }) => navigate(`${routerPage.order}/${record.id}`)}
                 rowSelect={false}
                 onChangePage={(_page) => setPage(_page)}
-                dataSource={products ? products.data : []}
-                columns={columnsProduct(page)}
-                total={products?.paging?.totalItemCount || 0}
+                dataSource={orders ? orders.data : []}
+                columns={columns(page)}
+                total={orders?.paging?.totalItemCount || 0}
             />
         </CardComponent>
     );
 };
 
-export default ProductTab;
+export default OrderTab;
