@@ -61,6 +61,7 @@ const ProductPage = () => {
                     extra={<ExportButton onClick={() => console.log('first')} />}
                 >
                     <TableComponent
+                        showTotalResult
                         loading={isLoading || isRefetching}
                         page={page}
                         onRowClick={(record: { id: number }) => navigate(`${routerPage.product}/${record.id}`)}

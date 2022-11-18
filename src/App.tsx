@@ -84,6 +84,12 @@ function App() {
                         <Timeline.Item color="#00CCFF" dot={<IconAntd icon="SmileOutlined" />}>
                             <strong>Bắt lỗi voucher</strong>
                         </Timeline.Item>
+                        <Timeline.Item color="green">
+                            <strong>Hiển thị kết quả lọc</strong>
+                        </Timeline.Item>
+                        <Timeline.Item color="green">
+                            <strong>Cập nhật preview tin tức</strong>
+                        </Timeline.Item>
                     </Timeline>
                 </div>
             ),

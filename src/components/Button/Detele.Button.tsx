@@ -4,7 +4,7 @@ import IconAntd from '../IconAntd';
 
 const DeleteButton = ({ onConfirm }: { onConfirm: () => void }) => {
     return (
-        <Popconfirm title="Bạn chắc chứ?" onConfirm={onConfirm}>
+        <Popconfirm title="Bạn chắc chắn muốn xoá??" onConfirm={onConfirm}>
             <Button
                 icon={<IconAntd size="16px" icon="DeleteOutlined" />}
                 key="delete"

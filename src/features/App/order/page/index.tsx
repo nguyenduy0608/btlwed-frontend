@@ -1,25 +1,18 @@
+import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
-import FormComponent from '@/components/FormComponent';
-import FormItemComponent from '@/components/FormComponent/FormItemComponent';
-import ModalComponent from '@/components/ModalComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
+import { routerPage } from '@/config/routes';
+import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
-import { Notification, wait } from '@/utils';
-import { Button, Form, InputNumber, Row, Segmented, Space } from 'antd';
-import Input from 'antd/lib/input/Input';
+import { selectAll } from '@/service';
+import { Form, Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { rules } from '../../voucher/rules';
+import Filter from '../components/FIlter';
 import { columns, DataTypeOrder } from '../components/Order.Config';
 import { OrderService } from '../service';
-import Filter from '../components/FIlter';
-import useCallContext from '@/hooks/useCallContext';
-import { selectAll } from '@/service';
-import ExportButton from '@/components/Button/Export.Button';
-import { routerPage } from '@/config/routes';
-import PrintButton from '@/components/Button/Print.Button';
 const initialFilterQuery = {};
 
 const initialValue = {
@@ -85,6 +78,7 @@ const OrderPage = () => {
                     ]}
                 >
                     <TableComponent
+                        showTotalResult
                         loading={isRefetching || loadingModal || isLoading}
                         page={page}
                         rowSelect={false}

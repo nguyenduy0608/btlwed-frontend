@@ -105,6 +105,7 @@ const AccountPage = () => {
                     }
                 >
                     <TableComponent
+                        showTotalResult
                         loading={isRefetching || loadingModal || isLoading}
                         page={page}
                         rowSelect={false}

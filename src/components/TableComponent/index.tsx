@@ -1,5 +1,5 @@
 import { RADIUS } from '@/config/theme';
-import { Col, Row, Table } from 'antd';
+import { Col, Row, Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
@@ -28,6 +28,7 @@ interface IProps {
     rowClassName?: any;
     hiddenSelectAll?: boolean;
     components?: any;
+    showTotalResult?: boolean;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -50,6 +51,7 @@ const TableComponent: React.FC<IProps> = ({
     rowClassName,
     hiddenSelectAll,
     components,
+    showTotalResult,
 }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
@@ -64,6 +66,14 @@ const TableComponent: React.FC<IProps> = ({
         <Row className="gx-m-0">
             <Col span={24} className="gx-m-0 gx-px-0">
                 <WrapperTable>
+                    {showTotalResult && (
+                        <ResultStyled>
+                            <div>Kết quả lọc: </div>
+                            <Tag className="gx-m-0 gx-ml-2" color="magenta">
+                                {total}
+                            </Tag>
+                        </ResultStyled>
+                    )}
                     <TableStyled
                         showSorterTooltip={{ title: 'Sắp xếp' }}
                         loading={loading}
@@ -179,6 +189,14 @@ export const TableStyled = styled(Table)`
         border-radius: ${RADIUS};
         background-color: #999;
     }
+`;
+
+const ResultStyled = styled.div`
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
 `;
 
 export default TableComponent;

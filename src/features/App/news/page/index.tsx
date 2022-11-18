@@ -79,6 +79,7 @@ const NewsPage = () => {
             <Container>
                 <CardComponent title={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent
+                        showTotalResult
                         loading={isLoading}
                         page={page}
                         rowSelect

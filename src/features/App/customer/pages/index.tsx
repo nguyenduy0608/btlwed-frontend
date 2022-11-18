@@ -73,6 +73,7 @@ const CustomerPage = () => {
                     extra={<ExportButton key="extra_btn" onClick={() => console.log('first')} />}
                 >
                     <TableComponent
+                        showTotalResult
                         loading={isRefetching || loadingModal || isLoading}
                         page={page}
                         rowSelect={false}

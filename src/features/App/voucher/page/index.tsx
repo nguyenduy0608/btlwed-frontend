@@ -71,6 +71,7 @@ const VoucherPage = () => {
             <Container>
                 <CardComponent title="" extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent
+                        showTotalResult
                         loading={isLoading}
                         page={page}
                         rowSelect={false}

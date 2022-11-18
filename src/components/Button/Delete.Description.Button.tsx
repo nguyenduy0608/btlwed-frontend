@@ -4,7 +4,7 @@ import IconAntd from '../IconAntd';
 
 const DeleteDescriptionButton = ({ handleDelete }: { handleDelete: () => void }) => {
     return (
-        <Popconfirm title="Bạn chắc chứ?" onConfirm={handleDelete}>
+        <Popconfirm title="Bạn chắc chắn muốn xoá??" onConfirm={handleDelete}>
             <Button
                 type="text"
                 className="gx-mb-0"

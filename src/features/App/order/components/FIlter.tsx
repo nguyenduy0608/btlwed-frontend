@@ -16,9 +16,8 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) =
     return (
         <Space size="middle" wrap>
             <SearchInput
-                style={{ minWidth: '140px' }}
                 onChangeSearch={(search) => returnFilter({ search })}
-                placeholderSearch="Nhập mã đơn, tên khách hàng, số điện thoại khách hàng"
+                placeholderSearch="Nhập mã đơn, Tên/SĐT khách hàng"
             />
             <DefaultSelectStyled
                 placeholder="Trạng thái"

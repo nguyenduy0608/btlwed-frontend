@@ -49,7 +49,7 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
         dataIndex: 'user',
         render: (value) => (
             <>
-                {value.fullName} {'(' + value.phoneNumber + ')'}
+                {value?.fullName} {'(' + value?.phoneNumber + ')'}
             </>
         ),
     },
