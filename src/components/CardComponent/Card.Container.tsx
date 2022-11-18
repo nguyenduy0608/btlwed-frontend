@@ -7,8 +7,12 @@ const CardContainer = ({ title, leftCol, rightCol }: { title: string; leftCol: R
         <>
             <TitleCard>{title}</TitleCard>
             <Row className="gx-mx-2">
-                <Col span={12}>{leftCol}</Col>
-                <Col span={12}>{rightCol}</Col>
+                <Col xs={24} sm={24} md={12}>
+                    {leftCol}
+                </Col>
+                <Col xs={24} sm={24} md={12}>
+                    {rightCol}
+                </Col>
             </Row>
         </>
     );

@@ -174,6 +174,13 @@ const GlobalStyle = createGlobalStyle`
 }
 
 
+
+@media screen and (max-width: 575px) {
+  .gx-main-content-wrapper {
+    padding: 6px 0 0;
+}
+}
+
 `;
 
 export const DefaultSelectStyled = styled(Select)`

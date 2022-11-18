@@ -27,32 +27,32 @@ const ChartReport = () => {
                 Đơn hàng
             </Title>
             <RowStyled gutter={[60, 20]} justify="center">
-                <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
+                <Col xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
                     <ColStyled color="#1890ff">
                         <TitleColStyled>Chờ xác nhận</TitleColStyled>
                         <span>123</span>
                     </ColStyled>
                 </Col>
-                <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
+                <Col xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
                     <ColStyled color="#998CEB">
                         <TitleColStyled>Đang xử lý</TitleColStyled>
                         <span>123</span>
                     </ColStyled>
                 </Col>
-                <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
+                <Col xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
                     <ColStyled color="#5BB318">
                         <TitleColStyled>Hoàn thành</TitleColStyled>
                         <span>123</span>
                     </ColStyled>
                 </Col>
-                <Col xl={6} lg={12} md={12} sm={12} xs={12} className="gx-col-full">
+                <Col xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
                     <ColStyled color="#FF0000">
                         <TitleColStyled>Huỷ/ Từ chối</TitleColStyled>
                         <span>123</span>
                     </ColStyled>
                 </Col>
             </RowStyled>
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, minHeight: '250px' }}>
                 <ResponsiveContainer width="100%">
                     <LineChart data={data} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
                         <XAxis dataKey="name" />
