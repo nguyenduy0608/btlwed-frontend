@@ -1,6 +1,7 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate } from '@/utils';
+import { Input } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 
 export interface DataTypeProductCategory {
@@ -17,6 +18,7 @@ export interface DataTypeProductCategory {
     status: number;
     total_child: number;
     deletedAt: any;
+    listChild?: any;
 }
 export interface DataTypeProduct {
     id: number;
@@ -99,38 +101,17 @@ export const dataSourceProduct = [
         total: 2000,
     },
 ];
-export const columns = (page: number): ColumnsType<DataTypeProductCategory> => [
+export const columns = (page: number): ColumnsType<any> => [
     {
         title: 'STT',
         dataIndex: 'id',
         align: 'center',
+        width: 40,
         render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
     },
     {
         title: 'Tên danh mục',
         dataIndex: 'name',
-    },
-    {
-        title: 'Trạng thái',
-        dataIndex: 'status',
-        align: 'center',
-        render: (value: number) =>
-            value ? (
-                <TagResult text="Đang hoạt động" color="processing" />
-            ) : (
-                <TagResult text="Ngừng hoạt động" color="error" />
-            ),
-    },
-    {
-        title: 'Thứ tự hiển thị',
-        dataIndex: 'order',
-        align: 'center',
-    },
-    {
-        title: 'Ngày tạo',
-        dataIndex: 'createdAt',
-        align: 'center',
-        render: (value: any) => momentToStringDate(value),
     },
 ];
 export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [

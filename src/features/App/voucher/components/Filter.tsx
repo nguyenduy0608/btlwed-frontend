@@ -31,6 +31,8 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) =
                 <Option value={0}>Ngừng hoạt động</Option>
             </DefaultSelectStyled>
             <RangerPicker
+                placeholderStart="Ngày bắt đầu"
+                placeholderEnd="Ngày kết thúc"
                 name="dateFilter"
                 onChange={(name: string, value: string) => {
                     returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });

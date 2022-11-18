@@ -27,6 +27,7 @@ interface IProps {
     renderDefault?: any;
     rowClassName?: any;
     hiddenSelectAll?: boolean;
+    components?: any;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -48,6 +49,7 @@ const TableComponent: React.FC<IProps> = ({
     renderDefault,
     rowClassName,
     hiddenSelectAll,
+    components,
 }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
@@ -67,7 +69,6 @@ const TableComponent: React.FC<IProps> = ({
                         loading={loading}
                         title={header ? () => header : undefined}
                         id={id}
-                        className="gx-table-responsive"
                         // @ts-ignore
                         rowSelection={
                             rowSelect
@@ -88,8 +89,13 @@ const TableComponent: React.FC<IProps> = ({
                             expandedRowKeys: keysExpanded,
                             expandRowByClick: true,
                             onExpandedRowsChange: (keys: any) => {
+                                console.log('🚀 ~ file: index.tsx ~ line 92 ~ keys', keys);
                                 if (keys?.length > 0) {
+                                    // if (components) {
+                                    //     setKeysExpanded([]);
+                                    // } else {
                                     setKeysExpanded([keys.reverse()[0]]);
+                                    // }
                                 } else {
                                     setKeysExpanded([]);
                                 }
@@ -108,6 +114,7 @@ const TableComponent: React.FC<IProps> = ({
                         dataSource={dataSource}
                         columns={columns}
                         // onChange={(all) => console.log('change table', all)}
+                        components={components}
                     />
                 </WrapperTable>
             </Col>

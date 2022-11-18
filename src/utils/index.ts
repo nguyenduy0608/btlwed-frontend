@@ -153,3 +153,22 @@ export const checkNowDate = (date: string) => {
 export const momentParseUtc = (date: string) => {
     return moment(date).utc();
 };
+
+// move array
+
+export function arrayMoveMutable(array: any, fromIndex: any, toIndex: any) {
+    const startIndex = fromIndex < 0 ? array.length + fromIndex : fromIndex;
+
+    if (startIndex >= 0 && startIndex < array.length) {
+        const endIndex = toIndex < 0 ? array.length + toIndex : toIndex;
+
+        const [item] = array.splice(fromIndex, 1);
+        array.splice(endIndex, 0, item);
+    }
+}
+
+export function arrayMoveImmutable(array: any, fromIndex: any, toIndex: any) {
+    const newArray = [...array];
+    arrayMoveMutable(newArray, fromIndex, toIndex);
+    return newArray;
+}

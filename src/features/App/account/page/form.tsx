@@ -93,100 +93,112 @@ const AccountFormPage = ({
             title={values ? 'Cập nhật tài khoản' : 'Thêm tài khoản'}
             modalVisible={modalVisible}
             loading={loadingModal}
+            width={800}
         >
-            <FormComponent layoutType="vertical" form={form} initialValues={initialValue} onSubmit={handleSubmit}>
-                <Row gutter={[20, 0]}>
-                    <FormItemComponent
-                        label="Ảnh đại diện"
-                        inputField={
-                            <UploadComponent
-                                isUploadServerWhenUploading
-                                uploadType="list"
-                                listType="picture-card"
-                                maxLength={1}
-                                onSuccessUpload={(file: any) => {
-                                    setFile(file?.url);
-                                }}
-                                isShowFileList
-                                initialFile={[{ url: values?.avatar, uid: uuid(), name: 'avatar' }]}
+            <FormComponent layoutType="vertical" form={form} onSubmit={handleSubmit}>
+                <Row style={{ flexDirection: 'row' }} gutter={[20, 0]}>
+                    <Col span={12}>
+                        <Row>
+                            <FormItemComponent
+                                rules={[rules.required('Vui lòng nhập họ tên !')]}
+                                name="fullName"
+                                label="Họ tên"
+                                inputField={<Input placeholder="Nhập tên" />}
                             />
-                        }
-                    />
-                    <FormItemComponent
-                        rules={[rules.required('Vui lòng nhập họ tên !')]}
-                        name="fullName"
-                        label="Họ tên"
-                        inputField={<Input placeholder="Nhập tên" />}
-                    />
-                    <FormItemComponent
-                        rules={[
-                            { required: true, message: 'Vui lòng nhập đúng định dạng số điện thoại !' },
-                            errorValidPhone,
-                        ]}
-                        name="phoneNumber"
-                        label="Số điện thoại"
-                        inputField={<Input disabled={!!values} placeholder="Nhập số điện thoại" />}
-                    />
-                    <FormItemComponent
-                        rules={[{ required: true, message: 'Vui lòng nhập đúng định dạng email!', type: 'email' }]}
-                        name="email"
-                        label="Email"
-                        inputField={<Input placeholder="Nhập email" />}
-                    />
-                    <FormItemComponent
-                        rules={[rules.required('Vui lòng chọn loại tài khoản!')]}
-                        name="accountId"
-                        label="Loại tài khoản"
-                        inputField={
-                            <Select placeholder="Chọn loại tài khoản">
-                                <Option value={ADMIN.main}>Admin</Option>
-                                <Option value={ADMIN.stall}>Admin gian hàng</Option>
-                            </Select>
-                        }
-                    />
-                    {accountId === ADMIN.stall && (
-                        <FormItemComponent
-                            rules={[{ required: true, message: 'Vui lòng chọn khu vực!' }]}
-                            name="kiotvietId"
-                            label="Khu vực"
-                            inputField={
-                                <Select placeholder="Chọn khu vực">
-                                    {state?.kiotviets?.map((kiot) => (
-                                        <Option value={kiot.id}>{kiot.name}</Option>
-                                    ))}
-                                </Select>
-                            }
-                        />
-                    )}
+                            <FormItemComponent
+                                rules={[
+                                    { required: true, message: 'Vui lòng nhập đúng định dạng email!', type: 'email' },
+                                ]}
+                                name="email"
+                                label="Email"
+                                inputField={<Input placeholder="Nhập email" />}
+                            />
+                            <FormItemComponent
+                                rules={[
+                                    { required: true, message: 'Vui lòng nhập đúng định dạng số điện thoại !' },
+                                    errorValidPhone,
+                                ]}
+                                name="phoneNumber"
+                                label="Số điện thoại"
+                                inputField={<Input disabled={!!values} placeholder="Nhập số điện thoại" />}
+                            />
+                            {values && (
+                                <FormItemComponent
+                                    rules={[rules.required('Vui lòng chọn trạng thái!')]}
+                                    name="status"
+                                    label="Trạng thái"
+                                    inputField={
+                                        <Select placeholder="Chọn trạng thái">
+                                            <Option value={STATUS.active}>Đang hoạt động</Option>
+                                            <Option value={STATUS.unActive}>Ngừng hoạt động</Option>
+                                        </Select>
+                                    }
+                                />
+                            )}
+                            {!values && (
+                                <>
+                                    <FormItemComponent
+                                        rules={[rules.required('Vui lòng nhập mật khẩu !')]}
+                                        name="password"
+                                        label="Mật khẩu"
+                                        inputField={<Input.Password placeholder="******" />}
+                                    />
+                                    <FormItemComponent
+                                        rules={[rules.required('Vui lòng nhập lại mật khẩu !'), errorConfirmPassword]}
+                                        name="passwordConfirmation"
+                                        label="Xác nhận mật khẩu"
+                                        inputField={<Input.Password placeholder="******" />}
+                                    />
+                                </>
+                            )}
+                        </Row>
+                    </Col>
 
-                    {values ? (
-                        <FormItemComponent
-                            rules={[rules.required('Vui lòng chọn trạng thái!')]}
-                            name="status"
-                            label="Trạng thái"
-                            inputField={
-                                <Select placeholder="Chọn trạng thái">
-                                    <Option value={STATUS.active}>Đang hoạt động</Option>
-                                    <Option value={STATUS.unActive}>Ngừng hoạt động</Option>
-                                </Select>
-                            }
-                        />
-                    ) : (
-                        <>
+                    <Col span={12}>
+                        <Row>
                             <FormItemComponent
-                                rules={[rules.required('Vui lòng nhập mật khẩu !')]}
-                                name="password"
-                                label="Mật khẩu"
-                                inputField={<Input.Password placeholder="******" />}
+                                label="Ảnh đại diện"
+                                inputField={
+                                    <UploadComponent
+                                        isUploadServerWhenUploading
+                                        uploadType="list"
+                                        listType="picture-card"
+                                        maxLength={1}
+                                        onSuccessUpload={(file: any) => {
+                                            setFile(file?.url);
+                                        }}
+                                        isShowFileList
+                                        initialFile={values && [{ url: values?.avatar, uid: uuid(), name: 'avatar' }]}
+                                    />
+                                }
                             />
                             <FormItemComponent
-                                rules={[rules.required('Vui lòng nhập lại mật khẩu !'), errorConfirmPassword]}
-                                name="passwordConfirmation"
-                                label="Xác nhận mật khẩu"
-                                inputField={<Input.Password placeholder="******" />}
+                                rules={[rules.required('Vui lòng chọn loại tài khoản!')]}
+                                name="accountId"
+                                label="Loại tài khoản"
+                                inputField={
+                                    <Select placeholder="Chọn loại tài khoản">
+                                        <Option value={ADMIN.main}>Admin</Option>
+                                        <Option value={ADMIN.stall}>Admin gian hàng</Option>
+                                    </Select>
+                                }
                             />
-                        </>
-                    )}
+                            {accountId === ADMIN.stall && (
+                                <FormItemComponent
+                                    rules={[{ required: true, message: 'Vui lòng chọn khu vực!' }]}
+                                    name="kiotvietId"
+                                    label="Khu vực"
+                                    inputField={
+                                        <Select placeholder="Chọn khu vực">
+                                            {state?.kiotviets?.map((kiot) => (
+                                                <Option value={kiot.id}>{kiot.name}</Option>
+                                            ))}
+                                        </Select>
+                                    }
+                                />
+                            )}
+                        </Row>
+                    </Col>
                 </Row>
                 <Row style={{ width: '100%' }} align="bottom">
                     <Space>

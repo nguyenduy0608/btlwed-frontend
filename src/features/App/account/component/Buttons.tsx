@@ -28,40 +28,29 @@ const Buttons = (props: IProps) => {
         Modal.destroyAll();
     };
     const showConfirmDelete = () => {
-        setTimeout(() => {
-            confirm({
-                title: 'Xóa tài khoản',
-                icon: <ExclamationCircleOutlined />,
-                content: (
-                    <Button className="gx-mb-0" onClick={destroyAll}>
-                        Bạn chắc chắn muốn xóa tài khoản này?
-                    </Button>
-                ),
-                onOk() {
-                    handleDelete(record.id);
-                },
-                onCancel() {},
-            });
+        confirm({
+            title: 'Xóa tài khoản',
+            icon: <ExclamationCircleOutlined />,
+            content: <strong style={{ marginTop: '10px' }}>Bạn chắc chắn muốn xóa tài khoản này?</strong>,
+            onOk() {
+                handleDelete(record.id);
+            },
+            onCancel() {},
         });
     };
     const showConfirmReset = () => {
-        setTimeout(() => {
-            confirm({
-                width: '520px',
-                title: 'Đặt lại mật khẩu',
-                icon: <ExclamationCircleOutlined />,
-                content: (
-                    <Button className="gx-mb-0" onClick={destroyAll}>
-                        Bạn chắc chắn đồng ý đặt lại mật khẩu khách hàng?
-                    </Button>
-                ),
-                onOk() {
-                    handleReset(record.id);
-                },
-                onCancel() {},
-            });
+        confirm({
+            width: '520px',
+            title: 'Đặt lại mật khẩu',
+            icon: <ExclamationCircleOutlined />,
+            content: <strong style={{ marginTop: '10px' }}>Bạn chắc chắn đồng ý đặt lại mật khẩu khách hàng?</strong>,
+            onOk() {
+                handleReset(record.id);
+            },
+            onCancel() {},
         });
     };
+
     const handleReset = async (id: number) => {
         const res = await voucherService.resetPassword(id);
         if (res.status) {

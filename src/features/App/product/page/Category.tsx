@@ -1,30 +1,35 @@
-import SaveButton from '@/components/Button/Save.Button';
 import CardComponent from '@/components/CardComponent';
-import FormComponent from '@/components/FormComponent';
-import FormItemComponent from '@/components/FormComponent/FormItemComponent';
-import ModalComponent from '@/components/ModalComponent';
+import IconAntd from '@/components/IconAntd';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
+import { RECORD_SIZE } from '@/config/theme';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { Notification, wait } from '@/utils';
-import { Button, Form, InputNumber, Row, Segmented, Space } from 'antd';
+import { momentToStringDate, Notification, wait } from '@/utils';
+import { Form, message, Segmented, Switch } from 'antd';
 import Input from 'antd/lib/input/Input';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { rules } from '../../voucher/rules';
+import type { SortableContainerProps, SortEnd } from 'react-sortable-hoc';
+import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
 import Description from '../components/Description';
 import Filter from '../components/Filter.Category';
 import { columns, DataTypeProductCategory } from '../components/Product.Config';
 import { CategoryService } from '../service';
+
 const initialFilterQuery = {};
 
 const initialValue = {
     name: '',
     order: '',
 };
+
+const DragHandle = SortableHandle(() => <IconAntd icon="DragOutlined" style={{ cursor: 'grab', color: '#999' }} />);
+
+const SortableItem = SortableElement((props: React.HTMLAttributes<HTMLTableRowElement>) => <tr {...props} />);
+const SortableBody = SortableContainer((props: React.HTMLAttributes<HTMLTableSectionElement>) => <tbody {...props} />);
 
 const ProductCategoryPage = () => {
     const { state, dispatch } = useCallContext();
@@ -107,6 +112,40 @@ const ProductCategoryPage = () => {
         [filterQuery]
     );
 
+    const onSortEnd = ({ oldIndex, newIndex, ...props }: SortEnd) => {
+        if (oldIndex !== newIndex) {
+            if (!category?.data?.[oldIndex]?.id || !category?.data?.[newIndex]?.id)
+                return message.error('Không thể sắp xếp danh mục này');
+
+            CategoryService.update(category?.data?.[oldIndex]?.id, {
+                order:
+                    oldIndex > newIndex ? +category?.data?.[newIndex]?.order - 1 : +category?.data?.[newIndex]?.order,
+            }).then(() => {
+                message.success('Thay đổi thứ tự thành công');
+                refetch();
+            });
+        }
+    };
+
+    const DraggableContainer = (props: SortableContainerProps) => {
+        return (
+            <SortableBody useDragHandle disableAutoscroll helperClass="row-dragging" onSortEnd={onSortEnd} {...props} />
+        );
+    };
+
+    const DraggableBodyRow: React.FC<any> = ({ className, style, ...restProps }) => {
+        // function findIndex base on Table rowKey props and should always be a right array index
+        const index = category?.data?.findIndex((x: any) => x.id === restProps['data-row-key']);
+        return (
+            <SortableItem
+                className={className}
+                style={style}
+                index={index || Math.floor(Math.random())}
+                {...restProps}
+            />
+        );
+    };
+
     return (
         <>
             <TopBar
@@ -129,12 +168,83 @@ const ProductCategoryPage = () => {
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
-                        dataSource={category?.data}
-                        columns={columns(page)}
+                        dataSource={category?.data || []}
+                        components={{
+                            body: {
+                                wrapper: DraggableContainer,
+                                row: DraggableBodyRow,
+                            },
+                        }}
+                        columns={[
+                            {
+                                title: '',
+                                dataIndex: 'sort',
+                                width: 30,
+                                className: 'drag-visible',
+                                render: () => <DragHandle />,
+                            },
+                            ...columns(page),
+                            {
+                                title: 'Thứ tự hiển thị',
+                                dataIndex: 'order',
+                                align: 'center',
+                                width: 200,
+                                render: (value: any, row: any) => (
+                                    <div
+                                        onClick={(e: any) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        <Input
+                                            onBlur={(e) => {
+                                                if (+e.target.value === +value) return;
+                                                CategoryService.update(row.id, { order: e.target.value }).then(() => {
+                                                    message.success('Thay đổi thứ tự thành công');
+
+                                                    refetch();
+                                                });
+                                            }}
+                                            defaultValue={value}
+                                        />
+                                    </div>
+                                ),
+                            },
+                            {
+                                title: 'Ngày tạo',
+                                dataIndex: 'createdAt',
+                                align: 'center',
+                                render: (value: any) => momentToStringDate(value),
+                            },
+                            {
+                                title: 'Trạng thái',
+                                dataIndex: 'status',
+                                align: 'center',
+                                width: 40,
+                                render: (value: number, row: any) => (
+                                    <div
+                                        onClick={(e: any) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                        }}
+                                    >
+                                        <Switch
+                                            onChange={(value) => {
+                                                CategoryService.changeStatus(row.id, value).then(() => {
+                                                    message.success('Cập nhật trạng thái thành công');
+                                                    refetch();
+                                                });
+                                            }}
+                                            defaultChecked={!!value}
+                                        />
+                                    </div>
+                                ),
+                            },
+                        ]}
                         total={category && category?.paging?.totalItemCount}
                     />
 
-                    <ModalComponent title="Cập nhật danh mục" modalVisible={modalVisible} loading={loadingModal}>
+                    {/* <ModalComponent title="Cập nhật danh mục" modalVisible={modalVisible} loading={loadingModal}>
                         <FormComponent
                             layoutType="vertical"
                             form={form}
@@ -173,7 +283,7 @@ const ProductCategoryPage = () => {
                                 </Space>
                             </Row>
                         </FormComponent>
-                    </ModalComponent>
+                    </ModalComponent> */}
                 </CardComponent>
             </Container>
         </>

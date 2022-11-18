@@ -160,6 +160,19 @@ const GlobalStyle = createGlobalStyle`
   cursor: pointer;
 }
 
+.row-dragging {
+  background: #fafafa;
+  border: 1px solid #ccc;
+}
+
+.row-dragging td {
+  padding: 16px;
+}
+
+.row-dragging .drag-visible {
+  visibility: visible;
+}
+
 
 `;
 

@@ -5,6 +5,7 @@ import CardContainer from '@/components/CardComponent/Card.Container';
 import CardRow from '@/components/CardComponent/Card.Row';
 import IconAntd from '@/components/IconAntd';
 import PrintTemplate from '@/components/PrintTemplate';
+import OrderPrint from '@/components/PrintTemplate/Order.print';
 import TableComponent from '@/components/TableComponent';
 import TagResult from '@/components/TagResult';
 import TopBar from '@/components/TopBar';
@@ -191,7 +192,7 @@ const OrderDetailPage = () => {
                     />
                 </CardComponent>
             </Container>
-            <PrintTemplate ref={componentRef} />
+            <OrderPrint ref={componentRef} />
         </>
     );
 };

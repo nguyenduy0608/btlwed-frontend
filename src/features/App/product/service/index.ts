@@ -15,7 +15,7 @@ export const CategoryService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
-    update: (id: number, data: { order: number }) => {
+    update: (id: number, data: { order: number | string }) => {
         const url = `/admin/product_category/${id}/re_order`;
         return AxiosClient.patch(url, { ...data });
     },
@@ -25,6 +25,10 @@ export const CategoryService = {
     },
     lock: (id: number) => {
         const url = `/admin/product_category/${id}/inactive`;
+        return AxiosClient.patch(url);
+    },
+    changeStatus: (id: number, status: boolean) => {
+        const url = status ? `/admin/product_category/${id}/active` : `/admin/product_category/${id}/inactive`;
         return AxiosClient.patch(url);
     },
 };

@@ -15,7 +15,7 @@ const Description: React.FC<IProps> = ({ record, refetch, handleShowModal }) => 
         <Card className="gx-mb-0" actions={Buttons({ record, handleShowModal, refetch })}>
             <Row>
                 <Col span={18}>
-                    <Descriptions title="Thông tin mã giảm giá" column={2}>
+                    <Descriptions title="Thông tin tài khoản" column={2}>
                         <Descriptions.Item label="Tên người dùng">{record.fullName || '--'}</Descriptions.Item>
                         <Descriptions.Item label="Email">{record.email || '--'}</Descriptions.Item>
                         <Descriptions.Item label="Số điện thoại">{record.phoneNumber || '--'}</Descriptions.Item>
