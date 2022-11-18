@@ -1,6 +1,6 @@
 import AppLoading from '@/assets/appLoading.json';
 import loadingSync from '@/assets/loading_sync.json';
-import { Spin, ConfigProvider, Row } from 'antd';
+import { Spin, ConfigProvider, Row, Alert, notification, Timeline } from 'antd';
 import Lottie from 'lottie-react';
 import React from 'react';
 import styled from 'styled-components';
@@ -15,6 +15,7 @@ import moment from 'moment';
 import vi_VN from 'antd/lib/locale/vi_VN';
 import { BOX_SHADOW } from './config/theme';
 import io from 'socket.io-client';
+import IconAntd from './components/IconAntd';
 
 moment.utc().locale('vi');
 
@@ -54,6 +55,47 @@ function App() {
             socket.close();
         };
     }, [dispatch, state.info]);
+
+    const openNotification = () => {
+        const args = {
+            message: 'Cập nhật mới',
+            description: (
+                <div className="gx-p-4">
+                    <Timeline
+                        pending={
+                            <strong>
+                                Tính năng tiếp theo: Cấu hình socket, loading đồng bộ, hoàn thiện tài khoản ...
+                            </strong>
+                        }
+                    >
+                        <Timeline.Item color="green">
+                            <strong>Danh mục 2 cấp</strong>
+                        </Timeline.Item>
+                        <Timeline.Item color="green">
+                            <strong>Chức năng cập nhật trạng thái + vị trí mới</strong>
+                        </Timeline.Item>
+
+                        <Timeline.Item>
+                            <strong>Kéo thả vị trí</strong>
+                        </Timeline.Item>
+                        <Timeline.Item color="green">
+                            <strong>In báo cáo chi tiết đơn hàng</strong>
+                        </Timeline.Item>
+                        <Timeline.Item color="#00CCFF" dot={<IconAntd icon="SmileOutlined" />}>
+                            <strong>Bắt lỗi voucher</strong>
+                        </Timeline.Item>
+                    </Timeline>
+                </div>
+            ),
+
+            duration: 0,
+        };
+        notification.open(args);
+    };
+
+    React.useEffect(() => {
+        openNotification();
+    }, []);
 
     return (
         <SpinLoadingStyled
