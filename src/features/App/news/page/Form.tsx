@@ -130,7 +130,7 @@ const NewsFormPage = () => {
                                     label="Trạng thái"
                                     inputField={
                                         <Select
-                                            // disabled={Boolean(id && status === NEWS_STATUS.POST)}
+                                            disabled={Boolean(id && status === NEWS_STATUS.POST)}
                                             placeholder="Chọn trạng thái"
                                         >
                                             <Select.Option value={NEWS_STATUS.POST}>Đăng bài</Select.Option>

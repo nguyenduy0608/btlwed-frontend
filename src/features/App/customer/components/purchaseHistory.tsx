@@ -12,6 +12,7 @@ import { CustomerService, PurchaseService } from '../service';
 import Filter from './Filter';
 import RangerPicker from '@/components/RangerPicker';
 import { TitleCardDes } from '@/config/global.style';
+import { routerPage } from '@/config/routes';
 const initialFilterQuery = {};
 
 const PuchaseHistoryPage = () => {
@@ -51,6 +52,7 @@ const PuchaseHistoryPage = () => {
                 page={page}
                 loading={isLoading}
                 rowSelect={false}
+                onRowClick={(record: { id: number }) => navigate(`${routerPage.order}/${record.id}`)}
                 onChangePage={(_page) => setPage(_page)}
                 dataSource={puchaseHistory ? puchaseHistory.data : []}
                 columns={Purchasecolumns(page)}

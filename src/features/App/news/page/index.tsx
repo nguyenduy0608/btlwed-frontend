@@ -18,8 +18,8 @@ const initialFilterQuery = {
     statusActive: undefined,
     typeNews: undefined,
     status: undefined,
-    fromDate: '',
-    toDate: '',
+    createFrom: '',
+    createTo: '',
 };
 
 const NewsPage = () => {

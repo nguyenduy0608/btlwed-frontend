@@ -24,8 +24,8 @@ interface IQuery {
     statusActive: IStatus | undefined;
     typeNews: NEWS_TYPE | undefined;
     status: NEWS_STATUS | undefined;
-    fromDate: string;
-    toDate: string;
+    createFrom: string;
+    createTo: string;
 }
 export const newService = {
     get: (params: IQuery) => {

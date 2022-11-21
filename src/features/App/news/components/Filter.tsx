@@ -56,7 +56,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
             <RangerPicker
                 name="dateFilter"
                 onChange={(name: string, value: string) => {
-                    returnFilter({ fromDate: value.split(',')[0], toDate: value.split(',')[1] });
+                    returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });
                 }}
             />
         </Space>
