@@ -467,7 +467,7 @@ const VoucherFormPage = () => {
                                     />
                                 }
                             />
-                            {applicableType === APPLICABLE_TYPE.product && (
+                            {(rewardType === REWARD.gift || applicableType === APPLICABLE_TYPE.product) && (
                                 <FormItemComponent
                                     grid={width > 1024}
                                     name="enableProducts"
@@ -482,7 +482,7 @@ const VoucherFormPage = () => {
                             )}
                         </Col>
                     </Row>
-                    {applicableType === APPLICABLE_TYPE.product && (
+                    {(rewardType === REWARD.gift || applicableType === APPLICABLE_TYPE.product) && (
                         <>
                             <Divider />
                             <div style={enableProducts ? { pointerEvents: 'none', opacity: '0.4' } : {}}>
