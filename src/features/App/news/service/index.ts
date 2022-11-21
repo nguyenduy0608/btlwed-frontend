@@ -47,8 +47,8 @@ export const newService = {
         formData.append('type', data.type);
         formData.append('status', data.status);
         formData.append('file', data.file);
-        formData.append('status_active', data.statusActive);
-        formData.append('notification_customer', data.notificationCustomer ? '1' : '0');
+        formData.append('status_active', data.statusActive || '1');
+        data.notificationCustomer && formData.append('notification_customer', data.notificationCustomer ? '1' : '0');
 
         return AxiosClient.post(url, formData, {
             headers: {
@@ -66,8 +66,8 @@ export const newService = {
         formData.append('type', data.type);
         formData.append('status', data.status);
         data.file && formData.append('file', data.file);
-        formData.append('status_active', data.statusActive);
-        formData.append('notification_customer', data.notificationCustomer ? '1' : '0');
+        formData.append('status_active', data.statusActive || '1');
+        data.notificationCustomer && formData.append('notification_customer', data.notificationCustomer ? '1' : '0');
 
         return AxiosClient.patch(url, formData, {
             headers: {

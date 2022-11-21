@@ -20,7 +20,9 @@ const Content = ({
     title: string;
 }) => {
     const [content, setContent] = React.useState('');
-
+    React.useEffect(() => {
+        setContent(refContent || '');
+    }, [refContent]);
     return (
         <Row style={{ flexDirection: 'row', flexWrap: 'nowrap', width: '100%', margin: 0 }}>
             <Col style={{ flex: 1 }}>

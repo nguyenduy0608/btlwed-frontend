@@ -90,6 +90,9 @@ function App() {
                         <Timeline.Item color="green">
                             <strong>Cập nhật preview tin tức</strong>
                         </Timeline.Item>
+                        <Timeline.Item color="red">
+                            <strong>Fix bug thêm tin tức</strong>
+                        </Timeline.Item>
                     </Timeline>
                 </div>
             ),
