@@ -1,4 +1,5 @@
 import TagResult from '@/components/TagResult';
+import TreeView from '@/components/TreeView';
 import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, uuid } from '@/utils';
 import { Tree } from 'antd';
@@ -136,25 +137,7 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
         // align: 'center',
         render: (value) =>
             value?.categoryParent ? (
-                <Tree
-                    rootStyle={{ backgroundColor: 'transparent' }}
-                    switcherIcon={<></>}
-                    showLine
-                    showIcon={false}
-                    defaultExpandAll
-                    treeData={[
-                        {
-                            title: value?.categoryParent?.name,
-                            key: uuid(),
-                            children: [
-                                {
-                                    title: value?.name,
-                                    key: uuid(),
-                                },
-                            ],
-                        },
-                    ]}
-                />
+                <TreeView parent={value?.categoryParent?.name} children={value?.name} />
             ) : (
                 value?.name
             ),

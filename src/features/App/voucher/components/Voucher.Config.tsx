@@ -1,5 +1,6 @@
 import IconAntd from '@/components/IconAntd';
 import TagResult from '@/components/TagResult';
+import TreeView from '@/components/TreeView';
 import { RECORD_SIZE } from '@/config/theme';
 import { currencyFormat, momentToStringDate, uuid } from '@/utils';
 import { Tree } from 'antd';
@@ -129,27 +130,7 @@ export const columnsApplyVoucherSelect: any = (callbackRemoveProduct: any) => [
         key: 'category',
         render: (value: any) =>
             value?.categoryParent ? (
-                <Tree
-                    rootStyle={{ backgroundColor: 'transparent' }}
-                    switcherIcon={<></>}
-                    showLine
-                    showIcon={false}
-                    defaultExpandAll
-                    autoExpandParent
-                    defaultExpandParent
-                    treeData={[
-                        {
-                            title: value?.categoryParent?.name,
-                            key: uuid(),
-                            children: [
-                                {
-                                    title: value?.name,
-                                    key: uuid(),
-                                },
-                            ],
-                        },
-                    ]}
-                />
+                <TreeView parent={value?.categoryParent?.name} children={value?.name} />
             ) : (
                 value?.name
             ),
