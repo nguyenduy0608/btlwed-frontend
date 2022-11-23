@@ -53,7 +53,7 @@ staging-build:
 staging-deploy:
     <<: *deploy
     script:
-        - ssh develop "cd ~/app/staka/staging && ./deploy.sh web_staging && exit"
+        - ssh develop "cd ~/app/staka && ./deploy.sh web_staging && exit"
     only:
         - staging
 
