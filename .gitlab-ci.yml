@@ -39,6 +39,24 @@ develop-deploy:
     only:
         - develop
 
+#STAGING ENVIRONMENT
+staging-build:
+    <<: *build
+    variables:
+        TAG: staging
+    before_script:
+        - echo -e "$STAGING_ENV" > .env
+        - cp .env.staging .env
+    only:
+        - staging
+
+staging-deploy:
+    <<: *deploy
+    script:
+        - ssh develop "cd ~/app/staka && ./deploy.sh web_staging && exit"
+    only:
+        - staging
+
 #PRODUCTION ENVIRONMENT
 prod-build:
     <<: *build
