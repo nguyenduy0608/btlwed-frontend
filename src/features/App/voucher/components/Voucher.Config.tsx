@@ -1,7 +1,8 @@
 import IconAntd from '@/components/IconAntd';
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
-import { currencyFormat, momentToStringDate } from '@/utils';
+import { currencyFormat, momentToStringDate, uuid } from '@/utils';
+import { Tree } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import styled from 'styled-components';
 
@@ -126,8 +127,32 @@ export const columnsApplyVoucherSelect: any = (callbackRemoveProduct: any) => [
         title: 'Danh mục',
         dataIndex: 'category',
         key: 'category',
-        render: (value: any) => value?.name,
-        width: '300px',
+        render: (value: any) =>
+            value?.categoryParent ? (
+                <Tree
+                    rootStyle={{ backgroundColor: 'transparent' }}
+                    switcherIcon={<></>}
+                    showLine
+                    showIcon={false}
+                    defaultExpandAll
+                    autoExpandParent
+                    defaultExpandParent
+                    treeData={[
+                        {
+                            title: value?.categoryParent?.name,
+                            key: uuid(),
+                            children: [
+                                {
+                                    title: value?.name,
+                                    key: uuid(),
+                                },
+                            ],
+                        },
+                    ]}
+                />
+            ) : (
+                value?.name
+            ),
     },
     {
         title: 'Sản phẩm',

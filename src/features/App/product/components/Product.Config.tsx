@@ -133,7 +133,7 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
     {
         title: 'Danh mục',
         dataIndex: 'category',
-        align: 'center',
+        // align: 'center',
         render: (value) =>
             value?.categoryParent ? (
                 <Tree
