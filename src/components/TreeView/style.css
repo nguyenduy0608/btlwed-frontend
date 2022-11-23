@@ -27,14 +27,14 @@
   content: "";
   position: absolute;
   border-top: 2px dashed #a2a5b5;
-  top: 26px;
-  left: -4px;
-  width: 20px;
+  top: 24px;
+  left: -18px;
+  width: 28px;
 }
 .treeview ul li:last-child:before {
   top: 4px;
-  left: -4px;
-  height: 20px;
+  left: -18px;
+  height: 16px;
 }
 .treeview > ul > li:after, .treeview > ul > li:last-child:before {
   content: unset;

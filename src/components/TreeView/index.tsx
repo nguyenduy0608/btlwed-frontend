@@ -8,7 +8,7 @@ const TreeView = ({ parent, children }: any) => {
                     <div className="treeview__level">
                         <span className="level-title">{parent}</span>
                     </div>
-                    <ul style={{ marginBottom: 0 }}>
+                    <ul style={{ marginBottom: 0, paddingLeft: '30px' }}>
                         <li>
                             <div className="treeview__level">
                                 <span className="level-title">{children}</span>
