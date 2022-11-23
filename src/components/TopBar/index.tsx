@@ -1,7 +1,7 @@
 import { BOX_SHADOW, RADIUS } from '@/config/theme';
 import { PageHeader, Typography } from 'antd';
 import React, { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 const { Title } = Typography;
 
@@ -16,11 +16,12 @@ const TopBar = ({
     style?: React.CSSProperties;
     back?: boolean;
 }) => {
+    const location = useLocation();
     const navigate = useNavigate();
     return (
         <HeaderStyled
             ghost
-            onBack={back ? () => navigate(-1) : undefined}
+            onBack={back ? () => navigate(location?.state?.prevUrl || -1, { state: location.state }) : undefined}
             title={title}
             style={style}
             extra={extra}

@@ -2,7 +2,6 @@ import CardComponent from '@/components/CardComponent';
 import IconAntd from '@/components/IconAntd';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
-import { RECORD_SIZE } from '@/config/theme';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
@@ -119,7 +118,11 @@ const ProductCategoryPage = () => {
 
             CategoryService.update(category?.data?.[oldIndex]?.id, {
                 order:
-                    oldIndex > newIndex ? +category?.data?.[newIndex]?.order - 1 : +category?.data?.[newIndex]?.order,
+                    oldIndex > newIndex
+                        ? +category?.data?.[newIndex + 1]?.order - 1 <= 0
+                            ? 1
+                            : +category?.data?.[newIndex + 1]?.order - 1
+                        : +category?.data?.[newIndex]?.order,
             }).then(() => {
                 message.success('Thay đổi thứ tự thành công');
                 refetch();
@@ -198,7 +201,11 @@ const ProductCategoryPage = () => {
                                         }}
                                     >
                                         <Input
+                                            min={1}
                                             onBlur={(e) => {
+                                                if (+e.target.value <= 0)
+                                                    return Notification('warning', 'Thứ tự phải lớn hơn 0');
+
                                                 if (+e.target.value === +value) return;
                                                 CategoryService.update(row.id, { order: e.target.value }).then(() => {
                                                     message.success('Thay đổi thứ tự thành công');

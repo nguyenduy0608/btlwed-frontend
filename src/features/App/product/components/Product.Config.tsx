@@ -1,7 +1,7 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
-import { currencyFormat, momentToStringDate } from '@/utils';
-import { Input } from 'antd';
+import { currencyFormat, uuid } from '@/utils';
+import { Tree } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 
 export interface DataTypeProductCategory {
@@ -134,7 +134,30 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeProduct> => [
         title: 'Danh mục',
         dataIndex: 'category',
         align: 'center',
-        render: (value) => value?.name,
+        render: (value) =>
+            value?.categoryParent ? (
+                <Tree
+                    rootStyle={{ backgroundColor: 'transparent' }}
+                    switcherIcon={<></>}
+                    showLine
+                    showIcon={false}
+                    defaultExpandAll
+                    treeData={[
+                        {
+                            title: value?.categoryParent?.name,
+                            key: uuid(),
+                            children: [
+                                {
+                                    title: value?.name,
+                                    key: uuid(),
+                                },
+                            ],
+                        },
+                    ]}
+                />
+            ) : (
+                value?.name
+            ),
     },
     {
         title: 'Giá bán(VNĐ)',

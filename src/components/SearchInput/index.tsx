@@ -3,15 +3,18 @@ import { Input } from 'antd';
 import React from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 
 const SearchInput = ({
     placeholderSearch,
     onChangeSearch,
     style,
+    defaultValue,
 }: {
     placeholderSearch: string;
     onChangeSearch: (search: string) => void;
     style?: React.CSSProperties;
+    defaultValue?: string;
 }) => {
     const [search, setSearch] = React.useState('');
     const debouncedSearchTerm = useDebounce(search, 300);
@@ -22,8 +25,13 @@ const SearchInput = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedSearchTerm]);
 
+    React.useEffect(() => {
+        setSearch(defaultValue || '');
+    }, [defaultValue]);
+
     return (
         <InputStyled
+            defaultValue={defaultValue}
             style={style}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={placeholderSearch}

@@ -9,7 +9,7 @@ import { selectAll } from '@/service';
 import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
 import Filter from '../components/Filter.Product';
 import { columnsProduct } from '../components/Product.Config';
@@ -17,6 +17,7 @@ import { ProductService } from '../service';
 const initialFilterQuery = {};
 const ProductPage = () => {
     const { state } = useCallContext();
+    const location = useLocation();
 
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
@@ -29,9 +30,19 @@ const ProductPage = () => {
         refetch,
     } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));
 
+    // React.useEffect(() => {
+    //     refetch();
+    // }, [state.syncLoading]);
+
     React.useEffect(() => {
-        refetch();
-    }, [state.syncLoading]);
+        if (location.state) {
+            delete location.state?.prevUrl;
+            setFilterQuery(location.state);
+            if (location.state?.page !== page) {
+                setPage(location.state?.page);
+            }
+        }
+    }, [location]);
 
     const returnFilter = React.useCallback(
         (filter: IFilter) => {
@@ -57,14 +68,18 @@ const ProductPage = () => {
             />
             <Container>
                 <CardComponent
-                    title={<Filter returnFilter={returnFilter} key="filterProduct" />}
+                    title={<Filter params={filterQuery} returnFilter={returnFilter} key="filterProduct" />}
                     extra={<ExportButton onClick={() => console.log('first')} />}
                 >
                     <TableComponent
                         showTotalResult
                         loading={isLoading || isRefetching}
                         page={page}
-                        onRowClick={(record: { id: number }) => navigate(`${routerPage.product}/${record.id}`)}
+                        onRowClick={(record: { id: number }) =>
+                            navigate(`${routerPage.product}/${record.id}`, {
+                                state: { ...filterQuery, page, prevUrl: location.pathname },
+                            })
+                        }
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         dataSource={products ? products.data : []}

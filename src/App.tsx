@@ -93,6 +93,10 @@ function App() {
                         <Timeline.Item color="red">
                             <strong>Fix bug thêm tin tức</strong>
                         </Timeline.Item>
+                        <Timeline.Item dot={<IconAntd icon="ApartmentOutlined" />} color="#2a69e6">
+                            <strong>Sản phẩm: Hiện thị danh mục 2 cấp -> Select tìm kiếm danh mục 2 cấp</strong>
+                        </Timeline.Item>
+                        
                     </Timeline>
                 </div>
             ),
