@@ -37,15 +37,17 @@ const ProductPage = () => {
     React.useEffect(() => {
         if (location.state) {
             delete location.state?.prevUrl;
-            setFilterQuery(location.state);
             if (location.state?.page !== page) {
                 setPage(location.state?.page);
             }
+            delete location.state?.page;
+            setFilterQuery(location.state);
         }
-    }, [location]);
+    }, [location?.state]);
 
     const returnFilter = React.useCallback(
         (filter: IFilter) => {
+            console.log('🚀 ~ file: index.tsx ~ line 50 ~ ProductPage ~ filter', filter);
             setPage(1);
             setFilterQuery({ ...filterQuery, ...filter });
         },

@@ -16,6 +16,7 @@ import vi_VN from 'antd/lib/locale/vi_VN';
 import { BOX_SHADOW } from './config/theme';
 import io from 'socket.io-client';
 import IconAntd from './components/IconAntd';
+const DEV_TYPE = import.meta.env.VITE_DEVOPS_TYPE;
 
 moment.utc().locale('vi');
 
@@ -106,7 +107,7 @@ function App() {
     };
 
     React.useEffect(() => {
-        openNotification();
+        DEV_TYPE === 'DEV' && openNotification();
     }, []);
 
     return (

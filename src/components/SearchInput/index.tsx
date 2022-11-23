@@ -16,7 +16,7 @@ const SearchInput = ({
     style?: React.CSSProperties;
     defaultValue?: string;
 }) => {
-    const [search, setSearch] = React.useState('');
+    const [search, setSearch] = React.useState(undefined);
     const debouncedSearchTerm = useDebounce(search, 300);
 
     React.useEffect(() => {
@@ -25,15 +25,15 @@ const SearchInput = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debouncedSearchTerm]);
 
-    React.useEffect(() => {
-        setSearch(defaultValue || '');
-    }, [defaultValue]);
+    // React.useEffect(() => {
+    //     setSearch(defaultValue || '');
+    // }, [defaultValue]);
 
     return (
         <InputStyled
             defaultValue={defaultValue}
             style={style}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: any) => setSearch(e.target.value)}
             placeholder={placeholderSearch}
             prefix={<SearchOutlined />}
             allowClear

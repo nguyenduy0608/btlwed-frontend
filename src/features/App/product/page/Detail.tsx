@@ -48,7 +48,13 @@ const ProductDetailPage = () => {
             <TopBar
                 back
                 title={product?.name || '-'}
-                extra={isEdit ? <SaveButton onClick={handleSubmit} /> : <EditButton onClick={() => setIsEdit(true)} />}
+                extra={
+                    isEdit ? (
+                        <SaveButton key="save" onClick={handleSubmit} />
+                    ) : (
+                        <EditButton key="edit" onClick={() => setIsEdit(true)} />
+                    )
+                }
             />
             <Container>
                 <CardComponent>
