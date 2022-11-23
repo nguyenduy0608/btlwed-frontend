@@ -1,21 +1,22 @@
 import AppLoading from '@/assets/appLoading.json';
 import loadingSync from '@/assets/loading_sync.json';
-import { Spin, ConfigProvider, Row, Alert, notification, Timeline } from 'antd';
+import { ConfigProvider, notification, Row, Spin, Timeline } from 'antd';
+import vi_VN from 'antd/lib/locale/vi_VN';
 import Lottie from 'lottie-react';
+import moment from 'moment';
 import React from 'react';
+import io from 'socket.io-client';
 import styled from 'styled-components';
 import LocalStorage from './apis/LocalStorage';
+import IconAntd from './components/IconAntd';
+import TagResult from './components/TagResult';
 import GlobalStyle from './config/global.style';
+import { BOX_SHADOW } from './config/theme';
 import { APP_LOADING, SET_INFO, SET_KIOTVIETS, SET_SOCKET } from './context/types';
 import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
 import { appService } from './service';
-import moment from 'moment';
-import vi_VN from 'antd/lib/locale/vi_VN';
-import { BOX_SHADOW } from './config/theme';
-import io from 'socket.io-client';
-import IconAntd from './components/IconAntd';
 const DEV_TYPE = import.meta.env.VITE_DEVOPS_TYPE;
 
 moment.utc().locale('vi');
@@ -61,44 +62,50 @@ function App() {
         const args = {
             message: 'Cập nhật mới',
             description: (
-                <div className="gx-p-4">
-                    <Timeline
-                        pending={
-                            <strong>
-                                Tính năng tiếp theo: Cấu hình socket, loading đồng bộ, hoàn thiện tài khoản ...
-                            </strong>
+                <>
+                    <TagResult
+                        text={
+                            <>
+                                Staging link:{' '}
+                                <a style={{ color: 'blue' }} href="http://staging.stakaadmin.winds.vn" target="_blank">
+                                    http://staging.stakaadmin.winds.vn
+                                </a>
+                            </>
                         }
-                    >
-                        <Timeline.Item color="green">
-                            <strong>Danh mục 2 cấp</strong>
-                        </Timeline.Item>
-                        <Timeline.Item color="green">
-                            <strong>Chức năng cập nhật trạng thái + vị trí mới</strong>
-                        </Timeline.Item>
-
-                        <Timeline.Item>
-                            <strong>Kéo thả vị trí</strong>
-                        </Timeline.Item>
-                        <Timeline.Item color="green">
-                            <strong>In báo cáo chi tiết đơn hàng</strong>
-                        </Timeline.Item>
-                        <Timeline.Item color="#00CCFF" dot={<IconAntd icon="SmileOutlined" />}>
-                            <strong>Bắt lỗi voucher</strong>
-                        </Timeline.Item>
-                        <Timeline.Item color="green">
-                            <strong>Hiển thị kết quả lọc</strong>
-                        </Timeline.Item>
-                        <Timeline.Item color="green">
-                            <strong>Cập nhật preview tin tức</strong>
-                        </Timeline.Item>
-                        <Timeline.Item color="red">
-                            <strong>Fix bug thêm tin tức</strong>
-                        </Timeline.Item>
-                        <Timeline.Item dot={<IconAntd icon="ApartmentOutlined" />} color="#2a69e6">
-                            <strong>Sản phẩm: Hiện thị danh mục 2 cấp + Select tìm kiếm danh mục 2 cấp</strong>
-                        </Timeline.Item>
-                    </Timeline>
-                </div>
+                        color="red"
+                    />
+                    <div className="gx-p-4">
+                        <Timeline
+                            pending={
+                                <strong>
+                                    Tính năng tiếp theo: Cấu hình socket, loading đồng bộ, hoàn thiện tài khoản ...
+                                </strong>
+                            }
+                        >
+                            <Timeline.Item color="green">
+                                <strong>Danh mục: 2 cấp, Giao diện cập nhật, kéo thả</strong>
+                            </Timeline.Item>
+                            <Timeline.Item color="green">
+                                <strong>Chi tiết đơn hàng: In báo cáo</strong>
+                            </Timeline.Item>
+                            <Timeline.Item color="#00CCFF" dot={<IconAntd icon="SmileOutlined" />}>
+                                <strong>Bắt lỗi voucher</strong>
+                            </Timeline.Item>
+                            <Timeline.Item color="green">
+                                <strong>Hiển thị kết quả lọc</strong>
+                            </Timeline.Item>
+                            <Timeline.Item color="green">
+                                <strong>Cập nhật preview tin tức</strong>
+                            </Timeline.Item>
+                            <Timeline.Item dot={<IconAntd icon="ApartmentOutlined" />} color="#2a69e6">
+                                <strong>Sản phẩm: Hiện thị danh mục 2 cấp + Select tìm kiếm danh mục 2 cấp</strong>
+                            </Timeline.Item>
+                            <Timeline.Item dot={<IconAntd icon="FileExcelOutlined" />} color="green">
+                                <strong>Báo cáo: Bán hàng + Gian hàng , Export excel Bán hàng + Gian hàng</strong>
+                            </Timeline.Item>
+                        </Timeline>
+                    </div>
+                </>
             ),
 
             duration: 0,

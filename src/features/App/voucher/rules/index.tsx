@@ -14,8 +14,8 @@ export const rules = {
             }
 
             // min length 5
-            if (value.length < 5) {
-                return Promise.reject(new Error('Tối thiểu 5 ký tự!'));
+            if (value.length < 6) {
+                return Promise.reject(new Error('Tối thiểu 6 ký tự!'));
             }
 
             // check white space
@@ -45,8 +45,8 @@ export const rules = {
             }
 
             // min length 5
-            if (value.length < 5) {
-                return Promise.reject(new Error('Tối thiểu 5 ký tự!'));
+            if (value.length < 6) {
+                return Promise.reject(new Error('Tối thiểu 6 ký tự!'));
             }
 
             // max length 56

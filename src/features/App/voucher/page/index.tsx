@@ -69,7 +69,7 @@ const VoucherPage = () => {
                 ]}
             />
             <Container>
-                <CardComponent title="" extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
+                <CardComponent title={<Filter returnFilter={returnFilter} key="filter" />}>
                     <TableComponent
                         showTotalResult
                         loading={isLoading}
@@ -79,8 +79,8 @@ const VoucherPage = () => {
                         expandedRowRender={rowRender}
                         onRowSelection={onRowSelection}
                         dataSource={voucher ? voucher.data : []}
-                        columns={columns(page)}
                         total={voucher && voucher?.paging?.totalItemCount}
+                        columns={columns(page)}
                     />
                 </CardComponent>
             </Container>

@@ -164,7 +164,7 @@ const ProductCategoryPage = () => {
                 }
             />
             <Container>
-                <CardComponent extra={[<Filter returnFilter={returnFilter} key="filter" />]}>
+                <CardComponent title={<Filter returnFilter={returnFilter} key="filter" />}>
                     <TableComponent
                         showTotalResult
                         loading={isLoading}
