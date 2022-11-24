@@ -2,7 +2,16 @@ import React from 'react';
 
 const OrderIcon = ({ color }: { color?: string }) => {
     return (
-        <div style={{ height: '45px', width: '45px' }}>
+        <div
+            style={{
+                padding: '4px',
+                height: '50px',
+                width: '50px',
+                backgroundColor: 'white',
+                borderRadius: '999px',
+                border: `6.5px solid #ff000080`,
+            }}
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

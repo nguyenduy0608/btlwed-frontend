@@ -7,7 +7,7 @@ import React from 'react';
 const FilterImportCommodity = ({ returnFilter }: { returnFilter: any }) => {
     return (
         <Space size="middle" wrap>
-            <SearchInput onChangeSearch={(search) => returnFilter({ search })} placeholderSearch="Nhập mã nhập hàng" />
+            <SearchInput onChangeSearch={(search) => returnFilter({ search })} placeholderSearch="Nhập mã nhập hàng " />
 
             <SelectTreeCategory
                 onChange={(categoryId: any) => {

@@ -23,36 +23,38 @@ const data = [
 const ChartReport = () => {
     return (
         <ReportChartStyled>
-            <Title level={4} className="gx-mb-1">
-                Đơn hàng
-            </Title>
-            <RowStyled gutter={[60, 20]} justify="center">
-                <Col xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
-                    <ColStyled color="#1890ff">
-                        <TitleColStyled>Chờ xác nhận</TitleColStyled>
-                        <span>123</span>
-                    </ColStyled>
-                </Col>
-                <Col xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
-                    <ColStyled color="#998CEB">
-                        <TitleColStyled>Đang xử lý</TitleColStyled>
-                        <span>123</span>
-                    </ColStyled>
-                </Col>
-                <Col xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
-                    <ColStyled color="#5BB318">
-                        <TitleColStyled>Hoàn thành</TitleColStyled>
-                        <span>123</span>
-                    </ColStyled>
-                </Col>
-                <Col xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
-                    <ColStyled color="#FF0000">
-                        <TitleColStyled>Huỷ/ Từ chối</TitleColStyled>
-                        <span>123</span>
-                    </ColStyled>
-                </Col>
-            </RowStyled>
-            <div style={{ flex: 1, minHeight: '250px' }}>
+            <TopBoxStyled>
+                <Title level={4} className="gx-mb-1">
+                    Đơn hàng
+                </Title>
+                <RowStyled className="gx-my-0 gx-pt-4 gx-pb-3" gutter={[60, 20]} justify="center">
+                    <Col xxl={6} xl={12} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
+                        <ColStyled color="#1890ff">
+                            <TitleColStyled>Chờ xác nhận</TitleColStyled>
+                            <span style={{ color: '#1890ff', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+                        </ColStyled>
+                    </Col>
+                    <Col xxl={6} xl={12} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
+                        <ColStyled color="#998CEB">
+                            <TitleColStyled>Đang xử lý</TitleColStyled>
+                            <span style={{ color: '#998CEB', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+                        </ColStyled>
+                    </Col>
+                    <Col xxl={6} xl={12} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
+                        <ColStyled color="#5BB318">
+                            <TitleColStyled>Hoàn thành</TitleColStyled>
+                            <span style={{ color: '#5BB318', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+                        </ColStyled>
+                    </Col>
+                    <Col xxl={6} xl={12} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
+                        <ColStyled color="#FF0000">
+                            <TitleColStyled>Huỷ/ Từ chối</TitleColStyled>
+                            <span style={{ color: '#FF0000', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+                        </ColStyled>
+                    </Col>
+                </RowStyled>
+            </TopBoxStyled>
+            <BoxChart style={{ flex: 1, minHeight: '250px' }}>
                 <ResponsiveContainer width="100%">
                     <LineChart data={data} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
                         <XAxis dataKey="name" />
@@ -64,7 +66,7 @@ const ChartReport = () => {
                         <Line name="Huỷ/Từ chối" type="monotone" dataKey="tc" stroke="#FE9E15" />
                     </LineChart>
                 </ResponsiveContainer>
-            </div>
+            </BoxChart>
         </ReportChartStyled>
     );
 };
@@ -73,11 +75,15 @@ const ReportChartStyled = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    height: 100%;
+`;
+
+const TopBoxStyled = styled.div`
     background-color: #fff;
     box-shadow: ${BOX_SHADOW};
     padding: 10px 20px 20px;
     border-radius: ${RADIUS};
+    margin-bottom: 30px;
 `;
 
 const RowStyled = styled(Row)`
@@ -101,6 +107,13 @@ const TitleColStyled = styled.div`
     background-color: white;
     padding: 0 20px;
     font-weight: bold;
+`;
+
+const BoxChart = styled.div`
+    padding: 30px 40px 20px 10px;
+    box-shadow: ${BOX_SHADOW};
+    background-color: white;
+    border-radius: ${RADIUS};
 `;
 
 export default ChartReport;

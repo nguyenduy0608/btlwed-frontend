@@ -103,6 +103,9 @@ function App() {
                             <Timeline.Item dot={<IconAntd icon="FileExcelOutlined" />} color="green">
                                 <strong>Báo cáo: Bán hàng + Gian hàng , Export excel Bán hàng + Gian hàng</strong>
                             </Timeline.Item>
+                            <Timeline.Item dot={<IconAntd icon="WindowsOutlined" />} color="red">
+                                <strong>Trang chủ: Update giao diện tổng quan</strong>
+                            </Timeline.Item>
                         </Timeline>
                     </div>
                 </>

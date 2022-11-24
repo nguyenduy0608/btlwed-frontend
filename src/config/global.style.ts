@@ -1,5 +1,6 @@
 import { Descriptions, Select } from 'antd';
 import styled, { createGlobalStyle } from 'styled-components';
+import { BOX_SHADOW } from './theme';
 
 const GlobalStyle = createGlobalStyle`
   :root {
@@ -173,12 +174,16 @@ const GlobalStyle = createGlobalStyle`
   visibility: visible;
 }
 
-
-
 @media screen and (max-width: 575px) {
   .gx-main-content-wrapper {
     padding: 6px 0 0;
 }
+}
+ 
+.home_picker * {
+  font-size: 14px;
+  font-weight: 600;
+  padding-bottom: 0;
 }
 
 `;

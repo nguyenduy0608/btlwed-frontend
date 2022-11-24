@@ -2,7 +2,16 @@ import React from 'react';
 
 const TurnoverIcon = ({ color }: { color: string }) => {
     return (
-        <div style={{ height: '45px', width: '45px' }}>
+        <div
+            style={{
+                padding: '4px',
+                height: '50px',
+                width: '50px',
+                backgroundColor: 'white',
+                borderRadius: '999px',
+                border: `6.5px solid #1890ff80`,
+            }}
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
