@@ -38,7 +38,7 @@ const CardInfo = React.memo(({ index, title, value }: { index: number; title: st
 });
 
 const initialValue = {};
-const GeneralInformation = ({ customerId }: { customerId: number }) => {
+const GeneralInformation = ({ customerId, disabled }: { customerId: number; disabled: boolean }) => {
     const [modalVisible, setModalVisible] = React.useState(false);
     const [loadingModal, setLoadingModal] = React.useState(false);
     const [values, setValues] = React.useState<DataTypeWalletChange | null>(null);
@@ -48,6 +48,10 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
         CustomerService.detail(customerId)
     );
     const generalInformation = data?.data;
+    console.log(
+        '🚀 ~ file: GeneralInformation.tsx ~ line 51 ~ GeneralInformation ~ generalInformation',
+        generalInformation
+    );
 
     const handleShowModal = (record: DataTypeWalletChange) => {
         setModalVisible(true);
@@ -129,7 +133,7 @@ const GeneralInformation = ({ customerId }: { customerId: number }) => {
                     {/* <TopBar title={<TitleCardDes>Tổng quan bán hàng</TitleCardDes>}></TopBar> */}
                     <Row className="gx-mb-4 gx-mx-0" justify="space-between" align="middle">
                         <TitleCardDes>Tổng quan bán hàng</TitleCardDes>
-                        <Button onClick={() => setModalVisible(true)} type="primary">
+                        <Button disabled={disabled} onClick={() => setModalVisible(true)} type="primary">
                             Áp dụng công nợ
                         </Button>
                     </Row>

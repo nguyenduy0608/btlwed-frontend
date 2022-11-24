@@ -19,6 +19,9 @@ import NewsPage from '@/features/App/news/page';
 import NewsFormPage from '@/features/App/news/page/Form';
 import SettingPage from '@/features/App/settings';
 import ChatPage from '@/features/App/chat';
+import ImportCommodityPage from '@/features/App/merchandise/pages/ImportCommodity';
+import ReturnCommodityPage from '@/features/App/merchandise/pages/ReturnCommodity';
+import ShippingPage from '@/features/App/merchandise/pages/Shipping';
 
 // định nghĩa router
 export const routerPage = {
@@ -64,6 +67,11 @@ export const routerPage = {
 
     // chat
     chat: '/chat',
+
+    // merchandise
+    merchandise_importCommodity: '/merchandise/importCommodity',
+    merchandise_returnCommodity: '/merchandise/returnCommodity',
+    merchandise_shipping: '/merchandise/shipping',
 
     // auth....
     login: '/auth/login',
@@ -112,6 +120,8 @@ const PrivateRoutes = [
         path: routerPage.voucherFormEdit,
         element: <VoucherFormPage />,
     },
+
+    // order
     {
         path: routerPage.order,
         element: <OrderPage />,
@@ -125,6 +135,19 @@ const PrivateRoutes = [
         element: <NotificationPage />,
     },
 
+    // merchandise
+    {
+        path: routerPage.merchandise_importCommodity,
+        element: <ImportCommodityPage />,
+    },
+    {
+        path: routerPage.merchandise_returnCommodity,
+        element: <ReturnCommodityPage />,
+    },
+    {
+        path: routerPage.merchandise_shipping,
+        element: <ShippingPage />,
+    },
     // new
     {
         path: routerPage.news,

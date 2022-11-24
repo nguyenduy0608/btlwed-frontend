@@ -40,12 +40,12 @@ export const items: any = [
         children: [
             {
                 label: 'Nhập hàng',
-                key: 'merchandise/order',
+                key: 'merchandise/importCommodity',
                 icon: <IconAntd icon="ShoppingOutlined" />,
             },
             {
                 label: 'Trả hàng',
-                key: 'merchandise/returnOrder',
+                key: 'merchandise/returnCommodity',
                 icon: <IconAntd icon="RollbackOutlined" />,
             },
             {

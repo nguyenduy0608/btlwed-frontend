@@ -26,6 +26,7 @@ const PaginationComponent: React.FC<IProps> = ({ page, total, pageSize = RECORD_
             total={total}
             showSizeChanger={false}
             pageSize={pageSize}
+            showQuickJumper={total > 120}
         />
     );
 };

@@ -27,7 +27,7 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
         {
             label: 'Thông tin chung',
             key: '1',
-            children: <GeneralInformation customerId={record.id} />,
+            children: <GeneralInformation disabled={record.status === 0} customerId={record.id} />,
         }, // remember to pass the key prop
         { label: 'Thông tin mua hàng', key: '2', children: <PuchaseHistoryPage /> },
         { label: 'Lịch sử tích điểm', key: '3', children: <WalletChangePage customerId={record.id} /> },
@@ -71,6 +71,7 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
                                   <ActiveButton onClick={() => handleUnlock(record.id)} />
                               ),
                               <Button
+                                  disabled={record.status === 0}
                                   type="text"
                                   className="gx-mb-0"
                                   style={{

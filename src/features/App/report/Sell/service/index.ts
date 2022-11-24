@@ -18,6 +18,7 @@ export const sellService = {
     },
     getFileExcel: (url: string, params: any) => {
         const handleParams = handleObjectEmpty(params);
+        console.log('🚀 ~ file: index.ts ~ line 21 ~ handleParams', handleParams);
         return AxiosClient.get(url, { params: { ...handleParams, limit: 999 } });
     },
 };
