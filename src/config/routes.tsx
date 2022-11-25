@@ -1,18 +1,23 @@
+import React, { Suspense } from 'react';
+
 import LoginPage from '@/features/Auth/Login/pages';
-import HomePage from '@/features/App/home/page';
+
+const HomePage = React.lazy(() => import('@/features/App/home/page'));
+const ProductCategoryPage = React.lazy(() => import('@/features/App/product/page/Category'));
+const ProductPage = React.lazy(() => import('@/features/App/product/page'));
+const ProductDetailPage = React.lazy(() => import('@/features/App/product/page/Detail'));
+const CustomerPage = React.lazy(() => import('@/features/App/customer/pages'));
+
+const VoucherPage = React.lazy(() => import('@/features/App/voucher/page'));
+const VoucherFormPage = React.lazy(() => import('@/features/App/voucher/page/form'));
+
+const OrderPage = React.lazy(() => import('@/features/App/order/page'));
+const OrderDetailPage = React.lazy(() => import('@/features/App/order/page/Detail'));
+
 import NotFoundPage from '@/features/Notfound';
 import RegisterPage from '@/features/Auth/Register';
-import ProductCategoryPage from '@/features/App/product/page/Category';
-import ProductPage from '@/features/App/product/page';
-import VoucherPage from '@/features/App/voucher/page';
-import VoucherFormPage from '@/features/App/voucher/page/form';
-import CustomerPage from '@/features/App/customer/pages';
-import ProductDetailPage from '@/features/App/product/page/Detail';
 import AccountPage from '@/features/App/account/page';
-import AccountFormPage from '@/features/App/account/page/form';
 import NotificationPage from '@/features/App/notification/page';
-import OrderPage from '@/features/App/order/page';
-import OrderDetailPage from '@/features/App/order/page/Detail';
 import ReportSellPage from '@/features/App/report/Sell';
 import ReportStallPage from '@/features/App/report/Stall';
 import NewsPage from '@/features/App/news/page';
@@ -22,6 +27,7 @@ import ChatPage from '@/features/App/chat';
 import ImportCommodityPage from '@/features/App/merchandise/pages/ImportCommodity';
 import ReturnCommodityPage from '@/features/App/merchandise/pages/ReturnCommodity';
 import ShippingPage from '@/features/App/merchandise/pages/Shipping';
+import { BarLoader } from 'react-spinners';
 
 // định nghĩa router
 export const routerPage = {
@@ -81,55 +87,120 @@ export const routerPage = {
 // public chứa những router không cần đăng nhập hoặc web view
 const PublicRoutes = [{ path: '*', element: <NotFoundPage /> }];
 
+const Lazy = ({ children }: { children: any }) => {
+    return (
+        <Suspense
+            fallback={
+                <div
+                    style={{
+                        height: '100vh',
+                        width: '100%',
+                        backgroundColor: 'rgba(0,0,0,.05)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <BarLoader />
+                </div>
+            }
+        >
+            {children}
+        </Suspense>
+    );
+};
+
 // private router khi đã đăng nhập
 const PrivateRoutes = [
     {
         path: routerPage.home,
-        element: <HomePage />,
+        element: (
+            <Lazy>
+                <HomePage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.productCategory,
-        element: <ProductCategoryPage />,
+        element: (
+            <Lazy>
+                <ProductCategoryPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.product,
-        element: <ProductPage />,
+        element: (
+            <Lazy>
+                <ProductPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.productDetail,
-        element: <ProductDetailPage />,
+        element: (
+            <Lazy>
+                <ProductDetailPage />
+            </Lazy>
+        ),
     },
     // customer
 
     {
         path: routerPage.customer,
-        element: <CustomerPage />,
+        element: (
+            <Lazy>
+                <CustomerPage />
+            </Lazy>
+        ),
     },
 
     // voucher
     {
         path: routerPage.voucher,
-        element: <VoucherPage />,
+        element: (
+            <Lazy>
+                <VoucherPage />
+            </Lazy>
+        ),
     },
 
     {
         path: routerPage.voucherForm,
-        element: <VoucherFormPage />,
+        element: (
+            <Lazy>
+                <VoucherFormPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.voucherFormEdit,
-        element: <VoucherFormPage />,
+        element: (
+            <Lazy>
+                <VoucherFormPage />
+            </Lazy>
+        ),
     },
 
     // order
     {
         path: routerPage.order,
-        element: <OrderPage />,
+        element: (
+            <Lazy>
+                <OrderPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.orderDetail,
-        element: <OrderDetailPage />,
+        element: (
+            <Lazy>
+                <OrderDetailPage />
+            </Lazy>
+        ),
     },
+
+    // noti
     {
         path: routerPage.notification,
         element: <NotificationPage />,
