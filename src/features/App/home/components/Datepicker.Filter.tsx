@@ -21,7 +21,7 @@ const DatepickerFilter = () => {
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ paddingRight: '15px', fontWeight: 600 }}>Từ</span>{' '}
                 <TagResult text={momentToStringDate(state[0].startDate)} color="#3D91FF" />
-                <span style={{ paddingRight: '15px', fontWeight: 600 }}>đến</span>{' '}
+                <span style={{ padding: '0 15px', fontWeight: 600 }}>đến</span>{' '}
                 <TagResult text={momentToStringDate(state[0].endDate)} color="#3D91FF" />
             </div>
             <DateRange

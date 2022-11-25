@@ -17,6 +17,6 @@ export const stallService = {
     },
     getFileExcel: (url: string, params: any) => {
         const handleParams = handleObjectEmpty(params);
-        return AxiosClient.get(url, { params: { ...handleParams, limit: 999 } });
+        return AxiosClient.get(url, { params: { ...handleParams, limit: -1 } });
     },
 };
