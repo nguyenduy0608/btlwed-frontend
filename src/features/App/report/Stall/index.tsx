@@ -3,7 +3,7 @@ import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
-import { downloadFile } from '@/utils';
+import { downloadFile, uuid } from '@/utils';
 import React from 'react';
 import { useQuery } from 'react-query';
 import Filter from './components/Filter';
@@ -52,7 +52,9 @@ const ReportStallPage = () => {
                         onChangePage={(_page) => setPage(_page)}
                         // expandedRowRender={rowRender}
                         // onRowSelection={onRowSelection}
-                        dataSource={stallReport ? stallReport.data : []}
+                        dataSource={
+                            stallReport ? [{ id: uuid(), ...stallReport?.paging?.headerData }, ...stallReport.data] : []
+                        }
                         total={stallReport && stallReport?.paging?.totalItemCount}
                         columns={stallColumns(page)}
                     />

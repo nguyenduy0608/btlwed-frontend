@@ -1,9 +1,9 @@
 import { Tag } from 'antd';
 import React, { ReactNode } from 'react';
 
-const TagResult = ({ text, color }: { text: string | ReactNode; color: string }) => {
+const TagResult = ({ text, color, style }: { text: string | ReactNode; color: string; style?: any }) => {
     return (
-        <Tag className="gx-mb-0" color={color} style={{ fontWeight: 700 }}>
+        <Tag className="gx-m-0" color={color} style={{ fontWeight: 700, ...style }}>
             {text}
         </Tag>
     );

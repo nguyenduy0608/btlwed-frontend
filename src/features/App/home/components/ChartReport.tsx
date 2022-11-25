@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Col, Row, Typography } from 'antd';
+import { Col, Row, Typography, Tooltip as TooltipAntd } from 'antd';
 import { BOX_SHADOW, RADIUS } from '@/config/theme';
 const { Title } = Typography;
 
@@ -23,37 +23,37 @@ const data = [
 const ChartReport = () => {
     return (
         <ReportChartStyled>
-            <TopBoxStyled>
-                <Title level={4} className="gx-mb-1">
-                    Đơn hàng
-                </Title>
-                <RowStyled className="gx-my-0 gx-pt-4 gx-pb-3" gutter={[60, 20]} justify="center">
-                    <Col xxl={6} xl={12} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
-                        <ColStyled color="#1890ff">
-                            <TitleColStyled>Chờ xác nhận</TitleColStyled>
-                            <span style={{ color: '#1890ff', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+            <RowStyled className="gx-m-0 gx-p-0 gx-mb-3" justify="center">
+                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
+                    <TooltipAntd color="#1890ff" title="Chờ xác nhận">
+                        <ColStyled index={1}>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>123</span>
                         </ColStyled>
-                    </Col>
-                    <Col xxl={6} xl={12} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
-                        <ColStyled color="#998CEB">
-                            <TitleColStyled>Đang xử lý</TitleColStyled>
-                            <span style={{ color: '#998CEB', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+                    </TooltipAntd>
+                </Col>
+                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
+                    <TooltipAntd color="#998CEB" title="Đang xử lý">
+                        <ColStyled index={2}>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>1234</span>
                         </ColStyled>
-                    </Col>
-                    <Col xxl={6} xl={12} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
-                        <ColStyled color="#5BB318">
-                            <TitleColStyled>Hoàn thành</TitleColStyled>
-                            <span style={{ color: '#5BB318', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+                    </TooltipAntd>
+                </Col>
+                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
+                    <TooltipAntd color="#5BB318" title="Hoàn thành">
+                        <ColStyled index={3}>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>12345</span>
                         </ColStyled>
-                    </Col>
-                    <Col xxl={6} xl={12} lg={12} md={12} sm={24} xs={24} className="gx-col-full">
-                        <ColStyled color="#FF0000">
-                            <TitleColStyled>Huỷ/ Từ chối</TitleColStyled>
-                            <span style={{ color: '#FF0000', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+                    </TooltipAntd>
+                </Col>
+                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
+                    <TooltipAntd color="#E16E93" title="Huỷ/ Từ chối">
+                        <ColStyled index={4}>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>123456</span>
                         </ColStyled>
-                    </Col>
-                </RowStyled>
-            </TopBoxStyled>
+                    </TooltipAntd>
+                </Col>
+            </RowStyled>
+            {/* </TopBoxStyled> */}
             <BoxChart style={{ flex: 1, minHeight: '250px' }}>
                 <ResponsiveContainer width="100%">
                     <LineChart data={data} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
@@ -81,9 +81,8 @@ const ReportChartStyled = styled.div`
 const TopBoxStyled = styled.div`
     background-color: #fff;
     box-shadow: ${BOX_SHADOW};
-    padding: 10px 20px 20px;
+    padding: 20px;
     border-radius: ${RADIUS};
-    margin-bottom: 30px;
 `;
 
 const RowStyled = styled(Row)`
@@ -91,14 +90,22 @@ const RowStyled = styled(Row)`
     margin: 30px 0;
 `;
 
-const ColStyled = styled(Col)<{ color?: string }>`
+const ColStyled = styled(Col)<{ color?: string; index?: number }>`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid ${(props) => (props.color ? props.color : '#ccc')};
+    /* border: 2px solid ${(props) => (props.color ? props.color : '#ccc')}; */
     padding: 20px 0;
     border-radius: ${RADIUS};
     position: relative;
+    box-shadow: ${BOX_SHADOW};
+    ${(props) =>
+        props?.index === 1 &&
+        'background-color: #0093E9;background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);'};
+    ${(props) => props?.index === 2 && 'background: linear-gradient(33deg, #DEB0DF, #A16BFE);'};
+
+    ${(props) => props?.index === 3 && 'background: linear-gradient(33deg, #54E38E, #41C7AF);'};
+    ${(props) => props?.index === 4 && 'background: linear-gradient(33deg, #E16E93, #9D2E7D);'};
 `;
 
 const TitleColStyled = styled.div`

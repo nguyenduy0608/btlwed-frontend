@@ -3,7 +3,7 @@ import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
-import { downloadFile } from '@/utils';
+import { downloadFile, uuid } from '@/utils';
 import React from 'react';
 import { useQuery } from 'react-query';
 import Filter from './components/Filter';
@@ -54,7 +54,9 @@ const ReportSellPage = () => {
                         onChangePage={(_page) => setPage(_page)}
                         // expandedRowRender={rowRender}
                         // onRowSelection={onRowSelection}
-                        dataSource={sellReport ? sellReport.data : []}
+                        dataSource={
+                            sellReport ? [{ id: uuid(), ...sellReport?.paging?.headerData }, ...sellReport.data] : []
+                        }
                         total={sellReport && sellReport?.paging?.totalItemCount}
                         columns={sellColumns(page)}
                     />

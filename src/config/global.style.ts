@@ -177,13 +177,18 @@ const GlobalStyle = createGlobalStyle`
 @media screen and (max-width: 575px) {
   .gx-main-content-wrapper {
     padding: 6px 0 0;
-}
+  }
 }
  
 .home_picker * {
   font-size: 14px;
   font-weight: 600;
   padding-bottom: 0;
+}
+@media screen and (max-width: 1366px) {
+  .home_picker * {
+    font-size: 13px;
+  }
 }
 
 `;
