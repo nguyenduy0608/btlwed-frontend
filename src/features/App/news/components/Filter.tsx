@@ -1,11 +1,14 @@
 import RangerPicker from '@/components/RangerPicker';
 import SearchInput from '@/components/SearchInput';
-import SelectComponent from '@/components/SelectComponent';
 import { DefaultSelectStyled } from '@/config/global.style';
 import { Space } from 'antd';
+import moment from 'moment';
+import { useLocation } from 'react-router-dom';
 import { IStatus, NEWS_STATUS, NEWS_TYPE } from '../service';
 
 const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
+    const location = useLocation();
+
     const handleChangeStatus = (value: any) => {
         returnFilter({ statusActive: value });
     };
@@ -20,13 +23,17 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
 
     return (
         <Space size="middle" wrap>
-            <SearchInput onChangeSearch={(search) => returnFilter({ search })} placeholderSearch="Nhập tiêu đề" />
+            <SearchInput
+                defaultValue={location?.state?.search}
+                onChangeSearch={(search) => returnFilter({ search })}
+                placeholderSearch="Nhập tiêu đề"
+            />
 
             <DefaultSelectStyled
                 placeholder="Trạng thái hoạt động"
                 allowClear
                 style={{ width: '250px' }}
-                defaultValue={null}
+                defaultValue={location?.state?.statusActive}
                 onChange={handleChangeStatus}
             >
                 <DefaultSelectStyled.Option value={IStatus.ACTIVE}>Đang hoạt động</DefaultSelectStyled.Option>
@@ -36,7 +43,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
                 placeholder="Trạng thái"
                 allowClear
                 style={{ width: '250px' }}
-                defaultValue={null}
+                defaultValue={location?.state?.status}
                 onChange={handleChangeStatusNew}
             >
                 <DefaultSelectStyled.Option value={NEWS_STATUS.POST}>Đăng bài</DefaultSelectStyled.Option>
@@ -45,8 +52,8 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
             <DefaultSelectStyled
                 placeholder="Loại tin tức"
                 allowClear
+                defaultValue={location?.state?.typeNews}
                 style={{ width: '250px' }}
-                defaultValue={null}
                 onChange={handleChangeTypeNew}
             >
                 <DefaultSelectStyled.Option value={NEWS_TYPE.BANNER}>Banner</DefaultSelectStyled.Option>
@@ -54,6 +61,11 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
                 <DefaultSelectStyled.Option value={NEWS_TYPE.TUTORIAL}>Hướng dẫn</DefaultSelectStyled.Option>
             </DefaultSelectStyled>
             <RangerPicker
+                defaultValue={
+                    location?.state?.createFrom
+                        ? [moment(location?.state?.createFrom), moment(location?.state?.createTo)]
+                        : null
+                }
                 name="dateFilter"
                 onChange={(name: string, value: string) => {
                     returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });

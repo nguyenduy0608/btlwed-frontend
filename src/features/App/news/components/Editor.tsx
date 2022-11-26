@@ -77,6 +77,7 @@ const NewsEditor = ({
                 }}
                 apiKey="hjuz02bsvcykwi6ruki9xpuarsd6l8txzaouzknog6xef2w5"
                 init={{
+                    placeholder: 'Nhập nôi dung tin tức ...',
                     height: 680,
                     content_style: 'body { font-family:Quicksand,sans-serif; font-size:14px }',
                     plugins: [

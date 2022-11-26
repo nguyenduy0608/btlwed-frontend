@@ -2,7 +2,7 @@ import ActiveButton from '@/components/Button/Active.Button';
 import DeleteDescriptionButton from '@/components/Button/Delete.Description.Button';
 import UnActiveButton from '@/components/Button/UnActive.Button';
 import { routerPage } from '@/config/routes';
-import { checkNowDate, Notification } from '@/utils';
+import { checkNowDate, checkNowStartVoucherDate, Notification } from '@/utils';
 import { CheckCircleOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +31,7 @@ const Buttons = (props: IProps) => {
     const handleDelete = async (id: number) => {
         const res = await voucherService.delete(id);
         if (res.status) {
-            Notification('success', 'Xóa thành công');
+            Notification('success', 'Xóa voucher thành công');
             refetch();
         }
     };
@@ -40,12 +40,20 @@ const Buttons = (props: IProps) => {
         record.status ? (
             <UnActiveButton
                 onClick={() => handleLock(record.id)}
-                disabled={checkNowDate(record.endTime) || record.remainQuota == 0}
+                disabled={
+                    checkNowStartVoucherDate(record.startTime) ||
+                    checkNowDate(record.endTime) ||
+                    record.remainQuota == 0
+                }
             />
         ) : (
             <ActiveButton
                 onClick={() => handleUnlock(record.id)}
-                disabled={checkNowDate(record.endTime) || record.remainQuota == 0}
+                disabled={
+                    checkNowStartVoucherDate(record.startTime) ||
+                    checkNowDate(record.endTime) ||
+                    record.remainQuota == 0
+                }
             />
         ),
         <Button

@@ -76,7 +76,6 @@ export const downloadFile = (fileLink: string) => {
 
             // Start download
             link.click();
-
             // Clean up and remove the link
             link.parentNode.removeChild(link);
         });
@@ -142,6 +141,30 @@ export const checkNowDate = (date: string) => {
 
         if (timeCompareSplit[0] === timeSplit[0]) {
             if (timeCompareSplit[1] < timeSplit[1]) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
+// check now start voucher date
+export const checkNowStartVoucherDate = (date: string) => {
+    const dateNow = moment().format('YYYY-MM-DD');
+    const timeNow = moment().format('HH:mm');
+    const dateCompare = momentParseUtc(date).format('YYYY-MM-DD');
+    const timeCompare = momentParseUtc(date).format('HH:mm');
+    // split timeCompare into hour and minute
+    const timeCompareSplit = timeCompare.split(':');
+    const timeSplit = timeNow.split(':');
+
+    if (dateNow === dateCompare) {
+        if (timeCompareSplit[0] > timeSplit[0]) {
+            return true;
+        }
+
+        if (timeCompareSplit[0] === timeSplit[0]) {
+            if (timeCompareSplit[1] > timeSplit[1]) {
                 return true;
             }
         }

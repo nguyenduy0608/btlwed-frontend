@@ -47,7 +47,6 @@ const ProductPage = () => {
 
     const returnFilter = React.useCallback(
         (filter: IFilter) => {
-            console.log('🚀 ~ file: index.tsx ~ line 50 ~ ProductPage ~ filter', filter);
             setPage(1);
             setFilterQuery({ ...filterQuery, ...filter });
         },

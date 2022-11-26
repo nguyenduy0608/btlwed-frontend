@@ -54,7 +54,7 @@ const ChartReport = () => {
                 </Col>
             </RowStyled>
             {/* </TopBoxStyled> */}
-            <BoxChart style={{ flex: 1, minHeight: '250px' }}>
+            <BoxChart style={{ flex: 1 }}>
                 <ResponsiveContainer width="100%">
                     <LineChart data={data} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
                         <XAxis dataKey="name" />

@@ -31,6 +31,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) =
                 <Option value={0}>Ngừng hoạt động</Option>
             </DefaultSelectStyled>
             <RangerPicker
+                tooltipTitle="Lọc theo ngày bắt đầu và kết thúc"
                 placeholderStart="Ngày bắt đầu"
                 placeholderEnd="Ngày kết thúc"
                 name="dateFilter"

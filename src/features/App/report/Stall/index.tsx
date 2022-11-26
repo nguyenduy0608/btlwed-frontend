@@ -3,7 +3,7 @@ import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
-import { downloadFile, uuid } from '@/utils';
+import { downloadFile, Notification, uuid } from '@/utils';
 import React from 'react';
 import { useQuery } from 'react-query';
 import Filter from './components/Filter';
@@ -35,6 +35,7 @@ const ReportStallPage = () => {
             stallService
                 .getFileExcel(stallReport?.paging?.links?.downExcel, { page, ...filterQuery })
                 .then((res: any) => {
+                    Notification('success', 'Export thành công');
                     downloadFile(res.path);
                 });
     }, [stallReport?.paging?.links?.downExcel, page, filterQuery]);

@@ -191,6 +191,23 @@ const GlobalStyle = createGlobalStyle`
   }
 }
 
+::-webkit-input-placeholder { /* Edge */
+  font-weight: 600 !important;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-weight: 600 !important;
+}
+
+::placeholder {
+  font-weight: 600 !important;
+}
+
+.ant-popover-buttons {
+  display: flex;
+  justify-content: center;
+}
+
 `;
 
 export const DefaultSelectStyled = styled(Select)`

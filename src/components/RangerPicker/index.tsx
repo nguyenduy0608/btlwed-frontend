@@ -10,12 +10,14 @@ const RangerPicker = ({
     tooltipTitle = 'Lọc theo ngày tạo',
     placeholderStart = 'Từ ngày',
     placeholderEnd = 'Đến ngày',
+    defaultValue,
 }: {
     name: string;
     onChange: any;
     tooltipTitle?: string;
     placeholderStart?: string;
     placeholderEnd?: string;
+    defaultValue?: any;
 }) => {
     return (
         <Tooltip title={tooltipTitle}>
@@ -32,7 +34,7 @@ const RangerPicker = ({
                     );
                 }}
                 placeholder={[placeholderStart, placeholderEnd]}
-                defaultValue={null}
+                defaultValue={defaultValue}
                 format={dateFormat}
             />
         </Tooltip>

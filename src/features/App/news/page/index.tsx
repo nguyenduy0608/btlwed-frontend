@@ -1,5 +1,4 @@
 import DeleteButton from '@/components/Button/Detele.Button';
-import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
@@ -8,7 +7,7 @@ import Container from '@/layout/Container';
 import { Button, Switch } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Filter from '../components/Filter';
 import { columns } from '../components/News.config';
 import { newService } from '../service';
@@ -23,6 +22,8 @@ const initialFilterQuery = {
 };
 
 const NewsPage = () => {
+    const location = useLocation();
+
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
     const [rowSelected, setRowSelected] = React.useState([]);
@@ -35,6 +36,17 @@ const NewsPage = () => {
     } = useQuery<any>(['news', page, filterQuery], () => newService.get({ page, ...filterQuery }));
 
     const navigate = useNavigate();
+
+    React.useEffect(() => {
+        if (location.state) {
+            delete location.state?.prevUrl;
+            if (location.state?.page !== page) {
+                setPage(location.state?.page);
+            }
+            delete location.state?.page;
+            setFilterQuery(location.state);
+        }
+    }, [location?.state]);
 
     const returnFilter = React.useCallback(
         (filter: any) => {
@@ -67,7 +79,11 @@ const NewsPage = () => {
                         <DeleteButton key="delete" onConfirm={handleConfirmDelete} />
                     ),
                     <Button
-                        onClick={() => navigate(routerPage.newsForm)}
+                        onClick={() =>
+                            navigate(routerPage.newsForm, {
+                                state: { ...filterQuery, page, prevUrl: location.pathname },
+                            })
+                        }
                         key="add_new"
                         className="gx-mb-0"
                         type="primary"
@@ -85,7 +101,11 @@ const NewsPage = () => {
                         rowSelect
                         onChangePage={(_page) => setPage(_page)}
                         // expandedRowRender={rowRender}
-                        onRowClick={(record: any) => navigate(routerPage.newsForm + '/' + record.id)}
+                        onRowClick={(record: { id: number }) =>
+                            navigate(routerPage.newsForm + '/' + record.id, {
+                                state: { ...filterQuery, page, prevUrl: location.pathname },
+                            })
+                        }
                         onRowSelection={onRowSelection}
                         dataSource={news?.data || []}
                         columns={[

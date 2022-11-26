@@ -182,7 +182,7 @@ const VoucherFormPage = () => {
                                     rules={[rules.required('Vui lòng nhập mã voucher!'), rules.validateCode]}
                                     name="code"
                                     label="Mã voucher"
-                                    inputField={<Input placeholder="Nhập mã voucher" />}
+                                    inputField={<Input disabled={!!id} placeholder="Nhập mã voucher" />}
                                 />
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng nhập tên voucher!'), rules.validateName]}

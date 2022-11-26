@@ -9,12 +9,13 @@ import Container from '@/layout/Container';
 import { Notification, uuid } from '@/utils';
 import { Checkbox, Col, Form, Input, Row, Select } from 'antd';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { rules } from '../../voucher/rules';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Content from '../components/Content';
+import { rules } from '../rules';
 import { newService, NEWS_STATUS, NEWS_TYPE } from '../service';
 
 const NewsFormPage = () => {
+    const location = useLocation();
     const navigate = useNavigate();
 
     const { id } = useParams();
@@ -38,7 +39,7 @@ const NewsFormPage = () => {
                 .then((res) => {
                     if (res.status) {
                         Notification('success', 'Cập nhật tin tức thành công');
-                        navigate(-1);
+                        navigate(location?.state?.prevUrl || -1, { state: location.state });
                     }
                 })
                 .finally(() => setLoading(false));
@@ -48,7 +49,7 @@ const NewsFormPage = () => {
                 .then((res) => {
                     if (res.status) {
                         Notification('success', 'Thêm tin tức thành công');
-                        navigate(-1);
+                        navigate(location?.state?.prevUrl || -1, { state: location.state });
                     }
                 })
                 .finally(() => setLoading(false));
@@ -76,7 +77,7 @@ const NewsFormPage = () => {
             <TopBar
                 back
                 title={id ? `Sửa tin tức * ${title} *` : 'Thêm tin tức'}
-                extra={[<SaveButton key="saveVoucher" htmlType="submit" />]}
+                extra={[<SaveButton key="saveNew" htmlType="submit" />]}
             />
             <Container>
                 <CardComponent>
@@ -85,7 +86,7 @@ const NewsFormPage = () => {
                         <Col xs={24} sm={24} lg={12}>
                             <Row>
                                 <FormItemComponent
-                                    rules={[rules.required('Vui lòng nhập mã voucher!')]}
+                                    rules={[rules.required('Vui lòng nhập tiêu đề tin tức!'), rules.validateTitle]}
                                     name="title"
                                     label="Tiêu đề tin tức"
                                     inputField={
@@ -107,6 +108,7 @@ const NewsFormPage = () => {
                                         <UploadComponent
                                             disabled={Boolean(id && status === NEWS_STATUS.POST)}
                                             // isUploadServerWhenUploading
+                                            accept=".png, .jpg, .jpeg"
                                             initialFile={fileEdit.current}
                                             uploadType="list"
                                             listType="picture-card"
@@ -116,7 +118,9 @@ const NewsFormPage = () => {
                                                     file: url?.originFileObj,
                                                 });
                                             }}
-                                        />
+                                        >
+                                            Tải lên
+                                        </UploadComponent>
                                     }
                                 />
                             </Row>
@@ -125,7 +129,7 @@ const NewsFormPage = () => {
                         <Col xs={24} sm={24} lg={12}>
                             <Row>
                                 <FormItemComponent
-                                    rules={[rules.required('Vui lòng chọn trạng thái bài viết!')]}
+                                    rules={[rules.required('Vui lòng chọn trạng thái tin tức!')]}
                                     name="status"
                                     label="Trạng thái"
                                     inputField={

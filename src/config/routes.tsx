@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 
-import LoginPage from '@/features/Auth/Login/pages';
+const LoginPage = React.lazy(() => import('@/features/Auth/Login/pages'));
 
 const HomePage = React.lazy(() => import('@/features/App/home/page'));
 const ProductCategoryPage = React.lazy(() => import('@/features/App/product/page/Category'));
@@ -13,20 +13,25 @@ const VoucherFormPage = React.lazy(() => import('@/features/App/voucher/page/for
 
 const OrderPage = React.lazy(() => import('@/features/App/order/page'));
 const OrderDetailPage = React.lazy(() => import('@/features/App/order/page/Detail'));
+const SettingPage = React.lazy(() => import('@/features/App/settings'));
+
+const AccountPage = React.lazy(() => import('@/features/App/account/page'));
+
+const ReportSellPage = React.lazy(() => import('@/features/App/report/Sell'));
+const ReportStallPage = React.lazy(() => import('@/features/App/report/Stall'));
+
+const NewsPage = React.lazy(() => import('@/features/App/news/page'));
+const NewsFormPage = React.lazy(() => import('@/features/App/news/page/Form'));
+
+const ShippingPage = React.lazy(() => import('@/features/App/merchandise/pages/Shipping'));
+const ImportCommodityPage = React.lazy(() => import('@/features/App/merchandise/pages/ImportCommodity'));
+const ReturnCommodityPage = React.lazy(() => import('@/features/App/merchandise/pages/ReturnCommodity'));
 
 import NotFoundPage from '@/features/Notfound';
 import RegisterPage from '@/features/Auth/Register';
-import AccountPage from '@/features/App/account/page';
 import NotificationPage from '@/features/App/notification/page';
-import ReportSellPage from '@/features/App/report/Sell';
-import ReportStallPage from '@/features/App/report/Stall';
-import NewsPage from '@/features/App/news/page';
-import NewsFormPage from '@/features/App/news/page/Form';
-import SettingPage from '@/features/App/settings';
+
 import ChatPage from '@/features/App/chat';
-import ImportCommodityPage from '@/features/App/merchandise/pages/ImportCommodity';
-import ReturnCommodityPage from '@/features/App/merchandise/pages/ReturnCommodity';
-import ShippingPage from '@/features/App/merchandise/pages/Shipping';
 import { BarLoader } from 'react-spinners';
 
 // định nghĩa router
@@ -209,44 +214,80 @@ const PrivateRoutes = [
     // merchandise
     {
         path: routerPage.merchandise_importCommodity,
-        element: <ImportCommodityPage />,
+        element: (
+            <Lazy>
+                <ImportCommodityPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.merchandise_returnCommodity,
-        element: <ReturnCommodityPage />,
+        element: (
+            <Lazy>
+                <ReturnCommodityPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.merchandise_shipping,
-        element: <ShippingPage />,
+        element: (
+            <Lazy>
+                <ShippingPage />
+            </Lazy>
+        ),
     },
     // new
     {
         path: routerPage.news,
-        element: <NewsPage />,
+        element: (
+            <Lazy>
+                <NewsPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.newsForm,
-        element: <NewsFormPage />,
+        element: (
+            <Lazy>
+                <NewsFormPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.newsFormEdit,
-        element: <NewsFormPage />,
+        element: (
+            <Lazy>
+                <NewsFormPage />
+            </Lazy>
+        ),
     },
 
     // report
     {
         path: routerPage.reportSell,
-        element: <ReportSellPage />,
+        element: (
+            <Lazy>
+                <ReportSellPage />
+            </Lazy>
+        ),
     },
     {
         path: routerPage.reportStall,
-        element: <ReportStallPage />,
+        element: (
+            <Lazy>
+                <ReportStallPage />
+            </Lazy>
+        ),
     },
 
     // account
     {
         path: routerPage.account,
-        element: <AccountPage />,
+        element: (
+            <Lazy>
+                <AccountPage />
+            </Lazy>
+        ),
     },
 
     // chat
@@ -258,7 +299,11 @@ const PrivateRoutes = [
     // setting
     {
         path: routerPage.setting,
-        element: <SettingPage />,
+        element: (
+            <Lazy>
+                <SettingPage />
+            </Lazy>
+        ),
     },
 
     ...PublicRoutes,

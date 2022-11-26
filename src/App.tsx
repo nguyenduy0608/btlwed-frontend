@@ -78,7 +78,7 @@ function App() {
                         <Timeline
                             pending={
                                 <strong>
-                                    Tính năng tiếp theo: Cấu hình socket, loading đồng bộ, hoàn thiện tài khoản ...
+                                    Tính năng tiếp theo: Nhập hàng, Trả hàng, Chuyển hàng, thông báo ... ...
                                 </strong>
                             }
                         >

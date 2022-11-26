@@ -13,7 +13,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
     return (
         <Space size="middle" wrap>
             <SearchInput
-                onChangeSearch={(search) => returnFilter({ search })}
+                onChangeSearch={(search) => returnFilter({ search: search?.trim() })}
                 placeholderSearch="Nhập tên, mã sản phẩm"
             />
 
@@ -54,6 +54,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
 
             <RangerPicker
                 name="dateFilter"
+                tooltipTitle="Lọc theo ngày tạo đơn hàng"
                 onChange={(name: string, value: string) => {
                     returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });
                 }}
