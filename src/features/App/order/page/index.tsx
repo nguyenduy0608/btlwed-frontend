@@ -79,7 +79,7 @@ const OrderPage = () => {
                 >
                     <TableComponent
                         showTotalResult
-                        loading={isRefetching || loadingModal || isLoading}
+                        loading={isRefetching || loadingModal}
                         page={page}
                         rowSelect={false}
                         onRowClick={(record: { id: number }) => navigate(`${routerPage.order}/${record.id}`)}

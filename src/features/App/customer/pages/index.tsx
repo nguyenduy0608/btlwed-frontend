@@ -74,7 +74,7 @@ const CustomerPage = () => {
                 >
                     <TableComponent
                         showTotalResult
-                        loading={isRefetching || loadingModal || isLoading}
+                        loading={isRefetching || loadingModal}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}

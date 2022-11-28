@@ -96,7 +96,7 @@ const NewsPage = () => {
                 <CardComponent title={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent
                         showTotalResult
-                        loading={isLoading}
+                        loading={isRefetching}
                         page={page}
                         rowSelect
                         onChangePage={(_page) => setPage(_page)}

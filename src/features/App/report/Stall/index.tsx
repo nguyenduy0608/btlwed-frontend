@@ -47,7 +47,7 @@ const ReportStallPage = () => {
                 <CardComponent title={[<Filter returnFilter={returnFilter} key="filter" />]}>
                     <TableComponent
                         showTotalResult
-                        loading={isLoading || isRefetching}
+                        loading={isRefetching}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}

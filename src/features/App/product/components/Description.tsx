@@ -1,17 +1,16 @@
 import { TableStyled } from '@/components/TableComponent';
 import { TitleCardDes } from '@/config/global.style';
 import { momentToStringDate } from '@/utils';
-import { Card, Input, message, Switch } from 'antd';
+import { Card, message, Switch } from 'antd';
 import React from 'react';
 import { CategoryService } from '../service';
-import Buttons from './Buttons';
 import { columns, DataTypeProductCategory } from './Product.Config';
 interface IProps {
     record: DataTypeProductCategory;
     handleShowModal?: (record: DataTypeProductCategory) => void;
     refetch: any;
 }
-const Description: React.FC<IProps> = ({ record, handleShowModal, refetch }) => {
+const Description: React.FC<IProps> = ({ record, refetch }) => {
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
     return (

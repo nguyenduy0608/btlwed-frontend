@@ -72,7 +72,7 @@ const VoucherPage = () => {
                 <CardComponent title={<Filter returnFilter={returnFilter} key="filter" />}>
                     <TableComponent
                         showTotalResult
-                        loading={isLoading}
+                        loading={isRefetching}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}

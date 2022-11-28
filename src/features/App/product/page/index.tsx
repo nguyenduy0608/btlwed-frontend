@@ -74,7 +74,7 @@ const ProductPage = () => {
                 >
                     <TableComponent
                         showTotalResult
-                        loading={isLoading || isRefetching}
+                        loading={isRefetching}
                         page={page}
                         onRowClick={(record: { id: number }) =>
                             navigate(`${routerPage.product}/${record.id}`, {
