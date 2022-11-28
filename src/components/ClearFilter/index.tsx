@@ -1,16 +1,29 @@
+import { wait } from '@/utils';
 import { Tooltip } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 import IconAntd from '../IconAntd';
 
 const ClearFilter = ({ onClick, hidden = false }: { onClick: any; hidden: boolean }) => {
+    const [loading, setLoading] = React.useState(false);
+
     return (
         <div style={{ visibility: hidden ? 'visible' : 'hidden' }}>
-            <Tooltip title="Xoá bộ lọc">
-                <ClearFilterStyled style={{ transform: hidden ? 'scale(1)' : 'scale(0.5)' }} onClick={onClick}>
+            <ClearFilterStyled
+                style={{ transform: hidden ? 'scale(1)' : 'scale(0.5)' }}
+                onClick={() => {
+                    if (loading) return;
+                    setLoading(true);
+                    onClick();
+                    wait(1400).then(() => setLoading(false));
+                }}
+            >
+                {loading ? (
+                    <IconAntd style={{ color: 'blue' }} spin icon="RedoOutlined" />
+                ) : (
                     <IconAntd style={{ color: 'blue' }} icon="ClearOutlined" />
-                </ClearFilterStyled>
-            </Tooltip>
+                )}
+            </ClearFilterStyled>
         </div>
     );
 };
@@ -27,7 +40,7 @@ const ClearFilterStyled = styled.div`
     &:hover {
         background-color: rgba(0, 0, 0, 0.2);
     }
-    transition: all 3s;
+    transition: all 0.25s ease-in-out;
 `;
 
 export default React.memo(ClearFilter);

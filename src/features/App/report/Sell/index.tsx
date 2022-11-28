@@ -1,9 +1,11 @@
 import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
+import ClearFilter from '@/components/ClearFilter';
+import ClearFilterLoading from '@/components/ClearFilter/ClearFilter.Loading';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import Container from '@/layout/Container';
-import { downloadFile, Notification, uuid } from '@/utils';
+import { downloadFile, handleObjectEmpty, Notification, uuid, wait } from '@/utils';
 import React from 'react';
 import { useQuery } from 'react-query';
 import Filter from './components/Filter';
@@ -22,6 +24,7 @@ const ReportSellPage = () => {
         refetch,
         isRefetching,
     } = useQuery<any>(['sellService', page, filterQuery], () => sellService.get({ page, ...filterQuery }));
+    const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
 
     const returnFilter = React.useCallback(
         (filter: any) => {
@@ -42,11 +45,28 @@ const ReportSellPage = () => {
                 });
     }, [sellReport?.paging?.links?.downExcel, page, filterQuery]);
 
+    const onClearFilter = () => {
+        setLoadingClearFilter(true);
+        wait(1500).then(() => {
+            setFilterQuery(initialFilterQuery);
+            setPage(1);
+            setLoadingClearFilter(false);
+        });
+    };
+
     return (
         <>
             <TopBar title="Báo cáo bán hàng" extra={[<ExportButton key="export" onClick={handleExportExcel} />]} />
             <Container>
-                <CardComponent title={[<Filter returnFilter={returnFilter} key="filter" />]}>
+                <CardComponent
+                    title={[
+                        loadingClearFilter ? (
+                            <ClearFilterLoading key="clear_filter" />
+                        ) : (
+                            <Filter returnFilter={returnFilter} key="filter" />
+                        ),
+                    ]}
+                >
                     <TableComponent
                         showTotalResult
                         loading={isRefetching}
@@ -63,6 +83,14 @@ const ReportSellPage = () => {
                     />
                 </CardComponent>
             </Container>
+            <ClearFilter
+                hidden={
+                    Object.values(handleObjectEmpty(filterQuery))?.filter(
+                        (item: any) => item !== undefined && item !== ''
+                    ).length > 0
+                }
+                onClick={onClearFilter}
+            />
         </>
     );
 };

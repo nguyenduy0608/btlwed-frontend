@@ -1,10 +1,13 @@
 import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
+import ClearFilter from '@/components/ClearFilter';
+import ClearFilterLoading from '@/components/ClearFilter/ClearFilter.Loading';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
+import { handleObjectEmpty, wait } from '@/utils';
 import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -29,6 +32,8 @@ const CustomerPage = () => {
         isRefetching,
     } = useQuery<any>(['customer', page, filterQuery], () => CustomerService.get({ page, ...filterQuery }));
 
+    const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
+
     React.useEffect(() => {
         refetch();
     }, [state.syncLoading]);
@@ -52,6 +57,15 @@ const CustomerPage = () => {
         [filterQuery]
     );
 
+    const onClearFilter = () => {
+        setLoadingClearFilter(true);
+        wait(1500).then(() => {
+            setFilterQuery(initialFilterQuery);
+            setPage(1);
+            setLoadingClearFilter(false);
+        });
+    };
+
     return (
         <>
             <TopBar
@@ -69,7 +83,13 @@ const CustomerPage = () => {
             />
             <Container>
                 <CardComponent
-                    title={<Filter returnFilter={returnFilter} key="filter" />}
+                    title={
+                        loadingClearFilter ? (
+                            <ClearFilterLoading key="clear_filter" />
+                        ) : (
+                            <Filter returnFilter={returnFilter} key="filter" />
+                        )
+                    }
                     extra={<ExportButton key="extra_btn" onClick={() => console.log('first')} />}
                 >
                     <TableComponent
@@ -85,6 +105,14 @@ const CustomerPage = () => {
                     />
                 </CardComponent>
             </Container>
+            <ClearFilter
+                hidden={
+                    Object.values(handleObjectEmpty(filterQuery))?.filter(
+                        (item: any) => item !== undefined && item !== ''
+                    ).length > 0
+                }
+                onClick={onClearFilter}
+            />
         </>
     );
 };

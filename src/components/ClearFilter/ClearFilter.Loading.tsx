@@ -1,5 +1,4 @@
 import { Skeleton, Space } from 'antd';
-import React from 'react';
 
 const ClearFilterLoading = () => {
     return (

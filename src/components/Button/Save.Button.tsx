@@ -2,6 +2,7 @@ import { images } from '@/assets/imagesAssets';
 import { Button } from 'antd';
 import { ButtonHTMLType } from 'antd/lib/button/button';
 import Lottie from 'lottie-react';
+import IconAntd from '../IconAntd';
 
 const SaveButton = ({ onClick, htmlType = 'button' }: { onClick?: () => void; htmlType?: ButtonHTMLType }) => {
     return (
@@ -11,11 +12,7 @@ const SaveButton = ({ onClick, htmlType = 'button' }: { onClick?: () => void; ht
             className="gx-mb-0"
             onClick={onClick && onClick}
             style={{ display: 'flex', alignItems: 'center' }}
-            icon={
-                <div style={{ height: '24px', width: '24px', marginRight: '10px' }}>
-                    <Lottie animationData={images.add} loop={true} />
-                </div>
-            }
+            icon={<IconAntd icon="SaveOutlined" />}
         >
             Lưu
         </Button>

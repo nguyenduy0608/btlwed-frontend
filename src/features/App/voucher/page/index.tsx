@@ -1,8 +1,11 @@
 import CardComponent from '@/components/CardComponent';
+import ClearFilter from '@/components/ClearFilter';
+import ClearFilterLoading from '@/components/ClearFilter/ClearFilter.Loading';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/routes';
 import Container from '@/layout/Container';
+import { handleObjectEmpty, wait } from '@/utils';
 import { Button } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -25,6 +28,7 @@ const VoucherPage = () => {
         refetch,
         isRefetching,
     } = useQuery<any>(['voucherService', page, filterQuery], () => voucherService.get({ page, ...filterQuery }));
+    const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
 
     const onRowSelection = React.useCallback((row: DataTypeVoucher[]) => {
         setRowSelected(row);
@@ -53,6 +57,15 @@ const VoucherPage = () => {
         refetch();
     }, []);
 
+    const onClearFilter = () => {
+        setLoadingClearFilter(true);
+        wait(1500).then(() => {
+            setFilterQuery(initialFilterQuery);
+            setPage(1);
+            setLoadingClearFilter(false);
+        });
+    };
+
     return (
         <>
             <TopBar
@@ -69,7 +82,15 @@ const VoucherPage = () => {
                 ]}
             />
             <Container>
-                <CardComponent title={<Filter returnFilter={returnFilter} key="filter" />}>
+                <CardComponent
+                    title={
+                        loadingClearFilter ? (
+                            <ClearFilterLoading key="clear_filter" />
+                        ) : (
+                            <Filter returnFilter={returnFilter} key="filter" />
+                        )
+                    }
+                >
                     <TableComponent
                         showTotalResult
                         loading={isRefetching}
@@ -84,6 +105,14 @@ const VoucherPage = () => {
                     />
                 </CardComponent>
             </Container>
+            <ClearFilter
+                hidden={
+                    Object.values(handleObjectEmpty(filterQuery))?.filter(
+                        (item: any) => item !== undefined && item !== ''
+                    ).length > 0
+                }
+                onClick={onClearFilter}
+            />
         </>
     );
 };

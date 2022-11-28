@@ -1,11 +1,14 @@
 import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
+import ClearFilter from '@/components/ClearFilter';
+import ClearFilterLoading from '@/components/ClearFilter/ClearFilter.Loading';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/routes';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
+import { handleObjectEmpty, wait } from '@/utils';
 import { Form, Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -25,9 +28,7 @@ const OrderPage = () => {
 
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
-    const [modalVisible, setModalVisible] = React.useState(false);
     const [loadingModal, setLoadingModal] = React.useState(false);
-    const [values, setValues] = React.useState<DataTypeOrder | null>(null);
     const [page, setPage] = React.useState(1);
     const [rowSelected, setRowSelected] = React.useState<DataTypeOrder[] | []>([]);
     const [form] = Form.useForm();
@@ -38,6 +39,8 @@ const OrderPage = () => {
         refetch,
         isRefetching,
     } = useQuery<any>(['OrderService', page, filterQuery], () => OrderService.get({ page, ...filterQuery }));
+
+    const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
 
     React.useEffect(() => {
         refetch();
@@ -55,6 +58,15 @@ const OrderPage = () => {
         [filterQuery]
     );
 
+    const onClearFilter = () => {
+        setLoadingClearFilter(true);
+        wait(1500).then(() => {
+            setFilterQuery(initialFilterQuery);
+            setPage(1);
+            setLoadingClearFilter(false);
+        });
+    };
+
     return (
         <>
             <TopBar
@@ -71,7 +83,13 @@ const OrderPage = () => {
             />
             <Container>
                 <CardComponent
-                    title={<Filter returnFilter={returnFilter} key="filter" />}
+                    title={
+                        loadingClearFilter ? (
+                            <ClearFilterLoading key="clear_filter" />
+                        ) : (
+                            <Filter returnFilter={returnFilter} key="filter" />
+                        )
+                    }
                     extra={[
                         // <PrintButton key="print" onClick={() => {}} />,
                         <ExportButton key="export" onClick={() => console.log('first')} />,
@@ -91,6 +109,14 @@ const OrderPage = () => {
                     />
                 </CardComponent>
             </Container>
+            <ClearFilter
+                hidden={
+                    Object.values(handleObjectEmpty(filterQuery))?.filter(
+                        (item: any) => item !== undefined && item !== ''
+                    ).length > 0
+                }
+                onClick={onClearFilter}
+            />
         </>
     );
 };

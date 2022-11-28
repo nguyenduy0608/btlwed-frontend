@@ -133,7 +133,7 @@ const ProductCategoryPage = () => {
                 <CardComponent
                     title={
                         loadingClearFilter ? (
-                            <ClearFilterLoading />
+                            <ClearFilterLoading key="clear_filter" />
                         ) : (
                             <Filter returnFilter={returnFilter} key="filter" />
                         )

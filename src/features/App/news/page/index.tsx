@@ -1,9 +1,12 @@
 import DeleteButton from '@/components/Button/Detele.Button';
 import CardComponent from '@/components/CardComponent';
+import ClearFilter from '@/components/ClearFilter';
+import ClearFilterLoading from '@/components/ClearFilter/ClearFilter.Loading';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/routes';
 import Container from '@/layout/Container';
+import { handleObjectEmpty, wait } from '@/utils';
 import { Button, Switch } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -27,6 +30,7 @@ const NewsPage = () => {
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
     const [rowSelected, setRowSelected] = React.useState([]);
+    const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
 
     const {
         data: news,
@@ -70,6 +74,15 @@ const NewsPage = () => {
         });
     }, [rowSelected]);
 
+    const onClearFilter = () => {
+        setLoadingClearFilter(true);
+        wait(1500).then(() => {
+            setFilterQuery(initialFilterQuery);
+            setPage(1);
+            setLoadingClearFilter(false);
+        });
+    };
+
     return (
         <>
             <TopBar
@@ -93,7 +106,15 @@ const NewsPage = () => {
                 ]}
             />
             <Container>
-                <CardComponent title={[<Filter returnFilter={returnFilter} key="filter" />]}>
+                <CardComponent
+                    title={[
+                        loadingClearFilter ? (
+                            <ClearFilterLoading key="clear_filter" />
+                        ) : (
+                            <Filter returnFilter={returnFilter} key="filter" />
+                        ),
+                    ]}
+                >
                     <TableComponent
                         showTotalResult
                         loading={isRefetching}
@@ -145,6 +166,14 @@ const NewsPage = () => {
                     />
                 </CardComponent>
             </Container>
+            <ClearFilter
+                hidden={
+                    Object.values(handleObjectEmpty(filterQuery))?.filter(
+                        (item: any) => item !== undefined && item !== ''
+                    ).length > 0
+                }
+                onClick={onClearFilter}
+            />
         </>
     );
 };

@@ -1,11 +1,14 @@
 import ExportButton from '@/components/Button/Export.Button';
 import CardComponent from '@/components/CardComponent';
+import ClearFilter from '@/components/ClearFilter';
+import ClearFilterLoading from '@/components/ClearFilter/ClearFilter.Loading';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/routes';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
+import { handleObjectEmpty, wait } from '@/utils';
 import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -14,7 +17,9 @@ import { IFilter } from '../../voucher/type';
 import Filter from '../components/Filter.Product';
 import { columnsProduct } from '../components/Product.Config';
 import { ProductService } from '../service';
+
 const initialFilterQuery = {};
+
 const ProductPage = () => {
     const { state } = useCallContext();
     const location = useLocation();
@@ -22,6 +27,7 @@ const ProductPage = () => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
+    const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
 
     const {
         data: products,
@@ -53,6 +59,15 @@ const ProductPage = () => {
         [filterQuery]
     );
 
+    const onClearFilter = () => {
+        setLoadingClearFilter(true);
+        wait(1500).then(() => {
+            setFilterQuery(initialFilterQuery);
+            setPage(1);
+            setLoadingClearFilter(false);
+        });
+    };
+
     return (
         <>
             <TopBar
@@ -69,7 +84,13 @@ const ProductPage = () => {
             />
             <Container>
                 <CardComponent
-                    title={<Filter params={filterQuery} returnFilter={returnFilter} key="filterProduct" />}
+                    title={
+                        loadingClearFilter ? (
+                            <ClearFilterLoading key="clear_filter" />
+                        ) : (
+                            <Filter params={filterQuery} returnFilter={returnFilter} key="filterProduct" />
+                        )
+                    }
                     extra={<ExportButton onClick={() => console.log('first')} />}
                 >
                     <TableComponent
@@ -89,6 +110,14 @@ const ProductPage = () => {
                     />
                 </CardComponent>
             </Container>
+            <ClearFilter
+                hidden={
+                    Object.values(handleObjectEmpty(filterQuery))?.filter(
+                        (item: any) => item !== undefined && item !== ''
+                    ).length > 0
+                }
+                onClick={onClearFilter}
+            />
         </>
     );
 };
