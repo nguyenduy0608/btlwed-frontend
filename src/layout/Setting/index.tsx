@@ -10,6 +10,7 @@ import Lottie from 'lottie-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import audiobell from '@/assets/audio/sound.mp3';
+import { syncService } from './service';
 
 const Setting = () => {
     const { state, dispatch } = useCallContext();
@@ -25,7 +26,7 @@ const Setting = () => {
         switch (type) {
             case 'category':
                 navigate('/product/category');
-                // await syncService.sync(+kiotVietId, type);
+                await syncService.sync(+kiotVietId, type);
                 break;
             case 'product':
                 navigate('/product');
