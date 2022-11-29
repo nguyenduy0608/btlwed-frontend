@@ -192,7 +192,7 @@ const OrderDetailPage = () => {
                     />
                 </CardComponent>
             </Container>
-            <OrderPrint ref={componentRef} />
+            <OrderPrint detailOrder={order} ref={componentRef} />
         </>
     );
 };

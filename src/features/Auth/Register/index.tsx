@@ -1,6 +1,5 @@
-import { routerPage } from '@/config/routes';
+import { routerPage } from '@/config/contants.routes';
 import { Button, Checkbox, Form, Input } from 'antd';
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Wrapper from '../Wrapper';
 import InfoRegister from './components/InfoRegister';

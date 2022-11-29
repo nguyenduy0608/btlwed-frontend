@@ -1,6 +1,8 @@
-import { Col, Row } from 'antd';
+import { currencyFormat, momentToStringDate } from '@/utils';
+import { Col, Row, Table } from 'antd';
 import moment from 'moment';
 import React from 'react';
+import TableComponent from '../TableComponent';
 import './style/order.style.css';
 
 const RowInfo: React.FC<{ left: any; right: any }> = React.memo(({ left, right }) => {
@@ -12,7 +14,8 @@ const RowInfo: React.FC<{ left: any; right: any }> = React.memo(({ left, right }
     );
 });
 
-const OrderPrint = React.forwardRef((detailOrder?: any, ref?: any) => {
+const OrderPrint = React.forwardRef((props?: any, ref?: any) => {
+    const { detailOrder } = props;
     return (
         <div className="order_print" ref={ref}>
             <Row className="s1" justify="space-between">
@@ -31,36 +34,36 @@ const OrderPrint = React.forwardRef((detailOrder?: any, ref?: any) => {
                 <br />
             </p>
             <h1 className="title_info">HÓA ĐƠN BÁN HÀNG</h1>
-            <h4 className="title_info">Số: HD001302</h4>
+            <h4 className="title_info">Số: {detailOrder?.code}</h4>
             <Row className="gx-mx-5">
                 <Col span={14}>
                     <p className="s2">
-                        Tên khách hàng: <span className="gx-font-weight-bold">Shop Máy Nhật Bãi - Biên Hòa </span>
+                        Tên khách hàng: <span className="gx-font-weight-bold">{detailOrder?.user?.fullName}</span>
                     </p>
                 </Col>
                 <Col span={10}>
                     <p className="s2" style={{ paddingTop: '1pt', textIndent: '0pt' }}>
-                        <span className="s3">SĐT: 0933.729.380</span>
+                        <span className="s3">SĐT: {detailOrder?.user?.phoneNumber}</span>
                     </p>
                 </Col>
                 <Col span={14}>
                     <p className="s2" style={{ paddingTop: '1pt', textIndent: '0pt' }}>
-                        Địa chỉ: -
+                        Địa chỉ: {detailOrder?.user?.address}
                     </p>
                 </Col>
                 <Col span={10}>
                     <p className="s2" style={{ paddingTop: '1pt', textIndent: '0pt' }}>
-                        Ngày lập hóa đơn: 15/11/2022 11:08
+                        Ngày lập hóa đơn: {momentToStringDate(detailOrder?.createdAt)}
                     </p>
                 </Col>
                 <Col span={14}>
                     <p className="s2" style={{ paddingTop: '1pt', textIndent: '0pt' }}>
-                        Khu vực:-
+                        Khu vực: {detailOrder?.kiotviet?.defaultBranchName}
                     </p>
                 </Col>
                 <Col span={10}>
                     <p className="s2" style={{ paddingTop: '1pt', textIndent: '0pt' }}>
-                        NVBH: THU HẰNG
+                        NVBH: ------!-----
                     </p>
                 </Col>
             </Row>
@@ -69,405 +72,45 @@ const OrderPrint = React.forwardRef((detailOrder?: any, ref?: any) => {
                 <br />
             </p>
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                <table style={{ borderCollapse: 'collapse' }} cellSpacing={0}>
-                    <tbody>
-                        <tr style={{ height: '17pt' }}>
-                            <td
-                                style={{
-                                    width: '27pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#2B2B2B',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#2B2B2B',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#808080',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s4"
-                                    style={{
-                                        paddingTop: '1pt',
-
-                                        textIndent: '0pt',
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    STT
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '83pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#2B2B2B',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#808080',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s4"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingLeft: '21pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    Mã hàng
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '180pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#2B2B2B',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#808080',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s4"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingLeft: '67pt',
-                                        paddingRight: '67pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'center',
-                                    }}
-                                >
-                                    Tên hàng
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '30pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#2B2B2B',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#808080',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s4"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingLeft: '3pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    ĐVT
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '50pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#2B2B2B',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#808080',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s4"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingRight: '4pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'right',
-                                    }}
-                                >
-                                    Số lượng
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '73pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#2B2B2B',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#808080',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s4"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingLeft: '19pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    Đơn giá
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '84pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#2B2B2B',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#808080',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#2B2B2B',
-                                }}
-                            >
-                                <p
-                                    className="s4"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingLeft: '17pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    Thành tiền
-                                </p>
-                            </td>
-                        </tr>
-                        <tr style={{ height: '17pt' }}>
-                            <td
-                                style={{
-                                    width: '27pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#808080',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#2B2B2B',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#2B2B2B',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p className="s5" style={{ paddingTop: '1pt', textIndent: '0pt', textAlign: 'center' }}>
-                                    1
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '83pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#808080',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#2B2B2B',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s5"
-                                    style={{
-                                        paddingTop: '1pt',
-
-                                        textIndent: '0pt',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    KBPO11CTKPS
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '180pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#808080',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#2B2B2B',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s5"
-                                    style={{
-                                        paddingTop: '1pt',
-
-                                        textIndent: '0pt',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    Khẩu bộ phá ốc 11CT Kapusi K-3689
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '30pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#808080',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#2B2B2B',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p style={{ textIndent: '0pt', textAlign: 'left' }}>
-                                    <br />
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '50pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#808080',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#2B2B2B',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s5"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingRight: '1pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'right',
-                                    }}
-                                >
-                                    10
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '73pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#808080',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#2B2B2B',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#808080',
-                                }}
-                            >
-                                <p
-                                    className="s5"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingLeft: '36pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    284,600
-                                </p>
-                            </td>
-                            <td
-                                style={{
-                                    width: '84pt',
-                                    borderTopStyle: 'solid',
-                                    borderTopWidth: '1pt',
-                                    borderTopColor: '#808080',
-                                    borderLeftStyle: 'solid',
-                                    borderLeftWidth: '1pt',
-                                    borderLeftColor: '#808080',
-                                    borderBottomStyle: 'solid',
-                                    borderBottomWidth: '1pt',
-                                    borderBottomColor: '#2B2B2B',
-                                    borderRightStyle: 'solid',
-                                    borderRightWidth: '1pt',
-                                    borderRightColor: '#2B2B2B',
-                                }}
-                            >
-                                <p
-                                    className="s5"
-                                    style={{
-                                        paddingTop: '1pt',
-                                        paddingLeft: '39pt',
-                                        textIndent: '0pt',
-                                        textAlign: 'left',
-                                    }}
-                                >
-                                    2,846,000
-                                </p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <Table
+                    dataSource={detailOrder ? detailOrder?.items : []}
+                    pagination={false}
+                    bordered
+                    columns={[
+                        {
+                            title: 'STT',
+                            dataIndex: 'id',
+                            align: 'center',
+                            render: (row, record, index) => index + 1,
+                        },
+                        {
+                            title: 'Tên sản phẩm',
+                            dataIndex: 'productName',
+                        },
+                        {
+                            title: 'Số lượng',
+                            dataIndex: 'quantity',
+                            align: 'center',
+                        },
+                        {
+                            title: 'Đơn vị tính',
+                            dataIndex: 'productUnit',
+                            align: 'center',
+                        },
+                        {
+                            title: 'Giá bán',
+                            dataIndex: 'price',
+                            align: 'center',
+                            render: (value) => currencyFormat(value),
+                        },
+                        {
+                            title: 'Thành tiền',
+                            dataIndex: '',
+                            align: 'center',
+                            render: (value, row: any) => currencyFormat(row?.price * row?.quantity),
+                        },
+                    ]}
+                />
                 <p style={{ textIndent: '0pt', textAlign: 'left' }}>
                     <br />
                 </p>

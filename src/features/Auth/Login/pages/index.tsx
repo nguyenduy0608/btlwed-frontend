@@ -1,11 +1,8 @@
 import LocalStorage from '@/apis/LocalStorage';
-import { routerPage } from '@/config/routes';
 import { Notification, wait } from '@/utils';
 import { errorValidPhone } from '@/utils/validation';
-import { Button, Checkbox, Form, Input, Row } from 'antd';
+import { Button, Form, Input } from 'antd';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { DotLoader } from 'react-spinners';
 import { authService } from '../../service';
 import Wrapper from '../../Wrapper';
 import InfoLogin from '../components/InfoLogin';

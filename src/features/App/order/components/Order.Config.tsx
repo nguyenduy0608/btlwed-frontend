@@ -93,7 +93,7 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
     },
     {
         title: 'Nguồn đơn',
-        dataIndex: 'createtableType',
+        dataIndex: 'creatableType',
         align: 'center',
         render: (value) => (value ? 'KiotViet' : 'Staka'),
     },

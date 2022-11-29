@@ -1,7 +1,7 @@
 import ActiveButton from '@/components/Button/Active.Button';
 import DeleteDescriptionButton from '@/components/Button/Delete.Description.Button';
 import UnActiveButton from '@/components/Button/UnActive.Button';
-import { routerPage } from '@/config/routes';
+import { routerPage } from '@/config/contants.routes';
 import { checkNowDate, checkNowStartVoucherDate, Notification } from '@/utils';
 import { CheckCircleOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';

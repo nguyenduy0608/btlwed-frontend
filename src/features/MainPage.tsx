@@ -1,5 +1,6 @@
 import LocalStorage from '@/apis/LocalStorage';
-import { AuthRoutes, PrivateRoutes, routerPage } from '@/config/routes';
+import { routerPage } from '@/config/contants.routes';
+import { AuthRoutes, AdminRoutes } from '@/config/routes';
 import PageLayout from '@/layout';
 import React from 'react';
 import { useLocation, useNavigate, useRoutes } from 'react-router-dom';
@@ -9,7 +10,7 @@ const MainPage = ({ role }: { role: string }) => {
     const navigate = useNavigate();
     const { pathname } = useLocation();
 
-    let element = useRoutes(LocalStorage.getToken() ? (role === 'admin' ? PrivateRoutes : AuthRoutes) : AuthRoutes);
+    let element = useRoutes(LocalStorage.getToken() ? (role === 'admin' ? AdminRoutes : AuthRoutes) : AuthRoutes);
 
     const [logged, setLogged] = React.useState(false);
 

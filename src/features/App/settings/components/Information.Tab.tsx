@@ -1,21 +1,24 @@
-import CardComponent from '@/components/CardComponent';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import UploadComponent from '@/components/Upload';
 import useCallContext from '@/hooks/useCallContext';
-import { Card, Col, Input, InputNumber, Row } from 'antd';
+import { Button, Card, Col, Input, InputNumber, Row } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
 
 const InformationTab = () => {
     const { state } = useCallContext();
+    const [isEditPoint, setIsEditPoint] = React.useState(false);
+    const [isEditContact, setIsEditContact] = React.useState(false);
+    const [isEditInfoPayment, setIsEditInfoPayment] = React.useState(false);
 
     return (
-        <FormComponent initialValues={{ point: 0 }} onSubmit={() => {}}>
-            <Row gutter={[12, 0]}>
-                <Col span={12}>
-                    <Card className="gx-mb-4">
+        <Row gutter={[12, 0]}>
+            <Col span={12}>
+                <Card className="gx-mb-4">
+                    <FormComponent initialValues={{ point: 0 }} onSubmit={() => {}}>
                         <TitleCardStyled>Tích điểm</TitleCardStyled>
+
                         <FormItemComponent
                             label="% tích điểm"
                             name="point"
@@ -30,16 +33,45 @@ const InformationTab = () => {
                                 />
                             }
                         />
-                    </Card>
-                    <Card>
+                    </FormComponent>
+                    {isEditPoint && (
+                        <Row justify="end" className="gx-m-0">
+                            <Button htmlType="submit" type="primary">
+                                Cập nhật
+                            </Button>
+                        </Row>
+                    )}
+                </Card>
+
+                <Card>
+                    <FormComponent onSubmit={() => {}}>
                         <TitleCardStyled>Thông tin liên hệ</TitleCardStyled>
-                        <FormItemComponent label="Zalo" name="zalo" inputField={<Input />} />
-                        <FormItemComponent label="Facebook" name="fb" inputField={<Input />} />
-                    </Card>
-                </Col>
-                <Col span={12}>
-                    <Card>
+
+                        <FormItemComponent
+                            label="Zalo"
+                            name="zalo"
+                            inputField={<Input placeholder="https://zalo.me" />}
+                        />
+                        <FormItemComponent
+                            label="Facebook"
+                            name="fb"
+                            inputField={<Input placeholder="https://www.facebook.com" />}
+                        />
+                        {isEditContact && (
+                            <Row justify="end" className="gx-m-0">
+                                <Button htmlType="submit" type="primary">
+                                    Cập nhật
+                                </Button>
+                            </Row>
+                        )}
+                    </FormComponent>
+                </Card>
+            </Col>
+            <Col span={12}>
+                <Card>
+                    <FormComponent onSubmit={() => {}}>
                         <TitleCardStyled>Thông tin chuyển khoản</TitleCardStyled>
+
                         <FormItemComponent
                             label="Tên ngân hàng"
                             name="bankName"
@@ -77,10 +109,17 @@ const InformationTab = () => {
                                 />
                             }
                         />
-                    </Card>
-                </Col>
-            </Row>
-        </FormComponent>
+                        {isEditInfoPayment && (
+                            <Row justify="end" className="gx-m-0">
+                                <Button htmlType="submit" type="primary">
+                                    Cập nhật
+                                </Button>
+                            </Row>
+                        )}
+                    </FormComponent>
+                </Card>
+            </Col>
+        </Row>
     );
 };
 

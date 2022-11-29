@@ -4,7 +4,7 @@ import ClearFilter from '@/components/ClearFilter';
 import ClearFilterLoading from '@/components/ClearFilter/ClearFilter.Loading';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
-import { routerPage } from '@/config/routes';
+import { routerPage } from '@/config/contants.routes';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';

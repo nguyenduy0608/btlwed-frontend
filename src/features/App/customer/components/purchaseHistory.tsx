@@ -1,18 +1,14 @@
 import CardComponent from '@/components/CardComponent';
+import RangerPicker from '@/components/RangerPicker';
 import TableComponent from '@/components/TableComponent';
-import TopBar from '@/components/TopBar';
-import Container from '@/layout/Container';
-import { Button, Form, InputNumber, Row, Segmented, Space } from 'antd';
-import React, { useState } from 'react';
+import { routerPage } from '@/config/contants.routes';
+import { Form } from 'antd';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
-import { DataTypeCustomer, columns, Purchasecolumns, DataTypePurchase } from './Customer.Config';
-import { CustomerService, PurchaseService } from '../service';
-import Filter from './Filter';
-import RangerPicker from '@/components/RangerPicker';
-import { TitleCardDes } from '@/config/global.style';
-import { routerPage } from '@/config/routes';
+import { PurchaseService } from '../service';
+import { Purchasecolumns } from './Customer.Config';
 const initialFilterQuery = {};
 
 const PuchaseHistoryPage = () => {

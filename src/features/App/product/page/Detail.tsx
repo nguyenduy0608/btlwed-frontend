@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import EditButton from '@/components/Button/Edit.Button';
 import SaveButton from '@/components/Button/Save.Button';
 import { IStatus } from '../../news/service';
+import TreeView from '@/components/TreeView';
 
 const ProductDetailPage = () => {
     const { id } = useParams();
@@ -97,7 +98,15 @@ const ProductDetailPage = () => {
                         }
                         rightCol={
                             <>
-                                <CardRow left="Danh mục" right={product?.categoryTree?.name} />
+                                <CardRow
+                                    left="Danh mục"
+                                    right={
+                                        <TreeView
+                                            parent={product?.categoryTree?.parent?.name}
+                                            children={product?.categoryTree?.name}
+                                        />
+                                    }
+                                />
                                 <CardRow
                                     left="Trạng thái"
                                     right={

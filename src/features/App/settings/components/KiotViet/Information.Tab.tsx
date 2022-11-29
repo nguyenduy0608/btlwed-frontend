@@ -43,7 +43,7 @@ const InformationTab = ({ info }: { info: any }) => {
                         {info?.clientId || '--'}
                     </Descriptions.Item>
                     <Descriptions.Item span={2} label="Secret_ID">
-                        {info?.secretId || '--'}
+                        {info?.clientSecret || '--'}
                     </Descriptions.Item>
                     <Descriptions.Item span={2} label="Trạng thái">
                         {info?.status ? (

@@ -29,7 +29,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) =
                 <Option value={'inprogress'}>Đang xử lý</Option>
                 <Option value={'wait_confirmation'}>Chờ xác nhận</Option>
                 <Option value={'completed'}>Hoàn thành</Option>
-                <Option value={'cacelled'}>Hủy</Option>
+                <Option value={'cancelled'}>Hủy</Option>
             </DefaultSelectStyled>
             <DefaultSelectStyled
                 placeholder="Nguồn đơn"

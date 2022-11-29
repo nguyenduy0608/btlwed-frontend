@@ -1,16 +1,18 @@
 import LocalStorage from '@/apis/LocalStorage';
-import ChatPage from '@/features/App/chat';
 import PushNoti from '@/features/App/pushNoti';
 import { rules } from '@/features/App/voucher/rules';
 import useCallContext from '@/hooks/useCallContext';
 import { DownOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button, Col, Form, Input, Modal, Popover, Row, Space } from 'antd';
+import { Avatar, Badge, Button, Col, Form, Input, Popover, Row, Space } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SaveButton from '../Button/Save.Button';
 import FormComponent from '../FormComponent';
 import IconAntd from '../IconAntd';
 import ModalComponent from '../ModalComponent';
+
+import Clock from 'react-live-clock';
+import styled from 'styled-components';
 
 const UserInfo = () => {
     const { state, dispatch } = useCallContext();
@@ -56,12 +58,10 @@ const UserInfo = () => {
                     </span>
                 </Popover>
             </Row>
-            <Row justify="center" className="gx-app-nav" style={{ marginTop: '26px' }}>
-                <li onClick={() => navigate('/chat')}>
-                    <Badge showZero count={2}>
-                        <IconAntd style={{ color: 'white' }} icon="MessageOutlined" />
-                    </Badge>
-                </li>
+            <Row justify="start" align="middle" className="gx-app-nav" style={{ marginTop: '15px' }}>
+                <ClockStyled>
+                    <Clock format="h:mm:ss" ticking />
+                </ClockStyled>
                 <li onClick={showDrawer}>
                     <Badge showZero count={9}>
                         <IconAntd style={{ color: 'white' }} icon="BellOutlined" />
@@ -127,5 +127,22 @@ const UserInfo = () => {
         </>
     );
 };
+
+const ClockStyled = styled.li`
+    border-radius: 10px;
+    margin-left: 20px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    background: linear-gradient(to right, #2b5876, #4e4376);
+    border: 1px dashed #ccc;
+    & * {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: white;
+    }
+`;
 
 export default React.memo(UserInfo);

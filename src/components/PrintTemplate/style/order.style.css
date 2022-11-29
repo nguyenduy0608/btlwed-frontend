@@ -1,5 +1,7 @@
 .order_print {
     width: 100%;
+    height: 100%;
+    background-color: #fff;
 }
 
 .order_print * {
