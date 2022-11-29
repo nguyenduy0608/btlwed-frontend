@@ -1,25 +1,21 @@
-import React, { ReactNode, useState } from 'react';
-import {
-    EditOutlined,
-    DeleteOutlined,
-    CloseCircleOutlined,
-    CheckCircleOutlined,
-    ReloadOutlined,
-    ExclamationCircleOutlined,
-} from '@ant-design/icons';
-import { Button, Modal } from 'antd';
-import voucherService from '../service';
-import { Notification } from '@/utils';
-import { DataTypeAccount } from './Account.Config';
-import { useNavigate } from 'react-router-dom';
 import ActiveButton from '@/components/Button/Active.Button';
 import UnActiveButton from '@/components/Button/UnActive.Button';
+import useCallContext from '@/hooks/useCallContext';
+import { Notification } from '@/utils';
+import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined, ReloadOutlined } from '@ant-design/icons';
+import { Button, Modal } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import voucherService from '../service';
+import { DataTypeAccount } from './Account.Config';
 interface IProps {
     record: DataTypeAccount;
     handleShowModal?: any;
     refetch: any;
 }
 const Buttons = (props: IProps) => {
+    const { state } = useCallContext();
+    const info = state?.info;
+
     const { record, refetch, handleShowModal } = props;
     const navigate = useNavigate();
 
@@ -82,15 +78,17 @@ const Buttons = (props: IProps) => {
     return [
         record.status ? (
             <UnActiveButton
+                disabled={info?.id === record.id}
                 onClick={() => {
                     handleLock(record.id);
                 }}
             />
         ) : (
-            <ActiveButton onClick={() => handleUnlock(record.id)} />
+            <ActiveButton disabled={info?.id === record.id} onClick={() => handleUnlock(record.id)} />
         ),
 
         <Button
+            disabled={info?.id === record.id}
             type="text"
             className="gx-mb-0"
             style={{
@@ -103,6 +101,7 @@ const Buttons = (props: IProps) => {
             Chỉnh sửa
         </Button>,
         <Button
+            disabled={info?.id === record.id}
             type="text"
             className="gx-mb-0"
             style={{
@@ -116,6 +115,7 @@ const Buttons = (props: IProps) => {
         </Button>,
 
         <Button
+            disabled={info?.id === record.id}
             type="text"
             className="gx-mb-0"
             style={{

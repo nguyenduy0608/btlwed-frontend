@@ -34,7 +34,6 @@ const NewsPage = () => {
 
     const {
         data: news,
-        isLoading,
         refetch,
         isRefetching,
     } = useQuery<any>(['news', page, filterQuery], () => newService.get({ page, ...filterQuery }));

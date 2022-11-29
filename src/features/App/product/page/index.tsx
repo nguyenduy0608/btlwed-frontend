@@ -31,7 +31,6 @@ const ProductPage = () => {
 
     const {
         data: products,
-        isLoading,
         isRefetching,
         refetch,
     } = useQuery<any>(['ProductService', page, filterQuery], () => ProductService.get({ page, ...filterQuery }));

@@ -9,12 +9,12 @@ import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
 import { handleObjectEmpty, wait } from '@/utils';
-import { Form, Segmented } from 'antd';
+import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import Filter from '../components/FIlter';
-import { columns, DataTypeOrder } from '../components/Order.Config';
+import { columns } from '../components/Order.Config';
 import { OrderService } from '../service';
 const initialFilterQuery = {};
 
@@ -24,18 +24,14 @@ const initialValue = {
 };
 
 const OrderPage = () => {
-    const { state, dispatch } = useCallContext();
+    const { state } = useCallContext();
 
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
-    const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeOrder[] | []>([]);
-    const [form] = Form.useForm();
 
     const {
         data: order,
-        isLoading,
         refetch,
         isRefetching,
     } = useQuery<any>(['OrderService', page, filterQuery], () => OrderService.get({ page, ...filterQuery }));
@@ -45,10 +41,6 @@ const OrderPage = () => {
     React.useEffect(() => {
         refetch();
     }, [state.syncLoading]);
-
-    const onRowSelection = React.useCallback((row: DataTypeOrder[]) => {
-        setRowSelected(row);
-    }, []);
 
     const returnFilter = React.useCallback(
         (filter: any) => {
@@ -97,12 +89,11 @@ const OrderPage = () => {
                 >
                     <TableComponent
                         showTotalResult
-                        loading={isRefetching || loadingModal}
+                        loading={isRefetching}
                         page={page}
                         rowSelect={false}
                         onRowClick={(record: { id: number }) => navigate(`${routerPage.order}/${record.id}`)}
                         onChangePage={(_page) => setPage(_page)}
-                        onRowSelection={onRowSelection}
                         dataSource={order?.data}
                         columns={columns(page)}
                         total={order && order?.paging?.totalItemCount}

@@ -1,17 +1,17 @@
+import SaveButton from '@/components/Button/Save.Button';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
-import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
-import { rules } from '../../voucher/rules';
-import { Notification, uuid, wait } from '@/utils';
-import React from 'react';
-import { ADMIN, STATUS } from '@/contants';
-import accountService from '../service';
 import ModalComponent from '@/components/ModalComponent';
-import { DataTypeAccount } from '../component/Account.Config';
 import UploadComponent from '@/components/Upload';
-import { errorConfirmPassword, errorValidPhone } from '@/utils/validation';
+import { ADMIN, STATUS } from '@/contants';
 import useCallContext from '@/hooks/useCallContext';
-import SaveButton from '@/components/Button/Save.Button';
+import { Notification, uuid, wait } from '@/utils';
+import { errorConfirmPassword, errorValidPhone } from '@/utils/validation';
+import { Button, Col, Form, Input, Row, Select, Space } from 'antd';
+import React from 'react';
+import { rules } from '../../voucher/rules';
+import { DataTypeAccount } from '../component/Account.Config';
+import accountService from '../service';
 const { Option } = Select;
 
 const initialValue = {

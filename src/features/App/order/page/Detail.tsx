@@ -1,10 +1,7 @@
-import ExportButton from '@/components/Button/Export.Button';
 import PrintButton from '@/components/Button/Print.Button';
 import CardComponent from '@/components/CardComponent';
 import CardContainer from '@/components/CardComponent/Card.Container';
 import CardRow from '@/components/CardComponent/Card.Row';
-import IconAntd from '@/components/IconAntd';
-import PrintTemplate from '@/components/PrintTemplate';
 import OrderPrint from '@/components/PrintTemplate/Order.print';
 import TableComponent from '@/components/TableComponent';
 import TagResult from '@/components/TagResult';
@@ -12,33 +9,25 @@ import TopBar from '@/components/TopBar';
 import { ORDER_STATE, ORDER_STATUS, PAYMENTSTATUS } from '@/contants';
 import Container from '@/layout/Container';
 import { currencyFormat, momentParseUtc } from '@/utils';
-import { Col, Form, Row, Timeline } from 'antd';
+import { Col, Row, Timeline } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
 import { IFilter } from '../../voucher/type';
-import { columnsProduct, DataTypeOrder } from '../components/Order.Config';
+import { columnsProduct } from '../components/Order.Config';
 import { OrderService } from '../service';
 
 const initialFilterQuery = {};
 const OrderDetailPage = () => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
-    const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeOrder[] | []>([]);
-    const [form] = Form.useForm();
     const { id } = useParams();
-    const { data, isLoading, refetch, isRefetching } = useQuery<any>(['detailOrder', id], () =>
-        OrderService.detail(id)
-    );
+    const { data, refetch, isRefetching } = useQuery<any>(['detailOrder', id], () => OrderService.detail(id));
     const order = data?.data;
     const orderProduct = data?.data.items;
 
-    const onRowSelection = React.useCallback((row: DataTypeOrder[]) => {
-        setRowSelected(row);
-    }, []);
     const returnFilter = React.useCallback(
         (filter: IFilter) => {
             setPage(1);
@@ -185,7 +174,6 @@ const OrderDetailPage = () => {
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
-                        onRowSelection={onRowSelection}
                         dataSource={order ? order?.items : []}
                         columns={columnsProduct(page)}
                         total={order && order?.paging?.totalItemCount}

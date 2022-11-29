@@ -12,7 +12,7 @@ import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import Description from '../components/Description';
 import Filter from '../components/Filter';
-import { columns, DataTypeVoucher } from '../components/Voucher.Config';
+import { columns } from '../components/Voucher.Config';
 import voucherService from '../service';
 import { IFilter } from '../type';
 const initialFilterQuery = {};
@@ -20,19 +20,13 @@ const VoucherPage = () => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
-    const [rowSelected, setRowSelected] = React.useState<DataTypeVoucher[] | []>([]);
 
     const {
         data: voucher,
-        isLoading,
         refetch,
         isRefetching,
     } = useQuery<any>(['voucherService', page, filterQuery], () => voucherService.get({ page, ...filterQuery }));
     const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
-
-    const onRowSelection = React.useCallback((row: DataTypeVoucher[]) => {
-        setRowSelected(row);
-    }, []);
 
     const rowRender = (record: any, index: number, indent: number, expanded: any) => {
         const row = document.querySelector(`[data-row-key="${record.id}"]`);
@@ -98,7 +92,6 @@ const VoucherPage = () => {
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
                         expandedRowRender={rowRender}
-                        onRowSelection={onRowSelection}
                         dataSource={voucher ? voucher.data : []}
                         total={voucher && voucher?.paging?.totalItemCount}
                         columns={columns(page)}

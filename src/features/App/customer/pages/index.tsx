@@ -22,12 +22,10 @@ const CustomerPage = () => {
     const { state } = useCallContext();
 
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
-    const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
 
     const {
         data: customer,
-        isLoading,
         refetch,
         isRefetching,
     } = useQuery<any>(['customer', page, filterQuery], () => CustomerService.get({ page, ...filterQuery }));
@@ -94,7 +92,7 @@ const CustomerPage = () => {
                 >
                     <TableComponent
                         showTotalResult
-                        loading={isRefetching || loadingModal}
+                        loading={isRefetching}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
