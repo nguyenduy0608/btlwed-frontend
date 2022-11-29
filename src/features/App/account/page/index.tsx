@@ -86,24 +86,23 @@ const AccountPage = () => {
 
     return (
         <>
-            <TopBar title="Tài khoản" />
+            <TopBar
+                extra={
+                    <Button
+                        key="add"
+                        type="primary"
+                        className="gx-mb-0"
+                        onClick={() => {
+                            setModalVisible(true);
+                        }}
+                    >
+                        Thêm mới
+                    </Button>
+                }
+                title="Tài khoản"
+            />
             <Container>
-                <CardComponent
-                    title={<Filter returnFilter={returnFilter} key="filter" />}
-                    extra={
-                        <Space>
-                            <Button
-                                type="primary"
-                                className="gx-mb-0"
-                                onClick={() => {
-                                    setModalVisible(true);
-                                }}
-                            >
-                                Thêm mới
-                            </Button>
-                        </Space>
-                    }
-                >
+                <CardComponent title={<Filter returnFilter={returnFilter} key="filter" />}>
                     <TableComponent
                         showTotalResult
                         loading={isRefetching || loadingModal}

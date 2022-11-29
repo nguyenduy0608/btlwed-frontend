@@ -36,11 +36,11 @@ const Description: React.FC<IProps> = ({ record, refetch, handleShowModal }) => 
 };
 
 const AvatarStyled = styled(Avatar)`
-    /* & .ant-image,
+    & .ant-image,
     img.ant-image-img {
         width: 100%;
         height: 100%;
-    } */
+    }
 `;
 
 export default React.memo(Description);

@@ -60,7 +60,7 @@ const UserInfo = () => {
             </Row>
             <Row justify="start" align="middle" className="gx-app-nav" style={{ marginTop: '15px' }}>
                 <ClockStyled>
-                    <Clock format="h:mm:ss" ticking />
+                    <Clock format="hh:mm:ss a" ticking />
                 </ClockStyled>
                 <li onClick={showDrawer}>
                     <Badge showZero count={9}>
@@ -131,7 +131,7 @@ const UserInfo = () => {
 const ClockStyled = styled.li`
     border-radius: 10px;
     margin-left: 20px;
-    width: 120px;
+    width: 130px;
     display: flex;
     justify-content: center;
     align-items: center;

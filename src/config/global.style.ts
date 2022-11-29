@@ -190,6 +190,11 @@ const GlobalStyle = createGlobalStyle`
     font-size: 13px;
   }
 }
+.ant-upload-list-item-info img.ant-upload-list-item-image {
+  & {
+    object-fit: cover !important;
+  }
+}
 
 ::-webkit-input-placeholder { /* Edge */
   font-weight: 600 !important;
