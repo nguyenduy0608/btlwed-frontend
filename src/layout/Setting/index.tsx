@@ -1,24 +1,32 @@
 import sync from '@/assets/sync.json';
 import IconAntd from '@/components/IconAntd';
 import { DefaultSelectStyled } from '@/config/global.style';
-import { SET_SYNC_LOADING } from '@/context/types';
+import { SET_BG_APP, SET_BG_APP_COLOR, SET_SYNC_LOADING } from '@/context/types';
 import useCallContext from '@/hooks/useCallContext';
 import { Notification as NotiMSG, wait } from '@/utils';
 import { notificationSync } from '@/utils/notification';
-import { Button, Col, Drawer, Popover, Row, Select } from 'antd';
+import { Button, Col, Drawer, Popover, Row, Select, Switch } from 'antd';
 import Lottie from 'lottie-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import audiobell from '@/assets/audio/sound.mp3';
 import { syncService } from './service';
+import LocalStorage from '@/apis/LocalStorage';
+import { CirclePicker, TwitterPicker } from 'react-color';
 
 const Setting = () => {
     const { state, dispatch } = useCallContext();
+    const [enable, setEnabled] = React.useState(false);
+
     const [kiotVietId, setKiotVietId] = React.useState('');
     const navigate = useNavigate();
 
     const [openNoti, setOpenNoti] = React.useState(false);
     const audioRef: any = React.useRef();
+
+    React.useLayoutEffect(() => {
+        console.log(LocalStorage.getBG());
+    }, []);
 
     const handleSync = async (type: string) => {
         if (!kiotVietId) return;
@@ -123,6 +131,37 @@ const Setting = () => {
                     >
                         Test thông báo
                     </Button>
+                </div>
+                <h4 className="gx-my-4 gx-text-uppercase">
+                    <strong>Giao diện</strong>
+                </h4>
+                <div>
+                    <Row align="middle" className="gx-m-0">
+                        <strong style={{ marginRight: '10px' }}>Chế độ tuyết</strong>
+                        <Switch
+                            defaultChecked={JSON.parse(LocalStorage.getBG() as any)}
+                            onChange={(check: any) => {
+                                dispatch({
+                                    type: SET_BG_APP,
+                                    payload: check,
+                                });
+                                LocalStorage.setBG(check);
+                            }}
+                        />
+                    </Row>
+                    <div style={{ margin: '10px 0 15px 0' }}>Màu tuyết rơi</div>
+                    {state?.appBackground?.show && (
+                        <Row className="gx-m-0" justify="center">
+                            <CirclePicker
+                                onChangeComplete={(value) =>
+                                    dispatch({
+                                        type: SET_BG_APP_COLOR,
+                                        payload: value.hex,
+                                    })
+                                }
+                            />
+                        </Row>
+                    )}
                 </div>
             </Drawer>
             <div className="gx-customizer-option">

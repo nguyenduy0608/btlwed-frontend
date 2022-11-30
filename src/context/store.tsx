@@ -16,6 +16,9 @@ const initialState: InitialStateType = {
     info: null,
     kiotviets: null,
     socket: null,
+    appBackground: {
+        show: false,
+    },
 };
 
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {

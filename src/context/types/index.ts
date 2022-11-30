@@ -5,13 +5,17 @@ export const SET_INFO = 'SET_INFO';
 export const SET_KIOTVIETS = 'SET_KIOTVIETS';
 export const SET_SYNC_LOADING = 'SET_SYNC_LOADING';
 export const SET_SOCKET = 'SET_SOCKET';
+export const SET_BG_APP = 'SET_BG_APP';
+export const SET_BG_APP_COLOR = 'SET_BG_APP_COLOR';
 
 type ActionType =
     | typeof APP_LOADING
     | typeof SET_INFO
     | typeof SET_KIOTVIETS
     | typeof SET_SYNC_LOADING
-    | typeof SET_SOCKET;
+    | typeof SET_SOCKET
+    | typeof SET_BG_APP
+    | typeof SET_BG_APP_COLOR;
 
 export type InitialStateType = {
     appLoading: boolean;
@@ -19,6 +23,7 @@ export type InitialStateType = {
     kiotviets: IKiotviet[] | null;
     syncLoading: boolean;
     socket: Socket | null;
+    appBackground?: any;
 };
 
 export interface IAction {

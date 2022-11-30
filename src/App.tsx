@@ -1,10 +1,11 @@
 import AppLoading from '@/assets/appLoading.json';
 import loadingSync from '@/assets/loading_sync.json';
-import { ConfigProvider, notification, Row, Spin, Timeline } from 'antd';
+import { Button, ConfigProvider, notification, Row, Spin, Timeline } from 'antd';
 import vi_VN from 'antd/lib/locale/vi_VN';
 import Lottie from 'lottie-react';
 import moment from 'moment';
 import React from 'react';
+import Snowfall from 'react-snowfall';
 import io from 'socket.io-client';
 import styled from 'styled-components';
 import LocalStorage from './apis/LocalStorage';
@@ -12,7 +13,7 @@ import IconAntd from './components/IconAntd';
 import TagResult from './components/TagResult';
 import GlobalStyle from './config/global.style';
 import { BOX_SHADOW } from './config/theme';
-import { APP_LOADING, SET_INFO, SET_KIOTVIETS, SET_SOCKET } from './context/types';
+import { APP_LOADING, SET_BG_APP, SET_INFO, SET_KIOTVIETS, SET_SOCKET } from './context/types';
 import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
@@ -43,6 +44,13 @@ function App() {
             });
             appService.getKiotviet().then((res) => {
                 dispatch({ type: SET_KIOTVIETS, payload: res.data });
+            });
+        }
+
+        if (LocalStorage.getBG()) {
+            dispatch({
+                type: SET_BG_APP,
+                payload: JSON.parse(LocalStorage.getBG() as any),
             });
         }
     }, []);
@@ -108,6 +116,21 @@ function App() {
                                     - Trang chủ: Update giao diện tổng quan
                                     <br />- Bộ lọc: Xoá bộ lọc
                                     <br />- Performance: Lazy load
+                                    <br />- Hệ thống: <TagResult color="red" text="Chế độ tuyết rơi" />
+                                    <br />
+                                    <Button
+                                        onClick={() => {
+                                            dispatch({
+                                                type: SET_BG_APP,
+                                                payload: true,
+                                            });
+                                            LocalStorage.setBG('true');
+                                        }}
+                                        className="gx-mt-3"
+                                        type="primary"
+                                    >
+                                        Trải nghiệm ngay
+                                    </Button>
                                 </strong>
                             </Timeline.Item>
                         </Timeline>
@@ -140,7 +163,16 @@ function App() {
             </ConfigProvider>
             {/* define default style */}
             <GlobalStyle />
-
+            {state?.appBackground?.show && (
+                <Snowfall
+                    color={state?.appBackground?.color}
+                    style={{
+                        position: 'fixed',
+                        width: '100vw',
+                        height: '100vh',
+                    }}
+                />
+            )}
             {/* loading khi đồng bộ */}
             {state.syncLoading && (
                 <ContainerLoadingSync>

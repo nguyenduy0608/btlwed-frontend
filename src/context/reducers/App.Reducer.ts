@@ -2,6 +2,8 @@ import {
     APP_LOADING,
     IAction,
     InitialStateType,
+    SET_BG_APP,
+    SET_BG_APP_COLOR,
     SET_INFO,
     SET_KIOTVIETS,
     SET_SOCKET,
@@ -28,6 +30,14 @@ export const appReducer = (state: InitialStateType, action: IAction) => {
 
         case SET_SOCKET: {
             return { ...state, socket: action.payload };
+        }
+
+        case SET_BG_APP: {
+            return { ...state, appBackground: { ...state.appBackground, show: action.payload } };
+        }
+
+        case SET_BG_APP_COLOR: {
+            return { ...state, appBackground: { ...state.appBackground, color: action.payload } };
         }
 
         default: {
