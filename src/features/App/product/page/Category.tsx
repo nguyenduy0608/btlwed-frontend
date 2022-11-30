@@ -121,7 +121,10 @@ const ProductCategoryPage = () => {
                 title="Danh mục sản phẩm"
                 extra={
                     <Segmented
-                        onChange={(value) => setFilterQuery({ ...filterQuery, kiotvietId: value })}
+                        onChange={(value) => {
+                            setPage(1);
+                            setFilterQuery({ ...filterQuery, kiotvietId: value });
+                        }}
                         options={[
                             selectAll,
                             ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
