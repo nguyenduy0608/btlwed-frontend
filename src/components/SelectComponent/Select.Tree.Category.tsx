@@ -2,8 +2,17 @@ import AxiosClient from '@/apis/AxiosClient';
 import useDebounce from '@/hooks/useDebounce';
 import { Tree, TreeSelect } from 'antd';
 import React from 'react';
+import TagResult from '../TagResult';
 
-const SelectTreeCategory = ({ placeholder, onChange }: { placeholder: string; onChange: any }) => {
+const SelectTreeCategory = ({
+    placeholder,
+    onChange,
+    params,
+}: {
+    placeholder: string;
+    onChange: any;
+    params?: any;
+}) => {
     const [search, setSearch] = React.useState('');
     const debouncedSearchTerm = useDebounce(search, 300);
 
@@ -18,10 +27,14 @@ const SelectTreeCategory = ({ placeholder, onChange }: { placeholder: string; on
 
     React.useEffect(() => {
         setLoading(true);
-        AxiosClient(`/admin/product_category`, { params: { search: debouncedSearchTerm, limit: 15 } })
+        AxiosClient(`/admin/product_category`, { params: { ...params, search: debouncedSearchTerm, limit: 15 } })
             .then((res) => {
                 const data = res.data.map((item: any) => ({
-                    title: item.name,
+                    title: (
+                        <div>
+                            {item.name} <TagResult color="blue" text={item?.kiotviet?.name} />
+                        </div>
+                    ),
                     value: item.id,
                     key: item.id,
                     children: item.listChild.map((child: any) => ({
@@ -35,7 +48,7 @@ const SelectTreeCategory = ({ placeholder, onChange }: { placeholder: string; on
             .finally(() => {
                 setLoading(false);
             });
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, params]);
 
     const onSelect = (newValue: any, { node }: any) => {
         setTreeValueSelected(node.title);

@@ -34,6 +34,7 @@ const Filter = ({ returnFilter, params }: { returnFilter: (filter: any) => void;
                 onChange={(categoryId: any) => {
                     returnFilter({ category_id: categoryId || '' });
                 }}
+                params={{ kiotvietId: params.kiotvietId }}
                 placeholder="Chọn danh mục"
             />
             <DefaultSelectStyled

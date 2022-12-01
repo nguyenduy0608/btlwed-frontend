@@ -4,9 +4,11 @@ import ClearFilterLoading from '@/components/ClearFilter/ClearFilter.Loading';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import { routerPage } from '@/config/contants.routes';
+import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
+import { selectAll } from '@/service';
 import { handleObjectEmpty, wait } from '@/utils';
-import { Button } from 'antd';
+import { Button, Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -15,8 +17,11 @@ import Filter from '../components/Filter';
 import { columns } from '../components/Voucher.Config';
 import voucherService from '../service';
 import { IFilter } from '../type';
+
 const initialFilterQuery = {};
+
 const VoucherPage = () => {
+    const { state } = useCallContext();
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
@@ -64,16 +69,18 @@ const VoucherPage = () => {
         <>
             <TopBar
                 title="Quản lý voucher"
-                extra={[
-                    <Button
-                        key="add_voucher"
-                        onClick={() => navigate(routerPage.voucherForm)}
-                        className="gx-mb-0"
-                        type="primary"
-                    >
-                        Thêm mới
-                    </Button>,
-                ]}
+                extra={
+                    <Segmented
+                        onChange={(value) => {
+                            setPage(1);
+                            setFilterQuery({ ...filterQuery, kiotvietId: value });
+                        }}
+                        options={[
+                            selectAll,
+                            ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
+                        ]}
+                    />
+                }
             />
             <Container>
                 <CardComponent
@@ -83,6 +90,16 @@ const VoucherPage = () => {
                         ) : (
                             <Filter returnFilter={returnFilter} key="filter" />
                         )
+                    }
+                    extra={
+                        <Button
+                            key="add_voucher"
+                            onClick={() => navigate(routerPage.voucherForm)}
+                            className="gx-mb-0"
+                            type="primary"
+                        >
+                            Thêm mới
+                        </Button>
                     }
                 >
                     <TableComponent

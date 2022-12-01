@@ -164,8 +164,8 @@ export const columnsApplyVoucher: any = (page: number) => [
         title: 'Danh mục',
         dataIndex: 'category',
         key: 'category',
-        render: (value: any) => value?.name,
         width: '300px',
+        render: (value: any) => value?.name,
     },
     {
         title: 'Sản phẩm',

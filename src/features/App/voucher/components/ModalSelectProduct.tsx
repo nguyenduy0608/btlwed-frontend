@@ -1,7 +1,10 @@
 import ModalComponent from '@/components/ModalComponent';
 import SearchInput from '@/components/SearchInput';
 import SelectComponent from '@/components/SelectComponent';
+import SelectTreeCategory from '@/components/SelectComponent/Select.Tree.Category';
 import TableComponent from '@/components/TableComponent';
+import { DefaultSelectStyled } from '@/config/global.style';
+import useCallContext from '@/hooks/useCallContext';
 import { Button, Row, Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -19,7 +22,8 @@ const ModalSelectProduct = ({
     callbackChoseProduct: any;
     productsProps: any;
 }) => {
-    const [filterQuery, setFilterQuery] = React.useState({});
+    const { state } = useCallContext();
+    const [filterQuery, setFilterQuery] = React.useState<any>({});
     const [page, setPage] = React.useState(1);
 
     const [productSelected, setProductSelected] = React.useState<any>({});
@@ -44,11 +48,6 @@ const ModalSelectProduct = ({
         setOpen(false);
     };
 
-    console.log(
-        'kk',
-        productsProps.map((item: any) => item.id)
-    );
-
     return (
         <ModalComponent width={1400} title="Chọn sản phẩm áp dụng" modalVisible={open}>
             <TableComponent
@@ -64,15 +63,34 @@ const ModalSelectProduct = ({
                         <Space>
                             <SearchInput
                                 placeholderSearch="Nhập tên sản phẩm"
-                                onChangeSearch={(value) => setFilterQuery({ search: value })}
+                                onChangeSearch={(value) => setFilterQuery({ ...filterQuery, search: value })}
                             />
-                            <SelectComponent
+                            {/* <SelectComponent
                                 onChange={(item: any) => {
-                                    setFilterQuery({ category_id: item?.key || '' });
+                                    setFilterQuery({ ...filterQuery, category_id: item?.key || '' });
                                 }}
                                 apiUrl="/admin/product_category"
                                 placeholder="Chọn danh mục"
+                            /> */}
+                            <SelectTreeCategory
+                                onChange={(categoryId: any) => {
+                                    setFilterQuery({ ...filterQuery, category_id: categoryId || '' });
+                                }}
+                                params={{ kiotvietId: filterQuery?.kiotviet_id }}
+                                placeholder="Chọn danh mục"
                             />
+                            <DefaultSelectStyled
+                                allowClear
+                                onChange={(value: any) => setFilterQuery({ ...filterQuery, kiotviet_id: value || '' })}
+                                placeholder="Chọn gian hàng"
+                            >
+                                {state?.kiotviets &&
+                                    state?.kiotviets.map((item: any) => (
+                                        <DefaultSelectStyled.Option key={item.id} value={item.id}>
+                                            {item.name}
+                                        </DefaultSelectStyled.Option>
+                                    ))}
+                            </DefaultSelectStyled>
                         </Space>
                     </Row>
                 }
