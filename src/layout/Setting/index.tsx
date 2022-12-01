@@ -38,12 +38,15 @@ const Setting = () => {
                 break;
             case 'product':
                 navigate('/product');
+                await syncService.sync(+kiotVietId, type);
                 break;
             case 'user':
                 navigate('/customer');
+                await syncService.sync(+kiotVietId, type);
                 break;
             case 'order':
                 navigate('/order');
+                await syncService.sync(+kiotVietId, type);
                 break;
             default:
                 break;

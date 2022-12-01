@@ -1,8 +1,10 @@
 import { RADIUS } from '@/config/theme';
-import { Col, Row, Table, Tag } from 'antd';
+import { wait } from '@/utils';
+import { Col, Row, Table, Tag, Tooltip } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import IconAntd from '../IconAntd';
 import PaginationComponent from '../PaginationComponent';
 type RowSelect = 'checkbox' | 'radio';
 
@@ -29,6 +31,7 @@ interface IProps {
     hiddenSelectAll?: boolean;
     components?: any;
     showTotalResult?: boolean;
+    reLoadData?: any;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -52,7 +55,10 @@ const TableComponent: React.FC<IProps> = ({
     hiddenSelectAll,
     components,
     showTotalResult,
+    reLoadData,
 }) => {
+    const [loadingRefresh, setLoadingRefresh] = React.useState(false);
+
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
     const rowSelection = {
@@ -67,16 +73,40 @@ const TableComponent: React.FC<IProps> = ({
             <Col span={24} className="gx-m-0 gx-px-0">
                 <WrapperTable>
                     {showTotalResult && (
-                        <ResultStyled>
-                            <div>Kết quả lọc: </div>
-                            <Tag className="gx-m-0 gx-ml-2" color="magenta">
-                                {total}
-                            </Tag>
-                        </ResultStyled>
+                        <Row className="gx-m-0 gx-pb-3" align="middle">
+                            <ResultStyled>
+                                <div>Kết quả lọc: </div>
+                                <Tag className="gx-m-0 gx-ml-2" color="magenta">
+                                    {total}
+                                </Tag>
+                            </ResultStyled>
+                            {reLoadData && (
+                                <Tooltip title="Tải lại dữ liệu">
+                                    <ReloadStyled
+                                        onClick={() => {
+                                            if (reLoadData) {
+                                                setLoadingRefresh(true);
+                                                wait(1000).then(() => {
+                                                    reLoadData();
+                                                    setLoadingRefresh(false);
+                                                });
+                                            }
+                                        }}
+                                    >
+                                        <IconAntd
+                                            spin={loadingRefresh}
+                                            style={{ color: loadingRefresh ? 'red' : 'black' }}
+                                            size="16px"
+                                            icon="ReloadOutlined"
+                                        />
+                                    </ReloadStyled>
+                                </Tooltip>
+                            )}
+                        </Row>
                     )}
                     <TableStyled
                         showSorterTooltip={{ title: 'Sắp xếp' }}
-                        loading={loading}
+                        loading={loading || loadingRefresh}
                         title={header ? () => header : undefined}
                         id={id}
                         // @ts-ignore
@@ -99,7 +129,6 @@ const TableComponent: React.FC<IProps> = ({
                             expandedRowKeys: keysExpanded,
                             expandRowByClick: true,
                             onExpandedRowsChange: (keys: any) => {
-                                console.log('🚀 ~ file: index.tsx ~ line 92 ~ keys', keys);
                                 if (keys?.length > 0) {
                                     // if (components) {
                                     //     setKeysExpanded([]);
@@ -196,7 +225,15 @@ const ResultStyled = styled.div`
     font-weight: 700;
     display: flex;
     align-items: center;
-    padding-bottom: 10px;
+`;
+
+const ReloadStyled = styled.div`
+    margin-left: 10px;
+    cursor: pointer;
+
+    &:hover {
+        scale: 1.3;
+    }
 `;
 
 export default TableComponent;

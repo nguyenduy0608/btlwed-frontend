@@ -8,7 +8,7 @@ import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
 import { handleObjectEmpty, momentToStringDate, Notification, wait } from '@/utils';
-import { message, Segmented, Switch } from 'antd';
+import { InputNumber, message, Segmented, Switch } from 'antd';
 import Input from 'antd/lib/input/Input';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -143,6 +143,7 @@ const ProductCategoryPage = () => {
                     }
                 >
                     <TableComponent
+                        reLoadData={() => refetch()}
                         showTotalResult
                         loading={isRefetching}
                         page={page}
@@ -177,9 +178,18 @@ const ProductCategoryPage = () => {
                                             e.stopPropagation();
                                         }}
                                     >
-                                        <Input
+                                        <InputNumber
                                             min={1}
+                                            max={10000000}
                                             onBlur={(e) => {
+                                                if (
+                                                    !e.target.value ||
+                                                    isNaN(+e.target.value) ||
+                                                    typeof +e.target.value !== 'number' ||
+                                                    +e.target.value > 1
+                                                )
+                                                    return;
+
                                                 if (+e.target.value <= 0)
                                                     return Notification('warning', 'Thứ tự phải lớn hơn 0');
 
@@ -190,7 +200,10 @@ const ProductCategoryPage = () => {
                                                     refetch();
                                                 });
                                             }}
-                                            defaultValue={value}
+                                            style={{ width: '100%' }}
+                                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
+                                            value={value}
                                         />
                                     </div>
                                 ),

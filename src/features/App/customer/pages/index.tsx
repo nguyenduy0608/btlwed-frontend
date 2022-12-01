@@ -91,6 +91,7 @@ const CustomerPage = () => {
                     extra={<ExportButton key="extra_btn" onClick={() => console.log('first')} />}
                 >
                     <TableComponent
+                        reLoadData={() => refetch()}
                         showTotalResult
                         loading={isRefetching}
                         page={page}

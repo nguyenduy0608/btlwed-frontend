@@ -91,6 +91,7 @@ const OrderPage = () => {
                     ]}
                 >
                     <TableComponent
+                        reLoadData={() => refetch()}
                         showTotalResult
                         loading={isRefetching}
                         page={page}

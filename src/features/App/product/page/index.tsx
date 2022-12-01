@@ -96,6 +96,7 @@ const ProductPage = () => {
                     extra={<ExportButton onClick={() => console.log('first')} />}
                 >
                     <TableComponent
+                        reLoadData={() => refetch()}
                         showTotalResult
                         loading={isRefetching}
                         page={page}
