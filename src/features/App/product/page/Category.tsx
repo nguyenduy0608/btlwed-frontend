@@ -182,12 +182,7 @@ const ProductCategoryPage = () => {
                                             min={1}
                                             max={10000000}
                                             onBlur={(e) => {
-                                                if (
-                                                    !e.target.value ||
-                                                    isNaN(+e.target.value) ||
-                                                    typeof +e.target.value !== 'number' ||
-                                                    +e.target.value > 1
-                                                )
+                                                if (!e.target.value || isNaN(+e.target.value) || +e.target.value < 1)
                                                     return;
 
                                                 if (+e.target.value <= 0)
