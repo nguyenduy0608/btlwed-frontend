@@ -101,10 +101,14 @@ const ProductDetailPage = () => {
                                 <CardRow
                                     left="Danh mục"
                                     right={
-                                        <TreeView
-                                            parent={product?.categoryTree?.parent?.name}
-                                            children={product?.categoryTree?.name}
-                                        />
+                                        product?.categoryTree?.parent ? (
+                                            <TreeView
+                                                parent={product?.categoryTree?.parent?.name}
+                                                children={product?.categoryTree?.name}
+                                            />
+                                        ) : (
+                                            product?.categoryTree?.name
+                                        )
                                     }
                                 />
                                 <CardRow
@@ -133,8 +137,14 @@ const ProductDetailPage = () => {
                                 {/* <CardRow left="Thuộc tính" right={'Chưa có api'} /> */}
                                 <CardRow left="Đơn vị tính (Mặc định)" right={product?.masterUnit} />
                                 <CardRow left="Đơn vị tính (Quy đổi)" right={product?.unit} />
-                                <CardRow left="Mô tả" right={product?.description} />
                             </>
+                        }
+                        oneRow={
+                            <CardRow
+                                full
+                                left="Mô tả"
+                                right={<div dangerouslySetInnerHTML={{ __html: product?.description }} />}
+                            />
                         }
                         title="Thông tin sản phẩm"
                     />

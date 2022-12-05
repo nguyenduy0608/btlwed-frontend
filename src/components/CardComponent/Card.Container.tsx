@@ -2,7 +2,17 @@ import { TitleCard } from '@/config/global.style';
 import { Col, Row } from 'antd';
 import React, { ReactNode } from 'react';
 
-const CardContainer = ({ title, leftCol, rightCol }: { title: string; leftCol: ReactNode; rightCol: ReactNode }) => {
+const CardContainer = ({
+    title,
+    leftCol,
+    rightCol,
+    oneRow,
+}: {
+    title: string;
+    leftCol: ReactNode;
+    rightCol: ReactNode;
+    oneRow?: ReactNode;
+}) => {
     return (
         <>
             <TitleCard>{title}</TitleCard>
@@ -13,6 +23,7 @@ const CardContainer = ({ title, leftCol, rightCol }: { title: string; leftCol: R
                 <Col xs={24} sm={24} md={12}>
                     {rightCol}
                 </Col>
+                <Col span={24}>{oneRow}</Col>
             </Row>
         </>
     );
