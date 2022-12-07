@@ -19,7 +19,7 @@ const Filter = ({ returnFilter, params }: { returnFilter: (filter: any) => void;
         <Space size="middle" wrap>
             <SearchInput
                 defaultValue={location.state?.search}
-                onChangeSearch={(search) => returnFilter({ search })}
+                onChangeSearch={(search) => returnFilter({ search: search?.trim() })}
                 placeholderSearch="Nhập mã, tên sản phẩm"
             />
             {/* <SelectComponent

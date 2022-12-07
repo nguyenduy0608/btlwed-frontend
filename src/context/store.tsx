@@ -19,6 +19,7 @@ const initialState: InitialStateType = {
     appBackground: {
         show: false,
     },
+    callbackNoti: false,
 };
 
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {

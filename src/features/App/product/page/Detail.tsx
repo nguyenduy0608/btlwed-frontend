@@ -2,60 +2,35 @@ import CardComponent from '@/components/CardComponent';
 import CardContainer from '@/components/CardComponent/Card.Container';
 import CardRow from '@/components/CardComponent/Card.Row';
 import TopBar from '@/components/TopBar';
+import TreeView from '@/components/TreeView';
+import { DefaultSelectStyled, TitleCard } from '@/config/global.style';
 import Container from '@/layout/Container';
-import React from 'react';
+import { currencyFormat } from '@/utils';
+import { Col, Image, message, Row } from 'antd';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { ProductService } from '../service';
-import { currencyFormat } from '@/utils';
-import TagResult from '@/components/TagResult';
-import { Col, Image, Row, Typography } from 'antd';
-import { DefaultSelectStyled, TitleCard } from '@/config/global.style';
 import styled from 'styled-components';
-import EditButton from '@/components/Button/Edit.Button';
-import SaveButton from '@/components/Button/Save.Button';
 import { IStatus } from '../../news/service';
-import TreeView from '@/components/TreeView';
+import { ProductService } from '../service';
 
 const ProductDetailPage = () => {
     const { id } = useParams();
-    const [isEdit, setIsEdit] = React.useState(false);
 
-    const { data, isLoading, refetch, isRefetching } = useQuery<any>(['detailProduct', id], () =>
-        ProductService.detail(id)
-    );
+    const { data, isLoading, refetch } = useQuery<any>(['detailProduct', id], () => ProductService.detail(id));
     const product = data?.data;
-    const [dataEdit, setDataEdit] = React.useState({
-        customType: '',
-        status: 1,
-    });
-
-    React.useEffect(() => {
-        setDataEdit({
-            customType: product?.customType,
-            status: product?.status,
-        });
-    }, [product]);
-
-    const handleSubmit = () => {
-        ProductService.update(id as any, dataEdit).then(() => {
-            refetch();
-            setIsEdit(false);
-        });
-    };
 
     return (
         <>
             <TopBar
                 back
                 title={product?.name || '-'}
-                extra={
-                    isEdit ? (
-                        <SaveButton key="save" onClick={handleSubmit} />
-                    ) : (
-                        <EditButton key="edit" onClick={() => setIsEdit(true)} />
-                    )
-                }
+                // extra={
+                //     isEdit ? (
+                //         <SaveButton key="save" onClick={handleSubmit} />
+                //     ) : (
+                //         <EditButton key="edit" onClick={() => setIsEdit(true)} />
+                //     )
+                // }
             />
             <Container>
                 <CardComponent>
@@ -68,28 +43,29 @@ const ProductDetailPage = () => {
                                 <CardRow
                                     left="Loại hàng"
                                     right={
-                                        isEdit ? (
-                                            <DefaultSelectStyled
-                                                value={dataEdit?.customType}
-                                                placeholder="Chọn loại hàng"
-                                                onChange={(value: any) =>
-                                                    setDataEdit({ ...dataEdit, customType: value })
-                                                }
-                                            >
-                                                <DefaultSelectStyled.Option value="is_best_selling">
-                                                    Bán chạy
-                                                </DefaultSelectStyled.Option>
-                                                <DefaultSelectStyled.Option value="is_sale_off">
-                                                    Đang giảm giá
-                                                </DefaultSelectStyled.Option>
-                                            </DefaultSelectStyled>
-                                        ) : product?.customType === 'is_best_selling' ? (
-                                            <TagResult color="success" text="Bán chạy" />
-                                        ) : product?.customType ? (
-                                            <TagResult color="warning" text="Đang giảm giá" />
-                                        ) : (
-                                            ''
-                                        )
+                                        // isEdit ? (
+                                        <DefaultSelectStyled
+                                            value={product?.customType}
+                                            allowClear
+                                            placeholder="Chọn loại hàng"
+                                            onChange={(value: any) => {
+                                                ProductService.update(id as any, {
+                                                    status: product?.status,
+                                                    customType: value,
+                                                }).then(() => {
+                                                    refetch();
+                                                    message.success('Cập nhật loại hàng thành công');
+                                                });
+                                            }}
+                                        >
+                                            <DefaultSelectStyled.Option value="">Không chọn</DefaultSelectStyled.Option>
+                                            <DefaultSelectStyled.Option value="is_best_selling">
+                                                Bán chạy
+                                            </DefaultSelectStyled.Option>
+                                            <DefaultSelectStyled.Option value="is_sale_off">
+                                                Đang giảm giá
+                                            </DefaultSelectStyled.Option>
+                                        </DefaultSelectStyled>
                                     }
                                 />
                                 <CardRow left="Tổng tồn" right={product?.stock || 0} />
@@ -114,24 +90,27 @@ const ProductDetailPage = () => {
                                 <CardRow
                                     left="Trạng thái"
                                     right={
-                                        isEdit ? (
-                                            <DefaultSelectStyled
-                                                value={dataEdit?.status}
-                                                placeholder="Trạng thái"
-                                                onChange={(value: any) => setDataEdit({ ...dataEdit, status: value })}
-                                            >
-                                                <DefaultSelectStyled.Option value={IStatus.ACTIVE}>
-                                                    Đang hoạt động
-                                                </DefaultSelectStyled.Option>
-                                                <DefaultSelectStyled.Option value={IStatus.UNACTIVE}>
-                                                    Ngừng hoạt động
-                                                </DefaultSelectStyled.Option>
-                                            </DefaultSelectStyled>
-                                        ) : product?.status ? (
-                                            <TagResult text="Đang hoạt động" color="processing" />
-                                        ) : (
-                                            <TagResult text="Ngừng hoạt động" color="error" />
-                                        )
+                                        // isEdit ? (
+                                        <DefaultSelectStyled
+                                            value={product?.status}
+                                            placeholder="Trạng thái"
+                                            onChange={(value: any) => {
+                                                ProductService.update(id as any, {
+                                                    status: value,
+                                                    customType: product?.customType,
+                                                }).then(() => {
+                                                    refetch();
+                                                    message.success('Cập nhật trạng thái thành công');
+                                                });
+                                            }}
+                                        >
+                                            <DefaultSelectStyled.Option value={IStatus.ACTIVE}>
+                                                Đang hoạt động
+                                            </DefaultSelectStyled.Option>
+                                            <DefaultSelectStyled.Option value={IStatus.UNACTIVE}>
+                                                Ngừng hoạt động
+                                            </DefaultSelectStyled.Option>
+                                        </DefaultSelectStyled>
                                     }
                                 />
                                 {/* <CardRow left="Thuộc tính" right={'Chưa có api'} /> */}

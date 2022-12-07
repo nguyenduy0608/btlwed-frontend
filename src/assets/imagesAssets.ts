@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import logo from './images/logo_sidebar.png';
+import notification from './images/notification.png';
 import bell from './bell_noti.json';
 import excel from './excel.json';
 import add from './add.json';
@@ -9,4 +10,5 @@ export const images = {
     bell,
     excel,
     add,
+    notification,
 };

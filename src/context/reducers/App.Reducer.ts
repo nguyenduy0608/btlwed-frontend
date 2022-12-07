@@ -4,6 +4,7 @@ import {
     InitialStateType,
     SET_BG_APP,
     SET_BG_APP_COLOR,
+    SET_COUNT_NOTI,
     SET_INFO,
     SET_KIOTVIETS,
     SET_SOCKET,
@@ -38,6 +39,10 @@ export const appReducer = (state: InitialStateType, action: IAction) => {
 
         case SET_BG_APP_COLOR: {
             return { ...state, appBackground: { ...state.appBackground, color: action.payload } };
+        }
+
+        case SET_COUNT_NOTI: {
+            return { ...state, callbackNoti: !state.callbackNoti };
         }
 
         default: {

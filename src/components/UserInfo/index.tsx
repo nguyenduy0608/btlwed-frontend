@@ -13,10 +13,12 @@ import ModalComponent from '../ModalComponent';
 
 import Clock from 'react-live-clock';
 import styled from 'styled-components';
+import { appService } from '@/service';
 
 const UserInfo = () => {
     const { state, dispatch } = useCallContext();
     const navigate = useNavigate();
+    const [countNoti, setCountNoti] = React.useState(0);
 
     const [open, setOpen] = React.useState(false);
 
@@ -29,6 +31,12 @@ const UserInfo = () => {
     const [form] = Form.useForm();
 
     const handleSubmit = () => {};
+
+    React.useEffect(() => {
+        appService.getCountNoti().then((res) => {
+            setCountNoti(res?.data?.count || 0);
+        });
+    }, [state.callbackNoti]);
 
     const userMenuOptions = (
         <ul className="gx-user-popover">
@@ -63,7 +71,7 @@ const UserInfo = () => {
                     <Clock format="hh:mm:ss a" ticking />
                 </ClockStyled>
                 <li onClick={showDrawer}>
-                    <Badge showZero count={9}>
+                    <Badge showZero count={countNoti || 0}>
                         <IconAntd style={{ color: 'white' }} icon="BellOutlined" />
                     </Badge>
                 </li>

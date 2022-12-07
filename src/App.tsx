@@ -13,7 +13,7 @@ import IconAntd from './components/IconAntd';
 import TagResult from './components/TagResult';
 import GlobalStyle from './config/global.style';
 import { BOX_SHADOW } from './config/theme';
-import { APP_LOADING, SET_BG_APP, SET_INFO, SET_KIOTVIETS, SET_SOCKET } from './context/types';
+import { APP_LOADING, SET_BG_APP, SET_COUNT_NOTI, SET_INFO, SET_KIOTVIETS, SET_SOCKET } from './context/types';
 import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
@@ -57,7 +57,9 @@ function App() {
 
     // setup socket to context
     React.useEffect(() => {
-        const socket = io(`https://api.quanlycongviec.cf`, { transports: ['websocket'] });
+        const socket = io(import.meta.env.VITE_SOCKET_URL, {
+            auth: { token: LocalStorage.getToken() },
+        });
         if (state.info) {
             dispatch({ type: SET_SOCKET, payload: socket });
         }

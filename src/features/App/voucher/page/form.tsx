@@ -404,27 +404,27 @@ const VoucherFormPage = () => {
                                         format="HH:mm DD/MM/YYYY"
                                         placeholder="Chọn ngày bắt đầu"
                                         style={{ width: '100%' }}
-                                        disabledDate={(current: any) => {
-                                            return current && current < moment().startOf('day');
-                                        }}
-                                        disabledTime={() => ({
-                                            disabledHours: () => {
-                                                const timePrevCurrentDay = [
-                                                    ...new Array(Number(moment().format('HH'))),
-                                                ].map((_, index) => index);
+                                        // disabledDate={(current: any) => {
+                                        //     return current && current < moment().startOf('day');
+                                        // }}
+                                        // disabledTime={() => ({
+                                        //     disabledHours: () => {
+                                        //         const timePrevCurrentDay = [
+                                        //             ...new Array(Number(moment().format('HH'))),
+                                        //         ].map((_, index) => index);
 
-                                                return moment().format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD')
-                                                    ? []
-                                                    : [...timePrevCurrentDay];
-                                            },
-                                            disabledMinutes: () => {
-                                                const timePrevCurrentDay = [
-                                                    ...new Array(Number(moment().format('mm'))),
-                                                ].map((_, index) => index);
+                                        //         return moment().format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD')
+                                        //             ? []
+                                        //             : [...timePrevCurrentDay];
+                                        //     },
+                                        //     disabledMinutes: () => {
+                                        //         const timePrevCurrentDay = [
+                                        //             ...new Array(Number(moment().format('mm'))),
+                                        //         ].map((_, index) => index);
 
-                                                return [...timePrevCurrentDay];
-                                            },
-                                        })}
+                                        //         return [...timePrevCurrentDay];
+                                        //     },
+                                        // })}
                                     />
                                 }
                             />
