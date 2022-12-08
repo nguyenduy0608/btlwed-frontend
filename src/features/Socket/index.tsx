@@ -1,12 +1,12 @@
-import React from 'react';
-import useCallContext from '@/hooks/useCallContext';
-import audiobell from '@/assets/audio/sound.mp3';
-import { NotificationType, ROLE_TYPE } from '@/contants';
-import { notificationSync } from '@/utils/notification';
 import LocalStorage from '@/apis/LocalStorage';
-import { useNavigate } from 'react-router-dom';
+import audiobell from '@/assets/audio/sound.mp3';
 import { routerPage } from '@/config/contants.routes';
 import { SET_COUNT_NOTI } from '@/context/types';
+import useCallContext from '@/hooks/useCallContext';
+import { notificationSync } from '@/utils/notification';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ORDER_TYPE } from './contants';
 
 const Socket = () => {
     const { state, dispatch } = useCallContext();
@@ -17,19 +17,20 @@ const Socket = () => {
     // joinUser
     React.useEffect(() => {
         if (state.socket?.connected) {
-            console.log('🚀 ~ file: index.tsx:19 ~ React.useEffect ~ state', state);
             if (LocalStorage.getToken()) {
                 state.socket.on('notification:created', (data: any) => {
-                    console.log('🚀 ~ file: index.tsx:19 ~ state.socket.on ~ data', data);
-                    if (data?.type_action === NotificationType.ORDER_SHOP) {
-                        audioRef.current.play();
-                        notificationSync(data?.data?.content, data?.data?.title, () =>
-                            navigate(routerPage.order + '/' + data?.data?.data?.id)
-                        );
+                    audioRef.current.play();
+                    notificationSync(
+                        data?.data?.content,
+                        data?.data?.title,
+                        () => navigate(routerPage.order + '/' + data?.data?.data?.id),
+                        ORDER_TYPE.includes(data?.data?.df_notification_id)
+                    );
+                    setTimeout(() => {
                         dispatch({
                             type: SET_COUNT_NOTI,
                         });
-                    }
+                    }, 1000);
                 });
             }
 
@@ -38,7 +39,6 @@ const Socket = () => {
             //     console.log('🚀 ~ file: index.tsx:19 ~ state.socket.on ~ args', args);
             // });
         }
-        // notificationSync(1, '2', () => navigate(routerPage.order + '/' + 2));
     }, [state.socket?.connected]);
 
     return (

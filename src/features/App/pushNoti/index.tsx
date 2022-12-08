@@ -1,13 +1,14 @@
-import React from 'react';
-import { Drawer, Avatar, List, Badge, Skeleton, Divider } from 'antd';
-import { pushNotiService } from './service';
 import { images } from '@/assets/imagesAssets';
-import { useNavigate } from 'react-router-dom';
 import { routerPage } from '@/config/contants.routes';
-import styled from 'styled-components';
-import useCallContext from '@/hooks/useCallContext';
 import { SET_COUNT_NOTI } from '@/context/types';
+import { ORDER_TYPE } from '@/features/Socket/contants';
+import useCallContext from '@/hooks/useCallContext';
+import { Avatar, Badge, Divider, Drawer, List, Skeleton } from 'antd';
+import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { pushNotiService } from './service';
 const data = [
     {
         title: 'Thông báo 1',
@@ -118,7 +119,9 @@ const PushNoti = ({ open, setOpen }: any) => {
                             <ListItemStyled
                                 onClick={async () => {
                                     await pushNotiService.read(item?.id);
-                                    navigate(routerPage.order + '/' + item?.data?.id);
+
+                                    ORDER_TYPE.includes(item?.dfNotificationId) &&
+                                        navigate(routerPage.order + '/' + item?.data?.id);
                                     setNotifications((prev: any) => {
                                         return prev.map((notis: any) => {
                                             return item.id === notis.id

@@ -35,10 +35,12 @@ const SelectTreeCategory = ({
                             {item.name} <TagResult color="blue" text={item?.kiotviet?.name} />
                         </div>
                     ),
+                    name: item.name,
                     value: item.id,
                     key: item.id,
                     children: item.listChild.map((child: any) => ({
                         title: child.name,
+                        name: child.name,
                         value: child.id,
                         key: child.id,
                     })),
@@ -51,7 +53,7 @@ const SelectTreeCategory = ({
     }, [debouncedSearchTerm, params]);
 
     const onSelect = (newValue: any, { node }: any) => {
-        setTreeValueSelected(node.title);
+        setTreeValueSelected(node.name);
         treeSelectRef?.current?.blur();
         setValueSelected(newValue);
         onChange(newValue?.[0] || '');
