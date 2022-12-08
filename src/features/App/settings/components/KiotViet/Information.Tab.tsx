@@ -57,13 +57,17 @@ const InformationTab = ({ info }: { info: any }) => {
             <Col span={10}>
                 <Row>
                     <Col span={12}>
-                        <CardInfo index={0} title="Số sản phẩm" value={<CountUp separator=" " end={99} />} />
+                        <CardInfo
+                            index={0}
+                            title="Số sản phẩm"
+                            value={<CountUp separator=" " end={info?.nProducts} />}
+                        />
                     </Col>
                     <Col span={12}>
-                        <CardInfo index={1} title="Số đơn hàng" value={<CountUp separator=" " end={99} />} />
+                        <CardInfo index={1} title="Số đơn hàng" value={<CountUp separator=" " end={info?.nOrders} />} />
                     </Col>
                     <Col span={12}>
-                        <CardInfo index={2} title="Số khách hàng" value={<CountUp separator=" " end={99} />} />
+                        <CardInfo index={2} title="Số khách hàng" value={<CountUp separator=" " end={info?.nUser} />} />
                     </Col>
                 </Row>
             </Col>

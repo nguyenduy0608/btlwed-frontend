@@ -2,6 +2,7 @@ import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import UploadComponent from '@/components/Upload';
 import useCallContext from '@/hooks/useCallContext';
+import { uuid } from '@/utils';
 import { Button, Card, Col, Form, Input, InputNumber, message, Row } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
@@ -60,17 +61,58 @@ const InformationTab = () => {
     const [formBank] = Form.useForm();
     const [callbackBank, setCallbackBank] = React.useState(false);
 
+    // giá trị ban đầu
+    const qrCodeCurrent = React.useRef<any>(null);
+    const bankNameCurrent = React.useRef('');
+    const bankAccountNumberCurrent = React.useRef('');
+    const bankAccountNameCurrent = React.useRef('');
+
+    // giá trị thực
+    const qrCodeLive = Form.useWatch('bankQrCode', formBank);
+    const bankNameLive = Form.useWatch('bankName', formBank);
+    const bankAccountNumberLive = Form.useWatch('bankAccountNumber', formBank);
+    const bankAccountNameLive = Form.useWatch('bankAccountName', formBank);
+
     React.useEffect(() => {
         settingService.getPayment().then((res) => {
-            console.log('🚀 ~ file: Information.Tab.tsx:41 ~ settingService.getContact ~ res', res);
-            // formContact.setFieldsValue({
-            //     linkFacebook: res?.data?.value?.linkFacebook,
-            //     linkZalo: res?.data?.value?.linkZalo,
-            // });
-            // zaloCurrent.current = res?.data?.value?.linkZalo;
-            // facebookCurrent.current = res?.data?.value?.linkFacebook;
+            formBank.setFieldsValue({
+                bankName: res?.data?.value?.bankName,
+                bankAccountNumber: res?.data?.value?.bankAccountNumber,
+                bankAccountName: res?.data?.value?.bankAccountName,
+            });
+            qrCodeCurrent.current = [{ url: res?.data?.value?.bankQrCode, uid: uuid(), name: 'demo' }];
+            bankNameCurrent.current = res?.data?.value?.bankName;
+            bankAccountNumberCurrent.current = res?.data?.value?.bankAccountNumber;
+            bankAccountNameCurrent.current = res?.data?.value?.bankAccountName;
         });
     }, [callbackBank]);
+
+    React.useEffect(() => {
+        if (
+            bankNameCurrent.current != bankNameLive ||
+            bankAccountNumberCurrent.current != bankAccountNumberLive ||
+            bankAccountNameCurrent.current != bankAccountNameLive ||
+            qrCodeLive
+        ) {
+            setIsEditInfoPayment(true);
+        } else {
+            setIsEditInfoPayment(false);
+        }
+    }, [bankNameLive, bankAccountNameLive, bankAccountNumberLive, qrCodeLive]);
+
+    const handleSubmitChangeBank = (values: any) => {
+        const formData = new FormData();
+
+        values?.bankQrCode && formData.append('file', values.bankQrCode);
+        formData.append('bank_name', values.bankName);
+        formData.append('bank_account_number', values.bankAccountNumber);
+        formData.append('bank_account_name', values.bankAccountName);
+        settingService.updatePayment(formData).then((res) => {
+            message.success('Cập nhật thành công thông tin tài khoản');
+            setCallbackBank(!callbackBank);
+            setIsEditInfoPayment(false);
+        });
+    };
 
     return (
         <Row gutter={[12, 0]}>
@@ -136,7 +178,7 @@ const InformationTab = () => {
             </Col>
             <Col span={12}>
                 <Card>
-                    <FormComponent form={formBank} onSubmit={() => {}}>
+                    <FormComponent form={formBank} onSubmit={handleSubmitChangeBank}>
                         <TitleCardStyled>Thông tin chuyển khoản</TitleCardStyled>
 
                         <FormItemComponent
@@ -146,7 +188,7 @@ const InformationTab = () => {
                         />
                         <FormItemComponent
                             label="Số tài khoản"
-                            name="paymentNumber"
+                            name="bankAccountNumber"
                             inputField={
                                 <InputNumber
                                     style={{ width: '100%' }}
@@ -158,20 +200,21 @@ const InformationTab = () => {
                         />
                         <FormItemComponent
                             label="Tên tài khoản"
-                            name="bankName"
+                            name="bankAccountName"
                             inputField={<Input placeholder="Nhập tên tài khoản" />}
                         />
                         <FormItemComponent
                             label="QR code"
+                            name="bankQrCode"
                             inputField={
                                 <UploadComponent
                                     // isUploadServerWhenUploading
-                                    // initialFile={fileEdit.current}
+                                    initialFile={qrCodeCurrent.current}
                                     uploadType="list"
                                     listType="picture-card"
                                     maxLength={1}
                                     onSuccessUpload={(url: any) => {
-                                        // setFile(url?.originFileObj);
+                                        formBank.setFieldValue('bankQrCode', url?.originFileObj);
                                     }}
                                 />
                             }

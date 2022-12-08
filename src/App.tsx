@@ -42,9 +42,6 @@ function App() {
                     payload: { ...res.data[Object.keys(res.data)[0]], role: Object.keys(res.data)[0] },
                 });
             });
-            appService.getKiotviet().then((res) => {
-                dispatch({ type: SET_KIOTVIETS, payload: res.data });
-            });
         }
 
         if (LocalStorage.getBG()) {
@@ -54,19 +51,21 @@ function App() {
             });
         }
     }, []);
+    React.useEffect(() => {
+        appService.getKiotviet().then((res) => {
+            dispatch({ type: SET_KIOTVIETS, payload: res.data });
+        });
+    }, [state.callbackKioviet]);
 
     // setup socket to context
     React.useEffect(() => {
-        const socket = io(import.meta.env.VITE_SOCKET_URL, {
-            auth: { token: LocalStorage.getToken() },
-        });
         if (state.info) {
+            const socket = io(import.meta.env.VITE_SOCKET_URL, {
+                auth: { token: LocalStorage.getToken() },
+            });
             dispatch({ type: SET_SOCKET, payload: socket });
         }
-        return () => {
-            socket.close();
-        };
-    }, [dispatch, state.info]);
+    }, [state.info]);
 
     const openNotification = () => {
         const args = {
@@ -112,6 +111,9 @@ function App() {
                             </Timeline.Item>
                             <Timeline.Item dot={<IconAntd icon="FileExcelOutlined" />} color="green">
                                 <strong>Báo cáo: Bán hàng + Gian hàng , Export excel Bán hàng + Gian hàng</strong>
+                            </Timeline.Item>
+                            <Timeline.Item dot={<IconAntd icon="FileExcelOutlined" />} color="green">
+                                <strong>Cấu hình: Thông tin hệ thông - thêm mới gian hàng</strong>
                             </Timeline.Item>
                             <Timeline.Item dot={<IconAntd icon="WindowsOutlined" />} color="red">
                                 <strong>

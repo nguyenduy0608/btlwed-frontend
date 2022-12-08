@@ -20,6 +20,7 @@ const initialState: InitialStateType = {
         show: false,
     },
     callbackNoti: false,
+    callbackKioviet: false,
 };
 
 export const ContextProvider = ({ children }: { children: React.ReactNode }) => {

@@ -8,6 +8,7 @@ export const SET_SOCKET = 'SET_SOCKET';
 export const SET_BG_APP = 'SET_BG_APP';
 export const SET_BG_APP_COLOR = 'SET_BG_APP_COLOR';
 export const SET_COUNT_NOTI = 'SET_COUNT_NOTI';
+export const SET_CALLBACK_KIOVIET = 'SET_CALLBACK_KIOVIET';
 
 type ActionType =
     | typeof APP_LOADING
@@ -17,6 +18,7 @@ type ActionType =
     | typeof SET_SOCKET
     | typeof SET_BG_APP
     | typeof SET_COUNT_NOTI
+    | typeof SET_CALLBACK_KIOVIET
     | typeof SET_BG_APP_COLOR;
 
 export type InitialStateType = {
@@ -27,6 +29,7 @@ export type InitialStateType = {
     socket: Socket | null;
     appBackground?: any;
     callbackNoti?: boolean;
+    callbackKioviet?: boolean;
 };
 
 export interface IAction {

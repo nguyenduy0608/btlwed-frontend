@@ -29,6 +29,21 @@ export const settingService = {
         return AxiosClient.get('/admin/config/bank');
     },
     updatePayment: (bank: any) => {
-        return AxiosClient.post('/admin/config/bank', bank);
+        return AxiosClient.post('/admin/config/bank', bank, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+    },
+
+    // thêm gian hàng
+    // todo: tạo liên kết kiotviet
+    postKiotviet: (data: any) => {
+        return AxiosClient.post('/admin/kiotviet', data);
+    },
+
+    // todo: cấu hình chi nhánh mặc định
+    branchKiotviet: (id: any, data: any) => {
+        return AxiosClient.patch('/admin/kiotviet/' + id + '/set_default_branch', data);
     },
 };

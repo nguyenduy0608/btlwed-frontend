@@ -2,6 +2,8 @@ import CardComponent from '@/components/CardComponent';
 import IconAntd from '@/components/IconAntd';
 import ModalComponent from '@/components/ModalComponent';
 import TopBar from '@/components/TopBar';
+import { SET_CALLBACK_KIOVIET } from '@/context/types';
+import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { Button, Steps, Tabs } from 'antd';
 import React from 'react';
@@ -13,6 +15,8 @@ const items = [
     { label: 'Đồng bộ Kiot Việt', key: '1', children: <SynckiotTab /> },
 ];
 const SettingPage = () => {
+    const { state, dispatch } = useCallContext();
+
     const [tabIndex, setTabIndex] = React.useState('0');
     const [addKiotViet, setAddKiotViet] = React.useState(false);
 
@@ -27,6 +31,9 @@ const SettingPage = () => {
     }, []);
 
     const handleClose = React.useCallback(() => {
+        dispatch({
+            type: SET_CALLBACK_KIOVIET,
+        });
         setAddKiotViet(false);
         setCurrent(0);
     }, []);
