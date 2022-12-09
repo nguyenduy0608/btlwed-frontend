@@ -71,9 +71,15 @@ const UserInfo = () => {
                     <Clock format="hh:mm:ss a" ticking />
                 </ClockStyled>
                 <li onClick={showDrawer}>
-                    <Badge showZero count={countNoti || 0}>
-                        <IconAntd style={{ color: 'white' }} icon="BellOutlined" />
-                    </Badge>
+                    <Popover
+                        placement="rightBottom"
+                        content={<PushNoti open={openNoti} setOpen={setOpenNoti} />}
+                        // title="Title"
+                    >
+                        <Badge showZero count={countNoti || 0}>
+                            <IconAntd style={{ color: 'white' }} icon="BellOutlined" />
+                        </Badge>
+                    </Popover>
                 </li>
             </Row>
             <ModalComponent modalVisible={open} title="Đổi mật khẩu">
@@ -131,7 +137,6 @@ const UserInfo = () => {
                     </Row>
                 </FormComponent>
             </ModalComponent>
-            <PushNoti open={openNoti} setOpen={setOpenNoti} />
         </>
     );
 };

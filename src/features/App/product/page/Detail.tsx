@@ -6,7 +6,7 @@ import TreeView from '@/components/TreeView';
 import { DefaultSelectStyled, TitleCard } from '@/config/global.style';
 import Container from '@/layout/Container';
 import { currencyFormat } from '@/utils';
-import { Col, Image, message, Row } from 'antd';
+import { Col, Empty, Image, message, Row } from 'antd';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -51,14 +51,13 @@ const ProductDetailPage = () => {
                                             onChange={(value: any) => {
                                                 ProductService.update(id as any, {
                                                     status: product?.status,
-                                                    customType: value,
+                                                    customType: value || '',
                                                 }).then(() => {
                                                     refetch();
                                                     message.success('Cập nhật loại hàng thành công');
                                                 });
                                             }}
                                         >
-                                            <DefaultSelectStyled.Option value="">Không chọn</DefaultSelectStyled.Option>
                                             <DefaultSelectStyled.Option value="is_best_selling">
                                                 Bán chạy
                                             </DefaultSelectStyled.Option>
@@ -130,18 +129,22 @@ const ProductDetailPage = () => {
                 </CardComponent>
                 <CardComponent>
                     <TitleCard>Thông tin hình ảnh</TitleCard>
-                    <Row gutter={[0, 20]} className="gx-mx-2 gx-mt-4">
-                        <Col span={5}>Hình ảnh</Col>
-                        <Col span={19}>
-                            <Row>
-                                {product?.images?.map((item: any) => (
-                                    <ColImageStyled span={2}>
-                                        <Image wrapperStyle={{ height: '100%' }} src={item?.src} />
-                                    </ColImageStyled>
-                                ))}
-                            </Row>
-                        </Col>
-                    </Row>
+                    {product?.images && product?.images.length > 0 ? (
+                        <Row gutter={[0, 20]} className="gx-mx-2 gx-mt-4">
+                            <Col span={5}>Hình ảnh</Col>
+                            <Col span={19}>
+                                <Row>
+                                    {product?.images?.map((item: any) => (
+                                        <ColImageStyled span={2}>
+                                            <Image wrapperStyle={{ height: '100%' }} src={item?.src} />
+                                        </ColImageStyled>
+                                    ))}
+                                </Row>
+                            </Col>
+                        </Row>
+                    ) : (
+                        <Empty />
+                    )}
                 </CardComponent>
             </Container>
         </>

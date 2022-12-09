@@ -65,7 +65,8 @@ const PushNoti = ({ open, setOpen }: any) => {
     }, []);
 
     return (
-        <Drawer placement="right" closable={false} onClose={onClose} open={open} key="bottom">
+        <div>
+            {/* <Drawer placement="right" closable={false} onClose={onClose} open={open} key="bottom"> */}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h4 className="gx-mb-3 gx-font-weight-bold">Danh sách thông báo</h4>
                 {/* <div>Đọc tất cả</div> */}
@@ -104,7 +105,7 @@ const PushNoti = ({ open, setOpen }: any) => {
                     </ListItemStyled>
                 )}
             /> */}
-            <div id="scrollableDiv" style={{ height: 'calc(100vh - 80px)', overflowY: 'auto' }}>
+            <div id="scrollableDiv" style={{ height: 'calc(100vh - 400px)', width: '400px', overflowY: 'auto' }}>
                 <InfiniteScroll
                     dataLength={notifications.length}
                     next={loadMoreData}
@@ -161,7 +162,8 @@ const PushNoti = ({ open, setOpen }: any) => {
                     />
                 </InfiniteScroll>
             </div>
-        </Drawer>
+            {/* </Drawer> */}
+        </div>
     );
 };
 

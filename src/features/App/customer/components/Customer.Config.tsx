@@ -96,7 +96,7 @@ export const columns = (page: number): ColumnsType<DataTypeCustomer> => [
         dataIndex: 'phoneNumber',
     },
     {
-        title: 'Tỉnh thành phố',
+        title: 'Địa chỉ',
         dataIndex: 'address',
     },
     {
