@@ -18,5 +18,6 @@ export enum NotificationType {
 }
 
 export const ORDER_TYPE = [1, 2, 3, 4, 5];
+export const VOUCHER_TYPE = [14, 15];
 export const SYNC = [6, 8, 9];
 export const DEBT_PAYMENT = [10];

@@ -57,10 +57,10 @@ const SynckiotForm = ({
                 <Spin spinning={loadingStep1}>
                     <FormComponent layoutType="vertical" onSubmit={handleSubmitStep1}>
                         <FormItemComponent
-                            label="Địa chỉ truy cập"
+                            label="Tên kết nối"
                             name="retailer"
-                            rules={[rules.required('Vui lòng nhập địa chỉ truy cập!')]}
-                            inputField={<Input placeholder="Nhập địa chỉ truy cập" />}
+                            rules={[rules.required('Vui lòng nhập tên kết nối!')]}
+                            inputField={<Input placeholder="Nhập tên kết nối" />}
                         />
                         <FormItemComponent
                             label="Tên gian hàng"

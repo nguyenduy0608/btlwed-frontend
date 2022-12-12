@@ -8,7 +8,7 @@ import UploadComponent from '@/components/Upload';
 import { APPLICABLE_TYPE, CUSTOMER_TYPE, REWARD } from '@/contants';
 import useWindowSize from '@/hooks/useWindowSize';
 import Container from '@/layout/Container';
-import { momentParseUtc, Notification, uuid } from '@/utils';
+import { checkNowDate, momentParseUtc, Notification, uuid } from '@/utils';
 import { Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select } from 'antd';
 import { decamelize } from 'humps';
 import moment from 'moment';
@@ -164,6 +164,8 @@ const VoucherFormPage = () => {
         })();
     }, [id]);
 
+    console.log(checkNowDate('11:38 12/12/2022'));
+
     return (
         <FormComponent form={form} initialValues={{ enableProducts: true }} onSubmit={handleSubmit}>
             <TopBar
@@ -181,7 +183,24 @@ const VoucherFormPage = () => {
                                     rules={[rules.required('Vui lòng nhập mã voucher!'), rules.validateCode]}
                                     name="code"
                                     label="Mã voucher"
-                                    inputField={<Input disabled={!!id} placeholder="Nhập mã voucher" />}
+                                    inputField={
+                                        <Input
+                                            onBlur={async (e) => {
+                                                if (!(e.target.value.length > 6)) return;
+                                                const result = await voucherService.checkExitsVoucher(e.target.value);
+                                                if (result) {
+                                                    form.setFields([
+                                                        {
+                                                            name: 'code',
+                                                            errors: ['Mã voucher đã tồn tại'],
+                                                        },
+                                                    ]);
+                                                }
+                                            }}
+                                            disabled={!!id}
+                                            placeholder="Nhập mã voucher"
+                                        />
+                                    }
                                 />
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng nhập tên voucher!'), rules.validateName]}
@@ -217,6 +236,7 @@ const VoucherFormPage = () => {
                                     }
                                     inputField={
                                         <UploadComponent
+                                            accept="image/png, image/jpeg"
                                             // isUploadServerWhenUploading
                                             initialFile={fileEdit.current}
                                             uploadType="list"
@@ -262,7 +282,7 @@ const VoucherFormPage = () => {
                                             label="Số lượng sản phẩm cần mua"
                                             inputField={
                                                 <InputNumber
-                                                    min={1}
+                                                    // min={1}
                                                     max={99}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
@@ -278,7 +298,7 @@ const VoucherFormPage = () => {
                                             label="Tổng giá trị sản phẩm tối thiểu"
                                             inputField={
                                                 <InputNumber
-                                                    min={0}
+                                                    // min={0}
                                                     max={10000000}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
@@ -314,6 +334,9 @@ const VoucherFormPage = () => {
                                                     min={1}
                                                     max={99}
                                                     style={{ width: '100%' }}
+                                                    formatter={(value) =>
+                                                        `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                    }
                                                     parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
                                                     placeholder="Nhập mức giảm"
                                                     addonAfter={'%'}
@@ -329,7 +352,6 @@ const VoucherFormPage = () => {
                                             }
                                             inputField={
                                                 <InputNumber
-                                                    min={0}
                                                     max={10000000}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
@@ -341,12 +363,21 @@ const VoucherFormPage = () => {
                                             }
                                         />
                                         <FormItemComponent
-                                            rules={[{ required: true, message: 'Vui lòng nhập giá trị giảm tối đa!' }]}
+                                            rules={[
+                                                { required: true, message: 'Vui lòng nhập giá trị giảm tối đa!' },
+                                                {
+                                                    validator: (_: any, value: number) => {
+                                                        if (value < 1) {
+                                                            return Promise.reject('Giá trị giảm tối đa lớn hơn 0');
+                                                        }
+                                                        return Promise.resolve();
+                                                    },
+                                                },
+                                            ]}
                                             name="rewardCap"
                                             label="Giá trị giảm tối đa"
                                             inputField={
                                                 <InputNumber
-                                                    min={1}
                                                     max={50000000}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>

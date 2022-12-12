@@ -30,7 +30,7 @@ const Socket = () => {
                         dispatch({
                             type: SET_COUNT_NOTI,
                         });
-                    }, 1000);
+                    }, 2000);
                 });
             }
 

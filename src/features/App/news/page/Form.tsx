@@ -22,6 +22,8 @@ const NewsFormPage = () => {
 
     const [loading, setLoading] = React.useState(false);
 
+    const statusCurrent = React.useRef<any>(null);
+
     const [form] = Form.useForm();
     const image = Form.useWatch('file', form);
     const title = Form.useWatch('title', form);
@@ -68,6 +70,7 @@ const NewsFormPage = () => {
                 fileEdit.current = [{ url: res.data?.image, uid: uuid(), name: 'img voucher' }];
                 refContent.current = res.data?.content;
                 statusActive.current = res.data?.statusActive;
+                statusCurrent.current = res.data?.status;
             }
         });
     }, [id]);
@@ -134,7 +137,7 @@ const NewsFormPage = () => {
                                     label="Trạng thái"
                                     inputField={
                                         <Select
-                                            disabled={Boolean(id && status === NEWS_STATUS.POST)}
+                                            disabled={Boolean(id && statusCurrent?.current === NEWS_STATUS.POST)}
                                             placeholder="Chọn trạng thái"
                                         >
                                             <Select.Option value={NEWS_STATUS.POST}>Đăng bài</Select.Option>

@@ -103,7 +103,14 @@ const UploadComponent: React.FC<IProps> = ({
         }
     };
 
-    const handleOnChange: UploadProps['onChange'] = ({ file, fileList, event }) => {
+    const handleOnChange: UploadProps['onChange'] = ({ file, fileList, event }: any) => {
+        // check size > 2mb reject
+        if (file?.size > 2 * 1024 * 1024) {
+            file.status = 'error';
+
+            return Notification('warning', 'Dung lượng ảnh nhỏ hơn 2 MB');
+        }
+
         if (file.status !== 'error') {
             setFiles(fileList);
         }

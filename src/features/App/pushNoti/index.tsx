@@ -1,9 +1,10 @@
 import { images } from '@/assets/imagesAssets';
 import { routerPage } from '@/config/contants.routes';
 import { SET_COUNT_NOTI } from '@/context/types';
-import { ORDER_TYPE } from '@/features/Socket/contants';
+import { ORDER_TYPE, VOUCHER_TYPE } from '@/features/Socket/contants';
 import useCallContext from '@/hooks/useCallContext';
-import { Avatar, Badge, Divider, Drawer, List, Skeleton } from 'antd';
+import { momentToStringDate } from '@/utils';
+import { Avatar, Badge, Divider, List, Row, Skeleton } from 'antd';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
@@ -24,7 +25,7 @@ const data = [
     },
 ];
 const PushNoti = ({ open, setOpen }: any) => {
-    const { dispatch } = useCallContext();
+    const { dispatch, state } = useCallContext();
 
     const [notifications, setNotifications] = React.useState<any>([]);
     const navigate = useNavigate();
@@ -43,13 +44,17 @@ const PushNoti = ({ open, setOpen }: any) => {
         pushNotiService
             .get(page)
             .then((res: any) => {
-                setNotifications((prev: any) => [...prev, ...res?.data]);
+                setNotifications((prev: any) => (page === 1 ? res?.data : [...prev, ...res?.data]));
                 setTotal(res?.paging?.totalItemCount);
             })
             .finally(() => {
                 setLoading(false);
             });
     }, [page]);
+
+    React.useEffect(() => {
+        setPage(1);
+    }, [state.callbackNoti]);
 
     const [loading, setLoading] = React.useState(false);
 
@@ -121,8 +126,14 @@ const PushNoti = ({ open, setOpen }: any) => {
                                 onClick={async () => {
                                     await pushNotiService.read(item?.id);
 
+                                    // nếu là order thì navigate đến order
                                     ORDER_TYPE.includes(item?.dfNotificationId) &&
                                         navigate(routerPage.order + '/' + item?.data?.id);
+
+                                    // nếu là voucher navigate đến voucher
+                                    VOUCHER_TYPE.includes(item?.dfNotificationId) &&
+                                        navigate(routerPage.voucherForm + '/' + item?.data?.id);
+
                                     setNotifications((prev: any) => {
                                         return prev.map((notis: any) => {
                                             return item.id === notis.id
@@ -151,7 +162,16 @@ const PushNoti = ({ open, setOpen }: any) => {
                                         )
                                     }
                                     title={
-                                        <div style={{ fontWeight: item?.isRead ? '400' : 'bold' }}>{item?.title}</div>
+                                        <Row justify="space-between" className="gx-m-0">
+                                            <div style={{ fontWeight: item?.isRead ? '400' : 'bold' }}>
+                                                {item?.title}
+                                            </div>
+                                            <div
+                                                style={{ fontWeight: item?.isRead ? '400' : 'bold', fontSize: '12px' }}
+                                            >
+                                                {momentToStringDate(item?.createdAt, 'dateTime')}
+                                            </div>
+                                        </Row>
                                     }
                                     description={
                                         <div style={{ fontWeight: item?.isRead ? '400' : 'bold' }}>{item?.content}</div>

@@ -34,6 +34,6 @@ const NotiContainerStyled = styled.div`
 
 const ContentNotiStyled = styled.div`
     padding: 4px 0 6px 0;
-    font-size: 16px;
+    font-size: 14px;
     flex: 1;
 `;

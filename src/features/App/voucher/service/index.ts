@@ -55,6 +55,15 @@ const voucherService = {
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: 8 } });
     },
+    checkExitsVoucher: async (search: string) => {
+        const url = `/admin/voucher`;
+        const res = await AxiosClient.get(url, { params: { searchCode: search } });
+        if (res.status && res.data?.length > 0) {
+            return true;
+        }
+
+        return false;
+    },
 };
 
 export default voucherService;
