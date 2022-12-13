@@ -14,18 +14,6 @@ import useCallContext from '@/hooks/useCallContext';
 import SaveButton from '@/components/Button/Save.Button';
 const { Option } = Select;
 
-const initialValue = {
-    fullName: '',
-    email: '',
-    avatar: '',
-    phoneNumber: '',
-    createdAt: '',
-    updatedAt: '',
-    password: '',
-    accountId: '',
-    passwordConfirmation: '',
-};
-
 const NotificationFormPage = ({
     values,
     modalVisible,
@@ -40,36 +28,39 @@ const NotificationFormPage = ({
     const [loadingModal, setLoadingModal] = React.useState(false);
 
     const formReset = () => {
-        form.setFieldsValue(initialValue);
+        form.setFieldsValue({
+            title: '',
+            content: '',
+        });
     };
+
     React.useEffect(() => {
         if (values) {
             setLoadingModal(true);
-            form.setFieldsValue(values || initialValue);
+            form.setFieldsValue(values);
             wait(500).then(() => setLoadingModal(false));
         }
     }, [values]);
     const handleSubmit = React.useCallback(
         async (data: DataTypeNotification) => {
             setLoadingModal(true);
-            // if (values) {
-
-            //     const res = await accountService.update(values.id, {
-            //         ...data
-            //     });
-            //     if (res.status === 1) {
-            //         Notification('success', 'Cập nhật thông báo thành công');
-            //         handleCloseForm();
-            //         formReset();
-            //     }
-            // } else {
-            //     const res = await accountService.create({ ...data });
-            //     if (res.status === 1) {
-            //         Notification('success', 'Thêm thông báo thành công');
-            //         handleCloseForm();
-            //         formReset();
-            //     }
-            // }
+            if (values) {
+                const res = await NotificationService.update(values.id, {
+                    ...data,
+                });
+                if (res.status) {
+                    Notification('success', 'Cập nhật thông báo thành công');
+                    handleCloseForm();
+                    formReset();
+                }
+            } else {
+                const res = await NotificationService.create({ ...data });
+                if (res.status) {
+                    Notification('success', 'Thêm thông báo thành công');
+                    handleCloseForm();
+                    formReset();
+                }
+            }
             setLoadingModal(false);
         },
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,19 +72,19 @@ const NotificationFormPage = ({
             modalVisible={modalVisible}
             loading={loadingModal}
         >
-            <FormComponent layoutType="vertical" form={form} initialValues={initialValue} onSubmit={handleSubmit}>
+            <FormComponent layoutType="vertical" form={form} onSubmit={handleSubmit}>
                 <Row gutter={[20, 0]}>
                     <FormItemComponent
                         rules={[rules.required('Vui lòng nhập tiêu đề !')]}
-                        name=""
+                        name="title"
                         label="Tiêu đề"
                         inputField={<Input placeholder="Nhập tiêu đề" />}
                     />
                     <FormItemComponent
                         rules={[rules.required('Vui lòng nhập nội dung !')]}
-                        name=""
-                        label="nội dung"
-                        inputField={<Input placeholder="Nhập nội dung" />}
+                        name="content"
+                        label="Nội dung"
+                        inputField={<Input.TextArea rows={4} placeholder="Nhập nội dung" />}
                     />
                 </Row>
                 <Row style={{ width: '100%' }} align="bottom">

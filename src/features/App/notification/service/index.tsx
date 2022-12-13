@@ -9,16 +9,16 @@ export interface IQuery {
 
 export const NotificationService = {
     get: (params: IQuery) => {
-        const url = `/notification`;
+        const url = `/notification/list-notifications`;
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
     create: (data: DataTypeNotification) => {
-        const url = `/admin/notification`;
+        const url = `/notification/send`;
         return AxiosClient.post(url, data);
     },
     update: (id: number, data: DataTypeNotification) => {
-        const url = `/admin/notification/${id}`;
-        return AxiosClient.patch(url, data);
+        const url = `/notification/${id}/notification`;
+        return AxiosClient.put(url, data);
     },
 };

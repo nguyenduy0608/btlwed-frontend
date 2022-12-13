@@ -5,6 +5,7 @@ import { ORDER_TYPE, VOUCHER_TYPE } from '@/features/Socket/contants';
 import useCallContext from '@/hooks/useCallContext';
 import { momentToStringDate } from '@/utils';
 import { Avatar, Badge, Divider, List, Row, Skeleton } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
@@ -169,7 +170,7 @@ const PushNoti = ({ open, setOpen }: any) => {
                                             <div
                                                 style={{ fontWeight: item?.isRead ? '400' : 'bold', fontSize: '12px' }}
                                             >
-                                                {momentToStringDate(item?.createdAt, 'dateTime')}
+                                                {moment(item?.createdAt).format('HH:mm YYYY-MM-DD')}
                                             </div>
                                         </Row>
                                     }

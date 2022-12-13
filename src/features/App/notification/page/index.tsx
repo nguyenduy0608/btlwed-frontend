@@ -4,7 +4,7 @@ import TopBar from '@/components/TopBar';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { Button, Form, Segmented, Space } from 'antd';
+import { Button, Form, Row, Segmented, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -97,7 +97,26 @@ const NotificationPage = () => {
                         onChangePage={(_page) => setPage(_page)}
                         onRowSelection={onRowSelection}
                         dataSource={notification ? notification.data : []}
-                        columns={columns(page)}
+                        columns={[
+                            ...columns(page),
+                            {
+                                title: 'Thao tác',
+                                dataIndex: 'action',
+                                align: 'center',
+                                render: (_, record: any) => (
+                                    <Row justify="center">
+                                        <div
+                                            onClick={() => {
+                                                handleShowModal(record);
+                                            }}
+                                        >
+                                            Sửa
+                                        </div>
+                                        <div>Xoá</div>
+                                    </Row>
+                                ),
+                            },
+                        ]}
                         total={notification?.paging?.totalItemCount || 0}
                     />
                     <NotificationFormPage
