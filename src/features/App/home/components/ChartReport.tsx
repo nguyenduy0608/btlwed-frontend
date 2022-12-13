@@ -1,26 +1,18 @@
-import React from 'react';
-import styled from 'styled-components';
-import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { Col, Row, Typography, Tooltip as TooltipAntd } from 'antd';
 import { BOX_SHADOW, RADIUS } from '@/config/theme';
+import { Col, Row, Tooltip as TooltipAntd } from 'antd';
+import React from 'react';
 import CountUp from 'react-countup';
+import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import styled from 'styled-components';
 
-const { Title } = Typography;
-
-const data = [
-    { name: 'T1', ht: 60, tc: 24 },
-    { name: 'T2', ht: 50, tc: 18 },
-    { name: 'T3', ht: 20, tc: 0 },
-    { name: 'T4', ht: 27, tc: 8 },
-    { name: 'T5', ht: 18, tc: 40 },
-    { name: 'T6', ht: 23, tc: 0 },
-    { name: 'T7', ht: 34, tc: 3 },
-    { name: 'T8', ht: 30, tc: 40 },
-    { name: 'T9', ht: 40, tc: 30 },
-    { name: 'T10', ht: 3, tc: 2 },
-    { name: 'T11', ht: 4, tc: 40 },
-    { name: 'T12', ht: 9, tc: 1 },
-];
+const textReportStyle: any = {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: '17px',
+    textAlign: 'center',
+    marginBottom: '4px',
+};
+const textNote = { color: '#fff', fontSize: '12px', fontWeight: '600' };
 
 const ChartReport = ({
     orderReport,
@@ -50,36 +42,48 @@ const ChartReport = ({
                 <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
                     <TooltipAntd color="#1890ff" title="Chờ xác nhận">
                         <ColStyled index={1}>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>
-                                <CountUp separator=" " end={orderReport?.countWaitConfirmation || 0} />
-                            </span>
+                            <div>
+                                <div style={textReportStyle}>
+                                    <CountUp separator=" " end={orderReport?.countWaitConfirmation || 0} />
+                                </div>
+                                <div style={textNote}>Chờ xác nhận</div>
+                            </div>
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
                 <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
                     <TooltipAntd color="#998CEB" title="Đang xử lý">
                         <ColStyled index={2}>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>
-                                <CountUp separator=" " end={orderReport?.countInprogress || 0} />
-                            </span>
+                            <div>
+                                <div style={textReportStyle}>
+                                    <CountUp separator=" " end={orderReport?.countInprogress || 0} />
+                                </div>
+                                <div style={textNote}>Đang xử lý</div>
+                            </div>
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
                 <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
                     <TooltipAntd color="#5BB318" title="Hoàn thành">
                         <ColStyled index={3}>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>
-                                <CountUp separator=" " end={orderReport?.countCompleted || 0} />
-                            </span>
+                            <div>
+                                <div style={textReportStyle}>
+                                    <CountUp separator=" " end={orderReport?.countCompleted || 0} />
+                                </div>
+                                <div style={textNote}>Hoàn thành</div>
+                            </div>
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
                 <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
                     <TooltipAntd color="#E16E93" title="Huỷ/ Từ chối">
                         <ColStyled index={4}>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>
-                                <CountUp separator=" " end={orderReport?.countCancelled || 0} />
-                            </span>
+                            <div>
+                                <div style={textReportStyle}>
+                                    <CountUp separator=" " end={orderReport?.countCancelled || 0} />
+                                </div>
+                                <div style={textNote}>Huỷ/ Từ chối</div>
+                            </div>
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
@@ -146,7 +150,7 @@ const ColStyled = styled(Col)<{ color?: string; index?: number }>`
     justify-content: center;
     align-items: center;
     /* border: 2px solid ${(props) => (props.color ? props.color : '#ccc')}; */
-    padding: 20px 0;
+    padding: 14px 0;
     border-radius: ${RADIUS};
     position: relative;
     box-shadow: ${BOX_SHADOW};
