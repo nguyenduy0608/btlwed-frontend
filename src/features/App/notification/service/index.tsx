@@ -9,7 +9,7 @@ export interface IQuery {
 
 export const NotificationService = {
     get: (params: IQuery) => {
-        const url = `/admin/notification`;
+        const url = `/notification`;
         const handleParams = handleObjectEmpty(params);
         return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
     },
