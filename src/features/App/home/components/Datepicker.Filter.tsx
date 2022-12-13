@@ -8,30 +8,41 @@ import { BOX_SHADOW } from '@/config/theme';
 import { momentToStringDate } from '@/utils';
 import TagResult from '@/components/TagResult';
 
-const DatepickerFilter = () => {
-    const [state, setState] = React.useState<any>([
-        {
-            startDate: new Date('2022-11-01'),
-            endDate: new Date(),
-            key: 'selection',
-        },
-    ]);
+const DatepickerFilter = ({
+    dateFilter,
+    handleChangeDate,
+}: {
+    dateFilter: {
+        fromDate: string;
+        toDate: string;
+    };
+    handleChangeDate: any;
+}) => {
     return (
         <WrapperStyled>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{ paddingRight: '15px', fontWeight: 600 }}>Từ</span>{' '}
-                <TagResult text={momentToStringDate(state[0].startDate)} color="#3D91FF" />
+                <TagResult text={dateFilter?.fromDate.split('-').reverse().join('/')} color="#3D91FF" />
                 <span style={{ padding: '0 15px', fontWeight: 600 }}>đến</span>{' '}
-                <TagResult text={momentToStringDate(state[0].endDate)} color="#3D91FF" />
+                <TagResult text={dateFilter?.toDate.split('-').reverse().join('/')} color="#3D91FF" />
             </div>
             <DateRange
+                retainEndDateOnFirstSelection
                 fixedHeight
                 className="home_picker"
                 locale={locale}
                 showDateDisplay={false}
-                onChange={(item) => setState([item.selection])}
+                onChange={handleChangeDate}
                 moveRangeOnFirstSelection={false}
-                ranges={state}
+                maxDate={new Date()}
+                shownDate={new Date()}
+                ranges={[
+                    {
+                        startDate: new Date(dateFilter?.fromDate),
+                        endDate: new Date(dateFilter?.toDate),
+                        key: 'selection',
+                    },
+                ]}
             />
         </WrapperStyled>
     );
@@ -48,4 +59,4 @@ const WrapperStyled = styled.div`
     flex-direction: column;
 `;
 
-export default DatepickerFilter;
+export default React.memo(DatepickerFilter);

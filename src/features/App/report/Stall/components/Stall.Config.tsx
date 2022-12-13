@@ -72,10 +72,10 @@ export const stallColumns = (page: number): any => [
                 </Row>
             ),
     },
-    {
-        title: 'Ngày tạo',
-        dataIndex: 'createdAt',
-        align: 'center',
-        render: (value: any) => momentToStringDate(value),
-    },
+    // {
+    //     title: 'Ngày tạo',
+    //     dataIndex: 'createdAt',
+    //     align: 'center',
+    //     render: (value: any) => momentToStringDate(value),
+    // },
 ];

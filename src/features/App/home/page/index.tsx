@@ -1,19 +1,41 @@
 import TopBar from '@/components/TopBar';
 import { PADDING, RADIUS } from '@/config/theme';
+import { momentToStringDate } from '@/utils';
 import { Col, DatePicker, Row, Typography } from 'antd';
 import moment from 'moment';
 import React from 'react';
+import { useQuery } from 'react-query';
 import styled from 'styled-components';
 import CardReport from '../components/CardReport';
 import ChartReport from '../components/ChartReport';
 import DatepickerFilter from '../components/Datepicker.Filter';
+import { homeService } from '../service';
 
 const { RangePicker } = DatePicker;
 const dateFormatList = ['DD/MM/YYYY', 'DD/MM/YY'];
 const dateFormat = 'DD/MM/YYYY';
 
 const HomePage = () => {
-    const [count, setCount] = React.useState(0);
+    const [dateFilter, setDateFilter] = React.useState({
+        fromDate: moment().utc().subtract(15, 'day').format('YYYY-MM-DD'),
+        toDate: moment().utc().format('YYYY-MM-DD'),
+    });
+
+    const {
+        data: homes,
+        refetch,
+        isLoading,
+        isRefetching,
+    } = useQuery<any>(['homes', dateFilter], () => {
+        return homeService.getDashboard(dateFilter);
+    });
+
+    const handleChangeDate = React.useCallback((value: any) => {
+        setDateFilter({
+            fromDate: moment(value.selection.startDate).format('YYYY-MM-DD'),
+            toDate: moment(value.selection.endDate).format('YYYY-MM-DD'),
+        });
+    }, []);
 
     return (
         <ContainerStyled>
@@ -31,11 +53,26 @@ const HomePage = () => {
 
             <div className="gx-m-0" style={{ display: 'flex', height: '100%' }}>
                 <div style={{ flex: 1, height: '100%' }}>
-                    <ChartReport />
+                    <ChartReport
+                        dataChart={homes?.data?.chartOrder}
+                        orderReport={{
+                            countWaitConfirmation: homes?.data?.order?.countWaitConfirmation,
+                            countInprogress: homes?.data?.order?.countInprogress,
+                            countCancelled: homes?.data?.order?.countCancelled,
+                            countCompleted: homes?.data?.order?.countCompleted,
+                        }}
+                    />
                 </div>
                 <div style={{ width: 'min-content', display: 'flex', flexDirection: 'column', marginLeft: '30px' }}>
-                    <DatepickerFilter />
-                    <CardReport />
+                    <DatepickerFilter handleChangeDate={handleChangeDate} dateFilter={dateFilter} />
+                    <CardReport
+                        countReport={{
+                            countUsers: homes?.data?.countUsers,
+                            countRevenue: homes?.data?.countRevenue?.revenue,
+                            countProducts: homes?.data?.countProducts,
+                            countOrders: homes?.data?.countOrders,
+                        }}
+                    />
                 </div>
             </div>
             <TitleHomeStyled />

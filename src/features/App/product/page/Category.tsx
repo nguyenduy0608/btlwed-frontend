@@ -195,6 +195,28 @@ const ProductCategoryPage = () => {
                                                     refetch();
                                                 });
                                             }}
+                                            onKeyDown={(e: any) => {
+                                                if (e.key === 'Enter') {
+                                                    if (
+                                                        !e.target.value ||
+                                                        isNaN(+e.target.value) ||
+                                                        +e.target.value < 1
+                                                    )
+                                                        return;
+
+                                                    if (+e.target.value <= 0)
+                                                        return Notification('warning', 'Thứ tự phải lớn hơn 0');
+
+                                                    if (+e.target.value === +value) return;
+                                                    CategoryService.update(row.id, { order: e.target.value }).then(
+                                                        () => {
+                                                            message.success('Thay đổi thứ tự thành công');
+
+                                                            refetch();
+                                                        }
+                                                    );
+                                                }
+                                            }}
                                             style={{ width: '100%' }}
                                             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                             parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}

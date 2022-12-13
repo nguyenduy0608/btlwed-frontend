@@ -72,6 +72,7 @@ const UserInfo = () => {
                 </ClockStyled>
                 <li onClick={showDrawer}>
                     <Popover
+                        trigger="click"
                         placement="rightBottom"
                         content={<PushNoti open={openNoti} setOpen={setOpenNoti} />}
                         // title="Title"

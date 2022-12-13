@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { Col, Row, Typography, Tooltip as TooltipAntd } from 'antd';
 import { BOX_SHADOW, RADIUS } from '@/config/theme';
+import CountUp from 'react-countup';
+
 const { Title } = Typography;
 
 const data = [
@@ -20,35 +22,64 @@ const data = [
     { name: 'T12', ht: 9, tc: 1 },
 ];
 
-const ChartReport = () => {
+const ChartReport = ({
+    orderReport,
+    dataChart,
+}: {
+    orderReport: {
+        countWaitConfirmation: number;
+        countInprogress: number;
+        countCancelled: number;
+        countCompleted: number;
+    };
+    dataChart: any;
+}) => {
+    const handleDataChart = dataChart?.labels?.map((item: string, index: number) => {
+        return {
+            name: item,
+            wait_confirmation: dataChart?.datasets[0]?.data[index],
+            inprogress: dataChart?.datasets[1]?.data[index],
+            cancelled: dataChart?.datasets[2]?.data[index],
+            completed: dataChart?.datasets[3]?.data[index],
+        };
+    });
+
     return (
         <ReportChartStyled>
             <RowStyled className="gx-m-0 gx-p-0 gx-mb-3" justify="center">
                 <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
                     <TooltipAntd color="#1890ff" title="Chờ xác nhận">
                         <ColStyled index={1}>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>123</span>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>
+                                <CountUp separator=" " end={orderReport?.countWaitConfirmation || 0} />
+                            </span>
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
                 <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
                     <TooltipAntd color="#998CEB" title="Đang xử lý">
                         <ColStyled index={2}>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>1234</span>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>
+                                <CountUp separator=" " end={orderReport?.countInprogress || 0} />
+                            </span>
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
                 <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
                     <TooltipAntd color="#5BB318" title="Hoàn thành">
                         <ColStyled index={3}>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>12345</span>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>
+                                <CountUp separator=" " end={orderReport?.countCompleted || 0} />
+                            </span>
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
                 <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
                     <TooltipAntd color="#E16E93" title="Huỷ/ Từ chối">
                         <ColStyled index={4}>
-                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>123456</span>
+                            <span style={{ color: '#fff', fontWeight: 'bold', fontSize: '16px' }}>
+                                <CountUp separator=" " end={orderReport?.countCancelled || 0} />
+                            </span>
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
@@ -56,14 +87,34 @@ const ChartReport = () => {
             {/* </TopBoxStyled> */}
             <BoxChart style={{ flex: 1 }}>
                 <ResponsiveContainer width="100%">
-                    <LineChart data={data} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
+                    <LineChart data={handleDataChart || []} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
                         <XAxis dataKey="name" />
                         <YAxis />
                         <CartesianGrid strokeDasharray="3 3" />
                         <Tooltip />
                         <Legend />
-                        <Line name="Hoàn thành" type="monotone" dataKey="ht" stroke="#003366" activeDot={{ r: 8 }} />
-                        <Line name="Huỷ/Từ chối" type="monotone" dataKey="tc" stroke="#FE9E15" />
+                        <Line
+                            name="Chờ xác nhận"
+                            type="monotone"
+                            dataKey="wait_confirmation"
+                            stroke="blue"
+                            activeDot={{ r: 8 }}
+                        />
+                        <Line
+                            name="Đang xử lý"
+                            type="monotone"
+                            dataKey="inprogress"
+                            stroke="#003366"
+                            activeDot={{ r: 8 }}
+                        />
+                        <Line
+                            name="Hoàn thành"
+                            type="monotone"
+                            dataKey="completed"
+                            stroke="green"
+                            activeDot={{ r: 8 }}
+                        />
+                        <Line name="Huỷ/Từ chối" type="monotone" dataKey="cancelled" stroke="#FE9E15" />
                     </LineChart>
                 </ResponsiveContainer>
             </BoxChart>
@@ -123,4 +174,4 @@ const BoxChart = styled.div`
     border-radius: ${RADIUS};
 `;
 
-export default ChartReport;
+export default React.memo(ChartReport);
