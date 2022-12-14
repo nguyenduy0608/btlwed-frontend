@@ -13,7 +13,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
     return (
         <Space size="middle" wrap>
             <SearchInput
-                onChangeSearch={(search) => returnFilter({ search })}
+                onChangeSearch={(search) => returnFilter({ title: search.trim() })}
                 placeholderSearch="Tìm kiếm theo tiêu đề thông báo"
             />
             <RangerPicker

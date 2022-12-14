@@ -21,4 +21,8 @@ export const NotificationService = {
         const url = `/notification/${id}/notification`;
         return AxiosClient.put(url, data);
     },
+    delete: (id: number) => {
+        const url = `/notification/${id}/notification`;
+        return AxiosClient.delete(url);
+    },
 };

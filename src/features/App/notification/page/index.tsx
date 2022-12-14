@@ -1,10 +1,12 @@
 import CardComponent from '@/components/CardComponent';
+import IconAntd from '@/components/IconAntd';
 import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { Button, Form, Row, Segmented, Space } from 'antd';
+import { Notification } from '@/utils';
+import { Button, Form, Popconfirm, Row, Segmented, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -40,6 +42,7 @@ const NotificationPage = () => {
     const onRowSelection = React.useCallback((row: DataTypeNotification[]) => {
         setRowSelected(row);
     }, []);
+
     const formReset = () => {
         form.setFieldsValue(initialValue);
     };
@@ -66,21 +69,7 @@ const NotificationPage = () => {
 
     return (
         <>
-            <TopBar
-                title="Thông báo"
-                extra={
-                    <Segmented
-                        onChange={(value) => {
-                            setPage(1);
-                            setFilterQuery({ ...filterQuery, kiotvietId: value });
-                        }}
-                        options={[
-                            selectAll,
-                            ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
-                        ]}
-                    />
-                }
-            />
+            <TopBar title="Thông báo" />
             <Container>
                 <CardComponent
                     title={<Filter returnFilter={returnFilter} key="filterNotification" />}
@@ -105,14 +94,23 @@ const NotificationPage = () => {
                                 align: 'center',
                                 render: (_, record: any) => (
                                     <Row justify="center">
-                                        <div
+                                        <Button
+                                            icon={<IconAntd icon="EditOutlined" />}
                                             onClick={() => {
                                                 handleShowModal(record);
                                             }}
+                                        />
+                                        <Popconfirm
+                                            onConfirm={() => {
+                                                NotificationService.delete(record.id).then(() => {
+                                                    refetch();
+                                                    Notification('success', 'Xoá thành công thông báo');
+                                                });
+                                            }}
+                                            title="Bạn có chắc chắn muốn xoá?"
                                         >
-                                            Sửa
-                                        </div>
-                                        <div>Xoá</div>
+                                            <Button icon={<IconAntd icon="DeleteOutlined" />} />
+                                        </Popconfirm>
                                     </Row>
                                 ),
                             },
