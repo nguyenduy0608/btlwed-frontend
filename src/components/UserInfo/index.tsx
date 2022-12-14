@@ -145,7 +145,7 @@ const UserInfo = () => {
 const ClockStyled = styled.li`
     border-radius: 10px;
     margin-left: 20px;
-    width: 150px;
+    width: 140px;
     display: flex;
     justify-content: center;
     align-items: center;

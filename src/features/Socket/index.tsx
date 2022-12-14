@@ -1,12 +1,12 @@
 import LocalStorage from '@/apis/LocalStorage';
 import audiobell from '@/assets/audio/sound.mp3';
 import { routerPage } from '@/config/contants.routes';
-import { SET_COUNT_NOTI } from '@/context/types';
+import { SET_COUNT_NOTI, SET_SYNC_LOADING } from '@/context/types';
 import useCallContext from '@/hooks/useCallContext';
 import { notificationSync } from '@/utils/notification';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ORDER_TYPE } from './contants';
+import { ORDER_TYPE, SYNC } from './contants';
 
 const Socket = () => {
     const { state, dispatch } = useCallContext();
@@ -21,14 +21,9 @@ const Socket = () => {
                 state.socket.on('notification:created', (data: any) => {
                     audioRef.current.play();
 
-                    // if(data?.)
-
-                    notificationSync(
-                        data?.data?.content,
-                        data?.data?.title,
-                        () => navigate(routerPage.order + '/' + data?.data?.data?.id),
-                        ORDER_TYPE.includes(data?.data?.df_notification_id)
-                    );
+                    if (SYNC.includes(data?.data?.df_notification_id)) {
+                        dispatch({ type: SET_SYNC_LOADING, payload: false });
+                    }
 
                     notificationSync(
                         data?.data?.content,
