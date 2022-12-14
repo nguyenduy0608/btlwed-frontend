@@ -8,33 +8,20 @@ import TagResult from '@/components/TagResult';
 import TopBar from '@/components/TopBar';
 import { ORDER_STATE, ORDER_STATUS, PAYMENTSTATUS } from '@/contants';
 import Container from '@/layout/Container';
-import { currencyFormat, momentParseUtc } from '@/utils';
+import { currencyFormat } from '@/utils';
 import { Col, Row, Timeline } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import { useQuery } from 'react-query';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
-import { IFilter } from '../../voucher/type';
 import { columnsProduct } from '../components/Order.Config';
 import { OrderService } from '../service';
 
-const initialFilterQuery = {};
 const OrderDetailPage = () => {
-    const navigate = useNavigate();
-    const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
-    const [page, setPage] = React.useState(1);
     const { id } = useParams();
-    const { data, refetch, isRefetching } = useQuery<any>(['detailOrder', id], () => OrderService.detail(id));
+    const { data } = useQuery<any>(['detailOrder', id], () => OrderService.detail(id));
     const order = data?.data;
-    const orderProduct = data?.data.items;
-
-    const returnFilter = React.useCallback(
-        (filter: IFilter) => {
-            setPage(1);
-            setFilterQuery({ ...filterQuery, ...filter });
-        },
-        [filterQuery]
-    );
 
     const switchLabel = (historyType: ORDER_STATE) => {
         switch (historyType) {
@@ -92,7 +79,7 @@ const OrderDetailPage = () => {
                             <Timeline mode="left" className="gx-mt-4">
                                 {order?.orderHistory.map((od: any) => (
                                     <Timeline.Item key={od.id} label={switchLabel(od.statusKiotviet)}>
-                                        {momentParseUtc(order?.createdAt).format('HH:mm DD/MM/YYYY')}
+                                        {moment(order?.createdAt).format('HH:mm DD/MM/YYYY')}
                                     </Timeline.Item>
                                 ))}
                             </Timeline>
@@ -171,11 +158,9 @@ const OrderDetailPage = () => {
                 </CardComponent>
                 <CardComponent title="Danh sách sản phẩm">
                     <TableComponent
-                        page={page}
                         rowSelect={false}
-                        onChangePage={(_page) => setPage(_page)}
                         dataSource={order ? order?.items : []}
-                        columns={columnsProduct(page)}
+                        columns={columnsProduct(1)}
                         total={order && order?.paging?.totalItemCount}
                     />
                 </CardComponent>
