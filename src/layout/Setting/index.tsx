@@ -56,7 +56,7 @@ const Setting = () => {
         setOpenNoti(false);
         wait(5000).then(() => {
             dispatch({ type: SET_SYNC_LOADING, payload: false });
-            NotiMSG('success', 'Đồng bộ thành công');
+            // NotiMSG('success', 'Đồng bộ thành công');
         });
     };
 

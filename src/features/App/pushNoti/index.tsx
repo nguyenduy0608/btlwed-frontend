@@ -3,7 +3,6 @@ import { routerPage } from '@/config/contants.routes';
 import { SET_COUNT_NOTI } from '@/context/types';
 import { ORDER_TYPE, VOUCHER_TYPE } from '@/features/Socket/contants';
 import useCallContext from '@/hooks/useCallContext';
-import { momentToStringDate } from '@/utils';
 import { Avatar, Badge, Divider, List, Row, Skeleton } from 'antd';
 import moment from 'moment';
 import React from 'react';

@@ -97,12 +97,6 @@ function App() {
                             <Timeline.Item color="green">
                                 <strong>Chi tiết đơn hàng: In báo cáo</strong>
                             </Timeline.Item>
-                            <Timeline.Item color="#00CCFF" dot={<IconAntd icon="SmileOutlined" />}>
-                                <strong>Bắt lỗi voucher</strong>
-                            </Timeline.Item>
-                            <Timeline.Item color="green">
-                                <strong>Hiển thị kết quả lọc</strong>
-                            </Timeline.Item>
                             <Timeline.Item color="green">
                                 <strong>Cập nhật preview tin tức</strong>
                             </Timeline.Item>
@@ -181,10 +175,30 @@ function App() {
             {state.syncLoading && (
                 <ContainerLoadingSync>
                     <ContainerLoad>
-                        <Lottie style={{ height: '300px', width: '300px' }} animationData={loadingSync} loop={true} />
+                        <Row justify="center">
+                            <Lottie
+                                style={{ height: '300px', width: '300px' }}
+                                animationData={loadingSync}
+                                loop={true}
+                            />
+                        </Row>
                         <Row justify="center">
                             <strong>Đang đồng bộ ...</strong>
                         </Row>
+                        <div
+                            style={{
+                                fontStyle: 'italic',
+                                width: '100%',
+                                fontSize: '12px',
+                                textAlign: 'center',
+                                marginTop: '10px',
+                                fontWeight: 'bold',
+                                color: 'blue',
+                            }}
+                        >
+                            Quá trình đồng bộ có thể mất vài phút hãy tải lại dữ liệu khi có thông báo đồng bộ thành
+                            công...
+                        </div>
                     </ContainerLoad>
                 </ContainerLoadingSync>
             )}
@@ -230,6 +244,7 @@ const ContainerLoad = styled.div`
     border-radius: 20px;
     box-shadow: ${BOX_SHADOW};
     padding: 40px;
+    max-width: 500px;
 `;
 
 export default App;

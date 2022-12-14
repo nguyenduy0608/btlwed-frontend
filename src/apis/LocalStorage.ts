@@ -4,6 +4,8 @@ const LocalStorage = {
     removeToken: () => localStorage.removeItem('token'),
     getBG: () => localStorage.getItem('bg'),
     setBG: (bg: string) => localStorage.setItem('bg', bg),
+    getVersion: () => localStorage.getItem('version'),
+    setVersion: (version: string) => localStorage.setItem('version', version),
 };
 
 export default LocalStorage;
