@@ -185,6 +185,10 @@ const GlobalStyle = createGlobalStyle`
   font-weight: 600;
   padding-bottom: 0;
 }
+
+.home_picker .rdrMonth {
+  padding-bottom: 4px
+}
 @media screen and (max-width: 1366px) {
   .home_picker * {
     font-size: 13px;

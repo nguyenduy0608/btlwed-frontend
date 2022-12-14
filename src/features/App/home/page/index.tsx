@@ -63,7 +63,7 @@ const HomePage = () => {
                         }}
                     />
                 </div>
-                <div style={{ width: 'min-content', display: 'flex', flexDirection: 'column', marginLeft: '30px' }}>
+                <div style={{ width: 'min-content', display: 'flex', flexDirection: 'column', marginLeft: '20px' }}>
                     <DatepickerFilter handleChangeDate={handleChangeDate} dateFilter={dateFilter} />
                     <CardReport
                         countReport={{
@@ -95,7 +95,7 @@ const ContainerStyled = styled.div`
 const TitleHomeStyled = styled.h2`
     font-weight: 700;
     font-size: 22px;
-    padding: 10px 0 18px 0;
+    padding: 10px 0;
     margin: 0;
 `;
 

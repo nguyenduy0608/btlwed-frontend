@@ -53,7 +53,7 @@ const WrapperStyled = styled.div`
     box-shadow: ${BOX_SHADOW};
     background-color: white;
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     flex-direction: column;

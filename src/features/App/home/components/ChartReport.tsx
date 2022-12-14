@@ -39,7 +39,7 @@ const ChartReport = ({
     return (
         <ReportChartStyled>
             <RowStyled className="gx-m-0 gx-p-0 gx-mb-3" justify="center">
-                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
+                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-2 gx-py-2">
                     <TooltipAntd color="#1890ff" title="Chờ xác nhận">
                         <ColStyled index={1}>
                             <div>
@@ -51,7 +51,7 @@ const ChartReport = ({
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
-                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
+                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-2 gx-py-2">
                     <TooltipAntd color="#998CEB" title="Đang xử lý">
                         <ColStyled index={2}>
                             <div>
@@ -63,7 +63,7 @@ const ChartReport = ({
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
-                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
+                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-2 gx-py-2">
                     <TooltipAntd color="#5BB318" title="Hoàn thành">
                         <ColStyled index={3}>
                             <div>
@@ -75,7 +75,7 @@ const ChartReport = ({
                         </ColStyled>
                     </TooltipAntd>
                 </Col>
-                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-3 gx-py-3">
+                <Col xxl={6} xl={6} lg={12} md={12} sm={24} xs={24} className="gx-col-full gx-p-0 gx-px-2 gx-py-2">
                     <TooltipAntd color="#E16E93" title="Huỷ/ Từ chối">
                         <ColStyled index={4}>
                             <div>
