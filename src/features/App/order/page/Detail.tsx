@@ -15,7 +15,7 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
-import { columnsProduct } from '../components/Order.Config';
+import { columnsProduct, TRANSPORT_STATUS } from '../components/Order.Config';
 import { OrderService } from '../service';
 
 const OrderDetailPage = () => {
@@ -110,18 +110,21 @@ const OrderDetailPage = () => {
                         leftCol={
                             <>
                                 <CardRow left="Mã đơn hàng" right={order?.code} />
+                                {/* <CardRow left="Mã khuyến mại" right={order?.note || '-'} /> */}
                                 <CardRow left="Sản phẩm" right={order?.items.length + ' sản phẩm'} />
                                 <CardRow left="Hình thức thanh toán" right={order?.paymentMethod} />
-                                <CardRow left="KH đã thanh toán" right={currencyFormat(order?.totalPayment) + 'đ'} />
 
                                 <CardRow
                                     left="Trạng thái vận chuyển"
                                     right={
-                                        order?.transportStatus ? (
-                                            <TagResult text="Đang chờ" color="processing" />
-                                        ) : (
-                                            <TagResult text="Đang vận chuyển" color="orange" />
-                                        )
+                                        <TagResult
+                                            text={
+                                                order?.transportStatusCode
+                                                    ? TRANSPORT_STATUS[order?.transportStatusCode]
+                                                    : ''
+                                            }
+                                            color="orange"
+                                        />
                                     }
                                 />
                                 <CardRow left="Ghi chú" right={order?.note || '-'} />
@@ -133,16 +136,17 @@ const OrderDetailPage = () => {
                                 <CardRow left="Tổng tiền" right={currencyFormat(order?.total) + 'đ'} />
                                 <CardRow
                                     left="Tổng tiền giảm(Điểm tích lũy)"
-                                    right={currencyFormat(order?.totalDiscount) + 'đ'}
+                                    right={currencyFormat(order?.usePoint) + 'đ'}
                                 />
                                 <CardRow
                                     left="Tổng tiền giảm(Voucher)"
                                     right={currencyFormat(order?.totalDiscount) + 'đ'}
                                 />
                                 <CardRow
-                                    left="Tổng tiền thanh toán"
-                                    right={currencyFormat(order?.totalPayment) + 'đ'}
+                                    left="KH cần thanh toán"
+                                    right={currencyFormat(order?.total - order?.totalDiscount - order?.usePoint) + 'đ'}
                                 />
+                                <CardRow left="KH đã thanh toán" right={currencyFormat(order?.totalPayment) + 'đ'} />
                             </>
                         }
                         title=""

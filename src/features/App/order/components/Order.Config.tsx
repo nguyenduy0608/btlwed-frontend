@@ -144,3 +144,18 @@ export const columnsProduct = (page: number): ColumnsType<DataTypeOrder> => [
         render: (value, row: any) => currencyFormat(row?.price * row?.quantity),
     },
 ];
+
+export const TRANSPORT_STATUS: any = {
+    1: 'Chờ xử lý',
+    2: 'Đang giao hàng',
+    3: 'Giao thành công',
+    4: 'Đang chuyển hoàn',
+    5: 'Đã chuyển hoàn',
+    6: 'Đã hủy',
+    7: 'Đang lấy hàng',
+    8: 'Chờ lấy lại',
+    9: 'Đã lấy hàng',
+    10: 'Chờ giao lại',
+    11: 'Chờ chuyển hoàn',
+    12: 'Chờ chuyển hoàn lại',
+};

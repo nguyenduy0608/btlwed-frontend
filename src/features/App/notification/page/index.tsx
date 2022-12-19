@@ -55,7 +55,6 @@ const NotificationPage = () => {
         setModalVisible(false);
         if (trick === 'notRefresh') return;
         refetch();
-        formReset();
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -92,6 +91,7 @@ const NotificationPage = () => {
                                 title: 'Thao tác',
                                 dataIndex: 'action',
                                 align: 'center',
+                                width: 120,
                                 render: (_, record: any) => (
                                     <Row justify="center">
                                         <Button

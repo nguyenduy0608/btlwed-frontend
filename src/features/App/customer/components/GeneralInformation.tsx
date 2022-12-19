@@ -61,7 +61,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
     const handleCloseModal = () => {
         setModalVisible(false);
         setValues(null);
-        formReset();
+        form.setFieldsValue({ debt: '' });
     };
     const formReset = () => {
         form.setFieldsValue(initialValue);
@@ -92,6 +92,23 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
     //     },
     //     [values]
     // );
+
+    const submitFormDebt = (values: any) => {
+        if (values?.debt) {
+            CustomerService.addDebt(customerId, {
+                maxDebit: values?.maxDebit,
+                maxDebitTime: values?.maxDebitTime,
+            }).then((res) => {
+                if (res.status) {
+                    Notification('success', 'Thêm thành công công nợ');
+                    refetch();
+                    setModalVisible(false);
+                    form.setFieldsValue({ debt: '' });
+                }
+            });
+        }
+    };
+
     return (
         <>
             <Row gutter={[24, 24]}>
@@ -133,7 +150,17 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                     {/* <TopBar title={<TitleCardDes>Tổng quan bán hàng</TitleCardDes>}></TopBar> */}
                     <Row className="gx-mb-4 gx-mx-0" justify="space-between" align="middle">
                         <TitleCardDes>Tổng quan bán hàng</TitleCardDes>
-                        <Button disabled={disabled} onClick={() => setModalVisible(true)} type="primary">
+                        <Button
+                            disabled={disabled}
+                            onClick={() => {
+                                setModalVisible(true);
+                                form.setFieldsValue({
+                                    maxDebit: generalInformation?.maxDebit,
+                                    maxDebitTime: generalInformation?.maxDebitTime,
+                                });
+                            }}
+                            type="primary"
+                        >
                             Áp dụng công nợ
                         </Button>
                     </Row>
@@ -172,11 +199,11 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                     layoutType="vertical"
                                     form={form}
                                     initialValues={initialValue}
-                                    onSubmit={() => {}}
+                                    onSubmit={submitFormDebt}
                                 >
                                     <Row gutter={[20, 0]}>
                                         <FormItemComponent
-                                            name=""
+                                            name="debt"
                                             label=""
                                             valuePropName="checked"
                                             inputField={
@@ -187,7 +214,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                         />
                                         <FormItemComponent
                                             // rules={[rules.required('Vui lòng nhập hạn mức công nợ!')]}
-                                            name=""
+                                            name="maxDebit"
                                             label="Hạn mức công nợ"
                                             inputField={
                                                 <InputNumber
@@ -211,7 +238,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                             //         message: 'Vui lòng nhập thời gian công nợ đơn hàng!',
                                             //     },
                                             // ]}
-                                            name=""
+                                            name="maxDebitTime"
                                             label="Thời gian công nợ đơn hàng"
                                             inputField={
                                                 <InputNumber

@@ -30,6 +30,10 @@ export const CustomerService = {
         const url = `/admin/user/${id}/password`;
         return AxiosClient.put(url, { password });
     },
+    addDebt: (userId: number, debt: any) => {
+        const url = `/admin/debit/${userId}`;
+        return AxiosClient.post(url, debt);
+    },
 };
 export const PurchaseService = {
     get: (params: IQuery) => {
