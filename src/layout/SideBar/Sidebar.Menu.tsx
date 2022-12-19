@@ -33,28 +33,28 @@ export const items: any = [
         key: 'order',
         icon: <IconAntd icon="SwitcherOutlined" />,
     },
-    {
-        label: 'Hàng hoá',
-        key: 'merchandise',
-        icon: <IconAntd icon="MergeCellsOutlined" />,
-        children: [
-            {
-                label: 'Nhập hàng',
-                key: 'merchandise/importCommodity',
-                icon: <IconAntd icon="ShoppingOutlined" />,
-            },
-            {
-                label: 'Trả hàng',
-                key: 'merchandise/returnCommodity',
-                icon: <IconAntd icon="RollbackOutlined" />,
-            },
-            {
-                label: 'Chuyển hàng',
-                key: 'merchandise/shipping',
-                icon: <IconAntd icon="CarOutlined" />,
-            },
-        ],
-    },
+    // {
+    //     label: 'Hàng hoá',
+    //     key: 'merchandise',
+    //     icon: <IconAntd icon="MergeCellsOutlined" />,
+    //     children: [
+    //         {
+    //             label: 'Nhập hàng',
+    //             key: 'merchandise/importCommodity',
+    //             icon: <IconAntd icon="ShoppingOutlined" />,
+    //         },
+    //         {
+    //             label: 'Trả hàng',
+    //             key: 'merchandise/returnCommodity',
+    //             icon: <IconAntd icon="RollbackOutlined" />,
+    //         },
+    //         {
+    //             label: 'Chuyển hàng',
+    //             key: 'merchandise/shipping',
+    //             icon: <IconAntd icon="CarOutlined" />,
+    //         },
+    //     ],
+    // },
     {
         label: 'Mã giảm giá',
         key: 'voucher',

@@ -60,14 +60,14 @@ const OrderDetailPage = () => {
                 <Row>
                     <Col className="gx-pr-3" xs={24} sm={24} lg={12}>
                         <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Thông tin khách hàng    ">
-                            <CardRow left="Tên khách hàng" right={order?.user.fullName} />
-                            <CardRow left="Số điện thoại" right={order?.user.phoneNumber} />
+                            <CardRow left="Tên khách hàng" right={order?.user?.fullName || '-'} />
+                            <CardRow left="Số điện thoại" right={order?.user?.phoneNumber || '-'} />
                         </CardComponent>
 
                         <CardComponent bodyStyle={{ padding: '0 20px 14px' }} title="Thông tin người nhận hàng">
-                            <CardRow left="Tên người nhận" right={order?.shippingName} />
-                            <CardRow left="Số điện thoại" right={order?.shippingPhoneNumber} />
-                            <CardRow left="Địa chỉ chi tiết" right={order?.shippingAddress} />
+                            <CardRow left="Tên người nhận" right={order?.shippingName || '-'} />
+                            <CardRow left="Số điện thoại" right={order?.shippingPhoneNumber || '-'} />
+                            <CardRow left="Địa chỉ chi tiết" right={order?.shippingAddress || '-'} />
                         </CardComponent>
                     </Col>
 
@@ -112,16 +112,7 @@ const OrderDetailPage = () => {
                                 <CardRow left="Mã đơn hàng" right={order?.code} />
                                 <CardRow left="Sản phẩm" right={order?.items.length + ' sản phẩm'} />
                                 <CardRow left="Hình thức thanh toán" right={order?.paymentMethod} />
-                                <CardRow
-                                    left="Trạng thái thanh toán"
-                                    right={
-                                        order?.paymentStatus && order?.paymentStatus === PAYMENTSTATUS.pending ? (
-                                            <TagResult text="Đang chờ" color="processing" />
-                                        ) : (
-                                            <TagResult text="Đã thanh toán" color="green" />
-                                        )
-                                    }
-                                />
+                                <CardRow left="KH đã thanh toán" right={currencyFormat(order?.totalPayment) + 'đ'} />
 
                                 <CardRow
                                     left="Trạng thái vận chuyển"
@@ -133,6 +124,7 @@ const OrderDetailPage = () => {
                                         )
                                     }
                                 />
+                                <CardRow left="Ghi chú" right={order?.note || '-'} />
                             </>
                         }
                         rightCol={

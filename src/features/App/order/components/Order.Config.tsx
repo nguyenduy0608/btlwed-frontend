@@ -80,16 +80,22 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
             ),
     },
 
+    // {
+    //     title: 'Trạng thái thanh toán',
+    //     dataIndex: 'paymentStatus',
+    //     align: 'center',
+    //     render: (value) =>
+    //         value ? (
+    //             <TagResult text="Đang chờ" color="processing" />
+    //         ) : (
+    //             <TagResult text="Đã thanh toán" color="success" />
+    //         ),
+    // },
     {
-        title: 'Trạng thái thanh toán',
-        dataIndex: 'paymentStatus',
+        title: 'KH đã thanh toán',
+        dataIndex: 'totalPayment',
         align: 'center',
-        render: (value) =>
-            value ? (
-                <TagResult text="Đang chờ" color="processing" />
-            ) : (
-                <TagResult text="Đã thanh toán" color="success" />
-            ),
+        render: (value) => currencyFormat(value),
     },
     {
         title: 'Nguồn đơn',
