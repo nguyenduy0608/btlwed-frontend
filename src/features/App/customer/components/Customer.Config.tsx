@@ -134,7 +134,7 @@ export const Purchasecolumns = (page: number): ColumnsType<DataTypePurchase> => 
         title: 'STT',
         dataIndex: 'id',
         align: 'center',
-        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
+        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * 8 + ++index),
     },
     {
         title: 'Mã đơn',
@@ -227,7 +227,7 @@ export const WalletChangecolumns = (page: number): ColumnsType<DataTypeWalletCha
         title: 'STT',
         dataIndex: 'id',
         align: 'center',
-        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
+        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * 8 + ++index),
     },
     {
         title: 'Mã đơn hàng',
