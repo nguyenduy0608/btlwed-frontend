@@ -5,6 +5,7 @@ import { DataTypeCustomer } from '../components/Customer.Config';
 export interface IQuery {
     page: number;
     kiotvietId?: string | number;
+    userId?: number;
 }
 
 export const CustomerService = {

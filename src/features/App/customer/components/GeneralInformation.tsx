@@ -48,10 +48,6 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
         CustomerService.detail(customerId)
     );
     const generalInformation = data?.data;
-    console.log(
-        '🚀 ~ file: GeneralInformation.tsx ~ line 51 ~ GeneralInformation ~ generalInformation',
-        generalInformation
-    );
 
     const handleShowModal = (record: DataTypeWalletChange) => {
         setModalVisible(true);

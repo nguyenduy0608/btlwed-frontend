@@ -11,15 +11,15 @@ import { PurchaseService } from '../service';
 import { Purchasecolumns } from './Customer.Config';
 const initialFilterQuery = {};
 
-const PuchaseHistoryPage = () => {
+const PuchaseHistoryPage = ({ userId }: { userId: number }) => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
     const [form] = Form.useForm();
 
-    const { data: puchaseHistory, isLoading } = useQuery<any>(['PurchaseService', page, filterQuery], () =>
-        PurchaseService.get({ page, ...filterQuery })
+    const { data: puchaseHistory, isLoading } = useQuery<any>(['PurchaseService', page, filterQuery, userId], () =>
+        PurchaseService.get({ page, userId, ...filterQuery })
     );
 
     const returnFilter = React.useCallback(

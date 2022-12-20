@@ -29,7 +29,7 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
             key: '1',
             children: <GeneralInformation disabled={record.status === 0} customerId={record.id} />,
         }, // remember to pass the key prop
-        { label: 'Thông tin mua hàng', key: '2', children: <PuchaseHistoryPage /> },
+        { label: 'Thông tin mua hàng', key: '2', children: <PuchaseHistoryPage userId={record.id} /> },
         { label: 'Lịch sử tích điểm', key: '3', children: <WalletChangePage customerId={record.id} /> },
     ];
 

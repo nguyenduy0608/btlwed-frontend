@@ -22,6 +22,7 @@ const OrderDetailPage = () => {
     const { id } = useParams();
     const { data } = useQuery<any>(['detailOrder', id], () => OrderService.detail(id));
     const order = data?.data;
+    console.log('🚀 ~ file: Detail.tsx:25 ~ OrderDetailPage ~ order', order);
 
     const switchLabel = (historyType: ORDER_STATE) => {
         switch (historyType) {
@@ -79,7 +80,7 @@ const OrderDetailPage = () => {
                             <Timeline mode="left" className="gx-mt-4">
                                 {order?.orderHistory.map((od: any) => (
                                     <Timeline.Item key={od.id} label={switchLabel(od.statusKiotviet)}>
-                                        {moment(order?.createdAt).format('HH:mm DD/MM/YYYY')}
+                                        {moment(od?.createdAt).format('HH:mm DD/MM/YYYY')}
                                     </Timeline.Item>
                                 ))}
                             </Timeline>
@@ -111,7 +112,7 @@ const OrderDetailPage = () => {
                             <>
                                 <CardRow left="Mã đơn hàng" right={order?.code} />
                                 {/* <CardRow left="Mã khuyến mại" right={order?.note || '-'} /> */}
-                                <CardRow left="Sản phẩm" right={order?.items.length + ' sản phẩm'} />
+                                <CardRow left="Sản phẩm" right={order?.quantityProduct + ' sản phẩm'} />
                                 <CardRow left="Hình thức thanh toán" right={order?.paymentMethod} />
 
                                 <CardRow
@@ -127,12 +128,12 @@ const OrderDetailPage = () => {
                                         />
                                     }
                                 />
+                                <CardRow left="Khu vực mua hàng" right={order?.kiotviet?.defaultBranchName} />
                                 <CardRow left="Ghi chú" right={order?.note || '-'} />
                             </>
                         }
                         rightCol={
                             <>
-                                <CardRow left="Khu vực mua hàng" right={order?.kiotviet?.defaultBranchName} />
                                 <CardRow left="Tổng tiền" right={currencyFormat(order?.total) + 'đ'} />
                                 <CardRow
                                     left="Tổng tiền giảm(Điểm tích lũy)"
