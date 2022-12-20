@@ -148,6 +148,7 @@ const OrderDetailPage = () => {
                                     right={currencyFormat(order?.total - order?.totalDiscount - order?.usePoint) + 'đ'}
                                 />
                                 <CardRow left="KH đã thanh toán" right={currencyFormat(order?.totalPayment) + 'đ'} />
+                                {order?.voucher?.name && <CardRow left="Quà tặng" right={order?.voucher?.name} />}
                             </>
                         }
                         title=""
