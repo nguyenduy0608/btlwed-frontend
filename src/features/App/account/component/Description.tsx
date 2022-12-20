@@ -23,7 +23,7 @@ const Description: React.FC<IProps> = ({ record, refetch, handleShowModal }) => 
                             {momentToStringDate(record.createdAt) || '--'}
                         </Descriptions.Item>
                         <Descriptions.Item label="Vai trò">
-                            {record.kiotvietId ? <p> Admin</p> : <p>Admin gian hàng</p>}
+                            {record.kiotvietId ? <p>Admin gian hàng</p> : <p>Admin</p>}
                         </Descriptions.Item>
                     </Descriptions>
                 </Col>
