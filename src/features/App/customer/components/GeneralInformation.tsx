@@ -90,19 +90,19 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
     // );
 
     const submitFormDebt = (values: any) => {
-        if (values?.debt) {
-            CustomerService.addDebt(customerId, {
-                maxDebit: values?.maxDebit,
-                maxDebitTime: values?.maxDebitTime,
-            }).then((res) => {
-                if (res.status) {
-                    Notification('success', 'Thêm thành công công nợ');
-                    refetch();
-                    setModalVisible(false);
-                    form.setFieldsValue({ debt: '' });
-                }
-            });
-        }
+        // if (values?.debt) {
+        CustomerService.addDebt(customerId, {
+            maxDebit: values?.maxDebit,
+            maxDebitTime: values?.maxDebitTime,
+        }).then((res) => {
+            if (res.status) {
+                Notification('success', 'Thêm thành công công nợ');
+                refetch();
+                setModalVisible(false);
+                form.setFieldsValue({ debt: '' });
+            }
+        });
+        // }
     };
 
     return (
@@ -198,7 +198,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                     onSubmit={submitFormDebt}
                                 >
                                     <Row gutter={[20, 0]}>
-                                        <FormItemComponent
+                                        {/* <FormItemComponent
                                             name="debt"
                                             label=""
                                             valuePropName="checked"
@@ -207,15 +207,15 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                                     <strong>Áp dụng công nợ</strong>
                                                 </Checkbox>
                                             }
-                                        />
+                                        /> */}
                                         <FormItemComponent
                                             // rules={[rules.required('Vui lòng nhập hạn mức công nợ!')]}
                                             name="maxDebit"
                                             label="Hạn mức công nợ"
                                             inputField={
                                                 <InputNumber
+                                                    addonAfter="VNĐ"
                                                     min={0}
-                                                    max={10000000}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
                                                         `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -238,8 +238,8 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                             label="Thời gian công nợ đơn hàng"
                                             inputField={
                                                 <InputNumber
+                                                    addonAfter="Ngày"
                                                     min={0}
-                                                    max={99}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
                                                         `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
