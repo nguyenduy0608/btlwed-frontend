@@ -91,11 +91,13 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
     // );
 
     const submitFormDebt = (values: any) => {
-        // if (values?.debt) {
+        if (values?.isApplyDebit && (!values?.maxDebit || !values?.maxDebitTime))
+            return Notification('warning', 'Vui lòng nhập đầy đủ thông tin');
+
         CustomerService.addDebt(customerId, {
             isApplyDebit: values?.isApplyDebit ? 1 : 0,
-            maxDebit: values?.maxDebit,
-            maxDebitTime: values?.maxDebitTime,
+            maxDebit: values?.maxDebit || 0,
+            maxDebitTime: values?.maxDebitTime || 0,
         }).then((res) => {
             if (res.status) {
                 Notification('success', 'Áp dụng thành công công nợ');
@@ -104,7 +106,6 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                 form.setFieldsValue({ debt: '' });
             }
         });
-        // }
     };
 
     return (
@@ -164,6 +165,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                             onClick={() => {
                                 setModalVisible(true);
                                 form.setFieldsValue({
+                                    isApplyDebit: generalInformation?.isApplyDebit,
                                     maxDebit: generalInformation?.maxDebit,
                                     maxDebitTime: generalInformation?.maxDebitTime,
                                 });
