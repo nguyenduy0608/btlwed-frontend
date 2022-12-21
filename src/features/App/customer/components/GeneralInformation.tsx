@@ -14,6 +14,7 @@ import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import { rules } from '../../voucher/rules';
 import { Notification, wait } from '@/utils';
 import SaveButton from '@/components/Button/Save.Button';
+import TagResult from '@/components/TagResult';
 
 const CardInfo = React.memo(({ index, title, value }: { index: number; title: string; value: any }) => {
     return (
@@ -92,11 +93,12 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
     const submitFormDebt = (values: any) => {
         // if (values?.debt) {
         CustomerService.addDebt(customerId, {
+            isApplyDebit: values?.isApplyDebit ? 1 : 0,
             maxDebit: values?.maxDebit,
             maxDebitTime: values?.maxDebitTime,
         }).then((res) => {
             if (res.status) {
-                Notification('success', 'Thêm thành công công nợ');
+                Notification('success', 'Áp dụng thành công công nợ');
                 refetch();
                 setModalVisible(false);
                 form.setFieldsValue({ debt: '' });
@@ -134,12 +136,23 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                         <Descriptions.Item span={2} label="Điểm tích lũy">
                             {generalInformation?.wallet?.point}
                         </Descriptions.Item>
-                        <Descriptions.Item span={2} label="Hạn mức công nợ">
-                            {generalInformation?.maxDebit}
+                        <Descriptions.Item span={2} label="Trạng thái công nợ">
+                            {generalInformation?.isApplyDebit ? (
+                                <TagResult color="green" text="Đang áp dụng" />
+                            ) : (
+                                <TagResult color="error" text="Không áp dụng" />
+                            )}
                         </Descriptions.Item>
-                        <Descriptions.Item span={2} label="Thời gian công nợ">
-                            {generalInformation?.maxDebitTime} ngày
-                        </Descriptions.Item>
+                        {generalInformation?.isApplyDebit && (
+                            <>
+                                <Descriptions.Item span={2} label="Hạn mức công nợ">
+                                    {generalInformation?.maxDebit}
+                                </Descriptions.Item>
+                                <Descriptions.Item span={2} label="Thời gian công nợ">
+                                    {generalInformation?.maxDebitTime} ngày
+                                </Descriptions.Item>
+                            </>
+                        )}
                     </DescriptionStyled>
                 </Col>
                 <Col span={10}>
@@ -198,8 +211,8 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                     onSubmit={submitFormDebt}
                                 >
                                     <Row gutter={[20, 0]}>
-                                        {/* <FormItemComponent
-                                            name="debt"
+                                        <FormItemComponent
+                                            name="isApplyDebit"
                                             label=""
                                             valuePropName="checked"
                                             inputField={
@@ -207,7 +220,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                                     <strong>Áp dụng công nợ</strong>
                                                 </Checkbox>
                                             }
-                                        /> */}
+                                        />
                                         <FormItemComponent
                                             // rules={[rules.required('Vui lòng nhập hạn mức công nợ!')]}
                                             name="maxDebit"
