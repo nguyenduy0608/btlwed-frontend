@@ -1,17 +1,14 @@
 import CardComponent from '@/components/CardComponent';
 import TableComponent from '@/components/TableComponent';
-import TopBar from '@/components/TopBar';
-import Container from '@/layout/Container';
-import { Button, Form, InputNumber, Row, Segmented, Space } from 'antd';
-import React, { useState } from 'react';
+import { currencyFormat } from '@/utils';
+import { Form } from 'antd';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
-import { DataTypeWalletChange, WalletChangecolumns } from './Customer.Config';
 import { WalletChangeService } from '../service';
-import Filter from './Filter';
+import { WalletChangecolumns } from './Customer.Config';
 import FilterWallet from './FilterWallet';
-import { title } from 'process';
 const initialFilterQuery = {};
 
 const WalletChangePage = ({ customerId }: { customerId: number }) => {
@@ -44,7 +41,9 @@ const WalletChangePage = ({ customerId }: { customerId: number }) => {
                 title={<div className="gx-pl-4">Lịch sử tích điểm</div>}
                 extra={[<FilterWallet returnFilter={returnFilter} key="filter" />]}
             >
-                <div className="gx-mb-3">Tổng điểm hiện tại: {walletChanges?.data?.totalPoint || 0}</div>
+                <div className="gx-mb-3">
+                    Tổng điểm hiện tại: {currencyFormat(walletChanges?.data?.totalPoint || 0)}
+                </div>
                 <TableComponent
                     loading={isRefetching}
                     page={page}

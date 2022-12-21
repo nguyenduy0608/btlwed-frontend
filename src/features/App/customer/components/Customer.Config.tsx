@@ -231,7 +231,7 @@ export const WalletChangecolumns = (page: number): ColumnsType<DataTypeWalletCha
     },
     {
         title: 'Mã đơn hàng',
-        dataIndex: '',
+        dataIndex: 'orderCode',
         align: 'center',
     },
     {
