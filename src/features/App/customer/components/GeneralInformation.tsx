@@ -12,7 +12,7 @@ import ModalComponent from '@/components/ModalComponent';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import { rules } from '../../voucher/rules';
-import { Notification, wait } from '@/utils';
+import { currencyFormat, Notification, wait } from '@/utils';
 import SaveButton from '@/components/Button/Save.Button';
 import TagResult from '@/components/TagResult';
 import { Rule } from 'antd/lib/form';
@@ -148,7 +148,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                         {generalInformation?.isApplyDebit && (
                             <>
                                 <Descriptions.Item span={2} label="Hạn mức công nợ">
-                                    {generalInformation?.maxDebit}
+                                    {currencyFormat(generalInformation?.maxDebit)}
                                 </Descriptions.Item>
                                 <Descriptions.Item span={2} label="Thời gian công nợ">
                                     {generalInformation?.maxDebitTime} ngày
