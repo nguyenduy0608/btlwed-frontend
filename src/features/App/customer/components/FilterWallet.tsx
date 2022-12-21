@@ -22,10 +22,10 @@ const FilterWallet = ({ returnFilter }: { returnFilter: (filter: any) => void })
             >
                 <Option value={WALLET_TYPE.ORDER_COMPLETED}>Hoàn thành đơn hàng</Option>
                 <Option value={WALLET_TYPE.PAYMENT_ORDER}>Thanh toán đơn hàng</Option>
-                <Option value={WALLET_TYPE.INVITE}>Giới thiệu ứng dụng</Option>
+                {/* <Option value={WALLET_TYPE.INVITE}>Giới thiệu ứng dụng</Option>
                 <Option value={WALLET_TYPE.JOIN_WITH_INVITE}>Đăng ký với mã giới thiệu</Option>
                 <Option value={WALLET_TYPE.DEPOSIT}>Nạp tiền từ VNPAY</Option>
-                <Option value={WALLET_TYPE.GIFT_EXCHANGE}>Đổi quà</Option>
+                <Option value={WALLET_TYPE.GIFT_EXCHANGE}>Đổi quà</Option> */}
             </DefaultSelectStyled>
             <RangerPicker
                 name="dateFilter"

@@ -21,6 +21,7 @@ const PuchaseHistoryPage = ({ userId }: { userId: number }) => {
     const { data: puchaseHistory, isLoading } = useQuery<any>(['PurchaseService', page, filterQuery, userId], () =>
         PurchaseService.get({ page, userId, ...filterQuery })
     );
+    console.log('🚀 ~ file: purchaseHistory.tsx:24 ~ PuchaseHistoryPage ~ puchaseHistory', puchaseHistory);
 
     const returnFilter = React.useCallback(
         (filter: IFilter) => {
@@ -52,6 +53,7 @@ const PuchaseHistoryPage = ({ userId }: { userId: number }) => {
                 onChangePage={(_page) => setPage(_page)}
                 dataSource={puchaseHistory ? puchaseHistory.data : []}
                 columns={Purchasecolumns(page)}
+                pageSize={8}
                 total={puchaseHistory && puchaseHistory?.paging?.totalItemCount}
             />
         </CardComponent>

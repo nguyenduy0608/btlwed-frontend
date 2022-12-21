@@ -51,6 +51,7 @@ const WalletChangePage = ({ customerId }: { customerId: number }) => {
                     onChangePage={(_page) => setPage(_page)}
                     dataSource={walletChanges ? walletChanges?.data?.listPointChange : []}
                     columns={WalletChangecolumns(page)}
+                    pageSize={8}
                     total={walletChanges && walletChanges?.paging?.totalItemCount}
                 />
             </CardComponent>

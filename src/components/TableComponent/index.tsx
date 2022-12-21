@@ -32,6 +32,7 @@ interface IProps {
     components?: any;
     showTotalResult?: boolean;
     reLoadData?: any;
+    pageSize?: any;
 }
 
 const TableComponent: React.FC<IProps> = ({
@@ -56,6 +57,7 @@ const TableComponent: React.FC<IProps> = ({
     components,
     showTotalResult,
     reLoadData,
+    pageSize,
 }) => {
     const [loadingRefresh, setLoadingRefresh] = React.useState(false);
 
@@ -160,7 +162,12 @@ const TableComponent: React.FC<IProps> = ({
             {!renderDefault && onChangePage && isPagination && total && total > 12 ? (
                 <Col span={24}>
                     <Row justify="end" style={{ flexDirection: 'row' }}>
-                        <PaginationComponent page={page || 1} total={total || 0} onChange={onChangePage} />
+                        <PaginationComponent
+                            pageSize={pageSize}
+                            page={page || 1}
+                            total={total || 0}
+                            onChange={onChangePage}
+                        />
                     </Row>
                 </Col>
             ) : null}
