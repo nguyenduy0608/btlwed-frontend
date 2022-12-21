@@ -22,7 +22,6 @@ const OrderDetailPage = () => {
     const { id } = useParams();
     const { data } = useQuery<any>(['detailOrder', id], () => OrderService.detail(id));
     const order = data?.data;
-    console.log('🚀 ~ file: Detail.tsx:25 ~ OrderDetailPage ~ order', order);
 
     const switchLabel = (historyType: ORDER_STATE) => {
         switch (historyType) {
@@ -150,9 +149,9 @@ const OrderDetailPage = () => {
                                     right={currencyFormat(order?.total - order?.totalDiscount - order?.usePoint) + 'đ'}
                                 />
                                 <CardRow left="KH đã thanh toán" right={currencyFormat(order?.totalPayment) + 'đ'} />
-                                {order?.giftStatus && order?.voucher?.name && (
+                                {order?.giftStatus && order?.voucher?.name ? (
                                     <CardRow left="Quà tặng" right={order?.voucher?.name} />
-                                )}
+                                ) : null}
                             </>
                         }
                         title=""
