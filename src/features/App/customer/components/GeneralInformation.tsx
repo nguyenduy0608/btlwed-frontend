@@ -15,6 +15,7 @@ import { rules } from '../../voucher/rules';
 import { Notification, wait } from '@/utils';
 import SaveButton from '@/components/Button/Save.Button';
 import TagResult from '@/components/TagResult';
+import { Rule } from 'antd/lib/form';
 
 const CardInfo = React.memo(({ index, title, value }: { index: number; title: string; value: any }) => {
     return (
@@ -224,45 +225,62 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                             }
                                         />
                                         <FormItemComponent
-                                            // rules={[rules.required('Vui lòng nhập hạn mức công nợ!')]}
+                                            rules={[
+                                                rules.required('Vui lòng nhập hạn mức công nợ!'),
+                                                () => ({
+                                                    validator(_: Rule, value: string) {
+                                                        if (value?.toString()?.length > 0 && +value < 1) {
+                                                            return Promise.reject(
+                                                                new Error('Hạn mức công nợ phải lớn hơn 0!')
+                                                            );
+                                                        }
+                                                        return Promise.resolve();
+                                                    },
+                                                }),
+                                            ]}
                                             name="maxDebit"
                                             label="Hạn mức công nợ"
                                             inputField={
                                                 <InputNumber
                                                     addonAfter="VNĐ"
-                                                    min={0}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
-                                                        `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                        `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, '')
                                                     }
-                                                    parser={(value: any) =>
-                                                        value ? value.replace(/\$\s?|(,*)/g, '') : ''
-                                                    }
+                                                    parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
                                                     placeholder="Nhập hạn mức công nợ"
                                                 />
                                             }
                                         />
                                         <FormItemComponent
-                                            // rules={[
-                                            //     {
-                                            //         required: true,
-                                            //         message: 'Vui lòng nhập thời gian công nợ đơn hàng!',
-                                            //     },
-                                            // ]}
+                                            rules={[
+                                                {
+                                                    required: true,
+                                                    message: 'Vui lòng nhập thời gian công nợ!',
+                                                },
+                                                () => ({
+                                                    validator(_: Rule, value: string) {
+                                                        if (value?.toString()?.length > 0 && +value < 1) {
+                                                            return Promise.reject(
+                                                                new Error('Thời gian công nợ phải lớn hơn 0!')
+                                                            );
+                                                        }
+
+                                                        return Promise.resolve();
+                                                    },
+                                                }),
+                                            ]}
                                             name="maxDebitTime"
-                                            label="Thời gian công nợ đơn hàng"
+                                            label="Thời gian công nợ"
                                             inputField={
                                                 <InputNumber
                                                     addonAfter="Ngày"
-                                                    min={0}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
-                                                        `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                        `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, '')
                                                     }
-                                                    parser={(value: any) =>
-                                                        value ? value.replace(/\$\s?|(,*)/g, '') : ''
-                                                    }
-                                                    placeholder="Nhập thời gian công nợ đơn hàng"
+                                                    parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
+                                                    placeholder="Nhập thời gian công nợ"
                                                 />
                                             }
                                         />

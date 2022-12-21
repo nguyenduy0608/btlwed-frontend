@@ -164,8 +164,6 @@ const VoucherFormPage = () => {
         })();
     }, [id]);
 
-    console.log(checkNowDate('11:38 12/12/2022'));
-
     return (
         <FormComponent form={form} initialValues={{ enableProducts: true }} onSubmit={handleSubmit}>
             <TopBar
