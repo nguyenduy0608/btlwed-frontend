@@ -76,7 +76,7 @@ function App() {
                         text={
                             <>
                                 Staging link:{' '}
-                                <a style={{ color: 'blue' }} href="http://staging.stakaadmin.winds.vn" target="_blank">
+                                <a style={{ color: 'blue' }} href="http://stakaadmin.winds.vn" target="_blank">
                                     http://stakaadmin.winds.vn
                                 </a>
                             </>
