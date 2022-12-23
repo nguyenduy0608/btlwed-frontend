@@ -51,7 +51,7 @@ const ProductDetailPage = () => {
                                             onChange={(value: any) => {
                                                 ProductService.update(id as any, {
                                                     status: product?.status,
-                                                    customType: value || '',
+                                                    customType: value || null,
                                                 }).then(() => {
                                                     refetch();
                                                     message.success('Cập nhật loại hàng thành công');
