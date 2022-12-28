@@ -155,7 +155,7 @@ const NewsPage = () => {
                                                         refetch();
                                                     });
                                             }}
-                                            defaultChecked={!!value}
+                                            checked={!!value}
                                         />
                                     </div>
                                 ),
