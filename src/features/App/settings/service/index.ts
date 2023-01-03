@@ -1,5 +1,10 @@
 import AxiosClient from '@/apis/AxiosClient';
-
+import { RECORD_SIZE } from '@/config/theme';
+import { handleObjectEmpty } from '@/utils';
+export interface IQuery {
+    page: number;
+    kiotvietId?: string | number;
+}
 export const settingService = {
     getProductByKiotViet: (kiotvietId: number, params: any) => {
         return AxiosClient.get(`/admin/product`, { params: { kiotvietId, ...params } });
@@ -45,5 +50,24 @@ export const settingService = {
     // todo: cấu hình chi nhánh mặc định
     branchKiotviet: (id: any, data: any) => {
         return AxiosClient.patch('/admin/kiotviet/' + id + '/set_default_branch', data);
+    },
+};
+export const WarehouseService = {
+    get: (params: IQuery) => {
+        const url = `/admin/branches`;
+        const handleParams = handleObjectEmpty(params);
+        return AxiosClient.get(url, { params: { ...handleParams, limit: RECORD_SIZE } });
+    },
+    create: (data: any) => {
+        const url = `/admin/branches`;
+        return AxiosClient.post(url, data);
+    },
+    update: (id: number, data: any) => {
+        const url = `/admin/branches/${id}`;
+        return AxiosClient.patch(url, data);
+    },
+    delete: (id: number) => {
+        const url = `/admin/branches/${id}`;
+        return AxiosClient.delete(url);
     },
 };

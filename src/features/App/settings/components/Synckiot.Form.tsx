@@ -43,7 +43,6 @@ const SynckiotForm = ({
             .then((res: any) => {
                 if (res.status) {
                     message.success('Cập nhật chi nhánh thành công!');
-
                     handleClose();
                 } else {
                     message.error('Có lỗi xảy ra!');

@@ -43,7 +43,7 @@ function SelectComponent({
         fetchUserList().then((res) => {
             return setDefaultOption(res);
         });
-    }, [disabled, params]);
+    }, [disabled, params, apiUrl]);
 
     return (
         <DebounceSelect

@@ -142,7 +142,7 @@ function App() {
     };
 
     React.useEffect(() => {
-        DEV_TYPE === 'DEV' && openNotification();
+        // DEV_TYPE === 'DEV' && openNotification();
     }, []);
 
     return (

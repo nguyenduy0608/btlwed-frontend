@@ -20,8 +20,10 @@ export const CUSTOMER_TYPE = {
     DISTRIBUTORS: 2,
 };
 export const ADMIN = {
-    main: 1,
-    stall: 2,
+    main: 'admin',
+    stall: 'shop_admin',
+    news: 'news_admin',
+    accountant: 'accountant_admin',
 };
 // export const ORDERSTATUS = {
 //     completed: 'completed',

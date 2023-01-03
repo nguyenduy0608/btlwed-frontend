@@ -11,6 +11,7 @@ const SelectMultiComponent = ({
     defaultSelect,
     fieldShow = 'name',
     labelProp,
+    showFirstField,
 }: {
     apiUrl: string;
     params?: any;
@@ -19,6 +20,7 @@ const SelectMultiComponent = ({
     defaultSelect?: any;
     fieldShow?: string;
     labelProp: any;
+    showFirstField?: boolean;
 }) => {
     const [value, setValue] = useState<any>([]);
     const [defaultOption, setDefaultOption] = React.useState<any>([]);
@@ -28,7 +30,11 @@ const SelectMultiComponent = ({
         async (search?: string) => {
             return AxiosClient(`${apiUrl}`, { params: { ...params, search, limit: 15 } }).then((body) =>
                 body.data.map((data: any) => ({
-                    label: labelProp ? data[labelProp[0]] + ' - ' + data[labelProp[1]] : `${data[labelProp]}`,
+                    label: showFirstField
+                        ? `${data[labelProp]}`
+                        : labelProp
+                        ? data[labelProp[0]] + ' - ' + data[labelProp[1]]
+                        : `${data[labelProp]}`,
                     value: data.id,
                 }))
             );

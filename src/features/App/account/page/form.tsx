@@ -180,6 +180,8 @@ const AccountFormPage = ({
                                     <Select placeholder="Chọn loại tài khoản">
                                         <Option value={ADMIN.main}>Admin</Option>
                                         <Option value={ADMIN.stall}>Admin gian hàng</Option>
+                                        <Option value={ADMIN.news}>Admin tin tức</Option>
+                                        <Option value={ADMIN.accountant}>Admin kế toán</Option>
                                     </Select>
                                 }
                             />
