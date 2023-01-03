@@ -22,8 +22,9 @@ const initialValue = {
     createdAt: '',
     updatedAt: '',
     password: '',
-    accountId: '',
+    role: '',
     passwordConfirmation: '',
+    group: '',
 };
 
 const AccountFormPage = ({
@@ -40,7 +41,7 @@ const AccountFormPage = ({
     const [file, setFile] = React.useState<any>(null);
     const [loadingModal, setLoadingModal] = React.useState(false);
 
-    const accountId = Form.useWatch('accountId', form);
+    const group = Form.useWatch('group', form);
 
     const formReset = () => {
         form.setFieldsValue(initialValue);
@@ -48,17 +49,18 @@ const AccountFormPage = ({
     React.useEffect(() => {
         if (values) {
             setLoadingModal(true);
-            form.setFieldsValue({ ...values, accountId: values?.isRoot ? 1 : 2 });
+            form.setFieldsValue({ ...values });
             wait(500).then(() => setLoadingModal(false));
         }
     }, [values]);
     const handleSubmit = React.useCallback(
         async (data: DataTypeAccount) => {
             setLoadingModal(true);
-            const { accountId, phoneNumber, ...rest } = data;
+            const { phoneNumber, group, ...rest } = data;
             if (values) {
                 const res = await accountService.update(values.id, {
                     ...rest,
+                    role: data.group,
                     avatar: file || values?.avatar,
                     status: !!data.status,
                     isRoot: true,
@@ -71,6 +73,7 @@ const AccountFormPage = ({
             } else {
                 const res = await accountService.create({
                     ...rest,
+                    role: data?.group,
                     avatar: file,
                     status: true,
                     isRoot: true,
@@ -100,7 +103,7 @@ const AccountFormPage = ({
                     <Col span={12}>
                         <Row>
                             <FormItemComponent
-                                rules={[rules.required('Vui lòng nhập họ tên !')]}
+                                rules={[rules.required('Vui lòng nhập họ tên !'), rules.validateName]}
                                 name="fullName"
                                 label="Họ tên"
                                 inputField={<Input placeholder="Nhập tên" />}
@@ -138,7 +141,13 @@ const AccountFormPage = ({
                             {!values && (
                                 <>
                                     <FormItemComponent
-                                        rules={[rules.required('Vui lòng nhập mật khẩu !')]}
+                                        rules={[
+                                            rules.required('Vui lòng nhập mật khẩu !'),
+                                            {
+                                                min: 6,
+                                                message: 'Vui lòng nhập từ 6 ký tự!',
+                                            },
+                                        ]}
                                         name="password"
                                         label="Mật khẩu"
                                         inputField={<Input.Password placeholder="******" />}
@@ -174,7 +183,7 @@ const AccountFormPage = ({
                             />
                             <FormItemComponent
                                 rules={[rules.required('Vui lòng chọn loại tài khoản!')]}
-                                name="accountId"
+                                name="group"
                                 label="Loại tài khoản"
                                 inputField={
                                     <Select placeholder="Chọn loại tài khoản">
@@ -185,7 +194,7 @@ const AccountFormPage = ({
                                     </Select>
                                 }
                             />
-                            {accountId === ADMIN.stall && (
+                            {group === ADMIN.stall && (
                                 <FormItemComponent
                                     rules={[{ required: true, message: 'Vui lòng chọn khu vực!' }]}
                                     name="kiotvietId"

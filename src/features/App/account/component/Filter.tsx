@@ -1,5 +1,6 @@
 import SearchInput from '@/components/SearchInput';
 import { DefaultSelectStyled } from '@/config/global.style';
+import { ADMIN } from '@/contants';
 import { DatePicker, Select, Space } from 'antd';
 import React from 'react';
 import { IFilter } from '../../voucher/type';
@@ -11,7 +12,7 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) =
         returnFilter({ status: value });
     };
     const handleChangeAdmin = (value: any) => {
-        returnFilter({ accountId: value });
+        returnFilter({ type: value });
     };
 
     return (
@@ -37,8 +38,10 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) =
                 defaultValue={null}
                 onChange={handleChangeAdmin}
             >
-                <Option value={1}>Admin</Option>
-                <Option value={2}>Admin gian hàng</Option>
+                <Option value={ADMIN.main}>Admin</Option>
+                <Option value={ADMIN.stall}>Admin gian hàng</Option>
+                <Option value={ADMIN.news}>Admin tin tức</Option>
+                <Option value={ADMIN.accountant}>Admin kế toán</Option>
             </DefaultSelectStyled>
         </Space>
     );

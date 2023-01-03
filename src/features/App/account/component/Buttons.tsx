@@ -3,7 +3,7 @@ import UnActiveButton from '@/components/Button/UnActive.Button';
 import useCallContext from '@/hooks/useCallContext';
 import { Notification } from '@/utils';
 import { DeleteOutlined, EditOutlined, ExclamationCircleOutlined, ReloadOutlined } from '@ant-design/icons';
-import { Button, Modal } from 'antd';
+import { Button, Modal, Popconfirm } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import voucherService from '../service';
 import { DataTypeAccount } from './Account.Config';
@@ -39,7 +39,9 @@ const Buttons = (props: IProps) => {
             width: '520px',
             title: 'Đặt lại mật khẩu',
             icon: <ExclamationCircleOutlined />,
-            content: <strong style={{ marginTop: '10px' }}>Bạn chắc chắn đồng ý đặt lại mật khẩu khách hàng?</strong>,
+            content: (
+                <strong style={{ marginTop: '10px' }}>Bạn chắc chắn đồng ý đặt lại mật khẩu tài khoản này?</strong>
+            ),
             onOk() {
                 handleReset(record.id);
             },
@@ -100,19 +102,35 @@ const Buttons = (props: IProps) => {
             <EditOutlined key="edit" />
             Chỉnh sửa
         </Button>,
-        <Button
-            disabled={info?.id === record.id}
-            type="text"
-            className="gx-mb-0"
-            style={{
-                fontSize: '16px',
-                color: '#000',
+        <Popconfirm
+            title={<strong style={{ marginTop: '10px' }}>Bạn chắc chắn đồng ý đặt lại mật khẩu tài khoản này?</strong>}
+            onConfirm={async () => {
+                try {
+                    handleReset(record.id);
+                } catch (error) {
+                } finally {
+                }
             }}
-            onClick={showConfirmReset}
+            okText="Đặt lại mật khẩu"
+            cancelText="Quay lại"
+            okButtonProps={{
+                type: 'primary',
+            }}
         >
-            <ReloadOutlined key="reset" />
-            Reset mật khẩu
-        </Button>,
+            <Button
+                disabled={info?.id === record.id}
+                type="text"
+                className="gx-mb-0"
+                style={{
+                    fontSize: '16px',
+                    color: '#000',
+                }}
+            >
+                <ReloadOutlined key="reset" />
+                Reset mật khẩu
+            </Button>
+            ,
+        </Popconfirm>,
 
         <Button
             disabled={info?.id === record.id}

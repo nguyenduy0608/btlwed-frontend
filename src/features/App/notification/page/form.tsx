@@ -1,7 +1,7 @@
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
 import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
-import { rules } from '../../voucher/rules';
+// import { rules } from '../../voucher/rules';
 import { Notification, wait } from '@/utils';
 import React from 'react';
 import { ADMIN, STATUS } from '@/contants';
@@ -12,6 +12,7 @@ import UploadComponent from '@/components/Upload';
 import { errorConfirmPassword, errorValidPhone } from '@/utils/validation';
 import useCallContext from '@/hooks/useCallContext';
 import SaveButton from '@/components/Button/Save.Button';
+import { rules } from '../../news/rules';
 const { Option } = Select;
 
 const NotificationFormPage = ({
@@ -75,13 +76,13 @@ const NotificationFormPage = ({
             <FormComponent layoutType="vertical" form={form} onSubmit={handleSubmit}>
                 <Row gutter={[20, 0]}>
                     <FormItemComponent
-                        rules={[rules.required('Vui lòng nhập tiêu đề !')]}
+                        rules={[rules.required('Vui lòng nhập tiêu đề !'), rules.validateTitle]}
                         name="title"
                         label="Tiêu đề"
                         inputField={<Input placeholder="Nhập tiêu đề" />}
                     />
                     <FormItemComponent
-                        rules={[rules.required('Vui lòng nhập nội dung !')]}
+                        rules={[rules.required('Vui lòng nhập nội dung !'), rules.validateTitle]}
                         name="content"
                         label="Nội dung"
                         inputField={<Input.TextArea rows={4} placeholder="Nhập nội dung" />}

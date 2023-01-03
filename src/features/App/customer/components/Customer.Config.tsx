@@ -227,7 +227,7 @@ export const WalletChangecolumns = (page: number): ColumnsType<DataTypeWalletCha
         title: 'STT',
         dataIndex: 'id',
         align: 'center',
-        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * 8 + ++index),
+        render: (row, record, index) => (page === 1 ? ++index : (page - 1) * 12 + ++index),
     },
     {
         title: 'Mã đơn hàng',
@@ -237,7 +237,6 @@ export const WalletChangecolumns = (page: number): ColumnsType<DataTypeWalletCha
     {
         title: 'Tác vụ',
         dataIndex: 'note',
-        align: 'center',
     },
     {
         title: 'Số điểm',

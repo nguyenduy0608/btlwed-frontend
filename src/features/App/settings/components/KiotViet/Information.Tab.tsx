@@ -47,9 +47,9 @@ const InformationTab = ({ info }: { info: any }) => {
                     </Descriptions.Item>
                     <Descriptions.Item span={2} label="Trạng thái">
                         {info?.status ? (
-                            <TagResult text="Đang hoạt động" color="processing" />
+                            <TagResult text="Đang đồng bộ" color="processing" />
                         ) : (
-                            <TagResult text="Ngừng hoạt động" color="error" />
+                            <TagResult text="Ngưng đồng bộ" color="error" />
                         )}
                     </Descriptions.Item>
                 </DescriptionStyled>

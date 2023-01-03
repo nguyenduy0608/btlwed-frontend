@@ -7,6 +7,6 @@ export interface IFilter {
     createTo?: string | null;
     accountId?: IRole | null;
     orderStatus?: IOrderStatus | null;
-    createtableType?:ICreatetable|null;
-
+    createtableType?: ICreatetable | null;
+    type?: string;
 }

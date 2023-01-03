@@ -5,11 +5,26 @@ import { DataTypeAccount } from './Account.Config';
 import { momentToStringDate } from '@/utils';
 import styled from 'styled-components';
 import { BOX_SHADOW } from '@/config/theme';
+import { ADMIN } from '@/contants';
 interface IProps {
     record: DataTypeAccount;
     refetch: any;
     handleShowModal?: (record: DataTypeAccount) => void;
 }
+const ROLE = (value: string) => {
+    switch (value) {
+        case ADMIN.main:
+            return 'Admin';
+        case ADMIN.stall:
+            return 'Admin gian hàng';
+        case ADMIN.news:
+            return 'Admin tin tức';
+        case ADMIN.accountant:
+            return 'Admin kế toán';
+        default:
+            return '';
+    }
+};
 const Description: React.FC<IProps> = ({ record, refetch, handleShowModal }) => {
     return (
         <Card className="gx-mb-0" actions={Buttons({ record, handleShowModal, refetch })}>
@@ -22,9 +37,7 @@ const Description: React.FC<IProps> = ({ record, refetch, handleShowModal }) => 
                         <Descriptions.Item label="Ngày tạo">
                             {momentToStringDate(record.createdAt) || '--'}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Vai trò">
-                            {record.kiotvietId ? <p>Admin gian hàng</p> : <p>Admin</p>}
-                        </Descriptions.Item>
+                        <Descriptions.Item label="Vai trò">{ROLE(record.group) || '--'}</Descriptions.Item>
                     </Descriptions>
                 </Col>
                 <Col span={6}>

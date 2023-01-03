@@ -21,7 +21,6 @@ const PuchaseHistoryPage = ({ userId }: { userId: number }) => {
     const { data: puchaseHistory, isLoading } = useQuery<any>(['PurchaseService', page, filterQuery, userId], () =>
         PurchaseService.get({ page, userId, ...filterQuery })
     );
-    console.log('🚀 ~ file: purchaseHistory.tsx:24 ~ PuchaseHistoryPage ~ puchaseHistory', puchaseHistory);
 
     const returnFilter = React.useCallback(
         (filter: IFilter) => {

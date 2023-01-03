@@ -136,7 +136,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                         </Descriptions.Item>
 
                         <Descriptions.Item span={2} label="Điểm tích lũy">
-                            {generalInformation?.wallet?.point}
+                            {generalInformation?.wallet?.point} điểm
                         </Descriptions.Item>
                         <Descriptions.Item span={2} label="Trạng thái công nợ">
                             {generalInformation?.isApplyDebit ? (
@@ -148,7 +148,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                         {generalInformation?.isApplyDebit && (
                             <>
                                 <Descriptions.Item span={2} label="Hạn mức công nợ">
-                                    {currencyFormat(generalInformation?.maxDebit)}
+                                    {currencyFormat(generalInformation?.maxDebit)} VNĐ
                                 </Descriptions.Item>
                                 <Descriptions.Item span={2} label="Thời gian công nợ">
                                     {generalInformation?.maxDebitTime} ngày
@@ -167,8 +167,8 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                                 setModalVisible(true);
                                 form.setFieldsValue({
                                     isApplyDebit: generalInformation?.isApplyDebit,
-                                    maxDebit: generalInformation?.maxDebit,
-                                    maxDebitTime: generalInformation?.maxDebitTime,
+                                    maxDebit: generalInformation?.maxDebit || undefined,
+                                    maxDebitTime: generalInformation?.maxDebitTime || undefined,
                                 });
                             }}
                             type="primary"

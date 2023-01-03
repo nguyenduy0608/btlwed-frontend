@@ -1,5 +1,6 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
+import { ADMIN } from '@/contants';
 import { ColumnsType } from 'antd/lib/table';
 
 export interface DataTypeAccount {
@@ -16,6 +17,8 @@ export interface DataTypeAccount {
     isRoot?: any;
     kiotvietId?: number;
     accountId?: any;
+    group: any;
+    role: any;
 }
 
 export const columns = (page: number): ColumnsType<DataTypeAccount> => [
@@ -40,9 +43,22 @@ export const columns = (page: number): ColumnsType<DataTypeAccount> => [
     },
     {
         title: 'Loại tài khoản',
-        dataIndex: 'kiotvietId',
+        dataIndex: 'group',
         align: 'center',
-        render: (value: number) => (value ? 'Admin gian hàng' : 'Admin'),
+        render: (value: any) => {
+            switch (value) {
+                case ADMIN.main:
+                    return 'Admin';
+                case ADMIN.stall:
+                    return 'Admin gian hàng';
+                case ADMIN.news:
+                    return 'Admin tin tức';
+                case ADMIN.accountant:
+                    return 'Admin kế toán';
+                default:
+                    return '';
+            }
+        },
     },
     {
         title: 'Trạng thái',

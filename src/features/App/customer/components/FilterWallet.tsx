@@ -14,7 +14,7 @@ const FilterWallet = ({ returnFilter }: { returnFilter: (filter: any) => void })
     return (
         <Space size="middle" wrap>
             <DefaultSelectStyled
-                placeholder="Tác vụ"
+                placeholder={<strong>Chọn tác vụ</strong>}
                 allowClear
                 style={{ width: '200px' }}
                 defaultValue={null}
