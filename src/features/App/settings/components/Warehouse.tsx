@@ -29,10 +29,15 @@ const Warehouse = ({ modalVisible, setModalVisible }: { modalVisible: boolean; s
 
     const handleShowModal = (record: any) => {
         setValues({
+            id: record.id,
             retailer: record?.kiotvietId,
             name: {
                 value: record?.kiotvietBranchesId,
             },
+            province: record?.provinceId.map((item: any, index: number) => ({
+                value: item,
+                label: record?.province?.[index],
+            })),
         });
         setModalVisible(true);
     };

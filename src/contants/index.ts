@@ -20,10 +20,10 @@ export const CUSTOMER_TYPE = {
     DISTRIBUTORS: 2,
 };
 export const ADMIN = {
-    main: 'admin',
-    stall: 'shop_admin',
-    news: 'news_admin',
-    accountant: 'accountant_admin',
+    main: 'admin', // admin chính
+    stall: 'shop_admin', // admin gian hàng
+    news: 'news_admin', // admin tin tức
+    accountant: 'accountant_admin', // kế toán
 };
 // export const ORDERSTATUS = {
 //     completed: 'completed',

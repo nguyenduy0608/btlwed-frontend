@@ -36,7 +36,7 @@ function App() {
     React.useLayoutEffect(() => {
         if (LocalStorage.getToken()) {
             authService.info().then((res) => {
-                setRole(Object.keys(res.data)[0]);
+                setRole(res.data[Object.keys(res.data)[0]]?.group);
                 dispatch({
                     type: SET_INFO,
                     payload: { ...res.data[Object.keys(res.data)[0]], role: Object.keys(res.data)[0] },
