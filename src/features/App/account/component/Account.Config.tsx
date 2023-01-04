@@ -17,8 +17,8 @@ export interface DataTypeAccount {
     isRoot?: any;
     kiotvietId?: number;
     accountId?: any;
-    group: any;
-    role: any;
+    group?: any;
+    role?: any;
 }
 
 export const columns = (page: number): ColumnsType<DataTypeAccount> => [
