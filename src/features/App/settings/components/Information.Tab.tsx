@@ -11,7 +11,6 @@ import { settingService } from '../service';
 const InformationTab = () => {
     const { state } = useCallContext();
     const [isEditPoint, setIsEditPoint] = React.useState(false);
-    const [isEditContact, setIsEditContact] = React.useState(false);
     const [isEditInfoPayment, setIsEditInfoPayment] = React.useState(false);
 
     // chỗ này xử lý tích điểm
@@ -34,21 +33,25 @@ const InformationTab = () => {
 
     // chỗ này xử lý thông tin liên hệ
     const [formContact] = Form.useForm();
-    const zaloCurrent = React.useRef(0);
-    const facebookCurrent = React.useRef(0);
+    const zaloCurrent = React.useRef('');
+    const facebookCurrent = React.useRef('');
     const zaloLive = Form.useWatch('linkZalo', formContact);
     const fbLive = Form.useWatch('linkFacebook', formContact);
     const [callbackContact, setCallbackContact] = React.useState(false);
+    const [reRender, setReRender] = React.useState(false);
+
     React.useEffect(() => {
         settingService.getContact().then((res) => {
+            zaloCurrent.current = res?.data?.value?.linkZalo;
+            facebookCurrent.current = res?.data?.value?.linkFacebook;
             formContact.setFieldsValue({
                 linkFacebook: res?.data?.value?.linkFacebook,
                 linkZalo: res?.data?.value?.linkZalo,
             });
-            zaloCurrent.current = res?.data?.value?.linkZalo;
-            facebookCurrent.current = res?.data?.value?.linkFacebook;
+            setReRender(!reRender);
         });
     }, [callbackContact]);
+
     const handleSubmitChangeContact = (values: any) => {
         settingService.updateContact(values).then((res) => {
             message.success('Cập nhật thành công thông tin liên hệ');

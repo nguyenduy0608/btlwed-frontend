@@ -2,6 +2,7 @@ import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { Switch } from 'antd';
 import localeValues from 'antd/lib/locale/vi_VN';
+import { settingService } from '../service';
 
 export const columns = (page: number): any => [
     {
@@ -21,35 +22,6 @@ export const columns = (page: number): any => [
     {
         title: 'Secret ID',
         dataIndex: 'clientSecret',
-    },
-    {
-        title: 'Trạng thái đồng bộ',
-        dataIndex: 'status',
-        align: 'center',
-        render: (value: number, row: any) => (
-            <div
-                onClick={(e: any) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }}
-            >
-                <Switch
-                    // onChange={(value) => {
-                    //     newService
-                    //         .updateStatus(row.id, {
-                    //             statusActive: value,
-                    //             title: row.title,
-                    //             status: row.status,
-                    //             type: row.type,
-                    //         })
-                    //         .then(() => {
-                    //             refetch();
-                    //         });
-                    // }}
-                    defaultChecked={!!value}
-                />
-            </div>
-        ),
     },
 ];
 export const WarehouseColumns = (page: number): any => [
@@ -72,9 +44,9 @@ export const WarehouseColumns = (page: number): any => [
         dataIndex: 'province',
         render: (value: any) => {
             return (
-                <td>
+                <div>
                     {value?.map((item: any, index: any) => {
-                        const str = ',';
+                        const str = ', ';
                         let newArray: any = [];
                         if (index === value.length - 1) {
                             newArray.push(item);
@@ -83,7 +55,7 @@ export const WarehouseColumns = (page: number): any => [
                         }
                         return newArray;
                     })}
-                </td>
+                </div>
             );
         },
     },

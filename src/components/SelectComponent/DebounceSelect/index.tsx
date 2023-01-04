@@ -50,7 +50,7 @@ function DebounceSelect<ValueType extends { key?: string; label: React.ReactNode
             notFoundContent={<>Không có dữ liệu</>}
             showSearch
             {...props}
-            options={props?.mode === 'multiple' ? [{ label: 'Chọn tất cả', value: 'all' }, ...options] : [...options]}
+            options={props?.mode === 'multiple' ? [...options] : [...options]}
         />
     );
 }

@@ -14,28 +14,15 @@ import SynckiotTab from './components/Synckiot.Tab';
 import Warehouse from './components/Warehouse';
 import WarehouseFormPage from './components/WarehouseForm';
 import { WarehouseService } from './service';
-const items = [
-    { label: 'Thông tin hệ thống', key: '0', children: <InformationTab /> }, // remember to pass the key prop
-    { label: 'Đồng bộ Kiot Việt', key: '1', children: <SynckiotTab /> },
-    { label: 'Kho hàng tự động', key: '2', children: <Warehouse /> },
-];
+
 const SettingPage = () => {
     const { state, dispatch } = useCallContext();
 
     const [tabIndex, setTabIndex] = React.useState('0');
     const [addKiotViet, setAddKiotViet] = React.useState(false);
     const [modalVisible, setModalVisible] = React.useState(false);
-    const [values, setValues] = React.useState<any>(null);
-    const [filterQuery, setFilterQuery] = React.useState();
-    const [page, setPage] = React.useState(1);
     // step
     const [current, setCurrent] = React.useState(0);
-    const {
-        data: warehouse,
-        isLoading,
-        refetch,
-        isRefetching,
-    } = useQuery<any>(['warehouseService', page, filterQuery], () => WarehouseService.get({ page }));
 
     const handleNextStep = () => {
         setCurrent((prev: number) => prev + 1);
@@ -52,14 +39,16 @@ const SettingPage = () => {
         setCurrent(0);
     }, []);
 
-    const handleCloseForm = React.useCallback((trick = '') => {
-        setValues(null);
-        setModalVisible(false);
-        if (trick === 'notRefresh') return;
-        refetch();
+    const items = [
+        { label: 'Thông tin hệ thống', key: '0', children: <InformationTab /> }, // remember to pass the key prop
+        { label: 'Đồng bộ Kiot Việt', key: '1', children: <SynckiotTab /> },
+        {
+            label: 'Kho hàng tự động',
+            key: '2',
+            children: <Warehouse modalVisible={modalVisible} setModalVisible={setModalVisible} />,
+        },
+    ];
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
     return (
         <>
             <TopBar title="Cấu hình" />
@@ -104,7 +93,6 @@ const SettingPage = () => {
                     />
                 </div>
             </ModalComponent>
-            <WarehouseFormPage handleCloseForm={handleCloseForm} modalVisible={modalVisible} />
         </>
     );
 };

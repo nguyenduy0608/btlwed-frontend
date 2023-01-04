@@ -16,7 +16,7 @@ const SelectMultiComponent = ({
     apiUrl: string;
     params?: any;
     placeholder: string;
-    onChange: (id: any) => void;
+    onChange?: (id: any) => void;
     defaultSelect?: any;
     fieldShow?: string;
     labelProp: any;
@@ -69,9 +69,9 @@ const SelectMultiComponent = ({
             fetchOptions={fetchUserList}
             onChange={(newValue: any) => {
                 if (newValue[newValue?.length - 1]?.value === 'all') {
-                    return onChange([{ label: 'Chọn tất cả', value: 'all' }]);
+                    return onChange && onChange([{ label: 'Chọn tất cả', value: 'all' }]);
                 }
-                onChange(newValue ? newValue : undefined);
+                onChange && onChange(newValue ? newValue : undefined);
             }}
             onSelect={(e: any) => {
                 // setCallback(!callback);
@@ -85,7 +85,7 @@ const SelectMultiComponent = ({
                             };
                         })
                     );
-                    setValue([{ label: 'Chọn tất cả', value: 'all' }]);
+                    // setValue([{ label: 'Chọn tất cả', value: 'all' }]);
                 } else {
                     setValue((prev: any) => [...prev, e]);
                 }

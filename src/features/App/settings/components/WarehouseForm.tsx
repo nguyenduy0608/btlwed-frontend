@@ -1,19 +1,16 @@
+import SaveButton from '@/components/Button/Save.Button';
 import FormComponent from '@/components/FormComponent';
 import FormItemComponent from '@/components/FormComponent/FormItemComponent';
-import { Button, Checkbox, Col, DatePicker, Divider, Form, Input, InputNumber, Row, Select, Space } from 'antd';
-import { rules } from '../../voucher/rules';
-import { Notification, wait } from '@/utils';
-import React from 'react';
-import { ADMIN, STATUS } from '@/contants';
-import { WarehouseService } from '../service';
 import ModalComponent from '@/components/ModalComponent';
-import UploadComponent from '@/components/Upload';
-import { errorConfirmPassword, errorValidPhone } from '@/utils/validation';
-import useCallContext from '@/hooks/useCallContext';
-import SaveButton from '@/components/Button/Save.Button';
 import SelectComponent from '@/components/SelectComponent';
 import SelectMultiComponent from '@/components/SelectComponent/SelectMultiComponent';
-const { Option } = Select;
+import { DefaultSelectStyled } from '@/config/global.style';
+import useCallContext from '@/hooks/useCallContext';
+import { Notification, wait } from '@/utils';
+import { Button, Form, Row, Select, Space } from 'antd';
+import React from 'react';
+import { rules } from '../../voucher/rules';
+import { WarehouseService } from '../service';
 
 const WarehouseFormPage = ({
     values,
@@ -24,10 +21,13 @@ const WarehouseFormPage = ({
     modalVisible: boolean;
     handleCloseForm: any;
 }) => {
+    const { state } = useCallContext();
+
     const [form] = Form.useForm();
     const [loadingModal, setLoadingModal] = React.useState(false);
 
     const retailer: any = Form.useWatch('retailer', form);
+    const branch_id: any = Form.useWatch('name', form);
 
     const formReset = () => {
         form.setFieldsValue({
@@ -46,6 +46,7 @@ const WarehouseFormPage = ({
             });
         }
     }, [values]);
+
     const handleSubmit = React.useCallback(
         async (data: any) => {
             setLoadingModal(true);
@@ -61,9 +62,7 @@ const WarehouseFormPage = ({
                     branches_id:
                         data.name === values.name ? values.kiotvietBranchesId.toString() : data.name.value.toString(),
                     kiotviet_id:
-                        data.retailer === values.retailer
-                            ? values.kiotvietId.toString()
-                            : data.retailer.value.toString(),
+                        data.retailer === values.retailer ? values.kiotvietId.toString() : data.retailer.toString(),
                 };
                 const res = await WarehouseService.update(values.id, newData);
                 if (res.status) {
@@ -79,7 +78,7 @@ const WarehouseFormPage = ({
                 let newData = {
                     province: provinced,
                     branches_id: data.name.value.toString(),
-                    kiotviet_id: data.retailer.value.toString(),
+                    kiotviet_id: data.retailer.toString(),
                 };
                 const res = await WarehouseService.create(newData);
                 if (res.status) {
@@ -106,18 +105,27 @@ const WarehouseFormPage = ({
                         name="retailer"
                         rules={[rules.required('Vui lòng chọn kho hàng!')]}
                         inputField={
-                            <SelectComponent fieldShow="name" apiUrl={'admin/kiotViet'} placeholder="Chọn kho hàng" />
+                            <DefaultSelectStyled allowClear placeholder="Chọn kho hàng">
+                                {state?.kiotviets &&
+                                    state?.kiotviets.map((item: any) => (
+                                        <DefaultSelectStyled.Option key={item.id} value={item.id}>
+                                            {item.name}
+                                        </DefaultSelectStyled.Option>
+                                    ))}
+                            </DefaultSelectStyled>
                         }
                     />
+                    {/* <SelectComponent fieldShow="name" apiUrl={'admin/kiotViet'} placeholder="" /> */}
                     <FormItemComponent
                         label="Kho tự động"
                         name="name"
                         rules={[rules.required('Vui lòng chọn kho tự động!')]}
                         inputField={
                             <SelectComponent
-                                disabled={!retailer?.value}
+                                disabled={!retailer}
+                                value={branch_id?.value}
                                 fieldShow="branchName"
-                                apiUrl={`/admin/kiotviet/${retailer?.value}/list_branch`}
+                                apiUrl={`/admin/kiotviet/${retailer}/list_branch`}
                                 placeholder="Chọn kho tự động"
                             />
                         }
@@ -133,7 +141,7 @@ const WarehouseFormPage = ({
                                 labelProp="name"
                                 apiUrl={'address/provinces'}
                                 placeholder="Chọn tỉnh thành phố"
-                                onChange={() => {}}
+                                // onChange={() => {}}
                             />
                         }
                     />

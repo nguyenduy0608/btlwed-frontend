@@ -36,6 +36,7 @@ AxiosClient.interceptors.response.use(
     (response: AxiosResponse) => {
         if (response && response.data) {
             if (!response.data.status || response.data.code === 400 || response.data.code === 403) {
+                console.log('🚀 ~ file: AxiosClient.tsx:40 ~ response', response);
                 switch (response.data.code) {
                     case 400:
                         if (response.data.details && response.data.details.length > 0) {
@@ -47,8 +48,11 @@ AxiosClient.interceptors.response.use(
                             Notification('error', response?.data?.message);
                         }
                         break;
-                    case 403:
+                    case 12:
                         // handle error
+                        Notification('error', response?.data?.message);
+                        LocalStorage.removeToken();
+                        window.location.reload();
                         break;
                     default:
                         Notification('error', response?.data?.message);

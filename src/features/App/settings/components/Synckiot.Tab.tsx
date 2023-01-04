@@ -1,11 +1,15 @@
 import TableComponent, { TableStyled } from '@/components/TableComponent';
+import { SET_CALLBACK_KIOVIET } from '@/context/types';
 import useCallContext from '@/hooks/useCallContext';
+import { Notification } from '@/utils';
+import { Switch } from 'antd';
 import React from 'react';
+import { settingService } from '../service';
 import DetailKiotViet from './KiotViet';
 import { columns } from './Setting.Config';
 
 const SynckiotTab = () => {
-    const { state } = useCallContext();
+    const { state, dispatch } = useCallContext();
     const [keysExpanded, setKeysExpanded] = React.useState<string[]>([]);
 
     const rowRender = (record: any, index: number, indent: number, expanded: any) => {
@@ -42,7 +46,38 @@ const SynckiotTab = () => {
                 pagination={false}
                 rowKey={(record: any) => record.id}
                 dataSource={state?.kiotviets || []}
-                columns={columns(1)}
+                columns={[
+                    ...columns(1),
+                    {
+                        title: 'Trạng thái đồng bộ',
+                        dataIndex: 'status',
+                        align: 'center',
+                        render: (value: number, row: any) => (
+                            <div
+                                onClick={(e: any) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }}
+                            >
+                                <Switch
+                                    onChange={(value) => {
+                                        settingService.toggleActive(row?.id).then((res) => {
+                                            if (res.data?.status) {
+                                                Notification('success', 'Đã bật trạng thái đồng bộ');
+                                            } else {
+                                                Notification('success', 'Đã tắt trạng thái đồng bộ');
+                                            }
+                                            dispatch({
+                                                type: SET_CALLBACK_KIOVIET,
+                                            });
+                                        });
+                                    }}
+                                    checked={!!value}
+                                />
+                            </div>
+                        ),
+                    },
+                ]}
             />
         </>
     );

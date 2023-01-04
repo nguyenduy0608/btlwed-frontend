@@ -46,7 +46,9 @@ export const settingService = {
     postKiotviet: (data: any) => {
         return AxiosClient.post('/admin/kiotviet', data);
     },
-
+    toggleActive: (id: number) => {
+        return AxiosClient.put('/admin/kiotviet/' + id);
+    },
     // todo: cấu hình chi nhánh mặc định
     branchKiotviet: (id: any, data: any) => {
         return AxiosClient.patch('/admin/kiotviet/' + id + '/set_default_branch', data);
