@@ -1,8 +1,9 @@
+import IconAntd from '@/components/IconAntd';
 import TableComponent, { TableStyled } from '@/components/TableComponent';
 import { SET_CALLBACK_KIOVIET } from '@/context/types';
 import useCallContext from '@/hooks/useCallContext';
 import { Notification } from '@/utils';
-import { Switch } from 'antd';
+import { Button, Popconfirm, Switch } from 'antd';
 import React from 'react';
 import { settingService } from '../service';
 import DetailKiotViet from './KiotViet';
@@ -49,7 +50,7 @@ const SynckiotTab = () => {
                 columns={[
                     ...columns(1),
                     {
-                        title: 'Trạng thái đồng bộ',
+                        title: 'Đồng bộ',
                         dataIndex: 'status',
                         align: 'center',
                         render: (value: number, row: any) => (
@@ -74,6 +75,33 @@ const SynckiotTab = () => {
                                     }}
                                     checked={!!value}
                                 />
+                            </div>
+                        ),
+                    },
+                    {
+                        title: '',
+                        dataIndex: 'action',
+                        align: 'center',
+                        render: (value: any, row: any) => (
+                            <div
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }}
+                            >
+                                <Popconfirm
+                                    onConfirm={() => {
+                                        settingService.deleteKiotviet(row.id).then(() => {
+                                            dispatch({
+                                                type: SET_CALLBACK_KIOVIET,
+                                            });
+                                            Notification('success', 'Xoá gian hàng thành công');
+                                        });
+                                    }}
+                                    title="Bạn có chắc chắn muốn xoá?"
+                                >
+                                    <Button icon={<IconAntd icon="DeleteOutlined" />} />
+                                </Popconfirm>
                             </div>
                         ),
                     },
