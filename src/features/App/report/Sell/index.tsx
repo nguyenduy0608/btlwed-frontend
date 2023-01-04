@@ -69,7 +69,7 @@ const ReportSellPage = () => {
                 >
                     <TableComponent
                         showTotalResult
-                        loading={isRefetching}
+                        loading={isLoading || isRefetching}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
