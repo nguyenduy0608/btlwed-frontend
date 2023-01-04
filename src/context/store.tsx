@@ -18,6 +18,7 @@ const initialState: InitialStateType = {
     socket: null,
     appBackground: {
         show: false,
+        showFlower: false,
     },
     callbackNoti: false,
     callbackKioviet: false,

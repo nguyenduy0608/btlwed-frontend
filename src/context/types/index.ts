@@ -9,6 +9,7 @@ export const SET_BG_APP = 'SET_BG_APP';
 export const SET_BG_APP_COLOR = 'SET_BG_APP_COLOR';
 export const SET_COUNT_NOTI = 'SET_COUNT_NOTI';
 export const SET_CALLBACK_KIOVIET = 'SET_CALLBACK_KIOVIET';
+export const SET_BG_APP_FLOWER = 'SET_BG_APP_FLOWER';
 
 type ActionType =
     | typeof APP_LOADING
@@ -19,7 +20,8 @@ type ActionType =
     | typeof SET_BG_APP
     | typeof SET_COUNT_NOTI
     | typeof SET_CALLBACK_KIOVIET
-    | typeof SET_BG_APP_COLOR;
+    | typeof SET_BG_APP_COLOR
+    | typeof SET_BG_APP_FLOWER;
 
 export type InitialStateType = {
     appLoading: boolean;

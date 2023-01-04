@@ -10,6 +10,7 @@ import {
     SET_KIOTVIETS,
     SET_SOCKET,
     SET_SYNC_LOADING,
+    SET_BG_APP_FLOWER,
 } from '../types';
 
 export const appReducer = (state: InitialStateType, action: IAction) => {
@@ -36,6 +37,10 @@ export const appReducer = (state: InitialStateType, action: IAction) => {
 
         case SET_BG_APP: {
             return { ...state, appBackground: { ...state.appBackground, show: action.payload } };
+        }
+
+        case SET_BG_APP_FLOWER: {
+            return { ...state, appBackground: { ...state.appBackground, showFlower: action.payload } };
         }
 
         case SET_BG_APP_COLOR: {
