@@ -3,7 +3,7 @@ import PushNoti from '@/features/App/pushNoti';
 import { rules } from '@/features/App/voucher/rules';
 import useCallContext from '@/hooks/useCallContext';
 import { DownOutlined } from '@ant-design/icons';
-import { Avatar, Badge, Button, Col, Form, Input, Popover, Row, Space } from 'antd';
+import { Avatar, Badge, Button, Col, Form, Input, Popconfirm, Popover, Row, Space } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import SaveButton from '../Button/Save.Button';
@@ -43,15 +43,20 @@ const UserInfo = () => {
             <li className="gx-font-weight-medium" onClick={() => setOpen(true)}>
                 Đổi mật khẩu
             </li>
-            <li
-                className="gx-font-weight-medium"
-                onClick={() => {
+            <Popconfirm
+                title={<strong style={{ marginTop: '10px' }}>Bạn chắc chắn muốn đăng xuất tài khoản này?</strong>}
+                onConfirm={() => {
                     LocalStorage.removeToken();
                     window.location.reload();
                 }}
+                okText="Ok"
+                cancelText="Hủy"
+                okButtonProps={{
+                    type: 'primary',
+                }}
             >
-                Đăng xuất
-            </li>
+                <li className="gx-font-weight-medium">Đăng xuất</li>
+            </Popconfirm>
         </ul>
     );
 

@@ -83,6 +83,7 @@ const VoucherFormPage = () => {
                 description: data?.description ? data?.description : '',
                 minSpend: data?.minSpend ? data?.minSpend : 0,
             };
+            console.log('dataUplaod:', dataUpload.description, dataUpload.minSpend);
             if (applicableType === APPLICABLE_TYPE.order) {
                 delete dataUpload.products;
             }
@@ -218,6 +219,21 @@ const VoucherFormPage = () => {
                                             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                             parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
                                             placeholder="Nhập số lượng voucher"
+                                        />
+                                    }
+                                />
+                                <FormItemComponent
+                                    rules={[{ required: true, message: 'Vui lòng nhập số lần sử dụng voucher!' }]}
+                                    name="vouchersPerUser"
+                                    label="Số lần sử dụng voucher"
+                                    inputField={
+                                        <InputNumber
+                                            min={1}
+                                            max={5000}
+                                            style={{ width: '100%' }}
+                                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
+                                            placeholder="Nhập số lần sử dụng voucher"
                                         />
                                     }
                                 />

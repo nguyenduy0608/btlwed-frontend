@@ -7,7 +7,15 @@ export interface IQuery {
     kiotvietId?: string | number;
     userId?: number;
 }
-
+export interface Export {
+    search?: string;
+    provinceId?: string;
+    kiotvietId?: string;
+    createFrom?: string;
+    createTo?: string;
+    status?: number;
+    limit?: number;
+}
 export const CustomerService = {
     get: (params: IQuery) => {
         const url = `/admin/user`;
@@ -35,7 +43,13 @@ export const CustomerService = {
         const url = `/admin/debit/${userId}`;
         return AxiosClient.post(url, debt);
     },
+    exportExcel: (params: Export) => {
+        const url = `/admin/user/export_to_excel`;
+        const handleParams = handleObjectEmpty(params);
+        return AxiosClient.get(url, { params: { ...handleParams } });
+    },
 };
+
 export const PurchaseService = {
     get: (params: IQuery) => {
         const url = `/admin/order`;

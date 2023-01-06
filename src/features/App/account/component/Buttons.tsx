@@ -118,9 +118,7 @@ const Buttons = (props: IProps) => {
             }}
         >
             <Button
-                disabled={info?.id === record.id}
                 type="text"
-                className="gx-mb-0"
                 style={{
                     fontSize: '16px',
                     color: '#000',

@@ -17,7 +17,7 @@ const dateFormat = 'DD/MM/YYYY';
 
 const HomePage = () => {
     const [dateFilter, setDateFilter] = React.useState({
-        fromDate: moment().utc().subtract(15, 'day').format('YYYY-MM-DD'),
+        fromDate: moment().utc().subtract(14, 'day').format('YYYY-MM-DD'),
         toDate: moment().utc().format('YYYY-MM-DD'),
     });
 

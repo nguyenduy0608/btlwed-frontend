@@ -3,7 +3,7 @@ import { routerPage } from '@/config/contants.routes';
 import { SET_COUNT_NOTI } from '@/context/types';
 import { ORDER_TYPE, VOUCHER_TYPE } from '@/features/Socket/contants';
 import useCallContext from '@/hooks/useCallContext';
-import { Avatar, Badge, Divider, List, Row, Skeleton } from 'antd';
+import { Avatar, Badge, Button, Divider, List, Row, Skeleton } from 'antd';
 import moment from 'moment';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -68,6 +68,12 @@ const PushNoti = ({ open, setOpen }: any) => {
     React.useEffect(() => {
         loadMoreData();
     }, []);
+    const markAllAsRead = async () => {
+        try {
+            await pushNotiService.readAll();
+            setOpen(false);
+        } catch (error) {}
+    };
 
     return (
         <div>
@@ -75,6 +81,14 @@ const PushNoti = ({ open, setOpen }: any) => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <h4 className="gx-mb-3 gx-font-weight-bold">Danh sách thông báo</h4>
                 {/* <div>Đọc tất cả</div> */}
+                <Button
+                    type="link"
+                    onClick={() => {
+                        markAllAsRead();
+                    }}
+                >
+                    Đọc tất cả
+                </Button>
             </div>
             {/* <List
                 style={{ height: 'calc(100vh - 80px)', overflowY: 'auto' }}
@@ -169,7 +183,7 @@ const PushNoti = ({ open, setOpen }: any) => {
                                             <div
                                                 style={{ fontWeight: item?.isRead ? '400' : 'bold', fontSize: '12px' }}
                                             >
-                                                {moment(item?.createdAt).format('HH:mm YYYY-MM-DD')}
+                                                {moment(item?.createdAt).format('HH:mm YYYY/MM/DD')}
                                             </div>
                                         </Row>
                                     }

@@ -12,4 +12,7 @@ export const pushNotiService = {
     read: (id: number) => {
         return AxiosClient.put('/notification/' + id);
     },
+    readAll: () => {
+        return AxiosClient.put('/notification/mark-as-read-all');
+    },
 };

@@ -7,7 +7,7 @@ import TopBar from '@/components/TopBar';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { handleObjectEmpty, wait } from '@/utils';
+import { downloadFile, handleObjectEmpty, wait, Notification } from '@/utils';
 import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -16,6 +16,7 @@ import { columns, DataTypeCustomer } from '../components/Customer.Config';
 import Description from '../components/Description';
 import Filter from '../components/Filter';
 import { CustomerService } from '../service';
+
 const initialFilterQuery = {};
 
 const CustomerPage = () => {
@@ -31,7 +32,6 @@ const CustomerPage = () => {
     } = useQuery<any>(['customer', page, filterQuery], () => CustomerService.get({ page, ...filterQuery }));
 
     const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
-
     React.useEffect(() => {
         refetch();
     }, [state.syncLoading]);
@@ -63,6 +63,14 @@ const CustomerPage = () => {
             setLoadingClearFilter(false);
         });
     };
+    const handleExport = async () => {
+        try {
+            const res: any = await CustomerService.exportExcel(filterQuery);
+            downloadFile(res);
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     return (
         <>
@@ -71,7 +79,9 @@ const CustomerPage = () => {
                 extra={[
                     <Segmented
                         key="kh"
-                        onChange={(value) => setFilterQuery({ ...filterQuery, kiotvietId: value })}
+                        onChange={(value) => {
+                            setFilterQuery({ ...filterQuery, kiotvietId: value });
+                        }}
                         options={[
                             selectAll,
                             ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
@@ -88,7 +98,14 @@ const CustomerPage = () => {
                             <Filter returnFilter={returnFilter} key="filter" />
                         )
                     }
-                    extra={<ExportButton key="extra_btn" onClick={() => console.log('first')} />}
+                    extra={
+                        <ExportButton
+                            key="extra_btn"
+                            onClick={() => {
+                                handleExport();
+                            }}
+                        />
+                    }
                 >
                     <TableComponent
                         reLoadData={() => refetch()}
