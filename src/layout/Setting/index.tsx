@@ -48,6 +48,10 @@ const Setting = () => {
                 navigate('/order');
                 await syncService.sync(+kiotVietId, type);
                 break;
+            case 'invoice':
+                navigate('/order');
+                await syncService.sync(+kiotVietId, type);
+                break;
             default:
                 break;
         }
@@ -80,6 +84,11 @@ const Setting = () => {
             <Col span={24}>
                 <Button style={{ width: '100%' }} onClick={() => handleSync('user')}>
                     Đồng bộ khách hàng
+                </Button>
+            </Col>
+            <Col span={24}>
+                <Button style={{ width: '100%' }} onClick={() => handleSync('invoice')}>
+                    Đồng bộ hóa đơn
                 </Button>
             </Col>
         </Row>

@@ -20,8 +20,9 @@ const FilterWallet = ({ returnFilter }: { returnFilter: (filter: any) => void })
                 defaultValue={null}
                 onChange={handleChange}
             >
-                <Option value={WALLET_TYPE.ORDER_COMPLETED}>Hoàn thành đơn hàng</Option>
-                <Option value={WALLET_TYPE.PAYMENT_ORDER}>Thanh toán đơn hàng</Option>
+                <Option value={WALLET_TYPE.ORDER_COMPLETE}>Hoàn thành đơn hàng</Option>
+                <Option value={WALLET_TYPE.ORDER_PAYMENT}>Thanh toán đơn hàng</Option>
+                <Option value={WALLET_TYPE.ORDER_REFUND_POINT}>Hoàn điểm</Option>
                 {/* <Option value={WALLET_TYPE.INVITE}>Giới thiệu ứng dụng</Option>
                 <Option value={WALLET_TYPE.JOIN_WITH_INVITE}>Đăng ký với mã giới thiệu</Option>
                 <Option value={WALLET_TYPE.DEPOSIT}>Nạp tiền từ VNPAY</Option>

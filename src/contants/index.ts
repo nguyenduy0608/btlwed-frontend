@@ -18,6 +18,7 @@ export const APPLICABLE_TYPE = {
 export const CUSTOMER_TYPE = {
     AGENT: 1,
     DISTRIBUTORS: 2,
+    ALL: 3,
 };
 export const ADMIN = {
     main: 'admin', // admin chính
@@ -42,13 +43,9 @@ export const ORDER_STATUS = {
 };
 
 export enum WALLET_TYPE {
-    PAYMENT_ORDER = 'payment_order',
-    ORDER_COMPLETED = 'order_completed',
-    DEPOSIT = 'deposit',
-    MEMBER_UPGRADE = 'member_upgrade',
-    JOIN_WITH_INVITE = 'join_with_invite',
-    INVITE = 'invite',
-    GIFT_EXCHANGE = 'gift_exchange',
+    ORDER_COMPLETE = 'order_compelete',
+    ORDER_REFUND_POINT = 'order_refund_point',
+    ORDER_PAYMENT = 'order_payment',
 }
 
 export enum ORDER_STATE {

@@ -66,7 +66,7 @@ const CustomerPage = () => {
     const handleExport = async () => {
         try {
             const res: any = await CustomerService.exportExcel(filterQuery);
-            downloadFile(res);
+            downloadFile(res?.data);
         } catch (err) {
             console.log(err);
         }

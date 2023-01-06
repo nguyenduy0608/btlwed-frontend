@@ -64,6 +64,7 @@ const VoucherFormPage = () => {
     const [quantity, setQuantity] = React.useState({
         used: 0,
         remaining: 0,
+        quota: 0,
     });
 
     const handleSubmit = React.useCallback(
@@ -83,7 +84,6 @@ const VoucherFormPage = () => {
                 description: data?.description ? data?.description : '',
                 minSpend: data?.minSpend ? data?.minSpend : 0,
             };
-            console.log('dataUplaod:', dataUpload.description, dataUpload.minSpend);
             if (applicableType === APPLICABLE_TYPE.order) {
                 delete dataUpload.products;
             }
@@ -155,6 +155,7 @@ const VoucherFormPage = () => {
                     }
 
                     setQuantity({
+                        quota: res.data?.quota,
                         used: res?.data?.used || 0,
                         remaining: res?.data?.remainQuota,
                     });
@@ -272,6 +273,7 @@ const VoucherFormPage = () => {
                                     label="Loại khách hàng"
                                     inputField={
                                         <Select placeholder="Chọn loại khách hàng">
+                                            <Option value={CUSTOMER_TYPE.ALL}>Tất cả</Option>
                                             <Option value={CUSTOMER_TYPE.AGENT}>Đại lý</Option>
                                             <Option value={CUSTOMER_TYPE.DISTRIBUTORS}>Nhà phân phối</Option>
                                         </Select>
@@ -419,7 +421,7 @@ const VoucherFormPage = () => {
                                         <FormItemComponent
                                             label="Số lượng đã dùng"
                                             valuePropName="checked"
-                                            inputField={<strong>{quantity.used}</strong>}
+                                            inputField={<strong>{quantity.quota - quantity.remaining}</strong>}
                                         />
                                         <FormItemComponent
                                             label="Số lượng còn lại"
