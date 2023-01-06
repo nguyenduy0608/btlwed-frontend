@@ -6,6 +6,7 @@ import { uuid } from '@/utils';
 import { Button, Card, Col, Form, Input, InputNumber, message, Row } from 'antd';
 import React from 'react';
 import styled from 'styled-components';
+import { rules } from '../../voucher/rules';
 import { settingService } from '../service';
 
 const InformationTab = () => {
@@ -136,6 +137,7 @@ const InformationTab = () => {
                                             setIsEditPoint(false);
                                         }
                                     }}
+                                    type="number"
                                     min={0}
                                     max={100}
                                     style={{ width: '100%' }}
@@ -188,6 +190,7 @@ const InformationTab = () => {
                             label="Tên ngân hàng"
                             name="bankName"
                             inputField={<Input placeholder="Nhập tên ngân hàng" />}
+                            rules={[]}
                         />
                         <FormItemComponent
                             label="Số tài khoản"

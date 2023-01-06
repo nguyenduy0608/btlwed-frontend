@@ -63,10 +63,17 @@ const SynckiotTab = () => {
                                 <Switch
                                     onChange={(value) => {
                                         settingService.toggleActive(row?.id).then((res) => {
+                                            console.log(row);
                                             if (res.data?.status) {
-                                                Notification('success', 'Đã bật trạng thái đồng bộ');
+                                                Notification(
+                                                    'success',
+                                                    `Gian hàng ${row.name} đang thực hiện quá trình đồng bộ`
+                                                );
                                             } else {
-                                                Notification('success', 'Đã tắt trạng thái đồng bộ');
+                                                Notification(
+                                                    'success',
+                                                    `Gian hàng ${row.name} đã tạm ngưng quá trình đồng bộ`
+                                                );
                                             }
                                             dispatch({
                                                 type: SET_CALLBACK_KIOVIET,

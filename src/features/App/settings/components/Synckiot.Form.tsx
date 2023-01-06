@@ -97,7 +97,7 @@ const SynckiotForm = ({
                         <FormItemComponent
                             label="Kho hàng"
                             name="defaultBranchId"
-                            rules={[rules.required('Vui lòng chọn kho hàng!')]}
+                            rules={[rules.required('Vui lòng chọn kho hàng để chuyển đơn sang Kiot Việt!')]}
                             inputField={
                                 <SelectComponent
                                     fieldShow="branchName"

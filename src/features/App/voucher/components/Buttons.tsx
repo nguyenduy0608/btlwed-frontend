@@ -2,9 +2,10 @@ import ActiveButton from '@/components/Button/Active.Button';
 import DeleteDescriptionButton from '@/components/Button/Delete.Description.Button';
 import UnActiveButton from '@/components/Button/UnActive.Button';
 import { routerPage } from '@/config/contants.routes';
-import { checkNowDate, checkNowStartVoucherDate, Notification } from '@/utils';
+import { checkNowDate, checkNowStartVoucherDate, momentParseUtc, Notification } from '@/utils';
 import { CheckCircleOutlined, CloseCircleOutlined, EditOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
+import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import voucherService from '../service';
 import { DataTypeVoucher } from './Voucher.Config';
@@ -35,7 +36,15 @@ const Buttons = (props: IProps) => {
             refetch();
         }
     };
+    const checkDate = (date: string) => {
+        const dateNow = moment().format('YYYY-MM-DD');
+        const dateCompare = momentParseUtc(date).format('YYYY-MM-DD');
 
+        if (dateNow < dateCompare) {
+            return true;
+        }
+        return false;
+    };
     return [
         record.status ? (
             <UnActiveButton
@@ -43,7 +52,8 @@ const Buttons = (props: IProps) => {
                 disabled={
                     checkNowStartVoucherDate(record.startTime) ||
                     checkNowDate(record.endTime) ||
-                    record.remainQuota == 0
+                    record.remainQuota == 0 ||
+                    checkDate(record.startTime)
                 }
             />
         ) : (

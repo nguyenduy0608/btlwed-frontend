@@ -145,7 +145,11 @@ export const checkNowDate = (date: string) => {
                 return true;
             }
         }
+        if (dateNow !== dateCompare) {
+            console.log('objtimeCompareSplitect:', timeCompareSplit, 'timeSplit:', timeSplit);
+        }
     }
+
     return false;
 };
 
@@ -170,6 +174,7 @@ export const checkNowStartVoucherDate = (date: string) => {
             }
         }
     }
+
     return false;
 };
 

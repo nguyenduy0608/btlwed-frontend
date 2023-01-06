@@ -6,7 +6,7 @@ import UploadComponent from '@/components/Upload';
 import { ADMIN, STATUS } from '@/contants';
 import useCallContext from '@/hooks/useCallContext';
 import { Notification, uuid, wait } from '@/utils';
-import { errorConfirmPassword, errorValidPhone } from '@/utils/validation';
+import { errorConfirmPassword, errorValidPhone, errorWhiteSpace } from '@/utils/validation';
 import { Button, Col, Form, Input, Row, Select, Space } from 'antd';
 import React from 'react';
 import { rules } from '../../voucher/rules';
@@ -24,7 +24,8 @@ const initialValue = {
     password: '',
     role: '',
     passwordConfirmation: '',
-    group: '',
+    group: undefined,
+    kiotvietId: undefined,
 };
 
 const AccountFormPage = ({
@@ -110,7 +111,11 @@ const AccountFormPage = ({
                             />
                             <FormItemComponent
                                 rules={[
-                                    { required: true, message: 'Vui lòng nhập đúng định dạng email!', type: 'email' },
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập đúng định dạng email!',
+                                        type: 'email',
+                                    },
                                 ]}
                                 name="email"
                                 label="Email"
@@ -120,6 +125,7 @@ const AccountFormPage = ({
                                 rules={[
                                     { required: true, message: 'Vui lòng nhập đúng định dạng số điện thoại !' },
                                     errorValidPhone,
+                                    errorWhiteSpace,
                                 ]}
                                 name="phoneNumber"
                                 label="Số điện thoại"

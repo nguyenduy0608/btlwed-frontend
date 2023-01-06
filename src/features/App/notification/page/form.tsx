@@ -51,15 +51,18 @@ const NotificationFormPage = ({
                 });
                 if (res.status) {
                     Notification('success', 'Cập nhật thông báo thành công');
+
                     handleCloseForm();
                     formReset();
                 }
             } else {
                 const res = await NotificationService.create({ ...data });
                 if (res.status) {
-                    Notification('success', 'Thêm thông báo thành công');
-                    handleCloseForm();
-                    formReset();
+                    setTimeout(() => {
+                        Notification('success', 'Thêm thông báo thành công');
+                        handleCloseForm();
+                        formReset();
+                    }, 1000);
                 }
             }
             setLoadingModal(false);
