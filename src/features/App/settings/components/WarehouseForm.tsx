@@ -21,6 +21,7 @@ const WarehouseFormPage = ({
     modalVisible: boolean;
     handleCloseForm: any;
 }) => {
+    console.log('🚀 ~ file: WarehouseForm.tsx:24 ~ values', values);
     const { state } = useCallContext();
 
     const [form] = Form.useForm();
@@ -59,10 +60,8 @@ const WarehouseFormPage = ({
                 let newData = {
                     ...rest,
                     province: provinced,
-                    branches_id:
-                        data.name === values.name ? values.kiotvietBranchesId.toString() : data.name.value.toString(),
-                    kiotviet_id:
-                        data.retailer === values.retailer ? values.kiotvietId.toString() : data.retailer.toString(),
+                    branches_id: data.name.value.toString(),
+                    kiotviet_id: data.retailer.toString(),
                 };
                 const res = await WarehouseService.update(values.id, newData);
                 if (res.status) {
@@ -141,6 +140,7 @@ const WarehouseFormPage = ({
                                 labelProp="name"
                                 apiUrl={'address/provinces'}
                                 placeholder="Chọn tỉnh thành phố"
+                                defaultSelect={values ? values?.province : null}
                                 // onChange={() => {}}
                             />
                         }

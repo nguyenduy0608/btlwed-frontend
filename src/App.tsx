@@ -18,10 +18,14 @@ import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
 import { appService } from './service';
+import hoadao from './assets/images/hoadao.png';
 const DEV_TYPE = import.meta.env.VITE_DEVOPS_TYPE;
 
 moment.utc().locale('vi');
-
+const snowflake1 = document.createElement('img');
+snowflake1.style.width = '50px';
+snowflake1.style.height = '50px';
+snowflake1.src = hoadao;
 function App() {
     const { state, dispatch } = useCallContext();
     const [role, setRole] = React.useState('');
@@ -36,7 +40,7 @@ function App() {
     React.useLayoutEffect(() => {
         if (LocalStorage.getToken()) {
             authService.info().then((res) => {
-                setRole(Object.keys(res.data)[0]);
+                setRole(res.data[Object.keys(res.data)[0]]?.group);
                 dispatch({
                     type: SET_INFO,
                     payload: { ...res.data[Object.keys(res.data)[0]], role: Object.keys(res.data)[0] },
@@ -83,7 +87,7 @@ function App() {
             </ConfigProvider>
             {/* define default style */}
             <GlobalStyle />
-            {state?.appBackground?.show && (
+            {!state?.appBackground?.showFlower && state?.appBackground?.show && (
                 <Snowfall
                     color={state?.appBackground?.color}
                     style={{
@@ -91,6 +95,19 @@ function App() {
                         width: '100vw',
                         height: '100vh',
                     }}
+                />
+            )}
+            {state?.appBackground?.showFlower && state?.appBackground?.show && (
+                <Snowfall
+                    color={state?.appBackground?.color}
+                    style={{
+                        position: 'fixed',
+                        width: '100vw',
+                        height: '100vh',
+                    }}
+                    snowflakeCount={30}
+                    radius={[10, 20]}
+                    images={[snowflake1]}
                 />
             )}
             {/* loading khi đồng bộ */}

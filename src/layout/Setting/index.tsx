@@ -1,11 +1,11 @@
 import sync from '@/assets/sync.json';
 import IconAntd from '@/components/IconAntd';
 import { DefaultSelectStyled } from '@/config/global.style';
-import { SET_BG_APP, SET_BG_APP_COLOR, SET_SYNC_LOADING } from '@/context/types';
+import { SET_BG_APP, SET_BG_APP_COLOR, SET_BG_APP_FLOWER, SET_SYNC_LOADING } from '@/context/types';
 import useCallContext from '@/hooks/useCallContext';
 import { Notification as NotiMSG, wait } from '@/utils';
 import { notificationSync } from '@/utils/notification';
-import { Button, Col, Drawer, Popover, Row, Select, Switch } from 'antd';
+import { Button, Checkbox, Col, Drawer, Popover, Row, Select, Switch } from 'antd';
 import Lottie from 'lottie-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -151,6 +151,18 @@ const Setting = () => {
                                 LocalStorage.setBG(check);
                             }}
                         />
+                    </Row>
+                    <Row align="middle" className="gx-ml-4 gx-mt-2">
+                        <Checkbox
+                            onChange={(e) => {
+                                dispatch({
+                                    type: SET_BG_APP_FLOWER,
+                                    payload: e.target.checked,
+                                });
+                            }}
+                        >
+                            Chế độ hoa đào
+                        </Checkbox>
                     </Row>
                     <div style={{ margin: '10px 0 15px 0' }}>Màu tuyết rơi</div>
                     {state?.appBackground?.show && (
