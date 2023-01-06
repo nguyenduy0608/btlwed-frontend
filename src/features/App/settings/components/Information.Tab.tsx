@@ -25,7 +25,7 @@ const InformationTab = () => {
         });
     }, [callbackPoint]);
     const handleSubmitChangePoint = (values: any) => {
-        settingService.updatePoint(values.point).then((res) => {
+        settingService.updatePoint(values.point.toString()).then((res) => {
             message.success('Cập nhật thành công % tích điểm');
             setCallbackPoint(!callbackPoint);
             setIsEditPoint(false);
@@ -128,6 +128,17 @@ const InformationTab = () => {
                         <FormItemComponent
                             label="% tích điểm"
                             name="point"
+                            rules={[
+                                {
+                                    message: 'Vui lòng nhập % tích điểm > 0',
+                                    validator: (_: any, value: any) => {
+                                        if (value === 0) {
+                                            return Promise.reject();
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                },
+                            ]}
                             inputField={
                                 <InputNumber
                                     onChange={(value) => {
@@ -167,7 +178,7 @@ const InformationTab = () => {
                             inputField={<Input placeholder="https://zalo.me" />}
                         />
                         <FormItemComponent
-                            label="Facebook"
+                            label="Messenger"
                             name="linkFacebook"
                             inputField={<Input placeholder="https://www.facebook.com" />}
                         />
@@ -190,17 +201,38 @@ const InformationTab = () => {
                             label="Tên ngân hàng"
                             name="bankName"
                             inputField={<Input placeholder="Nhập tên ngân hàng" />}
-                            rules={[]}
+                            rules={[
+                                {
+                                    validator: (_: any, value: any) => {
+                                        if (/\s/.test(value)) {
+                                            return Promise.reject(new Error('Không được có khoảng trắng!'));
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                },
+                            ]}
                         />
                         <FormItemComponent
                             label="Số tài khoản"
                             name="bankAccountNumber"
+                            rules={[
+                                {
+                                    message: 'Số tài khoản sai định dạng',
+                                    validator: (_: any, value: any) => {
+                                        if (value === 0) {
+                                            return Promise.reject();
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                },
+                            ]}
                             inputField={
                                 <InputNumber
                                     style={{ width: '100%' }}
-                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
                                     placeholder="Nhập số tài khoản"
+                                    controls={false}
+                                    type="number"
                                 />
                             }
                         />
