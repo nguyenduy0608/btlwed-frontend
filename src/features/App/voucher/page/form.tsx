@@ -69,6 +69,7 @@ const VoucherFormPage = () => {
 
     const handleSubmit = React.useCallback(
         async (data: any) => {
+            console.log('🚀 ~ file: form.tsx:71 ~ data', data);
             if (!id && !file) return Notification('warning', 'Vui lòng chọn ảnh');
             setLoading(true);
             const formData = new FormData();

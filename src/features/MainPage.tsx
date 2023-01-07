@@ -1,7 +1,7 @@
 import LocalStorage from '@/apis/LocalStorage';
 import { routerPage } from '@/config/contants.routes';
 import { PublicRoutes } from '@/config/Lazy.routes';
-import { AuthRoutes, AdminRoutes, EditorRoutes, AccountantRoutes } from '@/config/routes';
+import { AccountantRoutes, AdminRoutes, AuthRoutes, EditorRoutes } from '@/config/routes';
 import { ADMIN } from '@/contants';
 import PageLayout from '@/layout';
 import React from 'react';
@@ -15,6 +15,8 @@ const switchRoute = (role: string) => {
             return EditorRoutes;
         case ADMIN.accountant:
             return AccountantRoutes;
+        case ADMIN.stall:
+            return AdminRoutes;
         default:
             return PublicRoutes;
     }
@@ -30,6 +32,14 @@ const MainPage = ({ role }: { role: string }) => {
     const [logged, setLogged] = React.useState(false);
 
     React.useEffect(() => {
+        if (!role) return;
+
+        if (role === ADMIN.news) {
+            navigate(routerPage.news);
+        }
+    }, [role]);
+
+    React.useEffect(() => {
         if (logged) return;
 
         // nếu đăng nhập và domain không webview và domain không public
@@ -39,6 +49,7 @@ const MainPage = ({ role }: { role: string }) => {
             setLogged(true);
 
             if (pathname === routerPage.register || pathname === routerPage.login) {
+                // return switchSidebar(role)?.[0]?.key;
                 return navigate('/');
             }
             // navigate(pathname);
@@ -52,7 +63,7 @@ const MainPage = ({ role }: { role: string }) => {
                     break;
             }
         }
-    }, [logged, pathname]);
+    }, [logged, pathname, role]);
 
     return element;
 };
