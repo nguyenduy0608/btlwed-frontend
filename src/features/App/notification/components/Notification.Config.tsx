@@ -22,6 +22,8 @@ export interface DataTypeNotification {
     province: string;
     turnoverOfOrder: number;
     turnover: number;
+    title: string;
+    content: string;
 }
 export const columns = (page: number): ColumnsType<DataTypeNotification> => [
     {
