@@ -8,7 +8,16 @@ export interface IQuery {
     page: number;
     kiotvietId?: string | number;
 }
-
+export interface Export {
+    search?: string;
+    category_id?: string | number;
+    kiotvietId?: string | number;
+    customType?: string;
+    createFrom?: string;
+    createTo?: string;
+    status?: number | string;
+    limit?: number;
+}
 export const CategoryService = {
     get: (params: IQuery) => {
         const url = `/admin/product_category`;
@@ -45,5 +54,13 @@ export const ProductService = {
     detail: (id: string | undefined) => {
         const url = `/admin/product/${id}`;
         return AxiosClient.get(url);
+    },
+    exportExcel: (params: Export) => {
+        const url = `/admin/product/export_to_excel?status=${params?.status || ''}&search=${
+            params?.search || ''
+        }&kiotviet_id=${params?.kiotvietId || ''}&custom_type=${params?.customType || ''}&category_id=${
+            params?.category_id || ''
+        }`;
+        return AxiosClient.post(url);
     },
 };

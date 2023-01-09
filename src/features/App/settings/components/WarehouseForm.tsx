@@ -21,7 +21,6 @@ const WarehouseFormPage = ({
     modalVisible: boolean;
     handleCloseForm: any;
 }) => {
-    console.log('🚀 ~ file: WarehouseForm.tsx:24 ~ values', values);
     const { state } = useCallContext();
 
     const [form] = Form.useForm();

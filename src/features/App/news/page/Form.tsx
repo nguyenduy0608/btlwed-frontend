@@ -32,7 +32,6 @@ const NewsFormPage = () => {
     const fileEdit = React.useRef<any>(null);
     const refContent = React.useRef<any>(null);
     const statusActive = React.useRef<any>(null);
-
     const handleSubmit = (values: any) => {
         setLoading(true);
         if (id) {
@@ -44,7 +43,9 @@ const NewsFormPage = () => {
                         navigate(location?.state?.prevUrl || -1, { state: location.state });
                     }
                 })
-                .finally(() => setLoading(false));
+                .finally(() => {
+                    setLoading(false);
+                });
         } else {
             newService
                 .create({ ...values, statusActive: statusActive.current })
@@ -94,7 +95,7 @@ const NewsFormPage = () => {
                                     label="Tiêu đề tin tức"
                                     inputField={
                                         <Input
-                                            disabled={Boolean(id && status === NEWS_STATUS.POST)}
+                                            disabled={Boolean(id && statusCurrent?.current === NEWS_STATUS.POST)}
                                             placeholder="Nhập tiêu đề tin tức"
                                         />
                                     }
@@ -109,7 +110,7 @@ const NewsFormPage = () => {
                                     }
                                     inputField={
                                         <UploadComponent
-                                            disabled={Boolean(id && status === NEWS_STATUS.POST)}
+                                            disabled={Boolean(id && statusCurrent?.current === NEWS_STATUS.POST)}
                                             // isUploadServerWhenUploading
                                             accept=".png, .jpg, .jpeg"
                                             initialFile={fileEdit.current}
@@ -151,7 +152,7 @@ const NewsFormPage = () => {
                                     label="Loại tin tức"
                                     inputField={
                                         <Select
-                                            disabled={Boolean(id && status === NEWS_STATUS.POST)}
+                                            disabled={Boolean(id && statusCurrent?.current === NEWS_STATUS.POST)}
                                             placeholder="Chọn loại tin tức"
                                         >
                                             <Select.Option value={NEWS_TYPE.BANNER}>Banner</Select.Option>
@@ -166,7 +167,9 @@ const NewsFormPage = () => {
                                         label=" "
                                         valuePropName="checked"
                                         inputField={
-                                            <Checkbox disabled={Boolean(id && status === NEWS_STATUS.POST)}>
+                                            <Checkbox
+                                                disabled={Boolean(id && statusCurrent?.current === NEWS_STATUS.POST)}
+                                            >
                                                 <strong>Gửi thông báo cho khách hàng </strong>
                                             </Checkbox>
                                         }

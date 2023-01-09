@@ -8,11 +8,12 @@ import { routerPage } from '@/config/contants.routes';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { handleObjectEmpty, wait } from '@/utils';
+import { downloadFile, handleObjectEmpty, wait } from '@/utils';
 import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { ProductService } from '../../product/service';
 import Filter from '../components/FIlter';
 import { columns } from '../components/Order.Config';
 import { OrderService } from '../service';
@@ -58,7 +59,14 @@ const OrderPage = () => {
             setLoadingClearFilter(false);
         });
     };
-
+    const handleExport = async () => {
+        try {
+            const res: any = await OrderService.exportExcel(filterQuery);
+            downloadFile(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
     return (
         <>
             <TopBar
@@ -87,7 +95,7 @@ const OrderPage = () => {
                     }
                     extra={[
                         // <PrintButton key="print" onClick={() => {}} />,
-                        <ExportButton key="export" onClick={() => console.log('first')} />,
+                        <ExportButton key="export" onClick={() => handleExport()} />,
                     ]}
                 >
                     <TableComponent

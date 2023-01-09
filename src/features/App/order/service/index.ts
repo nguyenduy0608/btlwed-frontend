@@ -7,7 +7,16 @@ import { DataTypeOrder } from '../components/Order.Config';
 export interface IQuery {
     page: number;
 }
-
+export interface Export {
+    search?: string;
+    productId?: string;
+    userId?: string;
+    kiotvietId?: string;
+    createtableType?: string;
+    createFrom?: string;
+    createTo?: string;
+    status?: number | string;
+}
 export const OrderService = {
     get: (params: IQuery) => {
         const url = `/admin/order`;
@@ -18,5 +27,12 @@ export const OrderService = {
         const url = `/admin/order/${id}`;
         return AxiosClient.get(url);
     },
+    exportExcel: (params: Export) => {
+        const url = `/admin/order/export_to_excel?status=${params?.status || ''}&search=${
+            params?.search || ''
+        }&createtable_type=${params?.createtableType || ''}&kiotviet_id=${params?.kiotvietId || ''}&create_from=${
+            params?.createFrom || ''
+        }&create_to=${params?.createTo || ''}`;
+        return AxiosClient.post(url);
+    },
 };
-

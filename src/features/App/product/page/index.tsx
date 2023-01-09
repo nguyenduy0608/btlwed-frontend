@@ -8,7 +8,7 @@ import { routerPage } from '@/config/contants.routes';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { handleObjectEmpty, wait } from '@/utils';
+import { downloadFile, handleObjectEmpty, wait } from '@/utils';
 import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -16,7 +16,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { IFilter } from '../../voucher/type';
 import Filter from '../components/Filter.Product';
 import { columnsProduct } from '../components/Product.Config';
-import { ProductService } from '../service';
+import { Export, ProductService } from '../service';
 
 const initialFilterQuery = {};
 
@@ -25,7 +25,7 @@ const ProductPage = () => {
     const location = useLocation();
 
     const navigate = useNavigate();
-    const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
+    const [filterQuery, setFilterQuery] = React.useState<any>(initialFilterQuery);
     const [page, setPage] = React.useState(1);
     const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
 
@@ -66,7 +66,14 @@ const ProductPage = () => {
             setLoadingClearFilter(false);
         });
     };
-
+    const handleExport = async () => {
+        try {
+            const res: any = await ProductService.exportExcel(filterQuery);
+            downloadFile(res.data);
+        } catch (err) {
+            console.log(err);
+        }
+    };
     return (
         <>
             <TopBar
@@ -93,7 +100,13 @@ const ProductPage = () => {
                             <Filter params={filterQuery} returnFilter={returnFilter} key="filterProduct" />
                         )
                     }
-                    extra={<ExportButton onClick={() => console.log('first')} />}
+                    extra={
+                        <ExportButton
+                            onClick={() => {
+                                handleExport();
+                            }}
+                        />
+                    }
                 >
                     <TableComponent
                         reLoadData={() => refetch()}

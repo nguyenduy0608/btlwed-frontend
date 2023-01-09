@@ -18,9 +18,9 @@ const ROLE = (value: string) => {
         case ADMIN.stall:
             return 'Admin gian hàng';
         case ADMIN.news:
-            return 'Admin tin tức';
+            return 'Biên tập viên';
         case ADMIN.accountant:
-            return 'Admin kế toán';
+            return 'Kế toán';
         default:
             return '';
     }

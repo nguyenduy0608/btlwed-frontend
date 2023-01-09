@@ -14,6 +14,7 @@ import { decamelize } from 'humps';
 import moment from 'moment';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { start } from 'repl';
 import TableProduct from '../components/Table.Product';
 import { rules } from '../rules';
 import voucherService from '../service';
@@ -296,6 +297,19 @@ const VoucherFormPage = () => {
                                         <FormItemComponent
                                             name="quantityBuy"
                                             label="Số lượng sản phẩm cần mua"
+                                            // rules={[
+                                            //     {
+                                            //         validator: (_: any, value: any) => {
+                                            //             if (!value) {
+                                            //                 return Promise.reject(
+                                            //                     new Error('Vui lòng nhập số lượng sản phẩm cần mua!')
+                                            //                 );
+                                            //             }
+
+                                            //             return Promise.resolve();
+                                            //         },
+                                            //     },
+                                            // ]}
                                             inputField={
                                                 <InputNumber
                                                     // min={1}
@@ -487,8 +501,12 @@ const VoucherFormPage = () => {
                                         placeholder="Chọn ngày kết thúc"
                                         style={{ width: '100%' }}
                                         disabledDate={(current: any) => {
-                                            if (startDate) return current < moment(startDate).startOf('day');
-
+                                            if (startDate) {
+                                                if (moment(startDate).startOf('day') < moment().startOf('day')) {
+                                                    return current < moment().startOf('day');
+                                                } else return current < moment(startDate).startOf('day');
+                                            }
+                                            // return current < moment(startDate).startOf('day');
                                             return current && current < moment().startOf('day');
                                         }}
                                         disabledTime={() => ({
