@@ -216,7 +216,6 @@ const VoucherFormPage = () => {
                                     inputField={
                                         <InputNumber
                                             min={1}
-                                            max={99}
                                             style={{ width: '100%' }}
                                             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                             parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
@@ -300,7 +299,6 @@ const VoucherFormPage = () => {
                                             inputField={
                                                 <InputNumber
                                                     // min={1}
-                                                    max={99}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
                                                         `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -349,7 +347,6 @@ const VoucherFormPage = () => {
                                             inputField={
                                                 <InputNumber
                                                     min={1}
-                                                    max={99}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
                                                         `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
