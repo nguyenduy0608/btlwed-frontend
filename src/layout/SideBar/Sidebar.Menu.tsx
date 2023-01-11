@@ -94,11 +94,11 @@ export const itemsAdmin: any = [
                 key: 'report/sell',
                 icon: <IconAntd icon="UserSwitchOutlined" />,
             },
-            {
-                label: 'Gian hàng',
-                key: 'report/stall',
-                icon: <IconAntd icon="MergeCellsOutlined" />,
-            },
+            // {
+            //     label: 'Gian hàng',
+            //     key: 'report/stall',
+            //     icon: <IconAntd icon="MergeCellsOutlined" />,
+            // },
         ],
     },
     {
@@ -161,11 +161,11 @@ export const itemAccountants = [
                 key: 'report/sell',
                 icon: <IconAntd icon="UserSwitchOutlined" />,
             },
-            {
-                label: 'Gian hàng',
-                key: 'report/stall',
-                icon: <IconAntd icon="MergeCellsOutlined" />,
-            },
+            // {
+            //     label: 'Gian hàng',
+            //     key: 'report/stall',
+            //     icon: <IconAntd icon="MergeCellsOutlined" />,
+            // },
         ],
     },
 ];
