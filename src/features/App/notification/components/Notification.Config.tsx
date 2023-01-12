@@ -47,7 +47,7 @@ export const columns = (page: number): ColumnsType<DataTypeNotification> => [
         dataIndex: 'createdAt',
         align: 'center',
         render: (value: any) => {
-            return <td>{moment(value).format('HH:mm DD/MM/YYYY')}</td>;
+            return <>{moment(value).format('HH:mm DD/MM/YYYY')}</>;
         },
     },
 ];

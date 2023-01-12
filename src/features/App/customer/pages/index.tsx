@@ -24,6 +24,7 @@ const CustomerPage = () => {
 
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
+    const [loadingExcel, setLoadingExcel] = React.useState<boolean>(false);
 
     const {
         data: customer,
@@ -64,9 +65,12 @@ const CustomerPage = () => {
         });
     };
     const handleExport = async () => {
+        setLoadingExcel(true);
         try {
             const res: any = await CustomerService.exportExcel(filterQuery);
-            downloadFile(res?.data);
+            window.open(res?.data, '_blank');
+            setLoadingExcel(false);
+            // downloadFile(res?.data);
         } catch (err) {
             console.log(err);
         }
@@ -98,19 +102,12 @@ const CustomerPage = () => {
                             <Filter returnFilter={returnFilter} key="filter" />
                         )
                     }
-                    extra={
-                        <ExportButton
-                            key="extra_btn"
-                            onClick={() => {
-                                handleExport();
-                            }}
-                        />
-                    }
+                    extra={<ExportButton key="extra_btn" onClick={handleExport} />}
                 >
                     <TableComponent
                         reLoadData={() => refetch()}
                         showTotalResult
-                        loading={isRefetching}
+                        loading={isRefetching || loadingExcel}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}

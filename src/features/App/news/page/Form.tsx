@@ -110,7 +110,7 @@ const NewsFormPage = () => {
                                     }
                                     inputField={
                                         <UploadComponent
-                                            disabled={Boolean(id && statusCurrent?.current === NEWS_STATUS.POST)}
+                                            disabled={statusCurrent?.current === NEWS_STATUS.POST}
                                             // isUploadServerWhenUploading
                                             accept=".png, .jpg, .jpeg"
                                             initialFile={fileEdit.current}
@@ -138,7 +138,7 @@ const NewsFormPage = () => {
                                     label="Trạng thái"
                                     inputField={
                                         <Select
-                                            disabled={Boolean(id && statusCurrent?.current === NEWS_STATUS.POST)}
+                                            disabled={statusCurrent?.current === NEWS_STATUS.POST}
                                             placeholder="Chọn trạng thái"
                                         >
                                             <Select.Option value={NEWS_STATUS.POST}>Đăng bài</Select.Option>
@@ -152,7 +152,7 @@ const NewsFormPage = () => {
                                     label="Loại tin tức"
                                     inputField={
                                         <Select
-                                            disabled={Boolean(id && statusCurrent?.current === NEWS_STATUS.POST)}
+                                            disabled={statusCurrent?.current === NEWS_STATUS.POST}
                                             placeholder="Chọn loại tin tức"
                                         >
                                             <Select.Option value={NEWS_TYPE.BANNER}>Banner</Select.Option>

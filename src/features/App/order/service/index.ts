@@ -28,11 +28,12 @@ export const OrderService = {
         return AxiosClient.get(url);
     },
     exportExcel: (params: Export) => {
-        const url = `/admin/order/export_to_excel?status=${params?.status || ''}&search=${
-            params?.search || ''
-        }&createtable_type=${params?.createtableType || ''}&kiotviet_id=${params?.kiotvietId || ''}&create_from=${
-            params?.createFrom || ''
-        }&create_to=${params?.createTo || ''}`;
+        const url =
+            `/admin/order/export_to_excel?search=${params?.search || ''}&createtable_type=${
+                params?.createtableType || ''
+            }&kiotviet_id=${params?.kiotvietId || ''}&create_from=${params?.createFrom || ''}&create_to=${
+                params?.createTo || ''
+            }` + (params?.status ? `status=${params?.status}` : '');
         return AxiosClient.post(url);
     },
 };

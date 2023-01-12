@@ -61,8 +61,8 @@ const AccountFormPage = ({
             if (values) {
                 const res = await accountService.update(values.id, {
                     ...rest,
-                    fullName: data.fullName.trim(),
-                    email: data.email.trim(),
+                    fullName: data.fullName?.trim(),
+                    email: data.email?.trim(),
                     role: data.group,
                     avatar: file || values?.avatar,
                     status: !!data.status,
@@ -76,8 +76,8 @@ const AccountFormPage = ({
             } else {
                 const res = await accountService.create({
                     ...rest,
-                    fullName: data.fullName.trim(),
-                    email: data.email.trim(),
+                    fullName: data.fullName?.trim(),
+                    email: data.email?.trim(),
                     role: data?.group,
                     avatar: file,
                     status: true,

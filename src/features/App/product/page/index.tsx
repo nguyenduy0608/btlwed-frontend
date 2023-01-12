@@ -28,6 +28,7 @@ const ProductPage = () => {
     const [filterQuery, setFilterQuery] = React.useState<any>(initialFilterQuery);
     const [page, setPage] = React.useState(1);
     const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
+    const [loadingExcel, setLoadingExcel] = React.useState<boolean>(false);
 
     const {
         data: products,
@@ -67,9 +68,12 @@ const ProductPage = () => {
         });
     };
     const handleExport = async () => {
+        setLoadingExcel(true);
         try {
             const res: any = await ProductService.exportExcel(filterQuery);
-            downloadFile(res.data);
+            // downloadFile(res.data);
+            window.open(res?.data, '_blank');
+            setLoadingExcel(false);
         } catch (err) {
             console.log(err);
         }
@@ -100,18 +104,12 @@ const ProductPage = () => {
                             <Filter params={filterQuery} returnFilter={returnFilter} key="filterProduct" />
                         )
                     }
-                    extra={
-                        <ExportButton
-                            onClick={() => {
-                                handleExport();
-                            }}
-                        />
-                    }
+                    extra={<ExportButton onClick={handleExport} />}
                 >
                     <TableComponent
                         reLoadData={() => refetch()}
                         showTotalResult
-                        loading={isRefetching}
+                        loading={isRefetching || loadingExcel}
                         page={page}
                         onRowClick={(record: { id: number }) =>
                             navigate(`${routerPage.product}/${record.id}`, {

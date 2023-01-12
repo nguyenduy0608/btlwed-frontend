@@ -45,8 +45,8 @@ const NotificationFormPage = ({
     const handleSubmit = React.useCallback(
         async (data: DataTypeNotification) => {
             const newData: any = {
-                title: data.title.trim(),
-                content: data.content.trim(),
+                title: data.title?.trim(),
+                content: data.content?.trim(),
             };
             setLoadingModal(true);
             if (values) {

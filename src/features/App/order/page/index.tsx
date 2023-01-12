@@ -30,7 +30,7 @@ const OrderPage = () => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
-
+    const [loadingExcel, setLoadingExcel] = React.useState<boolean>(false);
     const {
         data: order,
         refetch,
@@ -60,9 +60,13 @@ const OrderPage = () => {
         });
     };
     const handleExport = async () => {
+        setLoadingExcel(true);
+
         try {
             const res: any = await OrderService.exportExcel(filterQuery);
-            downloadFile(res.data);
+            // downloadFile(res.data);
+            window.open(res?.data, '_blank');
+            setLoadingExcel(false);
         } catch (err) {
             console.log(err);
         }
@@ -95,13 +99,13 @@ const OrderPage = () => {
                     }
                     extra={[
                         // <PrintButton key="print" onClick={() => {}} />,
-                        <ExportButton key="export" onClick={() => handleExport()} />,
+                        <ExportButton key="export" onClick={handleExport} />,
                     ]}
                 >
                     <TableComponent
                         reLoadData={() => refetch()}
                         showTotalResult
-                        loading={isRefetching}
+                        loading={isRefetching || loadingExcel}
                         page={page}
                         rowSelect={false}
                         onRowClick={(record: { id: number }) => navigate(`${routerPage.order}/${record.id}`)}

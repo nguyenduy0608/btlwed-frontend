@@ -108,9 +108,9 @@ const InformationTab = () => {
         const formData = new FormData();
 
         values?.bankQrCode && formData.append('file', values.bankQrCode);
-        formData.append('bank_name', values.bankName.trim());
+        formData.append('bank_name', values.bankName?.trim());
         formData.append('bank_account_number', values.bankAccountNumber);
-        formData.append('bank_account_name', values.bankAccountName.trim());
+        formData.append('bank_account_name', values.bankAccountName?.trim());
         settingService.updatePayment(formData).then((res) => {
             message.success('Cập nhật thành công thông tin tài khoản');
             setCallbackBank(!callbackBank);
@@ -273,7 +273,6 @@ const InformationTab = () => {
                         <FormItemComponent
                             label="QR code"
                             name="bankQrCode"
-                            rules={[{}]}
                             inputField={
                                 <UploadComponent
                                     // isUploadServerWhenUploading

@@ -56,11 +56,11 @@ export const ProductService = {
         return AxiosClient.get(url);
     },
     exportExcel: (params: Export) => {
-        const url = `/admin/product/export_to_excel?status=${params?.status || ''}&search=${
-            params?.search || ''
-        }&kiotviet_id=${params?.kiotvietId || ''}&custom_type=${params?.customType || ''}&category_id=${
-            params?.category_id || ''
-        }`;
+        const url =
+            `/admin/product/export_to_excel?search=${params?.search || ''}&kiotviet_id=${
+                params?.kiotvietId || ''
+            }&custom_type=${params?.customType || ''}&category_id=${params?.category_id || ''}` +
+            (params?.status ? `status=${params?.status}` : '');
         return AxiosClient.post(url);
     },
 };
