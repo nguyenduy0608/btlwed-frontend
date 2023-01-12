@@ -128,11 +128,13 @@ const InformationTab = () => {
                         <FormItemComponent
                             label="% tích điểm"
                             name="point"
+                            // validateStatus="error"
+                            extra="Nhập giá trị > 0"
                             rules={[
                                 {
-                                    message: 'Vui lòng nhập % tích điểm > 0',
+                                    message: 'Vui lòng nhập % tích điểm',
                                     validator: (_: any, value: number) => {
-                                        if (value === 0) {
+                                        if (value <= 0) {
                                             return Promise.reject();
                                         }
                                         return Promise.resolve();
@@ -271,6 +273,7 @@ const InformationTab = () => {
                         <FormItemComponent
                             label="QR code"
                             name="bankQrCode"
+                            rules={[{}]}
                             inputField={
                                 <UploadComponent
                                     // isUploadServerWhenUploading

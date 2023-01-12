@@ -33,7 +33,7 @@ const SearchInput = ({
         <InputStyled
             defaultValue={defaultValue}
             style={style}
-            onChange={(e: any) => setSearch(e.target.value)}
+            onChange={(e: any) => setSearch(e.target.value.trim())}
             placeholder={placeholderSearch}
             prefix={<SearchOutlined />}
             allowClear
