@@ -47,11 +47,11 @@ AxiosClient.interceptors.response.use(
                             Notification('error', response?.data?.message);
                         }
                         break;
-                    case 12:
+                    case 512:
                         // handle error
                         Notification('error', response?.data?.message);
-                        LocalStorage.removeToken();
-                        window.location.reload();
+                        // LocalStorage.removeToken();
+                        // window.location.reload();
                         break;
                     default:
                         Notification('error', response?.data?.message);

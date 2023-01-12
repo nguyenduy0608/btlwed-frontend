@@ -1,12 +1,13 @@
 import logo_sidebar from '@/assets/images/logo_sidebar.png';
 import CustomScrollbars from '@/components/CustomScrollbars';
 import UserInfo from '@/components/UserInfo';
+import useCallContext from '@/hooks/useCallContext';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Menu, Row } from 'antd';
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { items } from './Sidebar.Menu';
+import { switchSidebar } from './contants';
 
 const SidebarContent = ({
     collapsed,
@@ -15,6 +16,8 @@ const SidebarContent = ({
     collapsed?: boolean;
     handleCallbackCollapsed?: () => void;
 }) => {
+    const { state } = useCallContext();
+
     const location = useLocation();
     const navigate = useNavigate();
     const selectedKeys = location.pathname.substr(1) || '/';
@@ -55,11 +58,11 @@ const SidebarContent = ({
                 <CustomScrollbars className="gx-layout-sider-scrollbar">
                     <div className="gx-menu-group">
                         <MenuStyled
-                            defaultOpenKeys={items.map((item: { key: string }) => item.key)}
+                            defaultOpenKeys={switchSidebar(state?.info?.group).map((item: { key: string }) => item.key)}
                             selectedKeys={[selectedKeys]}
                             theme="dark"
                             mode="inline"
-                            items={items}
+                            items={switchSidebar(state?.info?.group)}
                             onClick={(e) => navigate(e.key === '/' ? e.key : '/' + e.key)}
                         />
                     </div>

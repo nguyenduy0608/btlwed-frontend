@@ -1,7 +1,13 @@
+import CustomerPage from '@/features/App/customer/pages';
 import NotificationPage from '@/features/App/notification/page';
 import React from 'react';
 import { routerPage } from './contants.routes';
 import Lazy, { PublicRoutes } from './Lazy.routes';
+
+const HomePage = React.lazy(() => import('@/features/App/home/page'));
+const ProductCategoryPage = React.lazy(() => import('@/features/App/product/page/Category'));
+const ProductPage = React.lazy(() => import('@/features/App/product/page'));
+const ProductDetailPage = React.lazy(() => import('@/features/App/product/page/Detail'));
 
 const VoucherPage = React.lazy(() => import('@/features/App/voucher/page'));
 const VoucherFormPage = React.lazy(() => import('@/features/App/voucher/page/form'));
@@ -18,6 +24,48 @@ const ReturnCommodityPage = React.lazy(() => import('@/features/App/merchandise/
 
 // todo: router đăng nhập kế toán
 const AccountantRoutes = [
+    // tổng quan
+    {
+        path: routerPage.home,
+        element: (
+            <Lazy>
+                <HomePage />
+            </Lazy>
+        ),
+    },
+    {
+        path: routerPage.productCategory,
+        element: (
+            <Lazy>
+                <ProductCategoryPage />
+            </Lazy>
+        ),
+    },
+    {
+        path: routerPage.product,
+        element: (
+            <Lazy>
+                <ProductPage />
+            </Lazy>
+        ),
+    },
+    {
+        path: routerPage.productDetail,
+        element: (
+            <Lazy>
+                <ProductDetailPage />
+            </Lazy>
+        ),
+    },
+    // customer
+    {
+        path: routerPage.customer,
+        element: (
+            <Lazy>
+                <CustomerPage />
+            </Lazy>
+        ),
+    },
     // order
     {
         path: routerPage.order,
@@ -35,6 +83,7 @@ const AccountantRoutes = [
             </Lazy>
         ),
     },
+
     // merchandise
     {
         path: routerPage.merchandise_importCommodity,

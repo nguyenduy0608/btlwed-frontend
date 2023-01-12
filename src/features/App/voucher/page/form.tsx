@@ -70,6 +70,7 @@ const VoucherFormPage = () => {
 
     const handleSubmit = React.useCallback(
         async (data: any) => {
+            console.log('🚀 ~ file: form.tsx:71 ~ data', data);
             if (!id && !file) return Notification('warning', 'Vui lòng chọn ảnh');
             setLoading(true);
             const formData = new FormData();
@@ -216,7 +217,6 @@ const VoucherFormPage = () => {
                                     inputField={
                                         <InputNumber
                                             min={1}
-                                            max={99}
                                             style={{ width: '100%' }}
                                             formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                             parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
@@ -313,7 +313,6 @@ const VoucherFormPage = () => {
                                             inputField={
                                                 <InputNumber
                                                     // min={1}
-                                                    max={99}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
                                                         `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -362,7 +361,6 @@ const VoucherFormPage = () => {
                                             inputField={
                                                 <InputNumber
                                                     min={1}
-                                                    max={99}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
                                                         `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
@@ -510,23 +508,21 @@ const VoucherFormPage = () => {
                                             return current && current < moment().startOf('day');
                                         }}
                                         disabledTime={() => ({
-                                            disabledHours: () => {
-                                                const timePrevCurrentDay = [
-                                                    ...new Array(Number(moment().format('HH'))),
-                                                ].map((_, index) => index);
-
-                                                return moment().format('YYYY-MM-DD') !==
-                                                    moment(startDate).format('YYYY-MM-DD')
-                                                    ? []
-                                                    : [...timePrevCurrentDay];
-                                            },
-                                            disabledMinutes: () => {
-                                                const timePrevCurrentDay = [
-                                                    ...new Array(Number(moment().format('mm'))),
-                                                ].map((_, index) => index);
-
-                                                return [...timePrevCurrentDay];
-                                            },
+                                            // disabledHours: () => {
+                                            //     const timePrevCurrentDay = [
+                                            //         ...new Array(Number(moment().format('HH'))),
+                                            //     ].map((_, index) => index);
+                                            //     return moment().format('YYYY-MM-DD') !==
+                                            //         moment(startDate).format('YYYY-MM-DD')
+                                            //         ? []
+                                            //         : [...timePrevCurrentDay];
+                                            // },
+                                            // disabledMinutes: () => {
+                                            //     const timePrevCurrentDay = [
+                                            //         ...new Array(Number(moment().format('mm'))),
+                                            //     ].map((_, index) => index);
+                                            //     return [...timePrevCurrentDay];
+                                            // },
                                         })}
                                     />
                                 }

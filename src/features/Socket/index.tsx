@@ -1,6 +1,7 @@
 import LocalStorage from '@/apis/LocalStorage';
 import audiobell from '@/assets/audio/sound.mp3';
 import { routerPage } from '@/config/contants.routes';
+import { ADMIN } from '@/contants';
 import { SET_COUNT_NOTI, SET_SYNC_LOADING } from '@/context/types';
 import useCallContext from '@/hooks/useCallContext';
 import { notificationSync } from '@/utils/notification';
@@ -17,7 +18,7 @@ const Socket = () => {
     // joinUser
     React.useEffect(() => {
         if (state.socket?.connected) {
-            if (LocalStorage.getToken()) {
+            if (LocalStorage.getToken() && state?.info?.group !== ADMIN.news) {
                 state.socket.on('notification:created', (data: any) => {
                     audioRef.current.play();
 

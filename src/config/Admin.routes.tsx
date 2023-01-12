@@ -63,7 +63,6 @@ const AdminRoutes = [
         ),
     },
     // customer
-
     {
         path: routerPage.customer,
         element: (
