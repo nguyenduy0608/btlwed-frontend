@@ -8,11 +8,12 @@ import { routerPage } from '@/config/contants.routes';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { handleObjectEmpty, wait } from '@/utils';
+import { downloadFile, handleObjectEmpty, wait } from '@/utils';
 import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { ProductService } from '../../product/service';
 import Filter from '../components/FIlter';
 import { columns } from '../components/Order.Config';
 import { OrderService } from '../service';
@@ -29,7 +30,7 @@ const OrderPage = () => {
     const navigate = useNavigate();
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
-
+    const [loadingExcel, setLoadingExcel] = React.useState<boolean>(false);
     const {
         data: order,
         refetch,
@@ -58,7 +59,18 @@ const OrderPage = () => {
             setLoadingClearFilter(false);
         });
     };
+    const handleExport = async () => {
+        setLoadingExcel(true);
 
+        try {
+            const res: any = await OrderService.exportExcel(filterQuery);
+            // downloadFile(res.data);
+            window.open(res?.data, '_blank');
+            setLoadingExcel(false);
+        } catch (err) {
+            console.log(err);
+        }
+    };
     return (
         <>
             <TopBar
@@ -87,13 +99,13 @@ const OrderPage = () => {
                     }
                     extra={[
                         // <PrintButton key="print" onClick={() => {}} />,
-                        <ExportButton key="export" onClick={() => console.log('first')} />,
+                        <ExportButton key="export" onClick={handleExport} />,
                     ]}
                 >
                     <TableComponent
                         reLoadData={() => refetch()}
                         showTotalResult
-                        loading={isRefetching}
+                        loading={isRefetching || loadingExcel}
                         page={page}
                         rowSelect={false}
                         onRowClick={(record: { id: number }) => navigate(`${routerPage.order}/${record.id}`)}

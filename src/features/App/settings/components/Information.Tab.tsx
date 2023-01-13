@@ -108,9 +108,9 @@ const InformationTab = () => {
         const formData = new FormData();
 
         values?.bankQrCode && formData.append('file', values.bankQrCode);
-        formData.append('bank_name', values.bankName);
+        formData.append('bank_name', values.bankName?.trim());
         formData.append('bank_account_number', values.bankAccountNumber);
-        formData.append('bank_account_name', values.bankAccountName);
+        formData.append('bank_account_name', values.bankAccountName?.trim());
         settingService.updatePayment(formData).then((res) => {
             message.success('Cập nhật thành công thông tin tài khoản');
             setCallbackBank(!callbackBank);
@@ -128,11 +128,13 @@ const InformationTab = () => {
                         <FormItemComponent
                             label="% tích điểm"
                             name="point"
+                            // validateStatus="error"
+                            extra="Nhập giá trị > 0"
                             rules={[
                                 {
-                                    message: 'Vui lòng nhập % tích điểm > 0',
-                                    validator: (_: any, value: any) => {
-                                        if (value === 0) {
+                                    message: 'Vui lòng nhập % tích điểm',
+                                    validator: (_: any, value: number) => {
+                                        if (value <= 0) {
                                             return Promise.reject();
                                         }
                                         return Promise.resolve();
@@ -204,12 +206,21 @@ const InformationTab = () => {
                             rules={[
                                 {
                                     validator: (_: any, value: any) => {
-                                        if (/\s/.test(value)) {
-                                            return Promise.reject(new Error('Không được có khoảng trắng!'));
+                                        if (!value || value.trim() === '') {
+                                            return Promise.reject(new Error('Vui lòng nhập tên ngân hàng!'));
                                         }
+
                                         return Promise.resolve();
                                     },
                                 },
+                                // {
+                                //     validator: (_: any, value: any) => {
+                                //         if (/\s/.test(value)) {
+                                //             return Promise.reject(new Error('Vui lòng không nhập khoảng trắng!'));
+                                //         }
+                                //         return Promise.resolve();
+                                //     },
+                                // },
                             ]}
                         />
                         <FormItemComponent
@@ -239,6 +250,24 @@ const InformationTab = () => {
                         <FormItemComponent
                             label="Tên tài khoản"
                             name="bankAccountName"
+                            rules={[
+                                {
+                                    validator: (_: any, value: any) => {
+                                        if (!value || value.trim() === '') {
+                                            return Promise.reject(new Error('Vui lòng nhập tên tài khoản!'));
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                },
+                                // {
+                                //     validator: (_: any, value: any) => {
+                                //         if (value.trim() === '') {
+                                //             return Promise.reject(new Error('Vui lòng nhập tên tài khoản!'));
+                                //         }
+                                //         return Promise.resolve();
+                                //     },
+                                // },
+                            ]}
                             inputField={<Input placeholder="Nhập tên tài khoản" />}
                         />
                         <FormItemComponent

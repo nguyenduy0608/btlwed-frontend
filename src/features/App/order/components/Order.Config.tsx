@@ -31,6 +31,7 @@ export interface DataTypeOrder {
     transportStatus: any;
     transportStatusCode: number;
     updatableId: any;
+    usePoint: number;
 }
 export const columns = (page: number): ColumnsType<DataTypeOrder> => [
     {
@@ -62,7 +63,7 @@ export const columns = (page: number): ColumnsType<DataTypeOrder> => [
         title: 'Tổng tiền(VNĐ)',
         dataIndex: 'total',
         align: 'center',
-        render: (value) => currencyFormat(value),
+        render: (value, record) => currencyFormat(record?.total - record?.totalDiscount - record?.usePoint),
     },
     {
         title: 'Trạng thái đơn hàng',

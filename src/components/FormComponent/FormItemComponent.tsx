@@ -8,20 +8,28 @@ const FormItemComponent = ({
     rules,
     valuePropName,
     inputField,
+    style,
+    extra,
     ...props
 }: {
+    validateStatus?: any;
     grid?: boolean;
     label: any;
+    messageVariables?: any;
     name?: string;
     rules?: any;
     valuePropName?: any;
     inputField: ReactNode;
+    extra?: any;
+    style?: any;
     props?: { dependencies: any };
 }) => {
     return (
         <Col span={grid ? 12 : 24}>
             <Form.Item
                 // style={{ marginBottom: '14px' }}
+                style={style}
+                extra={extra}
                 colon={false}
                 label={label}
                 name={name}

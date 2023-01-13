@@ -61,6 +61,8 @@ const AccountFormPage = ({
             if (values) {
                 const res = await accountService.update(values.id, {
                     ...rest,
+                    fullName: data.fullName?.trim(),
+                    email: data.email?.trim(),
                     role: data.group,
                     avatar: file || values?.avatar,
                     status: !!data.status,
@@ -74,6 +76,8 @@ const AccountFormPage = ({
             } else {
                 const res = await accountService.create({
                     ...rest,
+                    fullName: data.fullName?.trim(),
+                    email: data.email?.trim(),
                     role: data?.group,
                     avatar: file,
                     status: true,
@@ -114,7 +118,6 @@ const AccountFormPage = ({
                                     {
                                         required: true,
                                         message: 'Vui lòng nhập đúng định dạng email!',
-                                        type: 'email',
                                     },
                                 ]}
                                 name="email"

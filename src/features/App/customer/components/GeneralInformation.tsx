@@ -136,7 +136,7 @@ const GeneralInformation = ({ customerId, disabled }: { customerId: number; disa
                         </Descriptions.Item>
 
                         <Descriptions.Item span={2} label="Điểm tích lũy">
-                            {generalInformation?.wallet?.point} điểm
+                            {currencyFormat(generalInformation?.wallet?.point)} điểm
                         </Descriptions.Item>
                         <Descriptions.Item span={2} label="Trạng thái công nợ">
                             {generalInformation?.isApplyDebit ? (

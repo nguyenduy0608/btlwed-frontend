@@ -44,11 +44,13 @@ const NotificationFormPage = ({
     }, [values]);
     const handleSubmit = React.useCallback(
         async (data: DataTypeNotification) => {
+            const newData: any = {
+                title: data.title?.trim(),
+                content: data.content?.trim(),
+            };
             setLoadingModal(true);
             if (values) {
-                const res = await NotificationService.update(values.id, {
-                    ...data,
-                });
+                const res = await NotificationService.update(values.id, newData);
                 if (res.status) {
                     Notification('success', 'Cập nhật thông báo thành công');
 
@@ -56,7 +58,7 @@ const NotificationFormPage = ({
                     formReset();
                 }
             } else {
-                const res = await NotificationService.create({ ...data });
+                const res = await NotificationService.create(newData);
                 if (res.status) {
                     setTimeout(() => {
                         Notification('success', 'Thêm thông báo thành công');
@@ -79,13 +81,13 @@ const NotificationFormPage = ({
             <FormComponent layoutType="vertical" form={form} onSubmit={handleSubmit}>
                 <Row gutter={[20, 0]}>
                     <FormItemComponent
-                        rules={[rules.required('Vui lòng nhập tiêu đề !'), rules.validateTitle]}
+                        rules={[rules.required('Vui lòng nhập tiêu đề !')]}
                         name="title"
                         label="Tiêu đề"
                         inputField={<Input placeholder="Nhập tiêu đề" />}
                     />
                     <FormItemComponent
-                        rules={[rules.required('Vui lòng nhập nội dung !'), rules.validateTitle]}
+                        rules={[rules.required('Vui lòng nhập nội dung !')]}
                         name="content"
                         label="Nội dung"
                         inputField={<Input.TextArea rows={4} placeholder="Nhập nội dung" />}

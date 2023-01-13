@@ -4,6 +4,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { Row, Table as AntdTable } from 'antd';
 import { Button } from 'antd/lib/radio';
 import EditOutlined from '@ant-design/icons';
+import moment from 'moment';
 export interface DataTypeNotification {
     id: number;
     code: string;
@@ -22,6 +23,8 @@ export interface DataTypeNotification {
     province: string;
     turnoverOfOrder: number;
     turnover: number;
+    title: string;
+    content: string;
 }
 export const columns = (page: number): ColumnsType<DataTypeNotification> => [
     {
@@ -43,6 +46,8 @@ export const columns = (page: number): ColumnsType<DataTypeNotification> => [
         title: 'Ngày tạo',
         dataIndex: 'createdAt',
         align: 'center',
-        render: (value: any) => momentToStringDate(value, 'dateTime'),
+        render: (value: any) => {
+            return <>{moment(value).format('HH:mm DD/MM/YYYY')}</>;
+        },
     },
 ];

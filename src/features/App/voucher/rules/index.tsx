@@ -40,20 +40,21 @@ export const rules = {
     validateName: () => ({
         validator(_: Rule, value: string) {
             if (!value) return Promise.resolve();
-            if (value.startsWith(' ') || value.endsWith(' ')) {
-                return Promise.reject(new Error('Không được bắt đầu hoặc kết thúc bằng khoảng trắng!'));
-            }
-
+            // if (value.startsWith(' ') || value.endsWith(' ')) {
+            //     return Promise.reject(new Error('Không được bắt đầu hoặc kết thúc bằng khoảng trắng!'));
+            // }
             // min length 5
+
+            // max length 56
+            if (value.length > 50) {
+                return Promise.reject(new Error('Tối đa 50 ký tự!'));
+            }
+            if (value.trim() === '') {
+                return Promise.reject(new Error('Vui lòng không nhập khoảng trắng!'));
+            }
             if (value.length < 6) {
                 return Promise.reject(new Error('Tối thiểu 6 ký tự!'));
             }
-
-            // max length 56
-            if (value.length > 56) {
-                return Promise.reject(new Error('Tối đa 56 ký tự!'));
-            }
-
             return Promise.resolve();
         },
     }),
