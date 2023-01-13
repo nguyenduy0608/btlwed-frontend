@@ -29,7 +29,7 @@ export const notificationSync = (msg: any, title?: string, onClick?: () => void,
         duration: 10,
         placement: 'bottomRight',
         style: {
-            padding: '8px 12px 4px 12px ',
+            padding: '8px 12px 8px 12px ',
         },
     });
 const NotiContainerStyled = styled.div`
