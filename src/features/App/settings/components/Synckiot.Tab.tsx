@@ -63,7 +63,6 @@ const SynckiotTab = () => {
                                 <Switch
                                     onChange={(value) => {
                                         settingService.toggleActive(row?.id).then((res) => {
-                                            console.log(row);
                                             if (res.data?.status) {
                                                 Notification(
                                                     'success',

@@ -12,7 +12,7 @@ export const notificationSync = (msg: any, title?: string, onClick?: () => void,
                     <ContentNotiStyled className="gx-mt-2">{msg}</ContentNotiStyled>
                     {/* popup noti */}
                     <NotiContainerStyled>
-                        <Lottie style={{ height: '60px' }} animationData={images.bell} />
+                        <Lottie style={{ height: '40px' }} animationData={images.bell} />
                     </NotiContainerStyled>
                 </Row>
                 {showDetail && (
@@ -27,13 +27,13 @@ export const notificationSync = (msg: any, title?: string, onClick?: () => void,
             </div>
         ),
         duration: 10,
+        placement: 'bottomRight',
     });
 const NotiContainerStyled = styled.div`
     width: 50px;
 `;
 
 const ContentNotiStyled = styled.div`
-    padding: 4px 0 6px 0;
-    font-size: 14px;
+    font-size: 12px;
     flex: 1;
 `;
