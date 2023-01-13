@@ -28,12 +28,15 @@ export const notificationSync = (msg: any, title?: string, onClick?: () => void,
         ),
         duration: 10,
         placement: 'bottomRight',
+        style: {
+            padding: '8px 12px 4px 12px ',
+        },
     });
 const NotiContainerStyled = styled.div`
     width: 50px;
 `;
 
 const ContentNotiStyled = styled.div`
-    font-size: 12px;
+    font-size: 14px;
     flex: 1;
 `;

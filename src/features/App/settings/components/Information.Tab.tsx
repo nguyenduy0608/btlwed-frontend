@@ -129,7 +129,7 @@ const InformationTab = () => {
                             label="% tích điểm"
                             name="point"
                             // validateStatus="error"
-                            extra="Nhập giá trị > 0"
+                            // extra="Nhập giá trị > 0"
                             rules={[
                                 {
                                     message: 'Vui lòng nhập % tích điểm',
