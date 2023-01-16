@@ -40,7 +40,7 @@ const MainPage = ({ role }: { role: string }) => {
     }, [role]);
 
     React.useEffect(() => {
-        if (logged) return;
+        if (logged || pathname === '/vn_pay') return;
 
         // nếu đăng nhập và domain không webview và domain không public
         // if (LocalStorage.getToken() && pathname.includes('webview') && pathname.includes('public')) {

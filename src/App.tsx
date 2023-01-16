@@ -32,7 +32,6 @@ function App() {
     const [role, setRole] = React.useState('');
 
     const location = useLocation();
-    console.log('🚀 ~ file: App.tsx:35 ~ App ~ location', location);
 
     // loading when going to app
     React.useEffect(() => {
@@ -60,9 +59,11 @@ function App() {
         }
     }, []);
     React.useEffect(() => {
-        appService.getKiotviet().then((res) => {
-            dispatch({ type: SET_KIOTVIETS, payload: res.data });
-        });
+        if (LocalStorage.getToken()) {
+            appService.getKiotviet().then((res) => {
+                dispatch({ type: SET_KIOTVIETS, payload: res.data });
+            });
+        }
     }, [state.callbackKioviet]);
 
     // setup socket to context
