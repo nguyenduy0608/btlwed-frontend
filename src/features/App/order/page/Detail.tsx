@@ -22,6 +22,7 @@ const OrderDetailPage = () => {
     const { id } = useParams();
     const { data } = useQuery<any>(['detailOrder', id], () => OrderService.detail(id));
     const order = data?.data;
+    console.log('🚀 ~ file: Detail.tsx:25 ~ OrderDetailPage ~ order', order);
 
     const switchLabel = (historyType: ORDER_STATE) => {
         switch (historyType) {

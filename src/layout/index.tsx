@@ -5,12 +5,15 @@ import useWindowSize from '@/hooks/useWindowSize';
 import SideBar from '@/layout/SideBar';
 import { Layout, Row } from 'antd';
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Topbar from './Content/Topbar';
 import Setting from './Setting';
 const { Content, Footer } = Layout;
 const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
     return function WithPage({ ...props }) {
+        const location = useLocation();
+
         const [isLogin, setIsLogin] = React.useState(false);
 
         const { width } = useWindowSize();
@@ -30,14 +33,18 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
         return isLogin ? (
             <Layout className="gx-app-layout">
                 {/* sidebar */}
-                <SideBar
-                    collapsedMobile={collapsedMobile}
-                    handleCallbackCollapseMobile={handleCallbackCollapseMobile}
-                />
+                {location.pathname !== '/vn_pay' && (
+                    <SideBar
+                        collapsedMobile={collapsedMobile}
+                        handleCallbackCollapseMobile={handleCallbackCollapseMobile}
+                    />
+                )}
                 {/* content */}
                 <Layout>
                     {/* top content */}
-                    {width < TAB_SIZE && <Topbar handleCallbackCollapseMobile={handleCallbackCollapseMobile} />}
+                    {width < TAB_SIZE && location.pathname !== '/vn_pay' && (
+                        <Topbar handleCallbackCollapseMobile={handleCallbackCollapseMobile} />
+                    )}
                     {/* body content */}
                     <ErrorBoundary>
                         <Content className="gx-layout-content">
@@ -53,7 +60,7 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                         </Content>
                     </ErrorBoundary>
                 </Layout>
-                <Setting />
+                {location.pathname !== '/vn_pay' && <Setting />}
                 <Socket />
             </Layout>
         ) : (
