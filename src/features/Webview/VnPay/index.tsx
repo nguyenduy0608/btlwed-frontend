@@ -32,7 +32,7 @@ const VnPayPage = () => {
                 </Row>
                 <Row justify="center" className="gx-mt-4">
                     <span className="gx-mr-2">Số tiền: </span>
-                    <strong>{currencyFormat(+obj?.vnp_Amount)}</strong>
+                    <strong>{currencyFormat(+obj?.vnp_Amount / 100)}</strong>
                 </Row>
                 <Row justify="center" className="gx-mt-5">
                     <Button
