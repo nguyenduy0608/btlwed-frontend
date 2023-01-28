@@ -5,7 +5,13 @@ import { Select, Space } from 'antd';
 
 const { Option } = Select;
 
-const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
+const Filter = ({
+    returnFilter,
+    returnFilterProvince,
+}: {
+    returnFilter: (filter: any) => void;
+    returnFilterProvince: any;
+}) => {
     const handleChange = (value: any) => {
         returnFilter({ status: value });
     };
@@ -16,14 +22,17 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: any) => void }) => {
                 onChangeSearch={(search) => returnFilter({ search })}
                 placeholderSearch="Nhập tên, số điện thoại"
             />
-            <SelectComponent
+            {/* <SelectComponent
                 onChange={(item: any) => {
                     returnFilter({ province_id: item?.key || '' });
                 }}
                 apiUrl="/address/provinces"
                 placeholder="Chọn Tỉnh/ Thành phố"
+            /> */}
+            <SearchInput
+                onChangeSearch={(search) => returnFilterProvince({ address: search })}
+                placeholderSearch="Nhập tỉnh thành phố"
             />
-
             <RangerPicker
                 name="dateFilter"
                 onChange={(name: string, value: string) => {

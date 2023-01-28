@@ -41,7 +41,7 @@ const ReportSellPage = () => {
                 .then((res: any) => {
                     // downloadFile(res.path);
                     Notification('success', 'Export thành công');
-                    downloadFile('http://dev.stakaapi.winds.vn/uploads/file/sale_report.xlsx');
+                    downloadFile(res?.path || 'https://dev.stakaapi.winds.vn/uploads/file/sale_report.xlsx');
                 });
     }, [sellReport?.paging?.links?.downExcel, page, filterQuery]);
 

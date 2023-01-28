@@ -19,6 +19,7 @@ import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
 import { appService } from './service';
 import hoadao from './assets/images/hoadao.png';
+import { useLocation } from 'react-router-dom';
 const DEV_TYPE = import.meta.env.VITE_DEVOPS_TYPE;
 
 moment.utc().locale('vi');
@@ -29,6 +30,8 @@ snowflake1.src = hoadao;
 function App() {
     const { state, dispatch } = useCallContext();
     const [role, setRole] = React.useState('');
+
+    const location = useLocation();
 
     // loading when going to app
     React.useEffect(() => {
@@ -56,9 +59,11 @@ function App() {
         }
     }, []);
     React.useEffect(() => {
-        appService.getKiotviet().then((res) => {
-            dispatch({ type: SET_KIOTVIETS, payload: res.data });
-        });
+        if (LocalStorage.getToken()) {
+            appService.getKiotviet().then((res) => {
+                dispatch({ type: SET_KIOTVIETS, payload: res.data });
+            });
+        }
     }, [state.callbackKioviet]);
 
     // setup socket to context
@@ -73,7 +78,7 @@ function App() {
 
     return (
         <SpinLoadingStyled
-            spinning={state.appLoading}
+            spinning={state.appLoading && location.pathname !== '/vn_pay'}
             indicator={
                 <ContainerLoading>
                     <div style={{ height: '600px', width: '600px' }}>

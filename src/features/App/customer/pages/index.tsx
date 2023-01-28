@@ -56,6 +56,14 @@ const CustomerPage = () => {
         [filterQuery]
     );
 
+    const returnFilterProvince = React.useCallback(
+        (filter: any) => {
+            setPage(1);
+            setFilterQuery({ ...filterQuery, ...filter });
+        },
+        [filterQuery]
+    );
+
     const onClearFilter = () => {
         setLoadingClearFilter(true);
         wait(1500).then(() => {
@@ -99,7 +107,11 @@ const CustomerPage = () => {
                         loadingClearFilter ? (
                             <ClearFilterLoading key="clear_filter" />
                         ) : (
-                            <Filter returnFilter={returnFilter} key="filter" />
+                            <Filter
+                                returnFilterProvince={returnFilterProvince}
+                                returnFilter={returnFilter}
+                                key="filter"
+                            />
                         )
                     }
                     extra={<ExportButton key="extra_btn" onClick={handleExport} />}
