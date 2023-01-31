@@ -216,9 +216,7 @@ const InformationTab = () => {
                                             setIsEditInitPoint(false);
                                         }
                                     }}
-                                    type="number"
-                                    min={0}
-                                    max={100000000}
+                                    // type="number"
                                     style={{ width: '100%' }}
                                     formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                     parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
