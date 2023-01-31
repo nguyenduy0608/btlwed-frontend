@@ -88,13 +88,13 @@ const OrderPrint = React.forwardRef((props?: any, ref?: any) => {
                             dataIndex: 'productName',
                         },
                         {
-                            title: 'Số lượng',
-                            dataIndex: 'quantity',
+                            title: 'Đơn vị tính',
+                            dataIndex: 'productUnit',
                             align: 'center',
                         },
                         {
-                            title: 'Đơn vị tính',
-                            dataIndex: 'productUnit',
+                            title: 'Số lượng',
+                            dataIndex: 'quantity',
                             align: 'center',
                         },
                         {
@@ -116,15 +116,19 @@ const OrderPrint = React.forwardRef((props?: any, ref?: any) => {
                 </p>
 
                 <div style={{ width: '100%' }}>
-                    <RowInfo left="Tổng tiền toa hàng:" right="2,846,000" />
-                    <RowInfo left="Phần trăm chiết khấu hóa đơn:" right="20%" />
-                    <RowInfo left="Chiết khấu hóa đơn:" right="596,200" />
-                    <RowInfo left="Tổng tiền hàng trừ chiết khấu hóa đơn:" right="2,276,800" />
-                    <RowInfo left="Nợ cũ:" right="0" />
-                    <RowInfo left="Khách hàng thanh toán:" right="0" />
-                    <RowInfo left="Nợ sau hoá đơn:" right="2,276,800" />
-                    <RowInfo left="Tổng nợ hiện tại:" right="2,276,800" />
-                    <RowInfo left="Số tiền còn phải thanh toán là:" right="2,276,800" />
+                    <RowInfo left="Tổng tiền:" right={currencyFormat(detailOrder?.total)} />
+                    <RowInfo left="Tổng tiền giảm(Điểm tích lũy):" right={currencyFormat(detailOrder?.usePoint)} />
+                    {!detailOrder?.giftStatus && (
+                        <RowInfo left="Tổng tiền giảm(Voucher):" right={currencyFormat(detailOrder?.totalDiscount)} />
+                    )}
+                    <RowInfo
+                        left="Khách hàng cần thanh toán:"
+                        right={currencyFormat(detailOrder?.total - detailOrder?.totalDiscount - detailOrder?.usePoint)}
+                    />
+                    <RowInfo left="Khách hàng đã thanh toán:" right={currencyFormat(detailOrder?.totalPayment)} />
+                    {detailOrder?.giftStatus && detailOrder?.voucher?.name ? (
+                        <RowInfo left="Quà tặng:" right={detailOrder?.voucher?.name} />
+                    ) : null}
                 </div>
 
                 <div>
@@ -184,6 +188,20 @@ const OrderPrint = React.forwardRef((props?: any, ref?: any) => {
                                 <p
                                     className="s5"
                                     style={{
+                                        paddingLeft: '43pt',
+                                        paddingRight: '50pt',
+                                        textIndent: '0pt',
+                                        lineHeight: '12pt',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    Người xuất kho
+                                </p>
+                            </td>
+                            <td>
+                                <p
+                                    className="s5"
+                                    style={{
                                         paddingLeft: '50pt',
                                         paddingRight: '1pt',
                                         textIndent: '0pt',
@@ -202,6 +220,20 @@ const OrderPrint = React.forwardRef((props?: any, ref?: any) => {
                                     style={{
                                         paddingLeft: '1pt',
                                         paddingRight: '43pt',
+                                        textIndent: '0pt',
+                                        lineHeight: '11pt',
+                                        textAlign: 'center',
+                                    }}
+                                >
+                                    (Ký, họ tên)
+                                </p>
+                            </td>
+                            <td>
+                                <p
+                                    className="s5"
+                                    style={{
+                                        paddingLeft: '43pt',
+                                        paddingRight: '50pt',
                                         textIndent: '0pt',
                                         lineHeight: '11pt',
                                         textAlign: 'center',

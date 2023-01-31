@@ -21,7 +21,15 @@ export const settingService = {
         return AxiosClient.post('/admin/config/coin', { coin });
     },
 
-    // tích điểm
+    // điểm tích lũy cho khách hàng mới tạo
+    getInitPoint: () => {
+        return AxiosClient.get('/admin/config/initial_point');
+    },
+    updateInitPoint: (point: number) => {
+        return AxiosClient.post('/admin/config/initial_point', { point });
+    },
+
+    // lien hệ
     getContact: () => {
         return AxiosClient.get('/admin/config/contact');
     },

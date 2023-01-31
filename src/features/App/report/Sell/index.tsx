@@ -17,7 +17,7 @@ const initialFilterQuery = {};
 const ReportSellPage = () => {
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
-
+    const [loadingExcel, setLoadingExcel] = React.useState(false);
     const {
         data: sellReport,
         isLoading,
@@ -35,6 +35,7 @@ const ReportSellPage = () => {
     );
 
     const handleExportExcel = React.useCallback(() => {
+        setLoadingExcel(true);
         sellReport?.paging?.links?.downExcel &&
             sellService
                 .getFileExcel(sellReport?.paging?.links?.downExcel, { page, ...filterQuery })
@@ -42,6 +43,7 @@ const ReportSellPage = () => {
                     // downloadFile(res.path);
                     Notification('success', 'Export thành công');
                     downloadFile(res?.path || 'https://dev.stakaapi.winds.vn/uploads/file/sale_report.xlsx');
+                    setLoadingExcel(false);
                 });
     }, [sellReport?.paging?.links?.downExcel, page, filterQuery]);
 
@@ -69,7 +71,7 @@ const ReportSellPage = () => {
                 >
                     <TableComponent
                         showTotalResult
-                        loading={isLoading || isRefetching}
+                        loading={isLoading || isRefetching || loadingExcel}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}

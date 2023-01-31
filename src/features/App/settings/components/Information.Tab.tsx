@@ -12,6 +12,7 @@ import { settingService } from '../service';
 const InformationTab = () => {
     const { state } = useCallContext();
     const [isEditPoint, setIsEditPoint] = React.useState(false);
+    const [isEditInitPoint, setIsEditInitPoint] = React.useState(false);
     const [isEditInfoPayment, setIsEditInfoPayment] = React.useState(false);
 
     // chỗ này xử lý tích điểm
@@ -29,6 +30,24 @@ const InformationTab = () => {
             message.success('Cập nhật thành công % tích điểm');
             setCallbackPoint(!callbackPoint);
             setIsEditPoint(false);
+        });
+    };
+
+    // chỗ này xử lý điểm tích lũy
+    const [formInitPoint] = Form.useForm();
+    const initPointCurrent = React.useRef(0);
+    const [callbackInitPoint, setCallbackInitPoint] = React.useState(false);
+    React.useEffect(() => {
+        settingService.getInitPoint().then((res) => {
+            formInitPoint.setFieldsValue({ initPoint: res?.data?.value || 0 });
+            initPointCurrent.current = res?.data?.value;
+        });
+    }, [callbackInitPoint]);
+    const handleSubmitChangeInitPoint = (values: any) => {
+        settingService.updateInitPoint(values.initPoint.toString()).then((res) => {
+            message.success('Cập nhật thành công điểm tích lũy');
+            setCallbackInitPoint(!callbackInitPoint);
+            setIsEditInitPoint(false);
         });
     };
 
@@ -58,6 +77,7 @@ const InformationTab = () => {
             message.success('Cập nhật thành công thông tin liên hệ');
             setCallbackContact(!callbackContact);
             setIsEditPoint(false);
+            setIsEditInitPoint(false);
         });
     };
 
@@ -169,7 +189,52 @@ const InformationTab = () => {
                         )}
                     </FormComponent>
                 </Card>
+                <Card className="gx-mb-4">
+                    <FormComponent form={formInitPoint} onSubmit={handleSubmitChangeInitPoint}>
+                        <TitleCardStyled>Điểm tích lũy cho khách hàng mới</TitleCardStyled>
 
+                        <FormItemComponent
+                            label="Điểm tích lũy"
+                            name="initPoint"
+                            rules={[
+                                {
+                                    message: 'Vui lòng nhập điểm tích lũy',
+                                    validator: (_: any, value: number) => {
+                                        if (value <= 0) {
+                                            return Promise.reject();
+                                        }
+                                        return Promise.resolve();
+                                    },
+                                },
+                            ]}
+                            inputField={
+                                <InputNumber
+                                    onChange={(value) => {
+                                        if (value != initPointCurrent.current) {
+                                            setIsEditInitPoint(true);
+                                        } else {
+                                            setIsEditInitPoint(false);
+                                        }
+                                    }}
+                                    type="number"
+                                    min={0}
+                                    max={100000000}
+                                    style={{ width: '100%' }}
+                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                    placeholder="Nhập tổng giá trị"
+                                />
+                            }
+                        />
+                        {isEditInitPoint && (
+                            <Row justify="end" className="gx-m-0">
+                                <Button htmlType="submit" type="primary">
+                                    Cập nhật
+                                </Button>
+                            </Row>
+                        )}
+                    </FormComponent>
+                </Card>
                 <Card>
                     <FormComponent form={formContact} onSubmit={handleSubmitChangeContact}>
                         <TitleCardStyled>Thông tin liên hệ</TitleCardStyled>

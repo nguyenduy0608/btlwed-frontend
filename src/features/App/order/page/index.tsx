@@ -8,7 +8,7 @@ import { routerPage } from '@/config/contants.routes';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
-import { downloadFile, handleObjectEmpty, wait } from '@/utils';
+import { downloadFile, handleObjectEmpty, Notification, wait } from '@/utils';
 import { Segmented } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -66,6 +66,7 @@ const OrderPage = () => {
             const res: any = await OrderService.exportExcel(filterQuery);
             // downloadFile(res.data);
             window.open(res?.data, '_blank');
+            Notification('success', 'Export thành công');
             setLoadingExcel(false);
         } catch (err) {
             console.log(err);

@@ -77,6 +77,7 @@ const CustomerPage = () => {
         try {
             const res: any = await CustomerService.exportExcel(filterQuery);
             window.open(res?.data, '_blank');
+            Notification('success', 'Export thành công');
             setLoadingExcel(false);
             // downloadFile(res?.data);
         } catch (err) {
