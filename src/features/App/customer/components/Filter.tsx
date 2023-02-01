@@ -10,7 +10,7 @@ const Filter = ({
     returnFilterProvince,
 }: {
     returnFilter: (filter: any) => void;
-    returnFilterProvince: any;
+    returnFilterProvince?: any;
 }) => {
     const handleChange = (value: any) => {
         returnFilter({ status: value });
