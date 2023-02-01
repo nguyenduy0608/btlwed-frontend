@@ -31,13 +31,21 @@ import AxiosClient from '@/apis/AxiosClient';
 import useDebounce from '@/hooks/useDebounce';
 
 const checkImage = (file: File) => {
-    const types = ['image/png', 'image/jpeg'];
+    const types = ['image/png', 'image/jpeg', 'image/jpg'];
     let err = '';
     if (!file) return (err = 'Tập tin không tồn tại.');
 
-    if (file.size > 1024 * 1024) err = 'Kích cỡ vượt quá 1mb.';
+    if (types.includes(file.type)) {
+        if (file?.size > 2 * 1024 * 1024) {
+            err = 'Kích cỡ hình ảnh trong nội dung vượt quá 2 MB.';
+        }
+    } else if (file?.type === 'video/mp4') {
+        if (file?.size > 5 * 1024 * 1024) {
+            err = 'Dung lượng video trong nội dung nhỏ hơn 5 MB';
+        }
+    }
 
-    if (!types.includes(file.type)) err = 'Ảnh không đúng định dạnh png / jpg.';
+    // file type video
 
     return err;
 };

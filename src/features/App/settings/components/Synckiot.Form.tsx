@@ -58,13 +58,25 @@ const SynckiotForm = ({
                         <FormItemComponent
                             label="Tên kết nối"
                             name="retailer"
-                            rules={[rules.required('Vui lòng nhập tên kết nối!')]}
+                            rules={[
+                                rules.required('Vui lòng nhập tên kết nối!'),
+                                {
+                                    whitespace: true,
+                                    message: 'Tên kết nối không được bắt đầu khoảng trắng!',
+                                },
+                            ]}
                             inputField={<Input placeholder="Nhập tên kết nối" />}
                         />
                         <FormItemComponent
                             label="Tên gian hàng"
                             name="name"
-                            rules={[rules.required('Vui lòng nhập tên gian hàng!')]}
+                            rules={[
+                                rules.required('Vui lòng nhập tên gian hàng!'),
+                                {
+                                    whitespace: true,
+                                    message: 'Tên gian hàng không được bắt đầu khoảng trắng!',
+                                },
+                            ]}
                             inputField={<Input placeholder="Nhập tên gian hàng" />}
                         />
                         <FormItemComponent
@@ -72,12 +84,14 @@ const SynckiotForm = ({
                             name="clientId"
                             rules={[rules.required('Vui lòng nhập client id!')]}
                             inputField={<Input placeholder="Nhập client id" />}
+                            normalize={(value: any) => value?.toString()?.trim()}
                         />
                         <FormItemComponent
                             label="Secret id"
                             name="clientSecret"
                             rules={[rules.required('Vui lòng nhập secret id!')]}
                             inputField={<Input placeholder="Nhập secret id" />}
+                            normalize={(value: any) => value?.toString()?.trim()}
                         />
                         <Row className="gx-m-0 gx-px-2" style={{ flexDirection: 'row' }} justify="end">
                             <Space>

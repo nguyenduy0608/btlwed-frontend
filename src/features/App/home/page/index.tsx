@@ -1,7 +1,4 @@
-import TopBar from '@/components/TopBar';
-import { PADDING, RADIUS } from '@/config/theme';
-import { momentToStringDate } from '@/utils';
-import { Col, DatePicker, Row, Typography } from 'antd';
+import { DatePicker } from 'antd';
 import moment from 'moment';
 import React from 'react';
 import { useQuery } from 'react-query';
@@ -87,7 +84,6 @@ const ContainerStyled = styled.div`
     padding: 10px 30px;
     display: flex;
     flex-direction: column;
-    overflow-y: hidden;
     overflow-x: hidden;
     max-height: 100vh;
 `;

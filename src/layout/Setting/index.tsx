@@ -1,32 +1,28 @@
+import LocalStorage from '@/apis/LocalStorage';
 import sync from '@/assets/sync.json';
 import IconAntd from '@/components/IconAntd';
 import { DefaultSelectStyled } from '@/config/global.style';
 import { SET_BG_APP, SET_BG_APP_COLOR, SET_BG_APP_FLOWER, SET_SYNC_LOADING } from '@/context/types';
 import useCallContext from '@/hooks/useCallContext';
-import { Notification as NotiMSG, wait } from '@/utils';
-import { notificationSync } from '@/utils/notification';
+import { wait } from '@/utils';
 import { Button, Checkbox, Col, Drawer, Popover, Row, Select, Switch } from 'antd';
 import Lottie from 'lottie-react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import audiobell from '@/assets/audio/sound.mp3';
+import { CirclePicker } from 'react-color';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { syncService } from './service';
-import LocalStorage from '@/apis/LocalStorage';
-import { CirclePicker, TwitterPicker } from 'react-color';
 
 const Setting = () => {
     const { state, dispatch } = useCallContext();
-    const [enable, setEnabled] = React.useState(false);
+
+    const { pathname } = useLocation();
+    console.log('🚀 ~ file: index.tsx:19 ~ Setting ~ pathname', pathname);
 
     const [kiotVietId, setKiotVietId] = React.useState('');
     const navigate = useNavigate();
 
     const [openNoti, setOpenNoti] = React.useState(false);
     const audioRef: any = React.useRef();
-
-    React.useLayoutEffect(() => {
-        console.log(LocalStorage.getBG());
-    }, []);
 
     const handleSync = async (type: string) => {
         if (!kiotVietId) return;
@@ -127,7 +123,7 @@ const Setting = () => {
                         </Popover>
                     </Row>
                 </div>
-                <h4 className="gx-my-4 gx-text-uppercase">
+                {/* <h4 className="gx-my-4 gx-text-uppercase">
                     <strong>CẤU HÌNH</strong>
                 </h4>
                 <div>
@@ -143,7 +139,7 @@ const Setting = () => {
                     >
                         Test thông báo
                     </Button>
-                </div>
+                </div> */}
                 <h4 className="gx-my-4 gx-text-uppercase">
                     <strong>Giao diện</strong>
                 </h4>
@@ -188,11 +184,13 @@ const Setting = () => {
                     )}
                 </div>
             </Drawer>
-            <div className="gx-customizer-option">
-                <Button onClick={() => setOpenNoti(true)} type="primary">
-                    <IconAntd spin icon="SettingOutlined" />
-                </Button>
-            </div>
+            {pathname !== '/' && (
+                <div className="gx-customizer-option">
+                    <Button onClick={() => setOpenNoti(true)} type="primary">
+                        <IconAntd spin icon="SettingOutlined" />
+                    </Button>
+                </div>
+            )}
         </div>
     );
 };

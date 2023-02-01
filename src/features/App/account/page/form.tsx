@@ -178,15 +178,18 @@ const AccountFormPage = ({
                                 label="Ảnh đại diện"
                                 inputField={
                                     <UploadComponent
+                                        accept="image/*"
                                         isUploadServerWhenUploading
-                                        uploadType="list"
+                                        uploadType="single"
                                         listType="picture-card"
                                         maxLength={1}
                                         onSuccessUpload={(file: any) => {
                                             setFile(file?.url);
                                         }}
                                         isShowFileList
-                                        initialFile={values && [{ url: values?.avatar, uid: uuid(), name: 'avatar' }]}
+                                        initialFile={
+                                            values?.avatar && [{ url: values?.avatar, uid: uuid(), name: 'avatar' }]
+                                        }
                                     />
                                 }
                             />

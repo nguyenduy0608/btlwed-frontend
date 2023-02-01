@@ -105,10 +105,20 @@ const UploadComponent: React.FC<IProps> = ({
 
     const handleOnChange: UploadProps['onChange'] = ({ file, fileList, event }: any) => {
         // check size > 2mb reject
-        if (file?.size > 2 * 1024 * 1024) {
-            file.status = 'error';
+        if (file?.type === 'image/png' || file?.type === 'image/jpeg' || file?.type === 'image/jpg') {
+            if (file?.size > 2 * 1024 * 1024) {
+                file.status = 'error';
 
-            return Notification('warning', 'Dung lượng ảnh nhỏ hơn 2 MB');
+                return Notification('warning', 'Dung lượng ảnh nhỏ hơn 2 MB');
+            }
+        }
+
+        // file type video
+        if (file?.type === 'video/mp4') {
+            if (file?.size > 5 * 1024 * 1024) {
+                file.status = 'error';
+                return Notification('warning', 'Dung lượng video nhỏ hơn 5 MB');
+            }
         }
 
         if (file.status !== 'error') {
@@ -164,8 +174,8 @@ const UploadComponent: React.FC<IProps> = ({
                             <Image
                                 key={uuid()}
                                 src={file?.thumbUrl || file.url}
-                                width={0}
-                                style={{ display: 'none' }}
+                                // width={0}
+                                style={{ display: 'none', width: '100%', height: '100%' }}
                             />
                         );
                     })}

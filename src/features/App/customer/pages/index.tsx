@@ -17,12 +17,14 @@ import Description from '../components/Description';
 import Filter from '../components/Filter';
 import { CustomerService } from '../service';
 
-const initialFilterQuery = {};
+const initialFilterQuery = {
+    kiotvietId: '',
+};
 
 const CustomerPage = () => {
     const { state } = useCallContext();
 
-    const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
+    const [filterQuery, setFilterQuery] = React.useState<any>(initialFilterQuery);
     const [page, setPage] = React.useState(1);
     const [loadingExcel, setLoadingExcel] = React.useState<boolean>(false);
 
@@ -90,16 +92,22 @@ const CustomerPage = () => {
             <TopBar
                 title="Danh sách khách hàng"
                 extra={[
-                    <Segmented
-                        key="kh"
-                        onChange={(value) => {
-                            setFilterQuery({ ...filterQuery, kiotvietId: value });
-                        }}
-                        options={[
-                            selectAll,
-                            ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
-                        ]}
-                    />,
+                    loadingClearFilter ? (
+                        <ClearFilterLoading key="clear_filter" />
+                    ) : (
+                        <Segmented
+                            key="kh"
+                            value={filterQuery?.kiotvietId}
+                            onChange={(value) => {
+                                setFilterQuery({ ...filterQuery, kiotvietId: value });
+                            }}
+                            options={[
+                                selectAll,
+                                ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) ||
+                                    []) as any),
+                            ]}
+                        />
+                    ),
                 ]}
             />
             <Container>

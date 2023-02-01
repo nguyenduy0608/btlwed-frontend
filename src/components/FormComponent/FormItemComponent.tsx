@@ -10,6 +10,7 @@ const FormItemComponent = ({
     inputField,
     style,
     extra,
+    normalize,
     ...props
 }: {
     validateStatus?: any;
@@ -22,6 +23,7 @@ const FormItemComponent = ({
     inputField: ReactNode;
     extra?: any;
     style?: any;
+    normalize?: any;
     props?: { dependencies: any };
 }) => {
     return (
@@ -35,6 +37,7 @@ const FormItemComponent = ({
                 name={name}
                 rules={rules}
                 valuePropName={valuePropName}
+                normalize={normalize}
                 {...props}
             >
                 {inputField}

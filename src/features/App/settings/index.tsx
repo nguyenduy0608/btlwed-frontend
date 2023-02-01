@@ -8,6 +8,7 @@ import Container from '@/layout/Container';
 import { Button, Steps, Tabs } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
+import { useLocation, useNavigate } from 'react-router-dom';
 import InformationTab from './components/Information.Tab';
 import SynckiotForm from './components/Synckiot.Form';
 import SynckiotTab from './components/Synckiot.Tab';
@@ -17,6 +18,18 @@ import { WarehouseService } from './service';
 
 const SettingPage = () => {
     const { state, dispatch } = useCallContext();
+
+    const navigate = useNavigate();
+    const { pathname, search } = useLocation();
+    if (search) {
+        var params = search.substring(1);
+        var searchParams = JSON.parse(
+            '{"' + params.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+            function (key, value) {
+                return key === '' ? value : decodeURIComponent(value);
+            }
+        );
+    }
 
     const [tabIndex, setTabIndex] = React.useState('0');
     const [addKiotViet, setAddKiotViet] = React.useState(false);
@@ -49,13 +62,23 @@ const SettingPage = () => {
         },
     ];
 
+    React.useEffect(() => {
+        if (!searchParams?.tab) return;
+
+        setTabIndex(searchParams?.tab);
+    }, [searchParams?.tab]);
+
     return (
         <>
             <TopBar title="Cấu hình" />
             <Container>
                 <CardComponent>
                     <Tabs
-                        onChange={(key) => setTabIndex(key)}
+                        activeKey={tabIndex}
+                        onChange={(key) => {
+                            navigate(`${pathname}?tab=${key}`);
+                            setTabIndex(key);
+                        }}
                         tabBarExtraContent={
                             (tabIndex === '1' && (
                                 <Button onClick={() => setAddKiotViet(true)} className="gx-mb-2" type="primary">
