@@ -352,6 +352,7 @@ const InformationTab = () => {
                                     maxLength={1}
                                     onSuccessUpload={(url: any) => {
                                         formBank.setFieldValue('bankQrCode', url?.originFileObj);
+                                        setIsEditInfoPayment(true);
                                     }}
                                 />
                             }
