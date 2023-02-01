@@ -134,7 +134,10 @@ const OrderDetailPage = () => {
                         }
                         rightCol={
                             <>
-                                <CardRow left="Tổng tiền" right={currencyFormat(order?.total) + 'đ'} />
+                                <CardRow
+                                    left="Tổng tiền"
+                                    right={currencyFormat(order?.total + order?.usePoint + order?.totalDiscount) + 'đ'}
+                                />
                                 <CardRow
                                     left="Tổng tiền giảm(Điểm tích lũy)"
                                     right={currencyFormat(order?.usePoint) + 'đ'}
@@ -145,10 +148,7 @@ const OrderDetailPage = () => {
                                         right={currencyFormat(order?.totalDiscount) + 'đ'}
                                     />
                                 )}
-                                <CardRow
-                                    left="KH cần thanh toán"
-                                    right={currencyFormat(order?.total - order?.totalDiscount - order?.usePoint) + 'đ'}
-                                />
+                                <CardRow left="KH cần thanh toán" right={currencyFormat(order?.total) + 'đ'} />
                                 <CardRow left="KH đã thanh toán" right={currencyFormat(order?.totalPayment) + 'đ'} />
                                 {order?.giftStatus && order?.voucher?.name ? (
                                     <CardRow left="Quà tặng" right={order?.voucher?.name} />

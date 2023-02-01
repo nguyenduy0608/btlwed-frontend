@@ -16,6 +16,7 @@ const initialFilterQuery = {};
 const ReportStallPage = () => {
     const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
     const [page, setPage] = React.useState(1);
+    const [loadingExcel, setLoadingExcel] = React.useState(false);
 
     const {
         data: stallReport,
@@ -34,12 +35,14 @@ const ReportStallPage = () => {
     );
 
     const handleExportExcel = React.useCallback(() => {
+        setLoadingExcel(true);
         stallReport?.paging?.links?.downExcel &&
             stallService
                 .getFileExcel(stallReport?.paging?.links?.downExcel, { page, ...filterQuery })
                 .then((res: any) => {
                     Notification('success', 'Export thành công');
                     downloadFile(res.path);
+                    setLoadingExcel(false);
                 });
     }, [stallReport?.paging?.links?.downExcel, page, filterQuery]);
 
@@ -67,7 +70,7 @@ const ReportStallPage = () => {
                 >
                     <TableComponent
                         showTotalResult
-                        loading={isLoading || isRefetching}
+                        loading={isLoading || isRefetching || loadingExcel}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}

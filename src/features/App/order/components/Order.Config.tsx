@@ -32,6 +32,7 @@ export interface DataTypeOrder {
     transportStatusCode: number;
     updatableId: any;
     usePoint: number;
+    Voucher: any;
 }
 export const columns = (page: number): ColumnsType<DataTypeOrder> => [
     {
