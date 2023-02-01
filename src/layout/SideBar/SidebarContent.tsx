@@ -20,7 +20,7 @@ const SidebarContent = ({
 
     const location = useLocation();
     const navigate = useNavigate();
-    const selectedKeys = location.pathname.substr(1) || '/';
+    const selectedKeys = location.pathname?.substr(1)?.includes('order') ? 'order' : location.pathname.substr(1) || '/';
 
     return (
         <>

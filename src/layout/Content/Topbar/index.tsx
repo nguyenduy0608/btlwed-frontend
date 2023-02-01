@@ -8,6 +8,7 @@ import { TAB_SIZE } from '@/config/theme';
 import CustomScrollbars from '@/components/CustomScrollbars';
 import UserInfo from '@/components/UserInfo';
 import { images } from '@/assets/imagesAssets';
+import PushNoti from '@/features/App/pushNoti';
 
 const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile: () => void }) => {
     const { width } = useWindowSize();
@@ -21,14 +22,14 @@ const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile
                 <Link className="gx-d-block gx-d-lg-none gx-pointer" to="/">
                     <img height={30} alt="" src={images.logo} />
                 </Link>
-                <SearchBox
+                {/* <SearchBox
                     styleName="gx-d-none gx-d-lg-block gx-lt-icon-search-bar-lg"
                     placeholder="Tìm kiếm..."
                     onChange={(e) => setSearchText(e.target.value)}
                     value={SearchText}
-                />
+                /> */}
                 <ul className="gx-header-notifications gx-ml-auto">
-                    <li className="gx-notify gx-notify-search gx-d-inline-block gx-d-lg-none">
+                    {/* <li className="gx-notify gx-notify-search gx-d-inline-block gx-d-lg-none">
                         <Popover
                             overlayClassName="gx-popover-horizantal"
                             placement="bottomRight"
@@ -46,31 +47,12 @@ const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile
                                 <SearchOutlined />
                             </span>
                         </Popover>
-                    </li>
+                    </li> */}
                     <li className="gx-notify">
                         <Popover
                             overlayClassName="gx-popover-horizantal"
                             placement="bottomRight"
-                            content={
-                                <>
-                                    <div className="gx-popover-header">
-                                        <h3 className="gx-mb-0">Notifications</h3>
-                                        <i className="gx-icon-btn icon icon-charvlet-down" />
-                                    </div>
-                                    <CustomScrollbars className="gx-popover-scroll">
-                                        <ul className="gx-sub-popover">
-                                            <li className="gx-media">
-                                                <div className="gx-media-body gx-align-self-center">
-                                                    <p className="gx-fs-sm gx-mb-0">title</p>
-                                                    <span className="gx-meta-date">
-                                                        <small>time</small>
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </CustomScrollbars>
-                                </>
-                            }
+                            content={<PushNoti />}
                             trigger="click"
                         >
                             <span className="gx-pointer gx-d-block">

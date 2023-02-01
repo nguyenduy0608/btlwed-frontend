@@ -35,11 +35,6 @@ const OrderTab = ({ kiotvietId }: { kiotvietId: number }) => {
 
     return (
         <CardComponent
-            title={
-                <div className="gx-pl-4" style={{ fontSize: '14px' }}>
-                    Kết quả lọc: <strong>{orders?.paging?.totalItemCount || 0}</strong>
-                </div>
-            }
             extra={[
                 <Space className="gx-mr-4" size="middle" wrap>
                     <SearchInput
@@ -76,6 +71,7 @@ const OrderTab = ({ kiotvietId }: { kiotvietId: number }) => {
                 page={page}
                 onRowClick={(record: { id: number }) => navigate(`${routerPage.order}/${record.id}`)}
                 rowSelect={false}
+                showTotalResult
                 onChangePage={(_page) => setPage(_page)}
                 dataSource={orders ? orders.data : []}
                 columns={columns(page)}

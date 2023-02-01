@@ -90,7 +90,7 @@ const ChartReport = ({
             </RowStyled>
             {/* </TopBoxStyled> */}
             <BoxChart style={{ flex: 1 }}>
-                <ResponsiveContainer width="100%">
+                <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={handleDataChart || []} margin={{ top: 10, right: 0, left: -15, bottom: 0 }}>
                         <XAxis dataKey="name" />
                         <YAxis />
@@ -172,7 +172,7 @@ const TitleColStyled = styled.div`
 `;
 
 const BoxChart = styled.div`
-    padding: 30px 40px 20px 10px;
+    padding: 30px 30px 20px 10px;
     box-shadow: ${BOX_SHADOW};
     background-color: white;
     border-radius: ${RADIUS};

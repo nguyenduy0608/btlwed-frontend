@@ -22,12 +22,6 @@ const UserInfo = () => {
 
     const [open, setOpen] = React.useState(false);
 
-    const [openNoti, setOpenNoti] = React.useState(false);
-
-    const showDrawer = () => {
-        setOpenNoti(true);
-    };
-
     const [form] = Form.useForm();
 
     const handleSubmit = () => {};
@@ -75,11 +69,11 @@ const UserInfo = () => {
                 <ClockStyled>
                     <Clock format="hh:mm:ss a" ticking />
                 </ClockStyled>
-                <li onClick={showDrawer}>
+                <li>
                     <Popover
                         trigger="click"
                         placement="rightBottom"
-                        content={<PushNoti open={openNoti} setOpen={setOpenNoti} />}
+                        content={<PushNoti />}
                         // title="Title"
                     >
                         <Badge showZero count={countNoti || 0}>

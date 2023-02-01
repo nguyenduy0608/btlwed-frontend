@@ -70,7 +70,6 @@ const VoucherFormPage = () => {
 
     const handleSubmit = React.useCallback(
         async (data: any) => {
-            console.log('🚀 ~ file: form.tsx:71 ~ data', data);
             if (!id && !file) return Notification('warning', 'Vui lòng chọn ảnh');
             setLoading(true);
             const formData = new FormData();
@@ -84,7 +83,8 @@ const VoucherFormPage = () => {
                 status: 1,
                 products: data?.enableProducts ? [] : products,
                 description: data?.description ? data?.description : '',
-                minSpend: data?.minSpend ? data?.minSpend : 0,
+                minSpend: data?.minSpend ? data?.minSpend : 'null',
+                quantityBuy: data?.quantityBuy ? data?.quantityBuy : 'null',
             };
             if (applicableType === APPLICABLE_TYPE.order) {
                 delete dataUpload.products;
@@ -225,7 +225,24 @@ const VoucherFormPage = () => {
                                     }
                                 />
                                 <FormItemComponent
-                                    rules={[{ required: true, message: 'Vui lòng nhập số lần sử dụng voucher!' }]}
+                                    rules={[
+                                        { required: true, message: 'Vui lòng nhập số lần sử dụng voucher!' },
+                                        // {
+                                        //     min: 1,
+                                        //     message: 'Số lần sử dụng voucher phải lớn hơn 0',
+                                        // },
+                                        {
+                                            validator: (_: any, value: any) => {
+                                                if (+value < 1) {
+                                                    return Promise.reject(
+                                                        new Error('Số lần sử dụng voucher phải lớn hơn 0!')
+                                                    );
+                                                }
+
+                                                return Promise.resolve();
+                                            },
+                                        },
+                                    ]}
                                     name="vouchersPerUser"
                                     label="Số lần sử dụng voucher"
                                     inputField={
@@ -363,7 +380,7 @@ const VoucherFormPage = () => {
                                                     min={1}
                                                     style={{ width: '100%' }}
                                                     formatter={(value) =>
-                                                        `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                                        `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, '')
                                                     }
                                                     parser={(value: any) => (value ? value.replace(/[^0-9]/g, '') : '')}
                                                     placeholder="Nhập mức giảm"

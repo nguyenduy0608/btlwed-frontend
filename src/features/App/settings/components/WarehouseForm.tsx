@@ -31,9 +31,9 @@ const WarehouseFormPage = ({
 
     const formReset = () => {
         form.setFieldsValue({
-            name: '',
-            retailer: '',
-            province: '',
+            name: null,
+            retailer: null,
+            province: null,
         });
     };
 
@@ -65,8 +65,8 @@ const WarehouseFormPage = ({
                 const res = await WarehouseService.update(values.id, newData);
                 if (res.status) {
                     Notification('success', 'Cập nhật kho hàng thành công');
-                    handleCloseForm();
                     formReset();
+                    handleCloseForm();
                 }
             } else {
                 let provinced: any = [];
@@ -81,8 +81,8 @@ const WarehouseFormPage = ({
                 const res = await WarehouseService.create(newData);
                 if (res.status) {
                     Notification('success', 'Thêm kho hàng thành công');
-                    handleCloseForm();
                     formReset();
+                    handleCloseForm();
                 }
             }
             setLoadingModal(false);
@@ -90,6 +90,15 @@ const WarehouseFormPage = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [values]
     );
+
+    React.useEffect(() => {
+        if (retailer) {
+            form.setFieldsValue({
+                name: null,
+            });
+        }
+    }, [retailer]);
+
     return (
         <ModalComponent
             title={values ? 'Sửa kho hàng' : 'Thêm kho hàng'}

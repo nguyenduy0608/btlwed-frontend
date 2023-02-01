@@ -9,6 +9,9 @@ import styled from 'styled-components';
 import { rules } from '../../voucher/rules';
 import { settingService } from '../service';
 
+const REG_VN =
+    /^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\s\W|_]+$/g;
+
 const InformationTab = () => {
     const { state } = useCallContext();
     const [isEditPoint, setIsEditPoint] = React.useState(false);
@@ -175,11 +178,13 @@ const InformationTab = () => {
                         <TitleCardStyled>Thông tin liên hệ</TitleCardStyled>
 
                         <FormItemComponent
+                            normalize={(value: any) => value?.toString()?.trim()?.replace(/ /g, '')}
                             label="Zalo"
                             name="linkZalo"
                             inputField={<Input placeholder="https://zalo.me" />}
                         />
                         <FormItemComponent
+                            normalize={(value: any) => value?.toString()?.trim()?.replace(/ /g, '')}
                             label="Messenger"
                             name="linkFacebook"
                             inputField={<Input placeholder="https://www.facebook.com" />}
@@ -228,10 +233,10 @@ const InformationTab = () => {
                             name="bankAccountNumber"
                             rules={[
                                 {
-                                    message: 'Số tài khoản sai định dạng',
                                     validator: (_: any, value: any) => {
-                                        if (value === 0) {
-                                            return Promise.reject();
+                                        // check value start with 0
+                                        if (value?.toString()?.startsWith('0')) {
+                                            return Promise.reject(new Error('Số tài khoản sai định dạng!'));
                                         }
                                         return Promise.resolve();
                                     },
@@ -240,12 +245,13 @@ const InformationTab = () => {
                             inputField={
                                 <InputNumber
                                     style={{ width: '100%' }}
-                                    parser={(value: any) => (value ? value.replace(/\$\s?|(,*)/g, '') : '')}
+                                    // parser={(value: any) => value?.replace(/[^\wÀ-úÀ-ÿ]/g, '')}
                                     placeholder="Nhập số tài khoản"
                                     controls={false}
                                     type="number"
                                 />
                             }
+                            normalize={(value: any) => value?.toString()?.replace(/[^\wÀ-úÀ-ÿ]/g, '')}
                         />
                         <FormItemComponent
                             label="Tên tài khoản"
@@ -273,6 +279,7 @@ const InformationTab = () => {
                         <FormItemComponent
                             label="QR code"
                             name="bankQrCode"
+                            rules={[rules.required('Vui lòng tải ảnh QR code!')]}
                             inputField={
                                 <UploadComponent
                                     // isUploadServerWhenUploading

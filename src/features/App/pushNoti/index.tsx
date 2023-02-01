@@ -24,7 +24,7 @@ const data = [
         title: 'Thông báo 4',
     },
 ];
-const PushNoti = ({ open, setOpen }: any) => {
+const PushNoti = () => {
     const { dispatch, state } = useCallContext();
 
     const [notifications, setNotifications] = React.useState<any>([]);
@@ -32,10 +32,6 @@ const PushNoti = ({ open, setOpen }: any) => {
     const [callback, setCallback] = React.useState(false);
     const [total, setTotal] = React.useState(0);
     const [page, setPage] = React.useState(1);
-
-    const onClose = () => {
-        setOpen(false);
-    };
 
     React.useEffect(() => {
         if (page !== 1) {
@@ -71,7 +67,6 @@ const PushNoti = ({ open, setOpen }: any) => {
     const markAllAsRead = async () => {
         try {
             await pushNotiService.readAll();
-            setOpen(false);
         } catch (error) {}
     };
 
@@ -162,7 +157,6 @@ const PushNoti = ({ open, setOpen }: any) => {
                                     dispatch({
                                         type: SET_COUNT_NOTI,
                                     });
-                                    setOpen(false);
                                 }}
                             >
                                 <List.Item.Meta
