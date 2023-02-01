@@ -116,15 +116,15 @@ const OrderPrint = React.forwardRef((props?: any, ref?: any) => {
                 </p>
 
                 <div style={{ width: '100%' }}>
-                    <RowInfo left="Tổng tiền:" right={currencyFormat(detailOrder?.total)} />
+                    <RowInfo
+                        left="Tổng tiền:"
+                        right={currencyFormat(detailOrder?.total + detailOrder?.usePoint + detailOrder?.totalDiscount)}
+                    />
                     <RowInfo left="Tổng tiền giảm(Điểm tích lũy):" right={currencyFormat(detailOrder?.usePoint)} />
                     {!detailOrder?.giftStatus && (
                         <RowInfo left="Tổng tiền giảm(Voucher):" right={currencyFormat(detailOrder?.totalDiscount)} />
                     )}
-                    <RowInfo
-                        left="Khách hàng cần thanh toán:"
-                        right={currencyFormat(detailOrder?.total - detailOrder?.totalDiscount - detailOrder?.usePoint)}
-                    />
+                    <RowInfo left="Khách hàng cần thanh toán:" right={currencyFormat(detailOrder?.total)} />
                     <RowInfo left="Khách hàng đã thanh toán:" right={currencyFormat(detailOrder?.totalPayment)} />
                     {detailOrder?.giftStatus && detailOrder?.voucher?.name ? (
                         <RowInfo left="Quà tặng:" right={detailOrder?.voucher?.name} />

@@ -25,8 +25,8 @@ export const settingService = {
     getInitPoint: () => {
         return AxiosClient.get('/admin/config/initial_point');
     },
-    updateInitPoint: (point: number) => {
-        return AxiosClient.post('/admin/config/initial_point', { point });
+    updateInitPoint: (inital_point: number) => {
+        return AxiosClient.post('/admin/config/initial_point', { inital_point });
     },
 
     // lien hệ
