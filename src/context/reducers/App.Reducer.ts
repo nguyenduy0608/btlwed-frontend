@@ -54,7 +54,7 @@ export const appReducer = (state: InitialStateType, action: IAction) => {
         case SET_CALLBACK_KIOVIET: {
             return { ...state, callbackKioviet: !state.callbackKioviet };
         }
-
+        //
         default: {
             throw new Error(`[appReducer] Unhandled action type: ${action.type}`);
         }

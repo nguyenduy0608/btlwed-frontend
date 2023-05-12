@@ -15,10 +15,10 @@ import './overiseStyle/style.min.css';
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
-            retry: false, // disable retry,
-            refetchOnWindowFocus: false, // disable refetch on window focus,
-            keepPreviousData: true, // keep previous data if query
-            staleTime: 10000, // time cache data fetching,
+            retry: false,
+            refetchOnWindowFocus: false,
+            keepPreviousData: true,
+            staleTime: 10000,
         },
     },
 });

@@ -50,8 +50,7 @@ AxiosClient.interceptors.response.use(
                     case 512:
                         // handle error
                         Notification('error', response?.data?.message);
-                        // LocalStorage.removeToken();
-                        // window.location.reload();
+
                         break;
                     default:
                         Notification('error', response?.data?.message);
