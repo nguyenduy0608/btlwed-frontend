@@ -1,4 +1,4 @@
-# FrontEnd boilerplate WINDSoft 
+
 
 
 ## Branch Structure
@@ -93,5 +93,5 @@ $  npm run li || yarn li
 ```bash
 $ touch .env .development .env.production
 $ yarn install || npm install (or npm install --force)
-$ yarn start || npm start
+$ yarn start || npm start || yarn dev
 ```
