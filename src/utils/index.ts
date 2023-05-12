@@ -18,7 +18,6 @@ export const Notification = (status: NotificationType, msg: any) => {
     }
 };
 
-// moment time to DD/MM/YYYY or ...'
 export const momentToStringDate = (date: string | Date, type = 'date') => {
     switch (type) {
         case 'date':
