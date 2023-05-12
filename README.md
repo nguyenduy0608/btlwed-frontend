@@ -1,6 +1,5 @@
 # FrontEnd boilerplate WINDSoft 
 
-Không chia sẻ source code lên git cá nhân hoặc public khi chưa được sự đồng ý bằng văn bản của WINDSoft.
 
 ## Branch Structure
 
