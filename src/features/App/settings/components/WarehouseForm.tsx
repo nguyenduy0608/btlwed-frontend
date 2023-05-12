@@ -109,7 +109,7 @@ const WarehouseFormPage = ({
                 <Row gutter={[20, 0]}>
                     <FormItemComponent
                         label="Tên gian hàng"
-                        name="retailer"
+                        title="retailer"
                         rules={[rules.required('Vui lòng chọn kho hàng!')]}
                         inputField={
                             <DefaultSelectStyled allowClear placeholder="Chọn kho hàng">
@@ -125,7 +125,7 @@ const WarehouseFormPage = ({
                     {/* <SelectComponent fieldShow="name" apiUrl={'admin/kiotViet'} placeholder="" /> */}
                     <FormItemComponent
                         label="Kho tự động"
-                        name="name"
+                        title="name"
                         rules={[rules.required('Vui lòng chọn kho tự động!')]}
                         inputField={
                             <SelectComponent
@@ -139,7 +139,7 @@ const WarehouseFormPage = ({
                     />
                     <FormItemComponent
                         label="Tỉnh/Thành phố"
-                        name="province"
+                        title="province"
                         rules={[rules.required('Vui lòng chọn tỉnh thành phố!')]}
                         inputField={
                             <SelectMultiComponent

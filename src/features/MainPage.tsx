@@ -11,12 +11,9 @@ const switchRoute = (role: string) => {
     switch (role) {
         case ADMIN.main:
             return AdminRoutes;
-        case ADMIN.news:
-            return EditorRoutes;
-        case ADMIN.accountant:
+        case ADMIN.employee:
             return AccountantRoutes;
-        case ADMIN.stall:
-            return AdminRoutes;
+
         default:
             return PublicRoutes;
     }
@@ -33,15 +30,8 @@ const MainPage = ({ role }: { role: string }) => {
 
     React.useEffect(() => {
         if (!role) return;
-
-        if (role === ADMIN.news) {
-            navigate(routerPage.news);
-        }
     }, [role]);
-
     React.useEffect(() => {
-        if (logged || pathname === '/vn_pay') return;
-
         // nếu đăng nhập và domain không webview và domain không public
         // if (LocalStorage.getToken() && pathname.includes('webview') && pathname.includes('public')) {
 
@@ -50,7 +40,12 @@ const MainPage = ({ role }: { role: string }) => {
 
             if (pathname === routerPage.register || pathname === routerPage.login) {
                 // return switchSidebar(role)?.[0]?.key;
-                return navigate('/');
+                if (role === 'ROLE_EMPLOYEE') {
+                    return navigate('/calendar');
+                }
+                if (role === 'ROLE_ADMIN') {
+                    return navigate('/');
+                }
             }
             // navigate(pathname);
         } else {

@@ -4,7 +4,9 @@ export const routerPage = {
 
     // private....
     home: '/',
-
+    //calendar
+    calendar: '/calendar',
+    employeeDetail: '/employee/:id',
     // product
     productCategory: '/product/category',
     product: '/product',
@@ -14,12 +16,11 @@ export const routerPage = {
     voucher: '/voucher',
     voucherForm: '/voucher/form',
     voucherFormEdit: '/voucher/form/:id',
-
-    // customer
-    customer: '/customer',
+    departmentDetail: 'voucher/:id',
+    employee: '/employee',
 
     //order
-    order: '/order',
+    contant: '/contant',
     orderDetail: '/order/:id',
 
     // notification
@@ -29,8 +30,7 @@ export const routerPage = {
     account: '/account',
 
     // report
-    reportSell: '/report/sell',
-    reportStall: '/report/stall',
+    wave: '/wave',
 
     // news
     news: '/news',

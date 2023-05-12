@@ -91,7 +91,7 @@ const NewsFormPage = () => {
                             <Row>
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng nhập tiêu đề tin tức!'), rules.validateTitle]}
-                                    name="title"
+                                    title="title"
                                     label="Tiêu đề tin tức"
                                     inputField={
                                         <Input
@@ -102,7 +102,7 @@ const NewsFormPage = () => {
                                 />
 
                                 <FormItemComponent
-                                    name="file"
+                                    title="file"
                                     label={
                                         <div>
                                             Ảnh tin tức <span style={{ color: 'red' }}>*</span>
@@ -134,7 +134,7 @@ const NewsFormPage = () => {
                             <Row>
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng chọn trạng thái tin tức!')]}
-                                    name="status"
+                                    title="status"
                                     label="Trạng thái"
                                     inputField={
                                         <Select
@@ -148,7 +148,7 @@ const NewsFormPage = () => {
                                 />
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng chọn loại tin tức!')]}
-                                    name="type"
+                                    title="type"
                                     label="Loại tin tức"
                                     inputField={
                                         <Select
@@ -163,7 +163,7 @@ const NewsFormPage = () => {
                                 />
                                 {status === NEWS_STATUS.POST && (
                                     <FormItemComponent
-                                        name="notificationCustomer"
+                                        title="notificationCustomer"
                                         label=" "
                                         valuePropName="checked"
                                         inputField={

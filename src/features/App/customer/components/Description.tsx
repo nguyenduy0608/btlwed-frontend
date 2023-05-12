@@ -9,12 +9,10 @@ import { Button, Card, Col, Form, Input, Row, Space, Tabs } from 'antd';
 import React from 'react';
 import { rules } from '../../voucher/rules';
 import { CustomerService } from '../service';
-import { DataTypeCustomer } from './Customer.Config';
-import GeneralInformation from './GeneralInformation';
-import PuchaseHistoryPage from './purchaseHistory';
-import WalletChangePage from './WalletChange';
+import { DataTypeEmployee } from './Employee.Config';
+
 interface IProps {
-    record: DataTypeCustomer;
+    record: DataTypeEmployee;
     refetch: any;
 }
 const Description: React.FC<IProps> = ({ record, refetch }) => {
@@ -22,16 +20,6 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
 
     const [tabActive, setTabActive] = React.useState('1');
     const [modalVisible, setModalVisible] = React.useState(false);
-
-    const items = [
-        {
-            label: 'Thông tin chung',
-            key: '1',
-            children: <GeneralInformation disabled={record.status === 0} customerId={record.id} />,
-        }, // remember to pass the key prop
-        { label: 'Thông tin mua hàng', key: '2', children: <PuchaseHistoryPage userId={record.id} /> },
-        { label: 'Lịch sử tích điểm', key: '3', children: <WalletChangePage customerId={record.id} /> },
-    ];
 
     const handleLock = async (id: number) => {
         const res = await CustomerService.changeStatus(id, 0);
@@ -47,20 +35,9 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
         }
     };
 
-    const handleSubmit = async (values: any) => {
-        CustomerService.changePassword(record.id, values.password).then((res) => {
-            if (res.status) {
-                refetch();
-                setModalVisible(false);
-                form.resetFields();
-                Notification('success', `Đổi mật khẩu thành công ${record.fullName}`);
-            }
-        });
-    };
-
     return (
         <>
-            <Card
+            {/* <Card
                 className="gx-mb-0"
                 actions={
                     tabActive === '1'
@@ -87,7 +64,7 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
                         : []
                 }
             >
-                <Tabs onChange={setTabActive} items={items} />
+                <Tabs onChange={setTabActive} items={[]} />
             </Card>
             <ModalComponent title="Đổi mật khẩu" modalVisible={modalVisible}>
                 <FormComponent form={form} onSubmit={handleSubmit}>
@@ -133,7 +110,7 @@ const Description: React.FC<IProps> = ({ record, refetch }) => {
                         </Space>
                     </Row>
                 </FormComponent>
-            </ModalComponent>
+            </ModalComponent> */}
         </>
     );
 };

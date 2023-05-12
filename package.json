@@ -10,11 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fullcalendar/daygrid": "^6.1.6",
+    "@fullcalendar/react": "^6.1.6",
     "@tinymce/tinymce-react": "^4.2.0",
     "@types/humps": "^2.0.2",
     "antd": "^4.23.2",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
+    "fullcalendar": "^6.1.6",
     "humps": "^2.0.1",
     "lottie-react": "^2.3.1",
     "moment": "^2.29.4",

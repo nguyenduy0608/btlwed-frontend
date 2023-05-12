@@ -7,6 +7,8 @@ import { Button, Modal, Popconfirm } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import voucherService from '../service';
 import { DataTypeAccount } from './Account.Config';
+import axios from 'axios';
+import LocalStorage from '@/apis/LocalStorage';
 interface IProps {
     record: DataTypeAccount;
     handleShowModal?: any;
@@ -18,7 +20,11 @@ const Buttons = (props: IProps) => {
 
     const { record, refetch, handleShowModal } = props;
     const navigate = useNavigate();
-
+    const token = LocalStorage.getToken();
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+    };
     const { confirm } = Modal;
     const destroyAll = () => {
         Modal.destroyAll();
@@ -34,61 +40,25 @@ const Buttons = (props: IProps) => {
             onCancel() {},
         });
     };
-    const showConfirmReset = () => {
-        confirm({
-            width: '520px',
-            title: 'Đặt lại mật khẩu',
-            icon: <ExclamationCircleOutlined />,
-            content: (
-                <strong style={{ marginTop: '10px' }}>Bạn chắc chắn đồng ý đặt lại mật khẩu tài khoản này?</strong>
-            ),
-            onOk() {
-                handleReset(record.id);
-            },
-            onCancel() {},
-        });
-    };
 
     const handleReset = async (id: number) => {
-        const res = await voucherService.resetPassword(id);
-        if (res.status) {
-            Notification('success', 'Reset mật khẩu thành công');
-            refetch();
-        }
+        const dataForm = {
+            name: '',
+        };
+        const res = await axios.put(`http://26.75.181.165:8080/admin/resetpass/admin/${id}`, dataForm, { headers });
+
+        Notification('success', 'Reset mật khẩu thành công');
+        refetch();
     };
-    const handleLock = async (id: number) => {
-        const res = await voucherService.lock(id);
-        if (res.status) {
-            Notification('success', 'Thay đổi trạng thái thành công');
-            refetch();
-        }
-    };
-    const handleUnlock = async (id: number) => {
-        const res = await voucherService.unlock(id);
-        if (res.status) {
-            Notification('success', 'Thay đổi trạng thái thành công');
-            refetch();
-        }
-    };
+
     const handleDelete = async (id: number) => {
-        const res = await voucherService.delete(id);
+        const res = await axios.delete(`http://26.75.181.165:8080/admin/${id}`, { headers });
         if (res.status) {
             Notification('success', 'Xóa thành công');
             refetch();
         }
     };
     return [
-        record.status ? (
-            <UnActiveButton
-                disabled={info?.id === record.id}
-                onClick={() => {
-                    handleLock(record.id);
-                }}
-            />
-        ) : (
-            <ActiveButton disabled={info?.id === record.id} onClick={() => handleUnlock(record.id)} />
-        ),
-
         <Button
             disabled={info?.id === record.id}
             type="text"

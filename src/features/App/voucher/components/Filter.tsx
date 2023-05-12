@@ -18,43 +18,8 @@ const Filter = ({ returnFilter }: { returnFilter: (filter: IFilter) => void }) =
         <Space size="middle" wrap>
             <SearchInput
                 onChangeSearch={(search) => returnFilter({ search })}
-                placeholderSearch="Nhập mã, tên voucher"
+                placeholderSearch="Nhập mã, tên phòng ban"
             />
-            <DefaultSelectStyled
-                placeholder="Trạng thái"
-                allowClear
-                style={{ width: '200px' }}
-                defaultValue={null}
-                onChange={handleChange}
-            >
-                <Option value={1}>Đang hoạt động</Option>
-                <Option value={0}>Ngừng hoạt động</Option>
-            </DefaultSelectStyled>
-            <DatePicker
-                style={{ minWidth: '200px' }}
-                placeholder="Ngày bắt đầu"
-                format={'DD/MM/YYYY'}
-                onChange={(date, dateString) => {
-                    returnFilter({ createFrom: dateString ? dateString.split('/').reverse().join('-') : '' });
-                }}
-            />
-            <DatePicker
-                style={{ minWidth: '200px' }}
-                placeholder="Ngày kết thúc"
-                format={'DD/MM/YYYY'}
-                onChange={(date, dateString) => {
-                    returnFilter({ createTo: dateString ? dateString.split('/').reverse().join('-') : '' });
-                }}
-            />
-            {/* <RangerPicker
-                tooltipTitle="Lọc theo ngày bắt đầu và kết thúc"
-                placeholderStart="Ngày bắt đầu"
-                placeholderEnd="Ngày kết thúc"
-                name="dateFilter"
-                onChange={(name: string, value: string) => {
-                    returnFilter({ createFrom: value.split(',')[0], createTo: value.split(',')[1] });
-                }}
-            /> */}
         </Space>
     );
 };

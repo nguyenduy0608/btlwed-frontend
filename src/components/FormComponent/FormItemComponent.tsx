@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 const FormItemComponent = ({
     grid,
     label,
-    name,
+    title: name,
     rules,
     valuePropName,
     inputField,
@@ -17,7 +17,7 @@ const FormItemComponent = ({
     grid?: boolean;
     label: any;
     messageVariables?: any;
-    name?: string;
+    title?: string;
     rules?: any;
     valuePropName?: any;
     inputField: ReactNode;

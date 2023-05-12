@@ -12,22 +12,25 @@ import React from 'react';
 import { rules } from '../../voucher/rules';
 import { DataTypeAccount } from '../component/Account.Config';
 import accountService from '../service';
+import axios from 'axios';
+import LocalStorage from '@/apis/LocalStorage';
 const { Option } = Select;
 
 const initialValue = {
-    fullName: '',
+    name: '',
     email: '',
-    avatar: '',
-    phoneNumber: '',
-    createdAt: '',
-    updatedAt: '',
-    password: '',
     role: '',
-    passwordConfirmation: '',
-    group: undefined,
-    kiotvietId: undefined,
+    address: '',
+    username: '',
+    password: '',
+    phoneNumber: '',
+    department: '',
 };
-
+const token = LocalStorage.getToken();
+const headers = {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+};
 const AccountFormPage = ({
     values,
     modalVisible,
@@ -57,32 +60,36 @@ const AccountFormPage = ({
     const handleSubmit = React.useCallback(
         async (data: DataTypeAccount) => {
             setLoadingModal(true);
-            const { phoneNumber, group, ...rest } = data;
             if (values) {
-                const res = await accountService.update(values.id, {
-                    ...rest,
-                    fullName: data.fullName?.trim(),
-                    email: data.email?.trim(),
-                    role: data.group,
-                    avatar: file || values?.avatar,
-                    status: !!data.status,
-                    isRoot: true,
-                });
+                const res = await axios.post(
+                    `http://26.75.181.165:8080/admin/newadmin/${data.department || 'test'} `,
+                    {
+                        name: data.name?.trim(),
+                        address: data.address?.trim(),
+                        phoneNumber: data.phoneNumber,
+                        status: data.status,
+                        id: values?.id,
+                    },
+                    { headers }
+                );
                 if (res.status) {
                     Notification('success', 'Cập nhật tài khoản thành công');
                     handleCloseForm();
                     formReset();
                 }
             } else {
-                const res = await accountService.create({
-                    ...rest,
-                    fullName: data.fullName?.trim(),
-                    email: data.email?.trim(),
-                    role: data?.group,
-                    avatar: file,
-                    status: true,
-                    isRoot: true,
-                    phone_number: phoneNumber,
+                const dataForm = {
+                    name: data.name?.trim(),
+                    email: data.address?.trim(),
+                    role: 'admin',
+                    address: data?.address,
+                    username: data?.username,
+                    password: data?.password,
+                    status: 'active',
+                    phoneNumber: data?.phoneNumber,
+                };
+                const res = await axios.put(`http://26.75.181.165:8080/admin/newadmin/${data?.department}`, dataForm, {
+                    headers,
                 });
                 if (res.status) {
                     Notification('success', 'Thêm tài khoản thành công');
@@ -108,21 +115,10 @@ const AccountFormPage = ({
                     <Col span={12}>
                         <Row>
                             <FormItemComponent
-                                rules={[rules.required('Vui lòng nhập họ tên !'), rules.validateName]}
-                                name="fullName"
-                                label="Họ tên"
-                                inputField={<Input placeholder="Nhập tên" />}
-                            />
-                            <FormItemComponent
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng nhập đúng định dạng email!',
-                                    },
-                                ]}
-                                name="email"
-                                label="Email"
-                                inputField={<Input placeholder="Nhập email" />}
+                                rules={[rules.required('Vui lòng nhập tài khoản !'), rules.validateName]}
+                                title="username"
+                                label="Tên tài khoản"
+                                inputField={<Input placeholder="Nhập tên tài khoản" />}
                             />
                             <FormItemComponent
                                 rules={[
@@ -130,14 +126,15 @@ const AccountFormPage = ({
                                     errorValidPhone,
                                     errorWhiteSpace,
                                 ]}
-                                name="phoneNumber"
+                                title="phoneNumber"
                                 label="Số điện thoại"
-                                inputField={<Input disabled={!!values} placeholder="Nhập số điện thoại" />}
+                                inputField={<Input placeholder="Nhập số điện thoại" />}
                             />
+
                             {values && (
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng chọn trạng thái!')]}
-                                    name="status"
+                                    title="status"
                                     label="Trạng thái"
                                     inputField={
                                         <Select placeholder="Chọn trạng thái">
@@ -157,14 +154,8 @@ const AccountFormPage = ({
                                                 message: 'Vui lòng nhập từ 6 ký tự!',
                                             },
                                         ]}
-                                        name="password"
+                                        title="password"
                                         label="Mật khẩu"
-                                        inputField={<Input.Password placeholder="******" />}
-                                    />
-                                    <FormItemComponent
-                                        rules={[rules.required('Vui lòng nhập lại mật khẩu !'), errorConfirmPassword]}
-                                        name="passwordConfirmation"
-                                        label="Xác nhận mật khẩu"
                                         inputField={<Input.Password placeholder="******" />}
                                     />
                                 </>
@@ -175,50 +166,33 @@ const AccountFormPage = ({
                     <Col span={12}>
                         <Row>
                             <FormItemComponent
-                                label="Ảnh đại diện"
-                                inputField={
-                                    <UploadComponent
-                                        accept="image/*"
-                                        isUploadServerWhenUploading
-                                        uploadType="single"
-                                        listType="picture-card"
-                                        maxLength={1}
-                                        onSuccessUpload={(file: any) => {
-                                            setFile(file?.url);
-                                        }}
-                                        isShowFileList
-                                        initialFile={
-                                            values?.avatar && [{ url: values?.avatar, uid: uuid(), name: 'avatar' }]
-                                        }
-                                    />
-                                }
+                                rules={[rules.required('Vui lòng nhập họ tên !'), rules.validateName]}
+                                title="name"
+                                label="Họ tên"
+                                inputField={<Input placeholder="Nhập tên" />}
                             />
                             <FormItemComponent
-                                rules={[rules.required('Vui lòng chọn loại tài khoản!')]}
-                                name="group"
-                                label="Loại tài khoản"
-                                inputField={
-                                    <Select placeholder="Chọn loại tài khoản">
-                                        <Option value={ADMIN.main}>Admin</Option>
-                                        <Option value={ADMIN.stall}>Admin gian hàng</Option>
-                                        <Option value={ADMIN.news}>Biên tập viên</Option>
-                                        <Option value={ADMIN.accountant}>Kế toán</Option>
-                                    </Select>
-                                }
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng nhập đúng địa chỉ',
+                                    },
+                                ]}
+                                title="address"
+                                label="Địa chỉ"
+                                inputField={<Input placeholder="Nhập địa chỉ" />}
                             />
-                            {group === ADMIN.stall && (
-                                <FormItemComponent
-                                    rules={[{ required: true, message: 'Vui lòng chọn khu vực!' }]}
-                                    name="kiotvietId"
-                                    label="Khu vực"
-                                    inputField={
-                                        <Select placeholder="Chọn khu vực">
-                                            {state?.kiotviets?.map((kiot) => (
-                                                <Option value={kiot.id}>{kiot.name}</Option>
-                                            ))}
-                                        </Select>
-                                    }
-                                />
+                            {values ? (
+                                <></>
+                            ) : (
+                                <>
+                                    <FormItemComponent
+                                        rules={[rules.required('Vui lòng nhập phòng ban !'), rules.validateName]}
+                                        title="department"
+                                        label="Phòng ban"
+                                        inputField={<Input placeholder="Nhập phòng ban" disabled={!!values} />}
+                                    />
+                                </>
                             )}
                         </Row>
                     </Col>

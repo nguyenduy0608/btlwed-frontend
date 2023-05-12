@@ -1,8 +1,8 @@
 import { PerformanceNodeTiming } from 'perf_hooks';
 
 export const STATUS = {
-    active: 1,
-    unActive: 0,
+    active: 'active',
+    unActive: 'unactive',
 };
 
 export const REWARD = {
@@ -21,10 +21,8 @@ export const CUSTOMER_TYPE = {
     ALL: 3,
 };
 export const ADMIN = {
-    main: 'admin', // admin chính
-    stall: 'shop_admin', // admin gian hàng
-    news: 'news_admin', // admin tin tức
-    accountant: 'accountant_admin', // kế toán
+    main: 'ROLE_ADMIN', // admin chính
+    employee: 'ROLE_EMPLOYEE',
 };
 // export const ORDERSTATUS = {
 //     completed: 'completed',

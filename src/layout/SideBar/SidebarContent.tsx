@@ -8,6 +8,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { switchSidebar } from './contants';
+import { Header } from 'antd/lib/layout/layout';
 
 const SidebarContent = ({
     collapsed,
@@ -17,7 +18,7 @@ const SidebarContent = ({
     handleCallbackCollapsed?: () => void;
 }) => {
     const { state } = useCallContext();
-
+    console.log(state);
     const location = useLocation();
     const navigate = useNavigate();
     const selectedKeys = location.pathname?.substr(1)?.includes('order') ? 'order' : location.pathname.substr(1) || '/';
@@ -37,7 +38,6 @@ const SidebarContent = ({
                         >
                             <img height="25px" alt="logo_sidebar" src={logo_sidebar} />
                         </div>
-                        {/* <div style={{ color: 'white', fontSize: '24px' }}>STAKA</div> */}
                     </Link>
                 )}
                 <div className="gx-linebar" onClick={handleCallbackCollapsed}>
@@ -58,11 +58,11 @@ const SidebarContent = ({
                 <CustomScrollbars className="gx-layout-sider-scrollbar">
                     <div className="gx-menu-group">
                         <MenuStyled
-                            defaultOpenKeys={switchSidebar(state?.info?.group).map((item: { key: string }) => item.key)}
+                            defaultOpenKeys={switchSidebar(state?.info?.role).map((item: { key: string }) => item.key)}
                             selectedKeys={[selectedKeys]}
                             theme="dark"
                             mode="inline"
-                            items={switchSidebar(state?.info?.group)}
+                            items={switchSidebar(state?.info?.role)}
                             onClick={(e) => navigate(e.key === '/' ? e.key : '/' + e.key)}
                         />
                     </div>

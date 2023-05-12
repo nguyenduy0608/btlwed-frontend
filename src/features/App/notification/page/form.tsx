@@ -82,13 +82,13 @@ const NotificationFormPage = ({
                 <Row gutter={[20, 0]}>
                     <FormItemComponent
                         rules={[rules.required('Vui lòng nhập tiêu đề !')]}
-                        name="title"
+                        title="title"
                         label="Tiêu đề"
                         inputField={<Input placeholder="Nhập tiêu đề" />}
                     />
                     <FormItemComponent
                         rules={[rules.required('Vui lòng nhập nội dung !')]}
-                        name="content"
+                        title="content"
                         label="Nội dung"
                         inputField={<Input.TextArea rows={4} placeholder="Nhập nội dung" />}
                     />

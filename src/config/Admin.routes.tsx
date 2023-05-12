@@ -2,6 +2,7 @@ import React from 'react';
 import NotificationPage from '@/features/App/notification/page';
 import { routerPage } from './contants.routes';
 import Lazy, { PublicRoutes } from './Lazy.routes';
+import EmployeePage from '@/features/App/customer/pages';
 
 const HomePage = React.lazy(() => import('@/features/App/home/page'));
 const ProductCategoryPage = React.lazy(() => import('@/features/App/product/page/Category'));
@@ -11,22 +12,17 @@ const CustomerPage = React.lazy(() => import('@/features/App/customer/pages'));
 
 const VoucherPage = React.lazy(() => import('@/features/App/voucher/page'));
 const VoucherFormPage = React.lazy(() => import('@/features/App/voucher/page/form'));
+const DepartmentPage = React.lazy(() => import('@/features/App/voucher/page'));
 
 const OrderPage = React.lazy(() => import('@/features/App/order/page'));
-const OrderDetailPage = React.lazy(() => import('@/features/App/order/page/Detail'));
+const EmployeeDetail = React.lazy(() => import('@/features/App/customer/pages/EmployeeDetail'));
+const DepartmentDetail = React.lazy(() => import('@/features/App/voucher/page/departmentDetail'));
 const SettingPage = React.lazy(() => import('@/features/App/settings'));
 
 const AccountPage = React.lazy(() => import('@/features/App/account/page'));
+const CalendarPage = React.lazy(() => import('@/features/App/employee/page'));
 
-const ReportSellPage = React.lazy(() => import('@/features/App/report/Sell'));
 const ReportStallPage = React.lazy(() => import('@/features/App/report/Stall'));
-
-const NewsPage = React.lazy(() => import('@/features/App/news/page'));
-const NewsFormPage = React.lazy(() => import('@/features/App/news/page/Form'));
-
-const ShippingPage = React.lazy(() => import('@/features/App/merchandise/pages/Shipping'));
-const ImportCommodityPage = React.lazy(() => import('@/features/App/merchandise/pages/ImportCommodity'));
-const ReturnCommodityPage = React.lazy(() => import('@/features/App/merchandise/pages/ReturnCommodity'));
 
 // private router khi đã đăng nhập admin
 const AdminRoutes = [
@@ -38,22 +34,7 @@ const AdminRoutes = [
             </Lazy>
         ),
     },
-    {
-        path: routerPage.productCategory,
-        element: (
-            <Lazy>
-                <ProductCategoryPage />
-            </Lazy>
-        ),
-    },
-    {
-        path: routerPage.product,
-        element: (
-            <Lazy>
-                <ProductPage />
-            </Lazy>
-        ),
-    },
+
     {
         path: routerPage.productDetail,
         element: (
@@ -64,10 +45,10 @@ const AdminRoutes = [
     },
     // customer
     {
-        path: routerPage.customer,
+        path: routerPage.employee,
         element: (
             <Lazy>
-                <CustomerPage />
+                <EmployeePage />
             </Lazy>
         ),
     },
@@ -77,7 +58,7 @@ const AdminRoutes = [
         path: routerPage.voucher,
         element: (
             <Lazy>
-                <VoucherPage />
+                <DepartmentPage />
             </Lazy>
         ),
     },
@@ -101,7 +82,7 @@ const AdminRoutes = [
 
     // order
     {
-        path: routerPage.order,
+        path: routerPage.contant,
         element: (
             <Lazy>
                 <OrderPage />
@@ -109,14 +90,21 @@ const AdminRoutes = [
         ),
     },
     {
-        path: routerPage.orderDetail,
+        path: routerPage.employeeDetail,
         element: (
             <Lazy>
-                <OrderDetailPage />
+                <EmployeeDetail />
             </Lazy>
         ),
     },
-
+    {
+        path: routerPage.departmentDetail,
+        element: (
+            <Lazy>
+                <DepartmentDetail />
+            </Lazy>
+        ),
+    },
     // noti
     {
         path: routerPage.notification,
@@ -124,67 +112,12 @@ const AdminRoutes = [
     },
 
     // merchandise
-    {
-        path: routerPage.merchandise_importCommodity,
-        element: (
-            <Lazy>
-                <ImportCommodityPage />
-            </Lazy>
-        ),
-    },
-    {
-        path: routerPage.merchandise_returnCommodity,
-        element: (
-            <Lazy>
-                <ReturnCommodityPage />
-            </Lazy>
-        ),
-    },
-    {
-        path: routerPage.merchandise_shipping,
-        element: (
-            <Lazy>
-                <ShippingPage />
-            </Lazy>
-        ),
-    },
-    // new
-    {
-        path: routerPage.news,
-        element: (
-            <Lazy>
-                <NewsPage />
-            </Lazy>
-        ),
-    },
-    {
-        path: routerPage.newsForm,
-        element: (
-            <Lazy>
-                <NewsFormPage />
-            </Lazy>
-        ),
-    },
-    {
-        path: routerPage.newsFormEdit,
-        element: (
-            <Lazy>
-                <NewsFormPage />
-            </Lazy>
-        ),
-    },
 
+    // new
     // report
+
     {
-        path: routerPage.reportSell,
-        element: (
-            <Lazy>
-                <ReportSellPage />
-            </Lazy>
-        ),
-    },
-    {
-        path: routerPage.reportStall,
+        path: routerPage.wave,
         element: (
             <Lazy>
                 <ReportStallPage />
@@ -201,24 +134,14 @@ const AdminRoutes = [
             </Lazy>
         ),
     },
-
-    // chat
-    // {
-    //     path: routerPage.chat,
-    //     element: <ChatPage />,
-    // },
-
-    // setting
     {
-        path: routerPage.setting,
+        path: routerPage.calendar,
         element: (
             <Lazy>
-                <SettingPage />
+                <CalendarPage />
             </Lazy>
         ),
     },
-
-    ...PublicRoutes,
 ];
 
 export default AdminRoutes;

@@ -57,7 +57,7 @@ const SynckiotForm = ({
                     <FormComponent layoutType="vertical" onSubmit={handleSubmitStep1}>
                         <FormItemComponent
                             label="Tên kết nối"
-                            name="retailer"
+                            title="retailer"
                             rules={[
                                 rules.required('Vui lòng nhập tên kết nối!'),
                                 {
@@ -69,7 +69,7 @@ const SynckiotForm = ({
                         />
                         <FormItemComponent
                             label="Tên gian hàng"
-                            name="name"
+                            title="name"
                             rules={[
                                 rules.required('Vui lòng nhập tên gian hàng!'),
                                 {
@@ -81,14 +81,14 @@ const SynckiotForm = ({
                         />
                         <FormItemComponent
                             label="Client id"
-                            name="clientId"
+                            title="clientId"
                             rules={[rules.required('Vui lòng nhập client id!')]}
                             inputField={<Input placeholder="Nhập client id" />}
                             normalize={(value: any) => value?.toString()?.trim()}
                         />
                         <FormItemComponent
                             label="Secret id"
-                            name="clientSecret"
+                            title="clientSecret"
                             rules={[rules.required('Vui lòng nhập secret id!')]}
                             inputField={<Input placeholder="Nhập secret id" />}
                             normalize={(value: any) => value?.toString()?.trim()}
@@ -110,7 +110,7 @@ const SynckiotForm = ({
                     {kiotvietId && (
                         <FormItemComponent
                             label="Kho hàng"
-                            name="defaultBranchId"
+                            title="defaultBranchId"
                             rules={[rules.required('Vui lòng chọn kho hàng để chuyển đơn sang Kiot Việt!')]}
                             inputField={
                                 <SelectComponent

@@ -26,17 +26,8 @@ const UserInfo = () => {
 
     const handleSubmit = () => {};
 
-    React.useEffect(() => {
-        appService.getCountNoti().then((res) => {
-            setCountNoti(res?.data?.count || 0);
-        });
-    }, [state.callbackNoti]);
-
     const userMenuOptions = (
         <ul className="gx-user-popover">
-            <li className="gx-font-weight-medium" onClick={() => setOpen(true)}>
-                Đổi mật khẩu
-            </li>
             <Popconfirm
                 title={<strong style={{ marginTop: '10px' }}>Bạn chắc chắn muốn đăng xuất tài khoản này?</strong>}
                 onConfirm={() => {
@@ -56,7 +47,7 @@ const UserInfo = () => {
 
     return (
         <>
-            <Row wrap={false} justify="start" className="gx-avatar-row gx-m-0">
+            <Row wrap={false} justify="center" className="gx-avatar-row gx-m-0">
                 <Popover placement="bottomRight" content={userMenuOptions}>
                     <Avatar src={state?.info?.avatar} className="gx-size-40 gx-pointer gx-mr-3" alt="" />
                     <span className="gx-avatar-name gx-font-weight-bold" style={{ color: 'white' }}>
@@ -65,23 +56,7 @@ const UserInfo = () => {
                     </span>
                 </Popover>
             </Row>
-            <Row justify="start" align="middle" className="gx-app-nav" style={{ marginTop: '15px' }}>
-                <ClockStyled>
-                    <Clock format="hh:mm:ss a" ticking />
-                </ClockStyled>
-                <li>
-                    <Popover
-                        trigger="click"
-                        placement="rightBottom"
-                        content={<PushNoti />}
-                        // title="Title"
-                    >
-                        <Badge showZero count={countNoti || 0}>
-                            <IconAntd style={{ color: 'white' }} icon="BellOutlined" />
-                        </Badge>
-                    </Popover>
-                </li>
-            </Row>
+
             <ModalComponent modalVisible={open} title="Đổi mật khẩu">
                 <FormComponent form={form} onSubmit={handleSubmit}>
                     <Row gutter={[20, 0]}>

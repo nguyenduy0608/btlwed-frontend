@@ -150,7 +150,7 @@ const InformationTab = () => {
 
                         <FormItemComponent
                             label="% tích điểm"
-                            name="point"
+                            title="point"
                             // validateStatus="error"
                             // extra="Nhập giá trị > 0"
                             rules={[
@@ -198,7 +198,7 @@ const InformationTab = () => {
 
                         <FormItemComponent
                             label="Điểm tích lũy"
-                            name="initPoint"
+                            title="initPoint"
                             rules={[
                                 {
                                     message: 'Vui lòng nhập điểm tích lũy',
@@ -243,13 +243,13 @@ const InformationTab = () => {
                         <FormItemComponent
                             normalize={(value: any) => value?.toString()?.trim()?.replace(/ /g, '')}
                             label="Zalo"
-                            name="linkZalo"
+                            title="linkZalo"
                             inputField={<Input placeholder="https://zalo.me" />}
                         />
                         <FormItemComponent
                             normalize={(value: any) => value?.toString()?.trim()?.replace(/ /g, '')}
                             label="Messenger"
-                            name="linkFacebook"
+                            title="linkFacebook"
                             inputField={<Input placeholder="https://www.facebook.com" />}
                         />
                         {(zaloLive !== zaloCurrent.current || fbLive !== facebookCurrent.current) && (
@@ -269,7 +269,7 @@ const InformationTab = () => {
 
                         <FormItemComponent
                             label="Tên ngân hàng"
-                            name="bankName"
+                            title="bankName"
                             inputField={<Input placeholder="Nhập tên ngân hàng" />}
                             rules={[
                                 {
@@ -293,7 +293,7 @@ const InformationTab = () => {
                         />
                         <FormItemComponent
                             label="Số tài khoản"
-                            name="bankAccountNumber"
+                            title="bankAccountNumber"
                             rules={[
                                 {
                                     validator: (_: any, value: any) => {
@@ -318,7 +318,7 @@ const InformationTab = () => {
                         />
                         <FormItemComponent
                             label="Tên tài khoản"
-                            name="bankAccountName"
+                            title="bankAccountName"
                             rules={[
                                 {
                                     validator: (_: any, value: any) => {
@@ -341,7 +341,7 @@ const InformationTab = () => {
                         />
                         <FormItemComponent
                             label="QR code"
-                            name="bankQrCode"
+                            title="bankQrCode"
                             rules={[rules.required('Vui lòng tải ảnh QR code!')]}
                             inputField={
                                 <UploadComponent

@@ -18,7 +18,7 @@ const Socket = () => {
     // joinUser
     React.useEffect(() => {
         if (state.socket?.connected) {
-            if (LocalStorage.getToken() && state?.info?.group !== ADMIN.news) {
+            if (LocalStorage.getToken()) {
                 state.socket.on('notification:created', (data: any) => {
                     audioRef.current.play();
 
@@ -26,12 +26,6 @@ const Socket = () => {
                         dispatch({ type: SET_SYNC_LOADING, payload: false });
                     }
 
-                    notificationSync(
-                        data?.data?.content,
-                        data?.data?.title,
-                        () => navigate(routerPage.order + '/' + data?.data?.data?.id),
-                        ORDER_TYPE.includes(data?.data?.df_notification_id)
-                    );
                     setTimeout(() => {
                         dispatch({
                             type: SET_COUNT_NOTI,

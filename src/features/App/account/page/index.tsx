@@ -3,7 +3,7 @@ import TableComponent from '@/components/TableComponent';
 import TopBar from '@/components/TopBar';
 import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
-import { Button, Form, Space } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,8 @@ import Description from '../component/Description';
 import Filter from '../component/Filter';
 import accountService from '../service';
 import AccountFormPage from './form';
+import axios from 'axios';
+import LocalStorage from '@/apis/LocalStorage';
 const initialFilterQuery = {};
 const initialValue = {
     fullName: '',
@@ -24,6 +26,7 @@ const initialValue = {
     updatedAt: '',
     password: '',
     accountId: '',
+    role: '',
     passwordConfirmation: '',
 };
 
@@ -31,21 +34,26 @@ const AccountPage = () => {
     const { state } = useCallContext();
     const navigate = useNavigate();
     const [form] = Form.useForm();
-
-    const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
+    const { Search } = Input;
+    const [filterQuery, setFilterQuery] = React.useState('');
     const [loadingModal, setLoadingModal] = React.useState(false);
     const [page, setPage] = React.useState(1);
     const [rowSelected, setRowSelected] = React.useState<DataTypeAccount[] | null>(null);
     const [modalVisible, setModalVisible] = React.useState(false);
     const [values, setValues] = React.useState<DataTypeAccount | null>(null);
-
+    const token = LocalStorage.getToken();
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+    };
     const {
         data: account,
         isLoading,
         refetch,
         isRefetching,
-    } = useQuery<any>(['account', page, filterQuery], () => accountService.get({ page, ...filterQuery }));
-
+    } = useQuery<any>(['account', page, filterQuery], () =>
+        axios.get(`http://26.75.181.165:8080/admin/alladmins/${filterQuery}`, { headers })
+    );
     const onRowSelection = React.useCallback((row: DataTypeAccount[]) => {
         setRowSelected(row);
     }, []);
@@ -75,14 +83,10 @@ const AccountPage = () => {
 
         return <Description record={record} handleShowModal={() => handleShowModal(record)} refetch={refetch} />;
     };
-
-    const returnFilter = React.useCallback(
-        (filter: IFilter) => {
-            setPage(1);
-            setFilterQuery({ ...filterQuery, ...filter });
-        },
-        [filterQuery]
-    );
+    const onSearch = (search: string) => {
+        setFilterQuery(search);
+        setPage(1);
+    };
 
     return (
         <>
@@ -101,8 +105,23 @@ const AccountPage = () => {
                 }
                 title="Tài khoản"
             />
+
             <Container>
-                <CardComponent title={<Filter returnFilter={returnFilter} key="filter" />}>
+                <CardComponent
+                    title={
+                        <Space>
+                            <Search
+                                size="large"
+                                placeholder="Nhập tên hoặc số điện thoại tài khoản"
+                                onChange={(e: any) => {
+                                    onSearch(e?.target?.value);
+                                }}
+                                style={{ width: 400 }}
+                            />
+                        </Space>
+                    }
+                >
+                    <div style={{ marginBottom: '16px' }}>Kết quả lọc: {account?.data.length} </div>
                     <TableComponent
                         showTotalResult
                         loading={isRefetching || loadingModal}

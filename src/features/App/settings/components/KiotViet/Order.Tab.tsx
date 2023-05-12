@@ -4,7 +4,7 @@ import SearchInput from '@/components/SearchInput';
 import TableComponent from '@/components/TableComponent';
 import { routerPage } from '@/config/contants.routes';
 import { DefaultSelectStyled } from '@/config/global.style';
-import { columns } from '@/features/App/order/components/Order.Config';
+import { columns } from '@/features/App/order/components/Contract.Config';
 import { Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';

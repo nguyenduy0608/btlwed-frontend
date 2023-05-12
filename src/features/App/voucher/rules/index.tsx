@@ -52,8 +52,8 @@ export const rules = {
             if (value.trim() === '') {
                 return Promise.reject(new Error('Vui lòng nhập họ tên!'));
             }
-            if (value.length < 6) {
-                return Promise.reject(new Error('Tối thiểu 6 ký tự!'));
+            if (value.length < 3) {
+                return Promise.reject(new Error('Tối thiểu 3 ký tự!'));
             }
             return Promise.resolve();
         },

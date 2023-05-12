@@ -49,7 +49,7 @@ const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile
                         </Popover>
                     </li> */}
                     <li className="gx-notify">
-                        <Popover
+                        {/* <Popover
                             overlayClassName="gx-popover-horizantal"
                             placement="bottomRight"
                             content={<PushNoti />}
@@ -58,7 +58,7 @@ const Topbar = ({ handleCallbackCollapseMobile }: { handleCallbackCollapseMobile
                             <span className="gx-pointer gx-d-block">
                                 <BellOutlined />
                             </span>
-                        </Popover>
+                        </Popover> */}
                     </li>
 
                     {/* {width < TAB_SIZE && (

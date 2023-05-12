@@ -14,48 +14,48 @@ const CardReport = ({
     countReport,
 }: {
     countReport: {
-        countUsers: number;
-        countRevenue: number;
-        countProducts: number;
-        countOrders: number;
+        countEmployee: number;
+        countDepartment: number;
+        countContract: number;
+        countAdmin: number;
     };
 }) => {
     const navigate = useNavigate();
 
     return (
-        <Row className="gx-px-2">
+        <Row className="gx-px-2" style={{}}>
             <Col
                 xl={12}
-                lg={12}
-                md={12}
+                lg={24}
+                md={24}
                 sm={24}
                 xs={24}
                 className="gx-px-3 gx-py-2"
                 onClick={() => {
-                    navigate(routerPage.reportSell);
+                    navigate(routerPage.employee);
                 }}
             >
                 <IconWithTextCard
-                    icon={<TurnoverIcon color="#1890ff" />}
-                    title={<CountUp separator=" " end={countReport?.countRevenue || 0} />}
-                    subTitle="Doanh thu"
+                    icon={<UserIcon color="#1890ff" />}
+                    title={<CountUp separator=" " end={countReport?.countEmployee || 0} />}
+                    subTitle="Nhân viên"
                 />
             </Col>
             <Col
                 xl={12}
-                lg={12}
-                md={12}
+                lg={24}
+                md={24}
                 sm={24}
                 xs={24}
                 className="gx-px-3 gx-py-2"
                 onClick={() => {
-                    navigate(routerPage.customer);
+                    navigate(routerPage.account);
                 }}
             >
                 <IconWithTextCard
                     icon={<UserIcon color="#998CEB" />}
-                    title={<CountUp separator=" " end={countReport?.countUsers || 0} />}
-                    subTitle="Khách hàng"
+                    title={<CountUp separator=" " end={countReport?.countAdmin || 0} />}
+                    subTitle="Tài khoản"
                 />
             </Col>
             <Col
@@ -66,13 +66,13 @@ const CardReport = ({
                 xs={24}
                 className="gx-px-3 gx-py-2"
                 onClick={() => {
-                    navigate(routerPage.product);
+                    navigate(routerPage.voucher);
                 }}
             >
                 <IconWithTextCard
                     icon={<ProductIcon color="#5BB318" />}
-                    title={<CountUp separator=" " end={countReport?.countProducts || 0} />}
-                    subTitle="Sản phẩm"
+                    title={<CountUp separator=" " end={countReport?.countDepartment || 0} />}
+                    subTitle="Phòng ban"
                 />
             </Col>
             <Col
@@ -83,13 +83,13 @@ const CardReport = ({
                 xs={24}
                 className="gx-px-3 gx-py-2"
                 onClick={() => {
-                    navigate(routerPage.order);
+                    navigate(routerPage.contant);
                 }}
             >
                 <IconWithTextCard
                     icon={<OrderIcon color="#FF0000" />}
-                    title={<CountUp separator=" " end={countReport?.countOrders || 0} />}
-                    subTitle="Đơn hàng"
+                    title={<CountUp separator=" " end={countReport?.countContract || 0} />}
+                    subTitle="Hợp đồng"
                 />
             </Col>
         </Row>

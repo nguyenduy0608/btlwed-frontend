@@ -183,7 +183,7 @@ const VoucherFormPage = () => {
                             <Row>
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng nhập mã voucher!'), rules.validateCode]}
-                                    name="code"
+                                    title="code"
                                     label="Mã voucher"
                                     inputField={
                                         <Input
@@ -206,13 +206,13 @@ const VoucherFormPage = () => {
                                 />
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng nhập tên voucher!'), rules.validateName]}
-                                    name="name"
+                                    title="name"
                                     label="Tên voucher"
                                     inputField={<Input placeholder="Nhập tên voucher" />}
                                 />
                                 <FormItemComponent
                                     rules={[{ required: true, message: 'Vui lòng nhập số lượng voucher!' }]}
-                                    name="quota"
+                                    title="quota"
                                     label="Số lượng voucher"
                                     inputField={
                                         <InputNumber
@@ -243,7 +243,7 @@ const VoucherFormPage = () => {
                                             },
                                         },
                                     ]}
-                                    name="vouchersPerUser"
+                                    title="vouchersPerUser"
                                     label="Số lần sử dụng voucher"
                                     inputField={
                                         <InputNumber
@@ -257,7 +257,7 @@ const VoucherFormPage = () => {
                                     }
                                 />
                                 <FormItemComponent
-                                    name="description"
+                                    title="description"
                                     label="Mô tả"
                                     inputField={<Input.TextArea rows={5} placeholder="Nhập ghi chú" />}
                                 />
@@ -287,7 +287,7 @@ const VoucherFormPage = () => {
                             <Row>
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng chọn loại khách hàng!')]}
-                                    name="customerType"
+                                    title="customerType"
                                     label="Loại khách hàng"
                                     inputField={
                                         <Select placeholder="Chọn loại khách hàng">
@@ -299,7 +299,7 @@ const VoucherFormPage = () => {
                                 />
                                 <FormItemComponent
                                     rules={[rules.required('Vui lòng chọn loại giảm voucher!')]}
-                                    name="rewardType"
+                                    title="rewardType"
                                     label="Loại giảm"
                                     inputField={
                                         <Select placeholder="Chọn loại giảm voucher">
@@ -312,7 +312,7 @@ const VoucherFormPage = () => {
                                 {rewardType === REWARD.gift && (
                                     <>
                                         <FormItemComponent
-                                            name="quantityBuy"
+                                            title="quantityBuy"
                                             label="Số lượng sản phẩm cần mua"
                                             // rules={[
                                             //     {
@@ -340,7 +340,7 @@ const VoucherFormPage = () => {
                                             }
                                         />
                                         <FormItemComponent
-                                            name="minSpend"
+                                            title="minSpend"
                                             label="Tổng giá trị sản phẩm tối thiểu"
                                             inputField={
                                                 <InputNumber
@@ -362,7 +362,7 @@ const VoucherFormPage = () => {
                                     <>
                                         <FormItemComponent
                                             rules={[rules.required('Vui lòng chọn loại áp dụng!')]}
-                                            name="applicableType"
+                                            title="applicableType"
                                             label="Loại áp dụng"
                                             inputField={
                                                 <Select placeholder="Chọn loại áp dụng">
@@ -372,7 +372,7 @@ const VoucherFormPage = () => {
                                             }
                                         />
                                         <FormItemComponent
-                                            name="rewardPercentage"
+                                            title="rewardPercentage"
                                             label="Mức giảm"
                                             rules={[rules.required('Vui lòng nhập mức giảm ')]}
                                             inputField={
@@ -389,7 +389,7 @@ const VoucherFormPage = () => {
                                             }
                                         />
                                         <FormItemComponent
-                                            name="minSpend"
+                                            title="minSpend"
                                             label={
                                                 applicableType === APPLICABLE_TYPE.order
                                                     ? `Tổng giá trị đơn hàng tối thiểu`
@@ -419,7 +419,7 @@ const VoucherFormPage = () => {
                                                     },
                                                 },
                                             ]}
-                                            name="rewardCap"
+                                            title="rewardCap"
                                             label="Giá trị giảm tối đa"
                                             inputField={
                                                 <InputNumber
@@ -436,7 +436,7 @@ const VoucherFormPage = () => {
                                     </>
                                 )}
                                 <FormItemComponent
-                                    name="enableNotification"
+                                    title="enableNotification"
                                     label=" "
                                     valuePropName="checked"
                                     inputField={
@@ -472,7 +472,7 @@ const VoucherFormPage = () => {
                             <FormItemComponent
                                 grid={width > 1024}
                                 rules={[rules.required('Vui lòng nhập ngày bắt đầu!')]}
-                                name="startTime"
+                                title="startTime"
                                 label="Ngày bắt đầu"
                                 inputField={
                                     <DatePicker
@@ -507,7 +507,7 @@ const VoucherFormPage = () => {
                             <FormItemComponent
                                 grid={width > 1024}
                                 rules={[rules.required('Vui lòng nhập ngày kết thúc!')]}
-                                name="endTime"
+                                title="endTime"
                                 label="Ngày kết thúc"
                                 inputField={
                                     <DatePicker
@@ -547,7 +547,7 @@ const VoucherFormPage = () => {
                             {(rewardType === REWARD.gift || applicableType === APPLICABLE_TYPE.product) && (
                                 <FormItemComponent
                                     grid={width > 1024}
-                                    name="enableProducts"
+                                    title="enableProducts"
                                     label=""
                                     valuePropName="checked"
                                     inputField={

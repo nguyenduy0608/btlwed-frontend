@@ -1,0 +1,54 @@
+yarn add v1.22.19
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+[3/4] Linking dependencies...
+[4/4] Building fresh packages...
+success Saved lockfile.
+success Saved 43 new dependencies.
+info Direct dependencies
+└─ webpack@5.82.0
+info All dependencies
+├─ @jridgewell/source-map@0.3.3
+├─ @types/eslint-scope@3.7.4
+├─ @types/eslint@8.37.0
+├─ @webassemblyjs/floating-point-hex-parser@1.11.5
+├─ @webassemblyjs/helper-numbers@1.11.5
+├─ @webassemblyjs/helper-wasm-section@1.11.5
+├─ @webassemblyjs/wasm-edit@1.11.5
+├─ @webassemblyjs/wasm-opt@1.11.5
+├─ @webassemblyjs/wast-printer@1.11.5
+├─ @xtuc/ieee754@1.2.0
+├─ acorn-import-assertions@1.8.0
+├─ acorn@8.8.2
+├─ browserslist@4.21.5
+├─ buffer-from@1.1.2
+├─ caniuse-lite@1.0.30001482
+├─ chrome-trace-event@1.0.3
+├─ commander@2.20.3
+├─ electron-to-chromium@1.4.383
+├─ enhanced-resolve@5.13.0
+├─ es-module-lexer@1.2.1
+├─ eslint-scope@5.1.1
+├─ esrecurse@4.3.0
+├─ estraverse@4.3.0
+├─ events@3.3.0
+├─ graceful-fs@4.2.11
+├─ jest-worker@27.5.1
+├─ json-parse-even-better-errors@2.3.1
+├─ loader-runner@4.3.0
+├─ merge-stream@2.0.0
+├─ neo-async@2.6.2
+├─ node-releases@2.0.10
+├─ randombytes@2.1.0
+├─ schema-utils@3.1.2
+├─ serialize-javascript@6.0.1
+├─ source-map-support@0.5.21
+├─ source-map@0.6.1
+├─ tapable@2.2.1
+├─ terser-webpack-plugin@5.3.7
+├─ terser@5.17.1
+├─ update-browserslist-db@1.0.11
+├─ watchpack@2.4.0
+├─ webpack-sources@3.2.3
+└─ webpack@5.82.0
+Done in 11.04s.

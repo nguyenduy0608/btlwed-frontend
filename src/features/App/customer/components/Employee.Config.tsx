@@ -4,29 +4,21 @@ import { ColumnsType } from 'antd/lib/table';
 import { Table as AntdTable } from 'antd';
 import { ORDER_STATUS } from '@/contants';
 import TagResult from '@/components/TagResult';
-export interface DataTypeCustomer {
-    id: number;
-    code: string;
-    fullName: string;
-    createdAt: string;
+export interface DataTypeEmployee {
+    id: number | string;
     phoneNumber: string;
+    password: string;
+    name: string;
     address: string;
-    gender: string;
-    description: string;
-    dateOfBirth: string;
-    provinceId: string;
-    status: number;
-    updatedAt: string;
-    totalOrder: number;
-    totalProductBought: number;
-    province: string;
-    turnoverOfOrder: number;
-    turnover: number;
+    createdAt: string;
+    role: string | number;
+    username: string;
+    salary: number | string;
 }
 export interface DataTypeDebt {
     id: number;
     code: string;
-    fullName: string;
+    name: string;
     createdAt: string;
     phoneNumber: string;
     address: string;
@@ -41,6 +33,7 @@ export interface DataTypeDebt {
     province: string;
     turnoverOfOrder: number;
     turnover: number;
+    role: string;
 }
 export interface DataTypePurchase {
     id: number;
@@ -80,7 +73,7 @@ export interface DataTypeWalletChange {
     turnoverOfOrder: number;
     turnover: number;
 }
-export const columns = (page: number): ColumnsType<DataTypeCustomer> => [
+export const columns = (page: number): ColumnsType<DataTypeEmployee> => [
     {
         title: 'STT',
         dataIndex: 'id',
@@ -88,8 +81,8 @@ export const columns = (page: number): ColumnsType<DataTypeCustomer> => [
         render: (row, record, index) => (page === 1 ? ++index : (page - 1) * RECORD_SIZE + ++index),
     },
     {
-        title: 'Tên khách hàng',
-        dataIndex: 'fullName',
+        title: 'Tên nhân viên',
+        dataIndex: 'name',
     },
     {
         title: 'Số điện thoại',
@@ -100,27 +93,15 @@ export const columns = (page: number): ColumnsType<DataTypeCustomer> => [
         dataIndex: 'address',
     },
     {
-        title: 'DS trên đơn hàng',
-        dataIndex: 'turnoverOfOrder',
+        title: 'Lương',
+        dataIndex: 'salary',
         align: 'center',
-        render: (value: number) => currencyFormat(value || 0),
-    },
-    {
-        title: 'DS thực tế',
-        dataIndex: 'turnover',
-        align: 'center',
-        render: (value: number) => currencyFormat(value || 0),
     },
     {
         title: 'Trạng thái',
         dataIndex: 'status',
         align: 'center',
-        render: (value: number) =>
-            value ? (
-                <TagResult text="Đang hoạt động" color="processing" />
-            ) : (
-                <TagResult text="Ngừng hoạt động" color="error" />
-            ),
+        render: (value: number) => <TagResult text="Đang hoạt động" color="processing" />,
     },
     {
         title: 'Ngày tạo',
@@ -142,8 +123,8 @@ export const Purchasecolumns = (page: number): ColumnsType<DataTypePurchase> => 
         align: 'center',
     },
     {
-        title: 'Khách hàng',
-        dataIndex: 'user',
+        title: 'nhân viên',
+        dataIndex: 'name',
         render: (value) => (
             <>
                 {value.fullName} {'(' + value.phoneNumber + ')'}

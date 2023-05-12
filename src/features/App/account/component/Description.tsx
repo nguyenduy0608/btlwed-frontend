@@ -15,11 +15,8 @@ const ROLE = (value: string) => {
     switch (value) {
         case ADMIN.main:
             return 'Admin';
-        case ADMIN.stall:
-            return 'Admin gian hàng';
-        case ADMIN.news:
-            return 'Biên tập viên';
-        case ADMIN.accountant:
+
+        case ADMIN.employee:
             return 'Kế toán';
         default:
             return '';
@@ -29,19 +26,15 @@ const Description: React.FC<IProps> = ({ record, refetch, handleShowModal }) => 
     return (
         <Card className="gx-mb-0" actions={Buttons({ record, handleShowModal, refetch })}>
             <Row>
-                <Col span={18}>
+                <Col span={24}>
                     <Descriptions title="Thông tin tài khoản" column={2}>
-                        <Descriptions.Item label="Tên người dùng">{record.fullName || '--'}</Descriptions.Item>
-                        <Descriptions.Item label="Email">{record.email || '--'}</Descriptions.Item>
+                        <Descriptions.Item label="Tên người dùng">{record.name || '--'}</Descriptions.Item>
+                        <Descriptions.Item label="Địa chỉ">{record.address || '--'}</Descriptions.Item>
                         <Descriptions.Item label="Số điện thoại">{record.phoneNumber || '--'}</Descriptions.Item>
                         <Descriptions.Item label="Ngày tạo">
-                            {momentToStringDate(record.createdAt) || '--'}
+                            {momentToStringDate(record.createdDate) || '--'}
                         </Descriptions.Item>
-                        <Descriptions.Item label="Vai trò">{ROLE(record.group) || '--'}</Descriptions.Item>
                     </Descriptions>
-                </Col>
-                <Col span={6}>
-                    <AvatarStyled shape="circle" size={140} icon={<Image preview={false} src={record.avatar} />} />
                 </Col>
             </Row>
         </Card>

@@ -74,38 +74,6 @@ const TableComponent: React.FC<IProps> = ({
         <Row className="gx-m-0">
             <Col span={24} className="gx-m-0 gx-px-0">
                 <WrapperTable>
-                    {showTotalResult && (
-                        <Row className="gx-m-0 gx-pb-3" align="middle">
-                            <ResultStyled>
-                                <div>Kết quả lọc: </div>
-                                <Tag className="gx-m-0 gx-ml-2" color="magenta">
-                                    {total}
-                                </Tag>
-                            </ResultStyled>
-                            {reLoadData && (
-                                <Tooltip title="Tải lại dữ liệu">
-                                    <ReloadStyled
-                                        onClick={() => {
-                                            if (reLoadData) {
-                                                setLoadingRefresh(true);
-                                                wait(1000).then(() => {
-                                                    reLoadData();
-                                                    setLoadingRefresh(false);
-                                                });
-                                            }
-                                        }}
-                                    >
-                                        <IconAntd
-                                            spin={loadingRefresh}
-                                            style={{ color: loadingRefresh ? 'red' : 'black' }}
-                                            size="16px"
-                                            icon="ReloadOutlined"
-                                        />
-                                    </ReloadStyled>
-                                </Tooltip>
-                            )}
-                        </Row>
-                    )}
                     <TableStyled
                         showSorterTooltip={{ title: 'Sắp xếp' }}
                         loading={loading || loadingRefresh}

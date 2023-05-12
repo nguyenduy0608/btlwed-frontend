@@ -78,6 +78,8 @@ const NotificationPage = () => {
                         </Button>
                     }
                 >
+                    <div style={{ marginBottom: '16px' }}>Kết quả lọc: {notification?.data.length} </div>
+
                     <TableComponent
                         loading={isRefetching}
                         page={page}

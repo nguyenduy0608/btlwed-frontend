@@ -41,26 +41,14 @@ const PageLayout = (PageComponent: React.JSXElementConstructor<any>) => {
                 )}
                 {/* content */}
                 <Layout>
-                    {/* top content */}
-                    {width < TAB_SIZE && location.pathname !== '/vn_pay' && (
-                        <Topbar handleCallbackCollapseMobile={handleCallbackCollapseMobile} />
-                    )}
-                    {/* body content */}
                     <ErrorBoundary>
                         <Content className="gx-layout-content">
                             <div className="gx-main-content-wrapper" style={{ overflow: 'hidden' }}>
                                 <PageComponent {...props} />
                             </div>
-                            {/* footer content */}
-                            {/* <Footer>
-                                <div className="gx-layout-footer-content">
-                                    <div className="gx-layout-footer-content">WindsSoft Frontend Team - 2022</div>
-                                </div>
-                            </Footer> */}
                         </Content>
                     </ErrorBoundary>
                 </Layout>
-                {location.pathname !== '/vn_pay' && <Setting />}
                 <Socket />
             </Layout>
         ) : (

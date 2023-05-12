@@ -1,7 +1,7 @@
 import AxiosClient from '@/apis/AxiosClient';
 import { RECORD_SIZE } from '@/config/theme';
 import { handleObjectEmpty } from '@/utils';
-import { DataTypeCustomer } from '../components/Customer.Config';
+import { DataTypeEmployee } from '../components/Employee.Config';
 export interface IQuery {
     page: number;
     kiotvietId?: string | number;
@@ -27,7 +27,7 @@ export const CustomerService = {
 
         return AxiosClient.get(url);
     },
-    update: (id: number, data: DataTypeCustomer) => {
+    update: (id: number, data: DataTypeEmployee) => {
         const url = `/admin/user/${id}`;
         return AxiosClient.patch(url, { ...data });
     },

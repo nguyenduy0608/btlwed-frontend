@@ -8,7 +8,7 @@ import useCallContext from '@/hooks/useCallContext';
 import Container from '@/layout/Container';
 import { selectAll } from '@/service';
 import { handleObjectEmpty, wait } from '@/utils';
-import { Button, Segmented } from 'antd';
+import { Button, Input, Segmented, Space } from 'antd';
 import React from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
@@ -17,40 +17,30 @@ import Filter from '../components/Filter';
 import { columns } from '../components/Voucher.Config';
 import voucherService from '../service';
 import { IFilter } from '../type';
+import axios from 'axios';
+import LocalStorage from '@/apis/LocalStorage';
 
 const initialFilterQuery = {};
 
-const VoucherPage = () => {
+const DepartmentPage = () => {
     const { state } = useCallContext();
+    const { Search } = Input;
     const navigate = useNavigate();
-    const [filterQuery, setFilterQuery] = React.useState(initialFilterQuery);
+    const [filterQuery, setFilterQuery] = React.useState<any>('');
     const [page, setPage] = React.useState(1);
-
+    const token = LocalStorage.getToken();
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+    };
     const {
-        data: voucher,
+        data: department,
         refetch,
         isRefetching,
-    } = useQuery<any>(['voucherService', page, filterQuery], () => voucherService.get({ page, ...filterQuery }));
-    const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
-
-    const rowRender = (record: any, index: number, indent: number, expanded: any) => {
-        const row = document.querySelector(`[data-row-key="${record.id}"]`);
-        if (expanded) {
-            row?.classList.add('rowTableSelect');
-        } else {
-            row?.classList.remove('rowTableSelect');
-        }
-
-        return <Description record={record} refetch={refetch} />;
-    };
-
-    const returnFilter = React.useCallback(
-        (filter: IFilter) => {
-            setPage(1);
-            setFilterQuery({ ...filterQuery, ...filter });
-        },
-        [filterQuery]
+    } = useQuery<any>(['department', page, filterQuery], () =>
+        axios.get(`http://26.75.181.165:8080/department/alldepartments/${filterQuery}`, { headers })
     );
+    const [loadingClearFilter, setLoadingClearFilter] = React.useState(false);
 
     React.useEffect(() => {
         refetch();
@@ -59,58 +49,48 @@ const VoucherPage = () => {
     const onClearFilter = () => {
         setLoadingClearFilter(true);
         wait(1500).then(() => {
-            setFilterQuery(initialFilterQuery);
+            setFilterQuery('');
             setPage(1);
             setLoadingClearFilter(false);
         });
     };
-
+    const onSearch = (search: string) => {
+        setFilterQuery(search);
+        setPage(1);
+    };
     return (
         <>
-            <TopBar
-                title="Quản lý voucher"
-                extra={
-                    <Segmented
-                        onChange={(value) => {
-                            setPage(1);
-                            setFilterQuery({ ...filterQuery, kiotvietId: value });
-                        }}
-                        options={[
-                            selectAll,
-                            ...((state?.kiotviets?.map((kiot) => ({ label: kiot.name, value: kiot.id })) || []) as any),
-                        ]}
-                    />
-                }
-            />
+            <TopBar title="Phòng ban" />
             <Container>
                 <CardComponent
                     title={
                         loadingClearFilter ? (
                             <ClearFilterLoading key="clear_filter" />
                         ) : (
-                            <Filter returnFilter={returnFilter} key="filter" />
+                            <Space>
+                                <Search
+                                    size="large"
+                                    placeholder="Nhập tên hoặc số điện thoại tài khoản"
+                                    onChange={(e: any) => {
+                                        onSearch(e?.target?.value);
+                                    }}
+                                    style={{ width: 400 }}
+                                />
+                            </Space>
                         )
                     }
-                    extra={
-                        <Button
-                            key="add_voucher"
-                            onClick={() => navigate(routerPage.voucherForm)}
-                            className="gx-mb-0"
-                            type="primary"
-                        >
-                            Thêm mới
-                        </Button>
-                    }
                 >
+                    <div style={{ marginBottom: '16px' }}>Kết quả lọc: {department?.data.length} </div>
+
                     <TableComponent
                         showTotalResult
                         loading={isRefetching}
                         page={page}
                         rowSelect={false}
                         onChangePage={(_page) => setPage(_page)}
-                        expandedRowRender={rowRender}
-                        dataSource={voucher ? voucher.data : []}
-                        total={voucher && voucher?.paging?.totalItemCount}
+                        dataSource={department ? department.data : []}
+                        onRowClick={(record: { name: string }) => navigate(`${routerPage.voucher}/${record.name}`)}
+                        total={department && department?.paging?.totalItemCount}
                         columns={columns(page)}
                     />
                 </CardComponent>
@@ -127,4 +107,4 @@ const VoucherPage = () => {
     );
 };
 
-export default VoucherPage;
+export default DepartmentPage;

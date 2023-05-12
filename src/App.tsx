@@ -1,36 +1,29 @@
 import AppLoading from '@/assets/appLoading.json';
-import loadingSync from '@/assets/loading_sync.json';
 import { Button, ConfigProvider, notification, Row, Spin, Timeline } from 'antd';
 import vi_VN from 'antd/lib/locale/vi_VN';
 import Lottie from 'lottie-react';
 import moment from 'moment';
 import React from 'react';
-import Snowfall from 'react-snowfall';
-import io from 'socket.io-client';
 import styled from 'styled-components';
 import LocalStorage from './apis/LocalStorage';
-import IconAntd from './components/IconAntd';
-import TagResult from './components/TagResult';
 import GlobalStyle from './config/global.style';
 import { BOX_SHADOW } from './config/theme';
 import { APP_LOADING, SET_BG_APP, SET_COUNT_NOTI, SET_INFO, SET_KIOTVIETS, SET_SOCKET } from './context/types';
-import { authService } from './features/Auth/service';
 import MainPage from './features/MainPage';
 import useCallContext from './hooks/useCallContext';
 import { appService } from './service';
-import hoadao from './assets/images/hoadao.png';
 import { useLocation } from 'react-router-dom';
-const DEV_TYPE = import.meta.env.VITE_DEVOPS_TYPE;
+import axios from 'axios';
 
 moment.utc().locale('vi');
-const snowflake1 = document.createElement('img');
-snowflake1.style.width = '50px';
-snowflake1.style.height = '50px';
-snowflake1.src = hoadao;
+
 function App() {
     const { state, dispatch } = useCallContext();
     const [role, setRole] = React.useState('');
-
+    const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${LocalStorage.getToken()}`,
+    };
     const location = useLocation();
 
     // loading when going to app
@@ -42,43 +35,19 @@ function App() {
 
     React.useLayoutEffect(() => {
         if (LocalStorage.getToken()) {
-            authService.info().then((res) => {
-                setRole(res.data[Object.keys(res.data)[0]]?.group);
+            axios.get('http://26.75.181.165:8080/getrole', { headers }).then((res) => {
+                setRole(res.data.role);
                 dispatch({
                     type: SET_INFO,
-                    payload: { ...res.data[Object.keys(res.data)[0]], role: Object.keys(res.data)[0] },
+                    payload: { ...res.data[Object.keys(res.data)[0]], role: res.data.role },
                 });
             });
         }
-
-        if (LocalStorage.getBG()) {
-            dispatch({
-                type: SET_BG_APP,
-                payload: JSON.parse(LocalStorage.getBG() as any),
-            });
-        }
     }, []);
-    React.useEffect(() => {
-        if (LocalStorage.getToken()) {
-            appService.getKiotviet().then((res) => {
-                dispatch({ type: SET_KIOTVIETS, payload: res.data });
-            });
-        }
-    }, [state.callbackKioviet]);
-
-    // setup socket to context
-    React.useEffect(() => {
-        if (state.info) {
-            const socket = io(import.meta.env.VITE_SOCKET_URL, {
-                auth: { token: LocalStorage.getToken() },
-            });
-            dispatch({ type: SET_SOCKET, payload: socket });
-        }
-    }, [state.info]);
 
     return (
         <SpinLoadingStyled
-            spinning={state.appLoading && location.pathname !== '/vn_pay'}
+            spinning={state.appLoading}
             indicator={
                 <ContainerLoading>
                     <div style={{ height: '600px', width: '600px' }}>
@@ -92,60 +61,6 @@ function App() {
             </ConfigProvider>
             {/* define default style */}
             <GlobalStyle />
-            {!state?.appBackground?.showFlower && state?.appBackground?.show && (
-                <Snowfall
-                    color={state?.appBackground?.color}
-                    style={{
-                        position: 'fixed',
-                        width: '100vw',
-                        height: '100vh',
-                    }}
-                />
-            )}
-            {state?.appBackground?.showFlower && state?.appBackground?.show && (
-                <Snowfall
-                    color={state?.appBackground?.color}
-                    style={{
-                        position: 'fixed',
-                        width: '100vw',
-                        height: '100vh',
-                    }}
-                    snowflakeCount={30}
-                    radius={[10, 20]}
-                    images={[snowflake1]}
-                />
-            )}
-            {/* loading khi đồng bộ */}
-            {state.syncLoading && (
-                <ContainerLoadingSync>
-                    <ContainerLoad>
-                        <Row justify="center">
-                            <Lottie
-                                style={{ height: '300px', width: '300px' }}
-                                animationData={loadingSync}
-                                loop={true}
-                            />
-                        </Row>
-                        <Row justify="center">
-                            <strong>Đang đồng bộ ...</strong>
-                        </Row>
-                        <div
-                            style={{
-                                fontStyle: 'italic',
-                                width: '100%',
-                                fontSize: '12px',
-                                textAlign: 'center',
-                                marginTop: '10px',
-                                fontWeight: 'bold',
-                                color: 'blue',
-                            }}
-                        >
-                            Quá trình đồng bộ có thể mất vài phút hãy tải lại dữ liệu khi có thông báo đồng bộ thành
-                            công...
-                        </div>
-                    </ContainerLoad>
-                </ContainerLoadingSync>
-            )}
         </SpinLoadingStyled>
     );
 }

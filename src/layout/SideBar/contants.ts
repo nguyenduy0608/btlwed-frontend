@@ -5,12 +5,9 @@ export const switchSidebar = (group: string) => {
     switch (group) {
         case ADMIN.main:
             return itemsAdmin;
-        case ADMIN.accountant:
+        case ADMIN.employee:
             return itemAccountants;
-        case ADMIN.news:
-            return itemsNews;
-        case ADMIN.stall:
-            return itemsAdmin;
+
         default:
             return [];
     }

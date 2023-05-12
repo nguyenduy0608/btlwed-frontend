@@ -1,18 +1,22 @@
 import TagResult from '@/components/TagResult';
 import { RECORD_SIZE } from '@/config/theme';
 import { ADMIN } from '@/contants';
+import { momentToStringDate } from '@/utils';
 import { ColumnsType } from 'antd/lib/table';
 
 export interface DataTypeAccount {
     id: number;
     status?: any;
-    fullName: string;
-    email: string;
+    name: string;
+    address: string;
     phoneNumber?: string;
     phone_number?: string;
-    createdAt: string;
+    createdDate: string;
     updatedAt: string;
     password?: string;
+    department?: string;
+    username?: string;
+
     avatar?: string;
     isRoot?: any;
     kiotvietId?: number;
@@ -30,45 +34,33 @@ export const columns = (page: number): ColumnsType<DataTypeAccount> => [
     },
     {
         title: 'Họ tên',
-        dataIndex: 'fullName',
+        dataIndex: 'name',
     },
     {
         title: 'Số điện thoại',
         dataIndex: 'phoneNumber',
     },
     {
-        title: 'Email',
-        dataIndex: 'email',
+        title: 'Địa chỉ',
+        dataIndex: 'address',
         align: 'center',
     },
-    {
-        title: 'Loại tài khoản',
-        dataIndex: 'group',
-        align: 'center',
-        render: (value: any) => {
-            switch (value) {
-                case ADMIN.main:
-                    return 'Admin';
-                case ADMIN.stall:
-                    return 'Admin gian hàng';
-                case ADMIN.news:
-                    return 'Biên tập viên';
-                case ADMIN.accountant:
-                    return 'Kế toán';
-                default:
-                    return '';
-            }
-        },
-    },
+
     {
         title: 'Trạng thái',
         dataIndex: 'status',
         align: 'center',
-        render: (value: number) =>
-            value ? (
+        render: (value: string) =>
+            value === 'active' ? (
                 <TagResult text="Đang hoạt động" color="processing" />
             ) : (
                 <TagResult text="Ngừng hoạt động" color="error" />
             ),
+    },
+    {
+        title: 'Ngày tạo',
+        dataIndex: 'createdDate',
+        align: 'center',
+        render: (value: any) => momentToStringDate(value),
     },
 ];
